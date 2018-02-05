@@ -22,6 +22,8 @@ header {
 
 main {
 	width: 100%;
+	float: left;
+	overflow: auto;
 }
 	
 footer {
@@ -33,6 +35,8 @@ footer {
 	background: #eee;
 	margin-top: 0;
 	clear: both;
+	width: 100%;
+	overflow: auto;
 }
 
 .navigation a {
@@ -57,4 +61,5 @@ footer {
 	/* Padding for content */
 	margin: 15px;
 	margin-top: 0;
+	
 }
