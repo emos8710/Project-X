@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2018 at 11:57 AM
+-- Generation Time: Feb 06, 2018 at 01:19 PM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -157,13 +157,13 @@ CREATE TABLE IF NOT EXISTS `upstrain_file` (
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE IF NOT EXISTS `users` (
-  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `user_id` int(3) NOT NULL AUTO_INCREMENT,
   `first_name` varchar(50) NOT NULL,
   `last_name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(14) NOT NULL,
   `password` varchar(50) NOT NULL,
-  PRIMARY KEY (`id`),
+  PRIMARY KEY (`user_id`),
   UNIQUE KEY `password` (`password`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Constraints for table `backbone`
 --
 ALTER TABLE `backbone`
-  ADD CONSTRAINT `bb_creat_id` FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `bb_creat_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `entry`
@@ -184,7 +184,7 @@ ALTER TABLE `entry`
   ADD CONSTRAINT `backbone_id` FOREIGN KEY (`backbone`) REFERENCES `backbone` (`id`),
   ADD CONSTRAINT `insert_id` FOREIGN KEY (`ins`) REFERENCES `ins` (`id`),
   ADD CONSTRAINT `strain_id` FOREIGN KEY (`strain`) REFERENCES `strain` (`id`),
-  ADD CONSTRAINT `user_id` FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `user_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `entry_upstrain`
@@ -196,7 +196,7 @@ ALTER TABLE `entry_upstrain`
 -- Constraints for table `ins`
 --
 ALTER TABLE `ins`
-  ADD CONSTRAINT `creator_id` FOREIGN KEY (`creator`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `creator_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`);
 
 --
 -- Constraints for table `upstrain_file`
