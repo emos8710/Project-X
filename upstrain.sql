@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2018 at 10:14 AM
+-- Generation Time: Feb 06, 2018 at 11:41 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS `entry` (
   `sequence` tinyint(1) NOT NULL DEFAULT '0',
   `backbone` int(3) NOT NULL,
   `strain` int(3) NOT NULL,
-  `ins` int(3) NOT NULL,
+  `ins` int(3) DEFAULT NULL,
   `creator` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `entry_regname` (`entry_reg`),
