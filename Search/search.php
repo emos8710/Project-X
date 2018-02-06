@@ -11,14 +11,14 @@ include 'db.php';
 
     if(isset(mysql_real_escape_string($link, $_REQUEST['submit']))) {
     
-        $id_criteria = $_POST['id_criteria'];
-        $strain_criteria = $_POST['strain_criteria'];
-        $backbone_criteria = $_POST['backbone_criteria'];
-        $insert_criteria = $_POST['insert_criteria'];
-        $bb_id_criteria = $_POST['bb_id_criteria'];
-        $comment_criteria = $_POST['comment_criteria'];
-        $creation_year_criteria = $_POST['creation_year_criteria'];
-        $inserted_year_criteria = $_POST['inserted_year_criteria'];
+        $id_criteria = mysql_real_escape_string($link, $_REQUEST['id_criteria']);
+        $strain_criteria = mysql_real_escape_string($link, $_REQUEST['strain_criteria']);
+        $backbone_criteria = mysql_real_escape_string($link, $_REQUEST['backbone_criteria']);
+        $insert_criteria = mysql_real_escape_string($link, $_REQUEST['insert_criteria']);
+        $bb_id_criteria = mysql_real_escape_string($link, $_REQUEST['bb_id_criteria']);
+        $comment_criteria = mysql_real_escape_string($link, $_REQUEST['comment_criteria']);
+        $creation_year_criteria = mysql_real_escape_string($link, $_REQUEST['creation_year_criteria']);
+        $inserted_year_criteria = mysql_real_escape_string($link, $_REQUEST['inserted_year_criteria']);
     
         // query the database table
         $sql="SELECT * FROM upstrain WHERE (ID like '%".$id_criteria."%') OR (backbone like '%".$backbone_criteria."%') OR 
