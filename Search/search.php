@@ -11,21 +11,21 @@ include 'db.php';
 
     if(isset(mysql_real_escape_string($link, $_REQUEST['submit']))) {
     
-        $id_criteria = mysql_real_escape_string($link, $_REQUEST['id_criteria']);
-        $strain_criteria = mysql_real_escape_string($link, $_REQUEST['strain_criteria']);
-        $backbone_criteria = mysql_real_escape_string($link, $_REQUEST['backbone_criteria']);
-        $insert_criteria = mysql_real_escape_string($link, $_REQUEST['insert_criteria']);
-        $bb_id_criteria = mysql_real_escape_string($link, $_REQUEST['bb_id_criteria']);
-        $comment_criteria = mysql_real_escape_string($link, $_REQUEST['comment_criteria']);
-        $creation_year_criteria = mysql_real_escape_string($link, $_REQUEST['creation_year_criteria']);
-        $inserted_year_criteria = mysql_real_escape_string($link, $_REQUEST['inserted_year_criteria']);
+        $id_criteria = mysqli_real_escape_string($link, $_REQUEST['id_criteria']);
+        $strain_criteria = mysqli_real_escape_string($link, $_REQUEST['strain_criteria']);
+        $backbone_criteria = mysqli_real_escape_string($link, $_REQUEST['backbone_criteria']);
+        $insert_criteria = mysqli_real_escape_string($link, $_REQUEST['insert_criteria']);
+        $bb_id_criteria = mysqli_real_escape_string($link, $_REQUEST['bb_id_criteria']);
+        $comment_criteria = mysqli_real_escape_string($link, $_REQUEST['comment_criteria']);
+        $creation_year_criteria = mysqli_real_escape_string($link, $_REQUEST['creation_year_criteria']);
+        $inserted_date_criteria = mysqli_real_escape_string($link, $_REQUEST['inserted_year_criteria']);
     
         // query the database table
-        $sql="SELECT * FROM upstrain WHERE (ID like '%".$id_criteria."%') OR (backbone like '%".$backbone_criteria."%') OR 
+        $sql="SELECT * FROM entry WHERE (ID like '%".$id_criteria."%') OR (backbone like '%".$backbone_criteria."%') OR 
         (strain like '%".$strain_criteria."%') OR (insert like '%".$insert_criteria."%') OR 
         (bb_id like '%".$bb_id_criteria."%') OR (comment like '%".$comment_criteria."%') OR
         (created_yearlike '%".$creation_year_criteria."%') OR
-        (inserted_year like '%".$inserted_year_criteria."%')";
+        (inserted_year like '%".$inserted_date_criteria."%')";
             
         $result=mysql_query($sql);
 

@@ -11,24 +11,48 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
+
         <form action="search.php" method="post" id="searchform">
-            <input type="text" name="name">
-            
-            <label>ID: <input type="text" name="id_criteria" /></label>
 
-            <label>Strain: <input type="text" name="strain_criteria" /></label>
-
-            <label>Backbone: <input type="text" name="backbone_criteria" /></label>
+            <p>
+            <label>upstrain ID: 
+                <input type="text" name="id_criteria" /></label>
+            </p>
             
-            <label>Insert: <input type="text" name="insert_criteria" /></label>
+            <p>
+            <label>Strain: 
+                <input type="text" name="strain_criteria" /></label>
+            </p>
             
-            <label>Biobrick_registry_id: <input type="text" name="bb_id_criteria" /></label>
+            <p>
+            <label>Backbone: 
+                <input type="text" name="backbone_criteria" /></label>
+            </p>
             
-            <label>Comment: <input type="text" name="comment_criteria" /></label>
+            <p>    
+            <label>Insert: 
+                <input type="text" name="insert_criteria" /></label>
+            </p>
             
-            <label>Year_created: <input type="text" name="creation_year_criteria" /></label>
+            <p>    
+            <label>Biobrick registry ID: 
+                <input type="text" name="bb_id_criteria" /></label>
+            </p>
             
-            <label>Year_inserted: <input type="text" name="inserted_year_criteria" /></label>
+            <p>    
+            <label>Comment: 
+                <input type="text" name="comment_criteria" /></label>
+            </p>
+            
+            <p>    
+            <label>Year created: 
+                <input type="text" name="creation_year_criteria" /></label>
+            </p>
+            
+            <p>    
+            <label>Date inserted: 
+                <input type="text" name="inserted_date_criteria" /></label>
+            </p>
             
             <input type="submit" name="submit" value="Search">
             
