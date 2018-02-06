@@ -1,0 +1,51 @@
+<?php
+
+/* 
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+// connect to database    
+include 'db.php';
+
+    if(isset(mysql_real_escape_string($link, $_REQUEST['submit']))) {
+    
+        $id_criteria = $_POST['id_criteria'];
+        $strain_criteria = $_POST['strain_criteria'];
+        $backbone_criteria = $_POST['backbone_criteria'];
+        $insert_criteria = $_POST['insert_criteria'];
+        $bb_id_criteria = $_POST['bb_id_criteria'];
+        $comment_criteria = $_POST['comment_criteria'];
+        $creation_year_criteria = $_POST['creation_year_criteria'];
+        $inserted_year_criteria = $_POST['inserted_year_criteria'];
+    
+        // query the database table
+        $sql="SELECT * FROM upstrain WHERE (ID like '%".$id_criteria."%') OR (backbone like '%".$backbone_criteria."%') OR 
+        (strain like '%".$strain_criteria."%') OR (insert like '%".$insert_criteria."%') OR 
+        (bb_id like '%".$bb_id_criteria."%') OR (comment like '%".$comment_criteria."%') OR
+        (created_yearlike '%".$creation_year_criteria."%') OR
+        (inserted_year like '%".$inserted_year_criteria."%')";
+            
+        $result=mysql_query($sql);
+
+        // create a while loop and loop through result set
+        while ($row=mysql_fetch_array($result)) {
+            $name=$row['name'];
+            $ID=$row['ID'];
+        // display the result of the array
+            echo "<ul>\n";
+            echo "<li>" . "<a href=\"search.php?id=$ID\">" . $name . "</a></li>\n";
+            "</ul>";
+            }
+        }
+    else {
+    echo "<p>Please enter a search query</p>";
+    }
+if (mysqli_query($link, $sql)) {
+        echo "<p>Search function failed</p>";
+    } else {
+        echo "Error: " . $sql . "<br>" . mysqli_error($link);
+    }
+    mysqli_close($link) or die('Could not close connection to database');
+
