@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Search for entity</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form action="search.php" method="post" id="searchform">
+            <input type="text" name="name">
+            
+            <label>ID: <input type="text" name="id_criteria" /></label>
+
+            <label>Strain: <input type="text" name="strain_criteria" /></label>
+
+            <label>Backbone: <input type="text" name="backbone_criteria" /></label>
+            
+            <label>Insert: <input type="text" name="insert_criteria" /></label>
+            
+            <label>Biobrick_registry_id: <input type="text" name="bb_id_criteria" /></label>
+            
+            <label>Comment: <input type="text" name="comment_criteria" /></label>
+            
+            <label>Year_created: <input type="text" name="creation_year_criteria" /></label>
+            
+            <label>Year_inserted: <input type="text" name="inserted_year_criteria" /></label>
+            
+            <input type="submit" name="submit" value="Search">
+            
+        </form>
+    </body>
+</html>
