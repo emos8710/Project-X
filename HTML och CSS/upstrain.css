@@ -15,20 +15,20 @@ p {
 }
 	
 header {
-	height: 100px;
 	background: #ccc;
-	margin: 0;
+	padding: 20px;
 }
 
 main {
 	width: 100%;
 	float: left;
 	overflow: auto;
+	background: #ccc;
 }
 	
 footer {
 	clear: both;
-	background: #ccc;
+	background: #eee;
 }
 	
 .navigation {
@@ -56,10 +56,12 @@ footer {
     background-color: #4CAF50;
     color: white;
 }
+.navigation a.login {
+	float: right;
+}
 	
 .innertube {
 	/* Padding for content */
 	margin: 15px;
-	margin-top: 0;
 	
 }
