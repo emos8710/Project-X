@@ -4,7 +4,7 @@
 	<?php
 	session_start();
 	// fetch the upstrain id from URL (!!make sure this variable is passed from results table!!)
-	$upstrain_id = $_GET["id"];
+	$upstrain_id = $_GET["upstrain_id"];
 	define('title',"upStrain Entry ".$upstrain_id);
 	exit();
 	?>
