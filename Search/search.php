@@ -32,11 +32,11 @@ include 'db.php';
         if(mysqli_num_rows($result) > 0) {
             // create a while loop and loop through result set
             while ($row=mysqli_fetch_array($result, MYSQL_ASSOC)) {
-                echo $row['name'];
-                echo $row['ID'];
+                $id = $row['id'];
+                echo $id;
             // display the result of the array
                 echo "<ul>\n";
-                echo "<li>" . "<a href=\"search.php?id=$ID\">" . $name . "</a></li>\n";
+                echo "<li>" . "<a href=\"search.php?id=$id\">" . $id . "</a></li>\n";
                 "</ul>";
                 }
         }
