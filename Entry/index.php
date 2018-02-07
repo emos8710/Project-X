@@ -8,15 +8,16 @@
 </head>
 
 <body>
-
+	
 	<?php include 'top.php'; ?>
 	
 	<!-- Main content goes here -->
 	<main>
 		<div class="innertube">
-			<p>main</p>
+			<p>Main</p>
 		</div>
 	</main>
+	
 	<!-- Site footer -->
 	<footer>
 			<div class="innertube">
