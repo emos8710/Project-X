@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 06, 2018 at 07:03 PM
+-- Generation Time: Feb 07, 2018 at 09:09 PM
 -- Server version: 5.7.19
--- PHP Version: 7.1.9
+-- PHP Version: 5.6.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -40,7 +40,14 @@ CREATE TABLE IF NOT EXISTS `backbone` (
   UNIQUE KEY `bb_name` (`name`),
   UNIQUE KEY `bb_regname` (`Bb_reg`),
   KEY `bb_creat_id` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `backbone`
+--
+
+INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `year_created`, `creator`) VALUES
+(2, 'test', 'test', 20180207, 2018, 1);
 
 -- --------------------------------------------------------
 
@@ -67,7 +74,14 @@ CREATE TABLE IF NOT EXISTS `entry` (
   KEY `insert_id` (`ins`),
   KEY `strain_id` (`strain`),
   KEY `creator_id` (`creator`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `entry`
+--
+
+INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `sequence`, `backbone`, `strain`, `ins`, `creator`) VALUES
+(001, 'testestestest', 2018, 20180207, 'test', 1, 2, 1, 2, 1);
 
 --
 -- Triggers `entry`
@@ -92,6 +106,13 @@ CREATE TABLE IF NOT EXISTS `entry_upstrain` (
   UNIQUE KEY `id_link` (`entry_id`,`upstrain_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `entry_upstrain`
+--
+
+INSERT INTO `entry_upstrain` (`entry_id`, `upstrain_id`) VALUES
+(001, 'UU2018001');
+
 -- --------------------------------------------------------
 
 --
@@ -111,7 +132,14 @@ CREATE TABLE IF NOT EXISTS `ins` (
   UNIQUE KEY `insert_name` (`name`),
   UNIQUE KEY `ins_regname` (`ins_reg`),
   KEY `creator_id` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ins`
+--
+
+INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `year_created`, `date_db`) VALUES
+(2, 'test', 'coding', 'test', 1, 2018, 20180207);
 
 -- --------------------------------------------------------
 
@@ -166,7 +194,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` varchar(50) NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `password` (`password`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES
+(1, 'test', 'testson', 'test.testson@testmail.com', '0123456789', 'testtest123', 'testymctestface');
 
 --
 -- Constraints for dumped tables

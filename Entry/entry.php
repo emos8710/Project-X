@@ -49,7 +49,13 @@
 			
 			if($iserror) {
 				echo "<h3>Error: ".$error."</h3>";
-				echo "<br><a href=\"javascript:history.go(-1)\">Go back</a>";
+				echo "<br>".
+				"<a href=\"javascript:history.go(-1)\">Go back</a>";
+			} else {
+				
+				include 'db.php';
+				mysqli_close($link) or die("Could not close database connection");
+				
 			}
 			
 			?>
@@ -57,12 +63,7 @@
 		</div>
 	</main>
 	
-	<!-- Site footer -->
-	<footer>
-			<div class="innertube">
-				<p>Footer</p>
-			</div>
-	</footer>
+	<?php include 'bottom.php'; ?>		
 
 </body>
 
