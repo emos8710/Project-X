@@ -70,13 +70,13 @@ footer p {
 
 .quicksearch input[type=text] {
 	padding: 6px;
-	margin-top: 18px;
+	margin-top: 12px;
 }
 
 .quicksearch button {
 	float: right;
 	padding: 0;
-	margin-top: 18px;
+	margin-top: 12px;
 	cursor: pointer;
 	border: none;
 }
@@ -87,6 +87,16 @@ footer p {
 
 img.quicksearch {
 	height: 31.5px;
+}
+
+.quicksearch a {
+	padding: 0;
+	font-size: small;
+}
+
+.quicksearch a:hover {
+	background-color: inherit;
+	color: #4CAF50;
 }
 	
 .innertube {
