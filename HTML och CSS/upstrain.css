@@ -16,7 +16,7 @@ p {
 	
 header {
 	background: #ccc;
-	padding: 20px;
+	padding: 15px;
 }
 
 main {
@@ -30,20 +30,23 @@ footer {
 	clear: both;
 	background: #eee;
 }
+
+footer p {
+	font-size: small;
+}
 	
 .navigation {
 	background: #eee;
 	margin-top: 0;
 	clear: both;
-	width: 100%;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .navigation a {
     float: left;
     color: black;
     text-align: center;
-    padding: 14px 16px;
+    padding: 22px 16px;
     text-decoration: none;
     font-size: 17px;
 }
@@ -58,10 +61,41 @@ footer {
 }
 .navigation a.login {
 	float: right;
+	margin-left: 20px;
+}
+
+.quicksearch {
+	float: right;
+}
+
+.quicksearch input[type=text] {
+	padding: 6px;
+	margin-top: 18px;
+}
+
+.quicksearch button {
+	float: right;
+	padding: 0;
+	margin-top: 18px;
+	cursor: pointer;
+	border: none;
+}
+
+.quicksearch button:hover {
+	background-color: #ccc;
+}
+
+img.quicksearch {
+	height: 31.5px;
 }
 	
 .innertube {
 	/* Padding for content */
 	margin: 15px;
-	
+}
+
+.logo {
+	float: left;
+	padding: 10px;
+	margin-right: 15%;
 }
