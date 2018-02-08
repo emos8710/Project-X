@@ -1,16 +1,22 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title></title>
-    </head>
-    <body>
-        
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>New Entry</title>
+	<link href="upstrain.css" rel="stylesheet">
+</head>
+
+<body>
+	
+	<?php include 'top.php'; ?>
+	
+	<!-- Main content goes here -->
+	<main>
+		<div class="innertube">
+			<p>New Entry</p>
+		</div>
+            
         <?php
         $strainErr = $backboneErr = $yearErr = $regErr = ""; 
         $strain = $backbone = $comment = $year = $private = $reg = ""; 
@@ -122,7 +128,6 @@ and open the template in the editor.
 <script type="text/javascript" src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>    
 <script type="text/javascript">
-
 $(function() {
     
     //autocomplete
@@ -130,11 +135,13 @@ $(function() {
         source: "search.php",
         minLength: 1
     });                
-
 });
 </script>
         
-        
-       
-    </body>
+	</main>
+	
+	<?php include 'bottom.php'; ?>
+	
+</body>
 </html>
+
