@@ -34,7 +34,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title><?php echo $title; ?></title>
-	<link href="upstrain.css" rel="stylesheet">
+	<link href="css/upstrain.css" rel="stylesheet">
 </head>
 
 <body>
@@ -68,9 +68,9 @@
 				."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
 				."entry.backbone = backbone.id AND backbone.creator = users.user_id";
 				
+				
+				
 								
-				
-				
 				mysqli_close($link) or die("Could not close database connection");
 				
 			}
