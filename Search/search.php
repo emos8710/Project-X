@@ -58,9 +58,8 @@ and open the template in the editor.
             </p>
             
             <!--<input type="submit" name="submit" value="Search">-->
-            <input name="submit-form" value="Search" type="submit" class="btn btn-lg btn-success">
+            <input name="submit-form" value="search" type="submit" class="btn btn-lg btn-success">
         
-        <?php include 'bottom.php'; ?>
             
     </body>
 </html>
@@ -88,56 +87,98 @@ include 'db.php';
         $creation_year_criteria = mysqli_real_escape_string($link, $_REQUEST['creation_year_criteria']);
         $inserted_date_criteria = mysqli_real_escape_string($link, $_REQUEST['inserted_date_criteria']);
     
-        // query the database table
-        $sql ="SELECT * FROM entry WHERE (id like '%".$id_criteria."%') OR (backbone like '%".$backbone_criteria."%') OR 
-        (strain like '%".$strain_criteria."%') OR (ins like '%".$insert_criteria."%') OR 
-        (entry_reg like '%".$bb_id_criteria."%') OR (comment like '%".$comment_criteria."%') OR
-        (year_created like '%".$creation_year_criteria."%') OR
-        (date_db like '%".$inserted_date_criteria."%')";
+        
+        $ConditionArray = [];
+        
+        if(!empty($id_criteria)) {
+            if (!preg_match('/[^A-Za-z0-9]/', $id_criteria)) { 
+                $ConditionArray[] = "id like '$id_criteria'";
+            } else {
+                echo nl2br ("\n \n Error: Non-valid character usage for 'ID'.");    
+            }
+        }  
+        
+        if(!empty($strain_criteria)) {
+            $ConditionArray[] = "strain like '$strain_criteria'";
+        }   
+        
+        if(!empty($backbone_criteria)) {
+            if (!preg_match('/[^A-Za-z0-9]/', $backbone_criteria)) { 
+                $ConditionArray[] = "backbone like '$backbone_criteria'";
+            } else {
+                echo nl2br ("\n \n Error: Non-valid character usage for 'Backbone'.");
+            }
+        }    
+        
+        if(!empty($insert_criteria)) {
+            $ConditionArray[] = "ins like $insert_criteria";
+        }   
+        
+        if(!empty($bb_id_criteria_criteria)) {
+            if (!preg_match('/[^A-Za-z0-9]/', $bb_id_criteria)) {
+                $ConditionArray[] = "entry_reg like '$bb_id_criteria'";
+            } else {
+                echo nl2br ("\n \n Error: Non-valid character usage for 'Biobrick registry ID'.");
+            }
+        }  
+        
+        if(!empty($comment_criteria)) {
+            $ConditionArray[] = "comment like '$comment_criteria'";
+        }   
+        
+        if(!empty($creation_year_criteria)) {
+            if (is_numeric($creation_year_criteria)) {
+                $ConditionArray[] = "year_created like '$creation_year_criteria'";
+            } else {
+                echo nl2br ("\n \n Error: Non-valid character usage for 'Year created'.");                
+            }
+        } 
+        
+        if(!empty($inserted_date_criteria)) {
+            if (is_numeric($inserted_date_criteria)) {
+                $ConditionArray[] = "date_db like '$inserted_date_criteria'";
+            } else {
+                echo nl2br ("\n \n Error: Non-valid character usage for 'Date inserted'.");
+            }
+        } 
+        
+        if (count($ConditionArray) > 0) {
+            $sql = "SELECT * FROM entry WHERE ".implode(' AND ', $ConditionArray);
             
-        $result=mysqli_query($link, $sql);
+        } else {
+            echo nl2br ("\n \n Please enter search query");
+        }
+
+            
+        $result=mysqli_query($link, $sql);  
+
         
         $iserror = FALSE;
         if (mysqli_num_rows($result) < 1) {
             $iserror = TRUE;
-            $error = "No such entry";
-            echo "<p>No matching results, try another search.</p>";
+            $error = "No matching results, try another search.";
         }
-        elseif(!$result = mysqli_query($link, $sql)) {
-            $iserror = TRUE;
-            $error = mysqli_error();
-        }
+      }
         
     else if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         header('HTTP/1.0 405 Method Not Allowed');
     exit;
     }
-}
-	
-mysqli_close($link) or die("Could not close database connection");
-	
-if($iserror) {
-	$title = "Error: ".$error;
-    } 
-else {
-
-     while ($row=mysqli_fetch_array($result, MYSQL_ASSOC)) {
-     $id = $row['id'];
-     $table = "";
-        }  
-    }
-
-			
+	 
+		
 if($iserror) {
     echo "<h3>Error: ".$error."</h3>";
     echo "<br>".
     "<a href=\"javascript:history.go(-1)\">Go back</a>";
 } else {
-    echo $id;
+    while($row = mysqli_fetch_array($result)) {
+        echo $row['id'];
+        }
     include 'db.php';
     mysqli_close($link) or die("Could not close database connection");
 				
 }
+include 'bottom.php';
 			
 ?>
 
