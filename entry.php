@@ -57,21 +57,67 @@
 				include 'scripts/db.php';
 				
 				$entrysql = "SELECT entry.comment AS cmt, entry.year_created AS year, "
-				."entry.date_db AS date, entry.entry_reg AS biobrick, entry.sequence AS seq, "
+				."entry.date_db AS date, entry.entry_reg AS biobrick, strain.name AS strain, entry.sequence AS seq, "
 				."users.first_name AS fname, users.last_name AS lname FROM entry, entry_upstrain, "
-				."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = "
-				."entry.id AND entry.creator = users.user_id";
+				."users, strain WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = "
+				."entry.id AND entry.creator = users.user_id AND entry.strain = strain.id";
+				$entryquery = mysqli_query($link, $entrysql);
 				
 				$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
 				."backbone.year_created AS year, backbone.date_db AS date, users.first_name AS fname, "
 				."users.last_name AS lname FROM backbone, entry, entry_upstrain, users WHERE "
 				."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
 				."entry.backbone = backbone.id AND backbone.creator = users.user_id";
+				$backbonequery = mysqli_query($link, $backbonesql);
 				
+				$insertsql = "SELECT ins.name AS ins, ins.ins_reg AS biobrick, ins.type AS type, ins.year_created AS year, "
+				."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname FROM ins, entry, entry_upstrain, "
+				."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry.ins = "
+				."ins.id AND ins.creator = users.user_id";
+				$insertquery = mysqli_query($link, $insertsql);
 				
+				$filesql = "SELECT name_new AS filename FROM upstrain_file WHERE upstrain_file.upstrain_id = '$id'";
+				$filequery = mysqli_query($link, $filesql);
 				
-								
-				mysqli_close($link) or die("Could not close database connection");
+				$rowserror = FALSE;
+				$filerows = mysqli_num_rows($filequery);
+				if($filerows < 1) {
+					$hasfile = FALSE;
+				} elseif($filerows == 1) {
+					$hasfile = TRUE;
+				}else {
+					$rowserror = TRUE;
+				}					
+				
+				$entryrows = mysqli_num_rows($entryquery);
+				$backbonerows = mysqli_num_rows($backbonequery);
+				$insertrows = mysqli_num_rows($insertquery);
+				
+				if(($entryrows > 1) || ($backbonerows > 1) || ($insertrows > 1)) {
+					$rowserror = TRUE;
+				}
+				
+				if($rowserror) {
+					echo "<br>".gettype($filerows);
+					echo "<br>".gettype($entryrows);
+					echo "<br>".gettype($backbonerows);
+					echo "<br>".gettype($insertrows);
+					echo "<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>";
+				} else {
+					
+					
+					echo "<p>"
+					."<div class=\"entry_table\">"
+					."<table>"
+					."<th>Entry details</th>"
+					."<th>Backbone</th>"
+					."<th>Insert</th>"
+					."</table>"
+					."</div>";
+									
+					mysqli_close($link) or die("Could not close database connection");
+					
+				}
 				
 			}
 			
