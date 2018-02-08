@@ -6,7 +6,7 @@
 	// fetch the upstrain id from URL
 	$upstrain_id = $_GET["upstrain_id"];
 
-	include 'db.php';
+	include 'scripts/db.php';
 
 	$id = mysqli_real_escape_string($link, $upstrain_id);
 	$sql = "SELECT upstrain_id FROM entry_upstrain WHERE upstrain_id LIKE '$id'";
@@ -54,7 +54,7 @@
 				
 				echo "<h2>UpStrain Entry ".$upstrain_id."</h2>";
 				
-				include 'db.php';
+				include 'scripts/db.php';
 				
 				$entrysql = "SELECT entry.comment AS cmt, entry.year_created AS year, "
 				."entry.date_db AS date, entry.entry_reg AS biobrick, entry.sequence AS seq, "
