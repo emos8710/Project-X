@@ -10,7 +10,7 @@
 		<!-- Navigation buttons -->
 		<a <?php if(basename($_SERVER['PHP_SELF'])=="index.php"){echo "class=\"active\" ";} ?> href="index.php">Home</a>
 		<a <?php if(basename($_SERVER['PHP_SELF'])=="search.php"){echo "class=\"active\" ";} ?> href="search.php">Search</a>
-		<a <?php if(basename($_SERVER['PHP_SELF'])=="insert.php"){echo "class=\"active\" ";} ?> href="insert.php">New entry</a>
+		<a <?php if(basename($_SERVER['PHP_SELF'])=="new_insert.php"){echo "class=\"active\" ";} ?> href="new_insert.php">New entry</a>
 		<a <?php if(basename($_SERVER['PHP_SELF'])=="help.php"){echo "class=\"active\" ";} ?> href="help.php">Help</a>
 		<a class="login<?php if(basename($_SERVER['PHP_SELF'])=="login.php"){echo " active";} ?>" href="login.php">Log in</a>
 		
