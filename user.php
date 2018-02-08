@@ -51,21 +51,30 @@
 		<div class="innertube">
 
 			<?php
-			
+			// Print error text...
 			if($iserror) {
 				echo "<h3>Error: ".$error."</h3>";
 				echo "<br>".
 				"<a href=\"javascript:history.go(-1)\">Go back</a>";
-			} else {
+			} 
+			// ... or show user page
+			else {
 				
-				echo "<h2>User ".$user_id."</h2>";
-				
+				// Connect to database
 				include 'scripts\db.php';
 				
-				$entrysql = "SELECT users.first_name AS fname, users.last_name AS lname, "
+				// Fetch user information
+				$usersql = "SELECT users.first_name AS fname, users.last_name AS lname, "
 				."users.email AS email, users.phone AS phone, users.username AS uname FROM users WHERE user_id = '$id'";
+				$result = mysqli_query($link, $usersql);
 				
+				// Close database connection
 				mysqli_close($link) or die("Could not close database connection");
+				
+				// Put user info in array [fname, lname, email, phone, uname]
+				$info = mysqli_fetch_row($result);
+				
+				echo "<h2>User ".$info[4]."</h2>";
 				
 			}
 			
