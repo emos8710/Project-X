@@ -1,0 +1,111 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Sans-Serif;
+	line-height: 1.5em;
+}
+	
+h1, h2, h3, h4, h5, h6 {
+	color: black;
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+	
+header {
+	background: #ccc;
+	padding: 15px;
+}
+
+main {
+	width: 100%;
+	float: left;
+	overflow: auto;
+	background: #ccc;
+}
+	
+footer {
+	clear: both;
+	background: #eee;
+}
+
+footer p {
+	font-size: small;
+}
+	
+.navigation {
+	background: #eee;
+	margin-top: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+.navigation a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 22px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.navigation a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navigation a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+.navigation a.login {
+	float: right;
+	margin-left: 20px;
+}
+
+.quicksearch {
+	float: right;
+}
+
+.quicksearch input[type=text] {
+	padding: 6px;
+	margin-top: 12px;
+}
+
+.quicksearch button {
+	float: right;
+	padding: 0;
+	margin-top: 12px;
+	cursor: pointer;
+	border: none;
+}
+
+.quicksearch button:hover {
+	background-color: #ccc;
+}
+
+img.quicksearch {
+	height: 31.5px;
+}
+
+.quicksearch a {
+	padding: 0;
+	font-size: small;
+}
+
+.quicksearch a:hover {
+	background-color: inherit;
+	color: #4CAF50;
+}
+	
+.innertube {
+	/* Padding for content */
+	margin: 15px;
+}
+
+.logo {
+	float: left;
+	padding: 10px;
+	margin-right: 15%;
+}
