@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 07, 2018 at 09:09 PM
+-- Generation Time: Feb 09, 2018 at 01:19 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -62,7 +62,6 @@ CREATE TABLE IF NOT EXISTS `entry` (
   `year_created` int(4) NOT NULL,
   `date_db` int(10) NOT NULL,
   `entry_reg` varchar(50) DEFAULT NULL,
-  `sequence` tinyint(1) NOT NULL DEFAULT '0',
   `backbone` int(3) NOT NULL,
   `strain` int(3) NOT NULL,
   `ins` int(3) DEFAULT NULL,
@@ -80,8 +79,8 @@ CREATE TABLE IF NOT EXISTS `entry` (
 -- Dumping data for table `entry`
 --
 
-INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `sequence`, `backbone`, `strain`, `ins`, `creator`) VALUES
-(001, 'testestestest', 2018, 20180207, 'test', 1, 2, 1, 2, 1);
+INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `ins`, `creator`) VALUES
+(001, 'testestestest', 2018, 20180207, 'test', 2, 1, 3, 1);
 
 --
 -- Triggers `entry`
@@ -123,7 +122,7 @@ DROP TABLE IF EXISTS `ins`;
 CREATE TABLE IF NOT EXISTS `ins` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
-  `type` varchar(50) NOT NULL,
+  `type` int(3) NOT NULL,
   `ins_reg` varchar(50) NOT NULL,
   `creator` int(3) NOT NULL,
   `year_created` int(4) NOT NULL,
@@ -131,15 +130,37 @@ CREATE TABLE IF NOT EXISTS `ins` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `insert_name` (`name`),
   UNIQUE KEY `ins_regname` (`ins_reg`),
-  KEY `creator_id` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  KEY `creator_id` (`creator`),
+  KEY `ins_type` (`type`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ins`
 --
 
 INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `year_created`, `date_db`) VALUES
-(2, 'test', 'coding', 'test', 1, 2018, 20180207);
+(3, 'test ins', 2, 'test ins reg', 1, 2018, 20180209);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ins_type`
+--
+
+DROP TABLE IF EXISTS `ins_type`;
+CREATE TABLE IF NOT EXISTS `ins_type` (
+  `id` int(3) NOT NULL AUTO_INCREMENT,
+  `name` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `type_name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ins_type`
+--
+
+INSERT INTO `ins_type` (`id`, `name`) VALUES
+(2, 'coding');
 
 -- --------------------------------------------------------
 
@@ -177,6 +198,13 @@ CREATE TABLE IF NOT EXISTS `upstrain_file` (
   UNIQUE KEY `name_new` (`name_new`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `upstrain_file`
+--
+
+INSERT INTO `upstrain_file` (`upstrain_id`, `name_original`) VALUES
+('UU2018001', 'test.txt');
+
 -- --------------------------------------------------------
 
 --
@@ -192,6 +220,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `phone` varchar(14) NOT NULL,
   `password` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `password` (`password`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -200,8 +229,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`) VALUES
-(1, 'test', 'testson', 'test.testson@testmail.com', '0123456789', 'testtest123', 'testymctestface');
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`, `admin`) VALUES
+(1, 'test', 'testson', 'test.testson@testmail.com', '0123456789', 'testtest123', 'testymctestface', 0);
 
 --
 -- Constraints for dumped tables
@@ -218,7 +247,7 @@ ALTER TABLE `backbone`
 --
 ALTER TABLE `entry`
   ADD CONSTRAINT `backbone_id` FOREIGN KEY (`backbone`) REFERENCES `backbone` (`id`),
-  ADD CONSTRAINT `insert_id` FOREIGN KEY (`ins`) REFERENCES `ins` (`id`),
+  ADD CONSTRAINT `ins_id` FOREIGN KEY (`ins`) REFERENCES `ins` (`id`),
   ADD CONSTRAINT `strain_id` FOREIGN KEY (`strain`) REFERENCES `strain` (`id`),
   ADD CONSTRAINT `user_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`);
 
@@ -232,7 +261,8 @@ ALTER TABLE `entry_upstrain`
 -- Constraints for table `ins`
 --
 ALTER TABLE `ins`
-  ADD CONSTRAINT `creator_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`);
+  ADD CONSTRAINT `creator_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`),
+  ADD CONSTRAINT `ins_type` FOREIGN KEY (`type`) REFERENCES `ins_type` (`id`);
 
 --
 -- Constraints for table `upstrain_file`

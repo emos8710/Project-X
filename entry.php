@@ -70,10 +70,10 @@
 				."entry.backbone = backbone.id AND backbone.creator = users.user_id";
 				$backbonequery = mysqli_query($link, $backbonesql);
 				
-				$insertsql = "SELECT ins.name AS ins, ins.ins_reg AS biobrick, ins.type AS type, ins.year_created AS year, "
-				."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname FROM ins, entry, entry_upstrain, "
+				$insertsql = "SELECT ins.name AS ins, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
+				."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname FROM ins, ins_type, entry, entry_upstrain, "
 				."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry.ins = "
-				."ins.id AND ins.creator = users.user_id";
+				."ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
 				$insertquery = mysqli_query($link, $insertsql);
 				
 				$filesql = "SELECT name_new AS filename FROM upstrain_file WHERE upstrain_file.upstrain_id = '$id'";
@@ -105,13 +105,28 @@
 					echo "<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>";
 				} else {
 					
+					$entrydata = mysqli_fetch_assoc($entryquery);
+					$backbonedata = mysqli_fetch_assoc($backbonequery);
+					$insertdata = mysqli_fetch_assoc($insertquery);
 					
-					echo "<p>"
-					."<div class=\"entry_table\">"
-					."<table>"
+					if($hasfile){
+						$filedata = mysqli_fetch_assoc($filequery);
+					}
+					
+										
+					
+					echo "<div class=\"entry_table\">"
+					."<table class=\"entry\">"
 					."<th>Entry details</th>"
 					."<th>Backbone</th>"
 					."<th>Insert</th>"
+					."<tr>"
+					."<td><strong>Year created:</strong> &nbsp; ".$entrydata["year"]."</td>"
+					."<td><strong>Year created:</strong> &nbsp; ".$backbonedata["year"]."</td>"
+					."<td><strong>Year created:</strong> &nbsp; ".$insertdata["year"]."</td>"
+					."</tr>"
+					."<tr>"
+					."<td><strong>
 					."</table>"
 					."</div>";
 									
