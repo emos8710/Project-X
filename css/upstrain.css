@@ -104,6 +104,21 @@ img.quicksearch {
 	margin: 15px;
 }
 
+.innertube a {
+	text-decoration: none;
+	color: blue;
+}
+
+.innertube a:hover {
+	text-decoration: underline;
+	color: green;
+}
+
+.entry_table {
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
 .logo {
 	float: left;
 	padding: 10px;
@@ -112,20 +127,19 @@ img.quicksearch {
 
 table {
 	border: none;
+	background-color: rgba(127, 255, 212, 0.5);
 }
 
 table.entry th {
-	height: 50px;
 	text-align: left;
 	vertical-align: bottom;
-	background-color: blue;
 	margin-right: 10px;
-	border-bottom: 1px black;
+	text-decoration: underline;
 }
 
 table.entry td {
-	padding: 15px;
 	text-align: left;
 	margin-right: 10px;
 	font-size: small;
+	padding-right: 10px;
 }

@@ -3,7 +3,8 @@
 
 <?php
 	session_start();
-	// fetch the upstrain id from URL
+	
+	// Fetch the upstrain id from URL
 	$upstrain_id = $_GET["upstrain_id"];
 
 	include 'scripts/db.php';
@@ -39,104 +40,151 @@
 
 <body>
 
+
 	<?php include 'top.php'; ?>
 
+	<!-- Body content of page -->
 	<main>
 		<div class="innertube">
 
-			<?php
-			
-			if($iserror) {
-				echo "<h3>Error: ".$error."</h3>";
-				echo "<br>".
-				"<a href=\"javascript:history.go(-1)\">Go back</a>";
-			} else {
+				<?php
 				
-				echo "<h2>UpStrain Entry ".$upstrain_id."</h2>";
-				
-				include 'scripts/db.php';
-				
-				$entrysql = "SELECT entry.comment AS cmt, entry.year_created AS year, "
-				."entry.date_db AS date, entry.entry_reg AS biobrick, strain.name AS strain, entry.sequence AS seq, "
-				."users.first_name AS fname, users.last_name AS lname FROM entry, entry_upstrain, "
-				."users, strain WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = "
-				."entry.id AND entry.creator = users.user_id AND entry.strain = strain.id";
-				$entryquery = mysqli_query($link, $entrysql);
-				
-				$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
-				."backbone.year_created AS year, backbone.date_db AS date, users.first_name AS fname, "
-				."users.last_name AS lname FROM backbone, entry, entry_upstrain, users WHERE "
-				."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
-				."entry.backbone = backbone.id AND backbone.creator = users.user_id";
-				$backbonequery = mysqli_query($link, $backbonesql);
-				
-				$insertsql = "SELECT ins.name AS ins, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
-				."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname FROM ins, ins_type, entry, entry_upstrain, "
-				."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry.ins = "
-				."ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
-				$insertquery = mysqli_query($link, $insertsql);
-				
-				$filesql = "SELECT name_new AS filename FROM upstrain_file WHERE upstrain_file.upstrain_id = '$id'";
-				$filequery = mysqli_query($link, $filesql);
-				
-				$rowserror = FALSE;
-				$filerows = mysqli_num_rows($filequery);
-				if($filerows < 1) {
-					$hasfile = FALSE;
-				} elseif($filerows == 1) {
-					$hasfile = TRUE;
-				}else {
-					$rowserror = TRUE;
-				}					
-				
-				$entryrows = mysqli_num_rows($entryquery);
-				$backbonerows = mysqli_num_rows($backbonequery);
-				$insertrows = mysqli_num_rows($insertquery);
-				
-				if(($entryrows > 1) || ($backbonerows > 1) || ($insertrows > 1)) {
-					$rowserror = TRUE;
-				}
-				
-				if($rowserror) {
-					echo "<br>".gettype($filerows);
-					echo "<br>".gettype($entryrows);
-					echo "<br>".gettype($backbonerows);
-					echo "<br>".gettype($insertrows);
-					echo "<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>";
+				//Print error...
+				if($iserror) {
+					echo "<h3>Error: ".$error."</h3>";
+					echo "<br>".
+					"<a href=\"javascript:history.go(-1)\">Go back</a>";
+					
+				//...or do everything else
 				} else {
 					
-					$entrydata = mysqli_fetch_assoc($entryquery);
-					$backbonedata = mysqli_fetch_assoc($backbonequery);
-					$insertdata = mysqli_fetch_assoc($insertquery);
+					echo "<h2>UpStrain Entry ".$upstrain_id."</h2>";
 					
-					if($hasfile){
-						$filedata = mysqli_fetch_assoc($filequery);
+					include 'scripts/db.php';
+					
+					$entrysql = "SELECT entry.comment AS cmt, entry.year_created AS year, "
+					."entry.date_db AS date, entry.entry_reg AS biobrick, strain.name AS strain, "
+					."users.first_name AS fname, users.last_name AS lname FROM entry, entry_upstrain, "
+					."users, strain WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = "
+					."entry.id AND entry.creator = users.user_id AND entry.strain = strain.id";
+					$entryquery = mysqli_query($link, $entrysql);
+					
+					$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
+					."backbone.year_created AS year, backbone.date_db AS date, users.first_name AS fname, "
+					."users.last_name AS lname FROM backbone, entry, entry_upstrain, users WHERE "
+					."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
+					."entry.backbone = backbone.id AND backbone.creator = users.user_id";
+					$backbonequery = mysqli_query($link, $backbonesql);
+					
+					$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
+					."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname FROM ins, ins_type, entry, entry_upstrain, "
+					."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry.ins = "
+					."ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
+					$insertquery = mysqli_query($link, $insertsql);
+					
+					$filesql = "SELECT name_new AS filename FROM upstrain_file WHERE upstrain_file.upstrain_id = '$id'";
+					$filequery = mysqli_query($link, $filesql);
+					
+					$rowserror = FALSE;
+					$filerows = mysqli_num_rows($filequery);
+					if($filerows < 1) {
+						$hasfile = FALSE;
+					} elseif($filerows == 1) {
+						$hasfile = TRUE;
+					}else {
+						$rowserror = TRUE;
+					}					
+					
+					$entryrows = mysqli_num_rows($entryquery);
+					$backbonerows = mysqli_num_rows($backbonequery);
+					$insertrows = mysqli_num_rows($insertquery);
+					
+					if(($entryrows > 1) || ($backbonerows > 1) || ($insertrows > 1)) {
+						$rowserror = TRUE;
 					}
 					
+					if($rowserror) {
+						echo "<br>".gettype($filerows);
+						echo "<br>".gettype($entryrows);
+						echo "<br>".gettype($backbonerows);
+						echo "<br>".gettype($insertrows);
+						echo "<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>";
+					} else {
+						
+						$entrydata = mysqli_fetch_assoc($entryquery);
+						$backbonedata = mysqli_fetch_assoc($backbonequery);
+						$insertdata = mysqli_fetch_assoc($insertquery);
+						
+						if($hasfile){
+							$filedata = mysqli_fetch_assoc($filequery);
+						}
+						
+						mysqli_close($link) or die("Could not close database connection");
+						
+						?>
+						
+						<div class="entry_table">
+							<table class="entry">
+								<col><col><col><col><col><col>
+								<tr>
+									<th colspan="2">Entry details</th>
+									<th colspan="2">Backbone</th>
+									<th colspan="2">Insert</th>
+								</tr>
+								<tr>
+									<td><strong>Strain:</strong></td>
+									<td><?php echo $entrydata["strain"] ?> </td>
+									<td><strong>Name:</strong></td>
+									<td><?php echo $backbonedata["name"] ?> </td>
+									<td><strong>Name:</strong></td>
+									<td><?php echo $insertdata["name"] ?> </td>
+								</tr>
+								<tr>
+									<td><strong>Year created:</strong></td>
+									<td><?php echo $entrydata["year"] ?> </td>
+									<td><strong>Year created:</strong></td>
+									<td><?php echo $backbonedata["year"] ?> </td>
+									<td><strong>Year created:</strong></td>
+									<td><?php echo $insertdata["year"] ?> </td>
+								</tr>
+								<tr>
+									<td><strong>iGEM registry entry:</strong></td>
+									<td><?php if($entrydata["biobrick"] === null || $entrydata["biobrick"] == ''){ echo "N/A"; } 
+									else { echo "<a href=\"http://parts.igem.org/Part:".$entrydata["biobrick"]."\" target=\"_blank\">".$entrydata["biobrick"]." (external link)</a>"; } ?> </td>
+									<td><strong>iGEM registry entry:</strong></td>
+									<td><?php if($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == ''){ echo "N/A"; } 
+									else { echo "<a href=\"http://parts.igem.org/Part:".$backbonedata["biobrick"]."\" target=\"_blank\">".$backbonedata["biobrick"]." (external link)</a>"; } ?> </td>
+									<td><strong>iGEM registry entry:</strong></td>
+									<td><?php if($insertdata["biobrick"] === null || $insertdata["biobrick"] == ''){ echo "N/A"; } 
+									else { echo "<a href=\"http://parts.igem.org/Part:".$insertdata["biobrick"]."\" target=\"_blank\">".$insertdata["biobrick"]." (external link)</a>"; } ?> </td>
+								</tr>
+								<tr>
+									<td><strong>Added by:</strong></td>
+									<td><?php echo $entrydata["fname"]." ".$entrydata["lname"]; ?> </td>
+									<td><strong>Added by:</strong></td>
+									<td><?php echo $backbonedata["fname"]." ".$backbonedata["lname"]; ?> </td>
+									<td><strong>Added by:</strong></td>
+									<td><?php echo $insertdata["fname"]." ".$insertdata["lname"]; ?> </td>
+								</tr>
+								<tr>
+								<td><strong>Date added:</strong></td>
+								<td><?php echo $entrydata["date"]; ?> </td>
+								<td><strong>Date added:</strong></td>
+								<td><?php echo $backbonedata["date"]; ?> </td>
+								<td><strong>Date added:</strong></td>
+								<td><?php echo $insertdata["date"]; ?> </td>
+								</tr>
+							</table>
+						</div>
+						
+						<?php
 										
-					
-					echo "<div class=\"entry_table\">"
-					."<table class=\"entry\">"
-					."<th>Entry details</th>"
-					."<th>Backbone</th>"
-					."<th>Insert</th>"
-					."<tr>"
-					."<td><strong>Year created:</strong> &nbsp; ".$entrydata["year"]."</td>"
-					."<td><strong>Year created:</strong> &nbsp; ".$backbonedata["year"]."</td>"
-					."<td><strong>Year created:</strong> &nbsp; ".$insertdata["year"]."</td>"
-					."</tr>"
-					."<tr>"
-					."<td><strong>
-					."</table>"
-					."</div>";
-									
-					mysqli_close($link) or die("Could not close database connection");
+						
+					}
 					
 				}
 				
-			}
-			
-			?>
+				?>
 
 		</div>
 	</main>
