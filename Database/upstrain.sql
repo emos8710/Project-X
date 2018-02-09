@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 09, 2018 at 01:19 PM
+-- Generation Time: Feb 09, 2018 at 10:12 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -85,9 +85,9 @@ INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `b
 --
 -- Triggers `entry`
 --
-DROP TRIGGER IF EXISTS `upstrain_id`;
+DROP TRIGGER IF EXISTS `create_upstrain_id`;
 DELIMITER $$
-CREATE TRIGGER `upstrain_id` AFTER INSERT ON `entry` FOR EACH ROW INSERT INTO `entry_upstrain` (entry_id, upstrain_id) VALUES (NEW.id, CONCAT("UU",NEW.year_created,NEW.id))
+CREATE TRIGGER `create_upstrain_id` AFTER INSERT ON `entry` FOR EACH ROW INSERT INTO entry_upstrain (entry_id,upstrain_id) VALUES (new.id,CONCAT("UU",new.year_created,new.id))
 $$
 DELIMITER ;
 
