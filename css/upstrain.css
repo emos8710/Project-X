@@ -102,11 +102,13 @@ img.quicksearch {
 .innertube {
 	/* Padding for content */
 	margin: 15px;
+	width: 95%;
 }
 
 .innertube a {
 	text-decoration: none;
 	color: blue;
+	
 }
 
 .innertube a:hover {
@@ -117,6 +119,15 @@ img.quicksearch {
 .entry_table {
 	padding-top: 50px;
 	padding-bottom: 50px;
+	width: 50%;
+	float: left;
+}
+
+.backbone_inserts {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: right;
 }
 
 .logo {
@@ -133,7 +144,6 @@ table {
 table.entry th {
 	text-align: left;
 	vertical-align: bottom;
-	margin-right: 10px;
 	text-decoration: underline;
 }
 
@@ -141,5 +151,4 @@ table.entry td {
 	text-align: left;
 	margin-right: 10px;
 	font-size: small;
-	padding-right: 10px;
 }

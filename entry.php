@@ -64,20 +64,20 @@
 					
 					$entrysql = "SELECT entry.comment AS cmt, entry.year_created AS year, "
 					."entry.date_db AS date, entry.entry_reg AS biobrick, strain.name AS strain, "
-					."users.first_name AS fname, users.last_name AS lname FROM entry, entry_upstrain, "
+					."users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM entry, entry_upstrain, "
 					."users, strain WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = "
 					."entry.id AND entry.creator = users.user_id AND entry.strain = strain.id";
 					$entryquery = mysqli_query($link, $entrysql);
 					
 					$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
 					."backbone.year_created AS year, backbone.date_db AS date, users.first_name AS fname, "
-					."users.last_name AS lname FROM backbone, entry, entry_upstrain, users WHERE "
+					."users.last_name AS lname, users.user_id AS user_id FROM backbone, entry, entry_upstrain, users WHERE "
 					."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
 					."entry.backbone = backbone.id AND backbone.creator = users.user_id";
 					$backbonequery = mysqli_query($link, $backbonesql);
 					
 					$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
-					."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname FROM ins, ins_type, entry, entry_upstrain, "
+					."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
 					."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry.ins = "
 					."ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
 					$insertquery = mysqli_query($link, $insertsql);
@@ -125,54 +125,82 @@
 						
 						<div class="entry_table">
 							<table class="entry">
-								<col><col><col><col><col><col>
+								<col><col>
 								<tr>
 									<th colspan="2">Entry details</th>
-									<th colspan="2">Backbone</th>
-									<th colspan="2">Insert</th>
 								</tr>
 								<tr>
 									<td><strong>Strain:</strong></td>
-									<td><?php echo $entrydata["strain"] ?> </td>
-									<td><strong>Name:</strong></td>
-									<td><?php echo $backbonedata["name"] ?> </td>
-									<td><strong>Name:</strong></td>
-									<td><?php echo $insertdata["name"] ?> </td>
+									<td><?php echo $entrydata["strain"] ?></td>
 								</tr>
 								<tr>
 									<td><strong>Year created:</strong></td>
-									<td><?php echo $entrydata["year"] ?> </td>
-									<td><strong>Year created:</strong></td>
-									<td><?php echo $backbonedata["year"] ?> </td>
-									<td><strong>Year created:</strong></td>
-									<td><?php echo $insertdata["year"] ?> </td>
+									<td><?php echo $entrydata["year"] ?></td>
 								</tr>
 								<tr>
 									<td><strong>iGEM registry entry:</strong></td>
 									<td><?php if($entrydata["biobrick"] === null || $entrydata["biobrick"] == ''){ echo "N/A"; } 
-									else { echo "<a href=\"http://parts.igem.org/Part:".$entrydata["biobrick"]."\" target=\"_blank\">".$entrydata["biobrick"]." (external link)</a>"; } ?> </td>
-									<td><strong>iGEM registry entry:</strong></td>
-									<td><?php if($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == ''){ echo "N/A"; } 
-									else { echo "<a href=\"http://parts.igem.org/Part:".$backbonedata["biobrick"]."\" target=\"_blank\">".$backbonedata["biobrick"]." (external link)</a>"; } ?> </td>
-									<td><strong>iGEM registry entry:</strong></td>
-									<td><?php if($insertdata["biobrick"] === null || $insertdata["biobrick"] == ''){ echo "N/A"; } 
-									else { echo "<a href=\"http://parts.igem.org/Part:".$insertdata["biobrick"]."\" target=\"_blank\">".$insertdata["biobrick"]." (external link)</a>"; } ?> </td>
+									else { echo "<a href=\"http://parts.igem.org/Part:".$entrydata["biobrick"]."\" target=\"_blank\">".$entrydata["biobrick"]." (external link)</a>"; } ?></td>
 								</tr>
 								<tr>
 									<td><strong>Added by:</strong></td>
-									<td><?php echo $entrydata["fname"]." ".$entrydata["lname"]; ?> </td>
-									<td><strong>Added by:</strong></td>
-									<td><?php echo $backbonedata["fname"]." ".$backbonedata["lname"]; ?> </td>
-									<td><strong>Added by:</strong></td>
-									<td><?php echo $insertdata["fname"]." ".$insertdata["lname"]; ?> </td>
+									<td><?php echo "<a href=\"user.php?user_id=".$entrydata["user_id"]."\">".$entrydata["fname"]." ".$entrydata["lname"]."</a>"; ?></td>
 								</tr>
 								<tr>
 								<td><strong>Date added:</strong></td>
 								<td><?php echo $entrydata["date"]; ?> </td>
-								<td><strong>Date added:</strong></td>
-								<td><?php echo $backbonedata["date"]; ?> </td>
-								<td><strong>Date added:</strong></td>
-								<td><?php echo $insertdata["date"]; ?> </td>
+								</tr>
+								<tr>
+								<td><?php if($hasfile) { echo "<strong>Download sequence (FASTA):</strong>"; } ?></td>
+								<td><?php if($hasfile) { echo "<a href=\"files/".$filedata["filename"]."\" download>".$filedata["filename"]."</a>"; } ?></td>
+								</tr>
+							</table>
+						</div>
+						
+						<div class="backbone_inserts">
+							<table class="entry">
+								<col><col><col><col>
+								<tr>
+									<th colspan="2">Backbone</th>
+									<th colspan="2">Insert 1</th>
+								</tr>
+								<tr>
+									<td><strong>Name:</strong></td>
+									<td><?php echo $backbonedata["name"] ?></td>
+									<td><strong>Name:</strong></td>
+									<td><?php echo $insertdata["name"] ?></td>
+								</tr>
+								<tr>
+									<td><strong>Year created:</strong></td>
+									<td><?php echo $backbonedata["year"] ?></td>
+									<td><strong>Year created:</strong></td>
+									<td><?php echo $insertdata["year"] ?></td>
+								</tr>
+								<tr>
+									<td><strong>iGEM registry entry:</strong></td>
+									<td><?php if($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == ''){ echo "N/A"; } 
+									else { echo "<a href=\"http://parts.igem.org/Part:".$backbonedata["biobrick"]."\" target=\"_blank\">".$backbonedata["biobrick"]." (external link)</a>"; } ?></td>
+									<td><strong>iGEM registry entry:</strong></td>
+									<td><?php if($insertdata["biobrick"] === null || $insertdata["biobrick"] == ''){ echo "N/A"; } 
+									else { echo "<a href=\"http://parts.igem.org/Part:".$insertdata["biobrick"]."\" target=\"_blank\">".$insertdata["biobrick"]." (external link)</a>"; } ?></td>
+								</tr>
+								<tr>
+									<td><strong>Added by:</strong></td>
+									<td><?php echo "<a href=\"user.php?user_id=".$backbonedata["user_id"]."\">".$backbonedata["fname"]." ".$backbonedata["lname"]."</a>"; ?></td>
+									<td><strong>Added by:</strong></td>
+									<td><?php echo "<a href=\"user.php?user_id=".$insertdata["user_id"]."\">".$insertdata["fname"]." ".$insertdata["lname"]."</a>"; ?></td>
+								</tr>
+								<tr>
+									<td><strong>Date added:</strong></td>
+									<td><?php echo $backbonedata["date"]; ?> </td>
+									<td><strong>Date added:</strong></td>
+									<td><?php echo $insertdata["date"]; ?> </td>
+								</tr>
+								<tr>
+									<td></td>
+									<td></td>
+									<td><strong>Type:</strong></td>
+									<td><?php echo $insertdata["type"]; ?></td>
 								</tr>
 							</table>
 						</div>
