@@ -127,7 +127,7 @@
 							<table class="entry">
 								<col><col>
 								<tr>
-									<th colspan="2">Entry details</th>
+									<th colspan="2"> Entry details</th>
 								</tr>
 								<tr>
 									<td><strong>Strain:</strong></td>
@@ -149,6 +149,12 @@
 								<tr>
 								<td><strong>Date added:</strong></td>
 								<td><?php echo $entrydata["date"]; ?> </td>
+								</tr>
+								<tr>
+									<td><strong>Comment:</strong></td>
+									<td rowspan="2"><?php echo $entrydata["cmt"]; ?></td>
+								</tr>
+								<tr>
 								</tr>
 								<tr>
 								<td><?php if($hasfile) { echo "<strong>Download sequence (FASTA):</strong>"; } ?></td>
