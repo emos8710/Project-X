@@ -142,12 +142,14 @@ table {
 }
 
 table.entry th {
+	padding-right: 10px;
 	text-align: left;
 	vertical-align: bottom;
 	text-decoration: underline;
 }
 
 table.entry td {
+	padding-right: 10px;
 	text-align: left;
 	margin-right: 10px;
 	font-size: small;

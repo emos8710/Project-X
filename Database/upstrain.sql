@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 09, 2018 at 10:12 PM
+-- Generation Time: Feb 10, 2018 at 10:54 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `backbone` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `Bb_reg` varchar(50) DEFAULT NULL,
-  `date_db` int(10) NOT NULL,
+  `date_db` varchar(10) NOT NULL,
   `year_created` int(4) NOT NULL,
   `creator` int(3) NOT NULL,
   PRIMARY KEY (`id`),
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS `backbone` (
 --
 
 INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `year_created`, `creator`) VALUES
-(2, 'test', 'test', 20180207, 2018, 1);
+(2, 'test', 'test', '2018-02-10', 2018, 1);
 
 -- --------------------------------------------------------
 
@@ -60,17 +60,15 @@ CREATE TABLE IF NOT EXISTS `entry` (
   `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
   `comment` varchar(100) DEFAULT NULL,
   `year_created` int(4) NOT NULL,
-  `date_db` int(10) NOT NULL,
+  `date_db` varchar(10) NOT NULL,
   `entry_reg` varchar(50) DEFAULT NULL,
   `backbone` int(3) NOT NULL,
   `strain` int(3) NOT NULL,
-  `ins` int(3) DEFAULT NULL,
   `creator` int(3) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `entry_regname` (`entry_reg`),
   UNIQUE KEY `entry_reg` (`entry_reg`),
   KEY `backbone_id` (`backbone`),
-  KEY `insert_id` (`ins`),
   KEY `strain_id` (`strain`),
   KEY `creator_id` (`creator`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -79,8 +77,8 @@ CREATE TABLE IF NOT EXISTS `entry` (
 -- Dumping data for table `entry`
 --
 
-INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `ins`, `creator`) VALUES
-(001, 'testestestest', 2018, 20180207, 'test', 2, 1, 3, 1);
+INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `creator`) VALUES
+(001, 'testestestest', 2018, '2018-02-07', 'test', 2, 1, 1);
 
 --
 -- Triggers `entry`
@@ -90,6 +88,29 @@ DELIMITER $$
 CREATE TRIGGER `create_upstrain_id` AFTER INSERT ON `entry` FOR EACH ROW INSERT INTO entry_upstrain (entry_id,upstrain_id) VALUES (new.id,CONCAT("UU",new.year_created,new.id))
 $$
 DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entry_inserts`
+--
+
+DROP TABLE IF EXISTS `entry_inserts`;
+CREATE TABLE IF NOT EXISTS `entry_inserts` (
+  `entry_id` int(3) UNSIGNED ZEROFILL NOT NULL,
+  `insert_id` int(3) NOT NULL,
+  UNIQUE KEY `entry_ins_link` (`entry_id`,`insert_id`),
+  KEY `ins` (`insert_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `entry_inserts`
+--
+
+INSERT INTO `entry_inserts` (`entry_id`, `insert_id`) VALUES
+(001, 3),
+(001, 4),
+(001, 5);
 
 -- --------------------------------------------------------
 
@@ -126,20 +147,22 @@ CREATE TABLE IF NOT EXISTS `ins` (
   `ins_reg` varchar(50) NOT NULL,
   `creator` int(3) NOT NULL,
   `year_created` int(4) NOT NULL,
-  `date_db` int(10) NOT NULL,
+  `date_db` varchar(10) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `insert_name` (`name`),
   UNIQUE KEY `ins_regname` (`ins_reg`),
   KEY `creator_id` (`creator`),
   KEY `ins_type` (`type`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ins`
 --
 
 INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `year_created`, `date_db`) VALUES
-(3, 'test ins', 2, 'test ins reg', 1, 2018, 20180209);
+(3, 'test ins', 2, 'test ins reg', 1, 2018, '2018-02-09'),
+(4, 'test ins 2', 3, 'test ins reg 2', 1, 2015, '2018-02-10'),
+(5, 'test ins 3', 3, 'test ins reg 3', 1, 1995, '2018-02-10');
 
 -- --------------------------------------------------------
 
@@ -153,14 +176,15 @@ CREATE TABLE IF NOT EXISTS `ins_type` (
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ins_type`
 --
 
 INSERT INTO `ins_type` (`id`, `name`) VALUES
-(2, 'coding');
+(2, 'Coding'),
+(3, 'Promotor');
 
 -- --------------------------------------------------------
 
@@ -247,9 +271,15 @@ ALTER TABLE `backbone`
 --
 ALTER TABLE `entry`
   ADD CONSTRAINT `backbone_id` FOREIGN KEY (`backbone`) REFERENCES `backbone` (`id`),
-  ADD CONSTRAINT `ins_id` FOREIGN KEY (`ins`) REFERENCES `ins` (`id`),
   ADD CONSTRAINT `strain_id` FOREIGN KEY (`strain`) REFERENCES `strain` (`id`),
   ADD CONSTRAINT `user_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`);
+
+--
+-- Constraints for table `entry_inserts`
+--
+ALTER TABLE `entry_inserts`
+  ADD CONSTRAINT `entry` FOREIGN KEY (`entry_id`) REFERENCES `entry` (`id`),
+  ADD CONSTRAINT `ins` FOREIGN KEY (`insert_id`) REFERENCES `ins` (`id`);
 
 --
 -- Constraints for table `entry_upstrain`

@@ -51,9 +51,13 @@
 				
 				//Print error...
 				if($iserror) {
-					echo "<h3>Error: ".$error."</h3>";
-					echo "<br>".
-					"<a href=\"javascript:history.go(-1)\">Go back</a>";
+					?>
+					
+					<h3>Error: <?php echo $error ?></h3>
+					<br>
+					<a href="javascript:history.go(-1)">Go back</a>
+					
+					<?php
 					
 				//...or do everything else
 				} else {
@@ -76,10 +80,10 @@
 					."entry.backbone = backbone.id AND backbone.creator = users.user_id";
 					$backbonequery = mysqli_query($link, $backbonesql);
 					
-					$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
+					$insertsql = "SELECT DISTINCT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
 					."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
-					."users WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry.ins = "
-					."ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
+					."users, entry_inserts WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry_inserts.entry_id = "
+					."entry.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
 					$insertquery = mysqli_query($link, $insertsql);
 					
 					$filesql = "SELECT name_new AS filename FROM upstrain_file WHERE upstrain_file.upstrain_id = '$id'";
@@ -99,21 +103,21 @@
 					$backbonerows = mysqli_num_rows($backbonequery);
 					$insertrows = mysqli_num_rows($insertquery);
 					
-					if(($entryrows > 1) || ($backbonerows > 1) || ($insertrows > 1)) {
+					if(($entryrows != 1) || ($backbonerows != 1) || ($insertrows < 1)) {
 						$rowserror = TRUE;
 					}
 					
 					if($rowserror) {
-						echo "<br>".gettype($filerows);
-						echo "<br>".gettype($entryrows);
-						echo "<br>".gettype($backbonerows);
-						echo "<br>".gettype($insertrows);
 						echo "<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>";
 					} else {
 						
 						$entrydata = mysqli_fetch_assoc($entryquery);
 						$backbonedata = mysqli_fetch_assoc($backbonequery);
-						$insertdata = mysqli_fetch_assoc($insertquery);
+						
+						$inserts = [];
+						while ($row = mysqli_fetch_assoc($insertquery)){
+							array_push($inserts, $row);
+						}
 						
 						if($hasfile){
 							$filedata = mysqli_fetch_assoc($filequery);
@@ -165,48 +169,84 @@
 						
 						<div class="backbone_inserts">
 							<table class="entry">
-								<col><col><col><col>
+								<col><col>
+								<?php for($i = 1; $i <= $insertrows; $i++){echo "<col><col>";} ?>
 								<tr>
 									<th colspan="2">Backbone</th>
-									<th colspan="2">Insert 1</th>
+									<?php for($i = 1; $i <= $insertrows; $i++){
+										?>
+										<th colspan="2">Insert<?php echo " $i"; ?></th>
+										<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td><strong>Name:</strong></td>
 									<td><?php echo $backbonedata["name"] ?></td>
-									<td><strong>Name:</strong></td>
-									<td><?php echo $insertdata["name"] ?></td>
+									<?php for($i = 0; $i < $insertrows; $i++) {
+										?>
+										<td><strong>Name:</strong></td>
+										<td><?php echo $inserts[$i]["name"]; ?></td>
+										<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td><strong>Year created:</strong></td>
 									<td><?php echo $backbonedata["year"] ?></td>
-									<td><strong>Year created:</strong></td>
-									<td><?php echo $insertdata["year"] ?></td>
+									<?php for($i = 0; $i < $insertrows; $i++) {
+										?>
+										<td><strong>Year created:</strong></td>
+										<td><?php echo $inserts[$i]["year"]; ?></td>
+										<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td><strong>iGEM registry entry:</strong></td>
 									<td><?php if($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == ''){ echo "N/A"; } 
 									else { echo "<a href=\"http://parts.igem.org/Part:".$backbonedata["biobrick"]."\" target=\"_blank\">".$backbonedata["biobrick"]." (external link)</a>"; } ?></td>
-									<td><strong>iGEM registry entry:</strong></td>
-									<td><?php if($insertdata["biobrick"] === null || $insertdata["biobrick"] == ''){ echo "N/A"; } 
-									else { echo "<a href=\"http://parts.igem.org/Part:".$insertdata["biobrick"]."\" target=\"_blank\">".$insertdata["biobrick"]." (external link)</a>"; } ?></td>
+									<?php for($i = 0; $i < $insertrows; $i++) {
+										?>
+										<td><strong>iGEM registry entry:</strong></td>
+										<td><?php if($inserts[$i]["biobrick"] === null || $inserts[$i]["biobrick"] == ''){ echo "N/A"; } 
+										else { echo "<a href=\"http://parts.igem.org/Part:".$inserts[$i]["biobrick"]."\" target=\"_blank\">".$inserts[$i]["biobrick"]." (external link)</a>"; } ?></td>
+										<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td><strong>Added by:</strong></td>
 									<td><?php echo "<a href=\"user.php?user_id=".$backbonedata["user_id"]."\">".$backbonedata["fname"]." ".$backbonedata["lname"]."</a>"; ?></td>
-									<td><strong>Added by:</strong></td>
-									<td><?php echo "<a href=\"user.php?user_id=".$insertdata["user_id"]."\">".$insertdata["fname"]." ".$insertdata["lname"]."</a>"; ?></td>
+									<?php for($i = 0; $i < $insertrows; $i++) {
+										?>
+										<td><strong>Added by:</strong></td>
+										<td><?php echo "<a href=\"user.php?user_id=".$inserts[$i]["user_id"]."\">".$inserts[$i]["fname"]." ".$inserts[$i]["lname"]."</a>"; ?></td>
+										<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td><strong>Date added:</strong></td>
 									<td><?php echo $backbonedata["date"]; ?> </td>
-									<td><strong>Date added:</strong></td>
-									<td><?php echo $insertdata["date"]; ?> </td>
+									<?php for($i = 0; $i < $insertrows; $i++) {
+										?>
+										<td><strong>Date added:</strong></td>
+										<td><?php echo $inserts[$i]["date"]; ?> </td>
+										<?php
+									}
+									?>
 								</tr>
 								<tr>
 									<td></td>
 									<td></td>
-									<td><strong>Type:</strong></td>
-									<td><?php echo $insertdata["type"]; ?></td>
+									<?php for($i = 0; $i < $insertrows; $i++) {
+										?>
+										<td><strong>Type:</strong></td>
+										<td><?php echo $inserts[$i]["type"]; ?></td>
+										<?php
+									}
+									?>
 								</tr>
 							</table>
 						</div>
