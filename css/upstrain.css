@@ -136,6 +136,11 @@ img.quicksearch {
 	margin-right: 15%;
 }
 
+a.external::after {
+	content: url(/images/external_link.png);
+	padding-right: 13px;
+}
+
 table {
 	border: none;
 	background-color: rgba(127, 255, 212, 0.5);
