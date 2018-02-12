@@ -3,6 +3,11 @@
 
 <?php
 	session_start();
+	// IMPLEMENT WHEN LOGIN WORKS
+	//if(!isset($_SESSION['user_id'])){
+	//	
+	//}
+	
 	// Fetch the user id from URL
 	$user_id = $_GET["user_id"];
 	
@@ -63,23 +68,88 @@
 				// Connect to database
 				include 'scripts\db.php';
 				
-				// Fetch user information
-				$usersql = "SELECT users.first_name AS fname, users.last_name AS lname, "
-				."users.email AS email, users.phone AS phone, users.username AS uname FROM users WHERE user_id = '$id'";
-				$result = mysqli_query($link, $usersql);
+				// Fetch user information from database
+				$usersql = "SELECT first_name AS fname, last_name AS lname, "
+				."email, phone, username AS uname FROM users WHERE user_id = '$id'";
+				$user_result = mysqli_query($link, $usersql);
+				
+				// Fetch information about entries from database
+				$entrysql = "SELECT entry.id AS eid, entry.comment, entry.year_created, entry.date_db, "
+				."entry.entry_reg, backbone.name AS bname, strain.name AS sname, entry_inserts.*, ins.name AS iname FROM entry "
+				."LEFT JOIN backbone ON entry.backbone = backbone.id "
+				."LEFT JOIN strain ON entry.strain = strain.id "
+                ."LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
+                ."LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
+				."WHERE entry.creator = '$id' "
+				."ORDER BY entry.id";
+				$entry_result = mysqli_query($link, $entrysql);
 				
 				// Close database connection
 				mysqli_close($link) or die("Could not close database connection");
 				
-				// Put user info in array [fname, lname, email, phone, uname]
-				$info = mysqli_fetch_row($result);
-				
-				echo "<h2>User ".$info[4]."</h2>";
-				
-			}
+				// Put user and first row of entry info in arrays
+				$info = mysqli_fetch_assoc($user_result);
+				$entry = mysqli_fetch_assoc($entry_result);
 			
-			?>
-
+				?>
+				<!-- Show user information -->
+				<h2>User <?php echo $info["uname"] ?></h2>
+				<h3>Contact information</h3>
+				<p>Name: <?php echo $info["fname"]." ".$info["lname"] ?>
+				<br>Email: <?php echo $info["email"] ?>
+				<br>Phone: <?php echo $info["phone"] ?></p>
+				<br>
+				
+				<!-- Show entry information -->
+				<h3>User entries</h3>
+				<!-- Create table -->
+				<table>
+					<tr>
+						<th>Entry ID</th>
+						<th>Strain</th>
+						<th>Backbone</th>
+						<th>Inserts</th>
+						<th>Year created</th>
+						<th>Registry</th>
+						<th>Comment</th>
+					</tr>
+				
+					<?php 
+					// Fill table one entry at a time
+					while ($entry) {
+						$current_entry = $entry["eid"];
+						
+						$tpart_1 = "<tr>"
+						."<td>".$entry["eid"]."</td>"
+						."<td>".$entry["sname"]."</td>"
+						."<td>".$entry["bname"]."</td>";
+				
+						$tpart_3 = "<td>".$entry["year_created"]."</td>"
+						."<td>".$entry["entry_reg"]."</td>"
+						."<td>".$entry["comment"]."</td>"
+						."</tr>";
+						
+						// Find all inserts
+						$inserts = $entry["iname"];
+						$entry = mysqli_fetch_assoc($entry_result);
+						while (TRUE) {
+							// Check if different entry or end of results
+							if(!$entry OR $entry["eid"] != $current_entry) {
+								break;
+							}
+							// Add next insert to list
+							$inserts = $inserts."<br>".$entry["iname"];
+							$entry = mysqli_fetch_assoc($entry_result);
+						}
+					
+						$tpart_2 = "<td>".$inserts."</td>";
+						
+						// Piece together the parts to form a row of the table
+						echo $tpart_1.$tpart_2.$tpart_3;
+					}
+				// End table
+				echo "</table>";
+			} ?>
 		</div>
 	</main>
 	<!-- Include site footer -->
