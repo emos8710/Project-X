@@ -16,6 +16,7 @@ and open the template in the editor.
 	<?php include 'top.php'; ?>
         
         	<!-- Main content goes here -->
+        	<!-- Main content goes here -->
 	<main>
 		<div class="innertube">
 			<h2>Search </h2>
@@ -79,7 +80,7 @@ and open the template in the editor.
  */
 
 // connect to database    
-include 'db.php';
+include 'scripts/db.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
@@ -178,7 +179,7 @@ if($iserror) {
     while($row = mysqli_fetch_array($result)) {
         echo $row['id'];
         }
-    include 'db.php';
+    include 'scripts/db.php';
     mysqli_close($link) or die("Could not close database connection");
 				
 }
