@@ -6,10 +6,10 @@
  * and open the template in the editor.
  */
 
-    $host = "";
-    $user = "";
-    $password = "";
-    $db = "";
+    $host = "localhost";
+    $user = "admin";
+    $password = "iamincontrolofthis";
+    $db = "upstrain";
     $charset = "utf8mb4"; 
 
     
@@ -19,7 +19,7 @@
     
     try {
         $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
-        $pdo = new PDO($dsn,$user,$pass)
+        $pdo = new PDO($dsn,$user,$pass); 
         $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         
         $stmt = $conn->prepare('SELECT name FROM ins WHERE name LIKE :term');
