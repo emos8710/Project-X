@@ -1,3 +1,8 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
 	margin: 0;
 	padding: 0;
@@ -137,8 +142,14 @@ img.quicksearch {
 }
 
 a.external::after {
-	content: url(/images/external_link.png);
-	padding-right: 13px;
+	background-image: url(/upstrain/images/external_link.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
 }
 
 table {
@@ -151,6 +162,7 @@ table.entry th {
 	text-align: left;
 	vertical-align: bottom;
 	text-decoration: underline;
+	white-space: nowrap;
 }
 
 table.entry td {
@@ -158,4 +170,5 @@ table.entry td {
 	text-align: left;
 	margin-right: 10px;
 	font-size: small;
+	white-space: nowrap;
 }
