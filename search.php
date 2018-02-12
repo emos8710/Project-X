@@ -124,7 +124,7 @@
         }    
         
         if(!empty($insert_criteria)) {
-            $ConditionArray[] = "t5.name = $insert_criteria";
+            $ConditionArray[] = "t5.name = '$insert_criteria'";
         }   
         
         if(!empty($bb_id_criteria_criteria)) {
@@ -156,7 +156,7 @@
         } 
         
         if(!empty($creator_criteria)) {
-                $ConditionArray[] = "uname like '$creator_criteria'";
+                $ConditionArray[] = "(t2.first_name = '$creator_criteria' OR t2.last_name = '$creator_criteria')";
         }        
         
         $entrysql = "SELECT t1.comment AS cmt, t1.year_created AS year, "
