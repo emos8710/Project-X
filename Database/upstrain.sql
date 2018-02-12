@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 10, 2018 at 10:54 AM
+-- Generation Time: Feb 11, 2018 at 03:32 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -245,6 +245,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
   `admin` tinyint(1) NOT NULL DEFAULT '0',
+  `full_name` varchar(101) GENERATED ALWAYS AS (concat(`first_name`,' ',`last_name`)) VIRTUAL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `password` (`password`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
