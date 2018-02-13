@@ -45,12 +45,14 @@
             </p>
             
             <p>
+            <label>Insert Type:
                <select name="insert_type">
-                <option value="promotor">Promotor</option>
-                <option value="coding_seq">Coding sequence</option>
-                <option value="RBS">RBS</option>
-                <option value="other">Other</option>
-            </select></p>
+               <option value=""></option>    
+               <option value="promotor">Promotor</option>
+               <option value="coding">Coding</option>
+            </select>
+            </label>       
+            </p>
             
             <p>    
             <label>Biobrick registry ID: 
@@ -99,14 +101,17 @@
         $creation_year_criteria = mysqli_real_escape_string($link, $_REQUEST['creation_year_criteria']);
         $inserted_date_criteria = mysqli_real_escape_string($link, $_REQUEST['inserted_date_criteria']);
         $creator_criteria = mysqli_real_escape_string($link, $_REQUEST['creator_criteria']);
+        $insert_type_criteria = mysqli_real_escape_string($link, $_REQUEST['insert_type']);
     
         
         $ConditionArray = [];
+        $ischarvalid = TRUE;
         
         if(!empty($id_criteria)) {
             if (!preg_match('/[^A-Za-z0-9]/', $id_criteria)) { 
                 $ConditionArray[] = "t10.upstrain_id = '$id_criteria'";
             } else {
+                $ischarvalid = FALSE;
                 echo nl2br ("\n \n Error: Non-valid character usage for 'ID'.");    
             }
         }  
@@ -119,6 +124,7 @@
             if (!preg_match('/[^A-Za-z0-9]/', $backbone_criteria)) { 
                 $ConditionArray[] = "t3.name = '$backbone_criteria'";
             } else {
+                $ischarvalid = FALSE;
                 echo nl2br ("\n \n Error: Non-valid character usage for 'Backbone'.");
             }
         }    
@@ -131,6 +137,7 @@
             if (!preg_match('/[^A-Za-z0-9]/', $bb_id_criteria)) {
                 $ConditionArray[] = "t1.entry_reg = '$bb_id_criteria'";
             } else {
+                $ischarvalid = FALSE;
                 echo nl2br ("\n \n Error: Non-valid character usage for 'Biobrick registry ID'.");
             }
         }  
@@ -143,6 +150,7 @@
             if (is_numeric($creation_year_criteria)) {
                 $ConditionArray[] = "t1.year_created = $creation_year_criteria";
             } else {
+                $ischarvalid = FALSE;
                 echo nl2br ("\n \n Error: Non-valid character usage for 'Year created'.");                
             }
         } 
@@ -151,32 +159,41 @@
             if (is_numeric($inserted_date_criteria)) {
                 $ConditionArray[] = "t1.date_db = $inserted_date_criteria";
             } else {
+                $ischarvalid = FALSE;
                 echo nl2br ("\n \n Error: Non-valid character usage for 'Date inserted'.");
             }
         } 
         
         if(!empty($creator_criteria)) {
-                $ConditionArray[] = "(t2.first_name = '$creator_criteria' OR t2.last_name = '$creator_criteria')";
-        }        
+                $ConditionArray[] = "(t2.first_name = '$creator_criteria' OR "
+                        . "t2.last_name = '$creator_criteria' OR "
+                        . "(CONCAT(t2.first_name,' ', t2.last_name) = '$creator_criteria'))";
+        } 
+        
+        if(!empty($insert_type_criteria)) {
+            $ConditionArray[] = "t8.name = '$insert_type_criteria'";
+        } 
+        
         
         $entrysql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
 	."t1.date_db AS date, t1.entry_reg AS biobrick, t4.name AS strain, "
-	."GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS ins, t3.name AS backbone, t2.user_id AS user_id, "
+	."GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS ins, t3.name AS backbone, "
+        ."t2.user_id AS user_id, GROUP_CONCAT(DISTINCT t8.name SEPARATOR ', ') AS ins_type, "
 	."t2.first_name AS fname, t2.last_name AS lname, t10.upstrain_id AS up_id "
         ."FROM ((ins_type AS t8), (entry AS t1)) "        
-        ."INNER JOIN users AS t2 ON t1.creator = t2.user_id " 
-        ."INNER JOIN backbone AS t3 ON t1.backbone = t3.id "
-        ."INNER JOIN strain AS t4 ON t1.strain = t4.id "
-        ."INNER JOIN entry_inserts AS t5 ON t1.id = t5.entry_id "
-        ."INNER JOIN ins AS t6 ON t8.id = t6.type "        
-        ."INNER JOIN entry_inserts AS t9 ON t6.id = t9.insert_id "              
-        ."INNER JOIN entry_upstrain AS t10 ON t1.id = t10.entry_id "        
+        ."LEFT JOIN users AS t2 ON t1.creator = t2.user_id " 
+        ."LEFT JOIN backbone AS t3 ON t1.backbone = t3.id "
+        ."LEFT JOIN strain AS t4 ON t1.strain = t4.id "
+        ."LEFT JOIN entry_inserts AS t5 ON t1.id = t5.entry_id "
+        ."LEFT JOIN ins AS t6 ON t8.id = t6.type "        
+        ."LEFT JOIN entry_inserts AS t9 ON t6.id = t9.insert_id "              
+        ."LEFT JOIN entry_upstrain AS t10 ON t1.id = t10.entry_id "        
         ."WHERE ";     
                 
         if (count($ConditionArray) > 0) {
             $sql = $entrysql . implode(' AND ', $ConditionArray);
             
-        } else {
+        } else if ($ischarvalid && count($ConditionArray) == 0) {
             echo nl2br ("\n Error: Please enter search query");
         }
 
@@ -196,7 +213,7 @@
     if (!empty($ConditionArray)) {
     echo "<table border='1' cellpadding='5'>";
     echo "<tr><th>upstrain ID</th><th>Strain</th><th>Backbone</th>"
-    . "<th>Insert</th><th>Year</th><th>iGEM registry entry</th>"
+    . "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM registry entry</th>"
     . "<th>Creator</th><th>Added date</th><th>Comment</th></tr>";
     
     // output data of each row
@@ -216,6 +233,7 @@
                 "</td><td>" . $row["strain"].
                 "</td><td>" . $row["backbone"]. 
                 "</td><td>" . $row["ins"].
+                "</td><td>" . $row["ins_type"].
                 "</td><td>" . $row["year"]. 
                 "</td><td>" . $biobrick. 
                 "</td><td>" . "<a href=\"user.php?user_id=".$row["user_id"]."\">". 
