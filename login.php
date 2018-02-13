@@ -23,12 +23,13 @@ else {
 		$_SESSION['phone'] 			= $user['phone'];
 		$_SESSION['username'] 		= $user['username'];
         $_SESSION['active'] 		= $user['active'];
+		$_SESSION['admin'] 			= $user['admin'];
         
 		// The session is set to logged in
         $_SESSION['logged_in'] = true;
 
 		// The user is sent to the profile page
-        header("location: profile.php");
+        header("location: index.php");
     }
 	// If the passwords do not match an error is sent to error.php
     else {

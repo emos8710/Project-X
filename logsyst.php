@@ -144,7 +144,8 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 
     <script src="js/index.js"></script>
 	
-	<?php include 'bottom.php'; ?>
+	
 
 </body>
 </html>
+<?php include 'bottom.php'; ?>

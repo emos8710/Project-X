@@ -4,4 +4,4 @@ $host = 'localhost';
 $user = 'root';
 $pass = '';
 $db = 'upstrain';
-$mysqli = new mysqli($host,$user,$pass,$db) or die($mysqli->error);
+$mysqli = mysqli_connect($host,$user,$pass,$db) or die($mysqli->error);

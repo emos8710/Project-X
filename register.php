@@ -1,4 +1,5 @@
 <?php
+
 /* Registration process */
 
 $result=$mysqli->query("SELECT * FROM users WHERE first_name='".$_POST['firstname']."' AND last_name='".$_POST['lastname']."'") or die($mysqli->error());
@@ -57,7 +58,7 @@ else {
 				// If the query returns zero rows, the username is free
 				else {
 					// The registering user is inserted into the database
-					$sql = "INSERT INTO users (first_name, last_name, email, phone, username, password, hash) " . "VALUES ('$first_name','$last_name','$email','$phone','$username','$password', '$hash')";
+					$sql = "INSERT INTO users (first_name, last_name, email, phone, username, password, hash) " . "VALUES ('$first_name','$last_name','$email','$phone','$username','$password','$hash')";
 
 					// If the insertion succeeds the user is set to logged in, but not active (0)
 					if ( $mysqli->query($sql) ){
