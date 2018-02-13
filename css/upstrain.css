@@ -1,36 +1,53 @@
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
+#field1 {float:left; clear: left; }
+#field2 {float:left; clear: right; }
+#fieldsss {clear: both; }
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+a {/*links ex reset password*/
+  text-decoration: none;
+  color: #1ab188;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
+}
+
+
+a.external::after {
+	background-image: url(/upstrain/images/external_link.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
+}
+
+a:hover { /* When hovering over link */
+  color: #179b77;
 }
 
 body {
 	margin: 0;
 	padding: 0;
-	font-family: Sans-Serif;
 	line-height: 1.5em;
-}
-	
-h1, h2, h3, h4, h5, h6 {
-	color: black;
-	margin: 0;
+	background: #ffffff; /* #c1bdba */
+	font-family: 'Titillium Web', sans-serif;
 }
 
-p {
-	margin: 0;
-}
-	
-header {
-	background: #ccc;
-	padding: 15px;
-}
+ div.info {
+    color: pink;
+    display: box;
+    text-align: center;
+    padding: 5px;
+    margin-top: -20px;
+    margin-bottom: 15px;
+    border: 1px solid red;
+    background: #66131c;
+} 
 
-main {
-	width: 100%;
-	float: left;
-	overflow: auto;
-	background: #ccc;
-}
-	
 footer {
 	clear: both;
 	background: #eee;
@@ -39,7 +56,218 @@ footer {
 footer p {
 	font-size: small;
 }
+
+h2, h3, h4, h5, h6 {
+	color: black;
+	margin: 0;
+}
+
+h1 {
+  text-align: center;
+  color: #000000;
+  font-weight: 300;
+  margin: 0 0 40px;
+} 
+
+/* h2 {
+    text-align: center;
+    color: #1ab188;
+    font-weight: 1000;
+    margin: 0;
+} */
+
+header {
+	background: #ccc;
+	padding: 15px;
+}
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+	overflow-y: scroll;
+}
+
+input, textarea {
+  font-size: 22px;
+  display: block;
+  width: 100%;
+  height: 100%;
+  padding: 5px 10px;
+  background: none;
+  background-image: none;
+  border: 1px solid #a0b3b0;
+  color: #000000/* #ffffff */;
+  border-radius: 0;
+  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
+  transition: border-color .25s ease, box-shadow .25s ease;
+}
+input:focus, textarea:focus {
+  outline: 0;
+  border-color: #1ab188;
+}
+
+label {
+  position: absolute;
+  -webkit-transform: translateY(6px);
+          transform: translateY(6px);
+  left: 13px;
+  color: #000000; /* rgba(255, 255, 255, 0.5); */
+  -webkit-transition: all 0.25s ease;
+  transition: all 0.25s ease;
+  -webkit-backface-visibility: hidden;
+  pointer-events: none;
+  font-size: 22px;
+}
+
+label .req { /* The "*" sign where input is required */
+  margin: 2px;
+  color: #4CAF50 /* #1ab188 */;
+}
+
+label.active { /* ???? */
+  -webkit-transform: translateY(50px);
+          transform: translateY(50px);
+  left: 2px;
+  font-size: 14px;
+}
+
+label.active .req { /* ???? */
+  opacity: 0;
+}
+
+label.highlight { /* ???? */
+  color: #000000; /* #ffffff; */
+}
+
+main {
+	width: 100%;
+	float: left;
+	overflow: auto;
+	background: #ccc;
+}
+
+p1 { /* "The plasmid database for iGEM uppsala" */
+	margin: 0;
+}
+
+p {
+    text-align: center;
+    color: #000000 ; /* #ffffff; */
+    margin: 0px 0px 50px 0px;
+}
+
+span {
+    color: #1ab188;
+    font-weight: bold;
+}
+
+table {
+	border: none;
+	background-color: rgba(127, 255, 212, 0.5);
+}
+
+table.entry th {
+	padding-right: 10px;
+	text-align: left;
+	vertical-align: bottom;
+	text-decoration: underline;
+	white-space: nowrap;
+}
+
+table.entry td {
+	padding-right: 10px;
+	text-align: left;
+	margin-right: 10px;
+	font-size: small;
+	white-space: nowrap;
+}
+
+textarea {
+  border: 2px solid #a0b3b0;
+  resize: vertical;
+}
+
+.backbone_inserts {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: right;
+}
+
+.button {
+  border: 0;
+  outline: none;
+  border-radius: 0;
+  padding: 15px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: .1em;
+  background: #4CAF50 /* #1ab188 */;
+  color: #ffffff;
+  -webkit-transition: all 0.5s ease;
+  transition: all 0.5s ease;
+  -webkit-appearance: none;
+}
+
+.button:hover, .button:focus { /* When hovering over the button */
+  background: #179b77;
+}
+
+.button-block { /* Makes the button wider */
+  display: block;
+  width: 100%;
+}
+
+.entry_table {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: left;
+}
+
+.field-wrap {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.forgot { /* Shifts the "Reset password" to the right */
+  margin-top: -20px;
+  text-align: right;
+}
+
+.form {
+  background: #f0f8ff; 
+  padding: 40px;
+  max-width: 600px;
+  margin: 40px auto;
+  border-radius: 4px;
+  box-shadow: 0 4px 10px 4px rgba(19, 35, 47, 0.3);
+}
+
+.innertube {
+	/* Padding for content */
+	margin: 15px;
+	width: 95%;
+}
+
+.innertube a {
+	text-decoration: none;
+	color: blue;
 	
+}
+
+.innertube a:hover {
+	text-decoration: underline;
+	color: green;
+}
+
+.logo {
+	float: left;
+	padding: 10px;
+	margin-right: 15%;
+}
+
 .navigation {
 	background: #eee;
 	margin-top: 0;
@@ -60,7 +288,7 @@ footer p {
     color: black;
 }
 
-.navigation a.active {
+.navigation a.active { /* Login button in top */
     background-color: #4CAF50;
     color: white;
 }
@@ -103,99 +331,59 @@ img.quicksearch {
 	background-color: inherit;
 	color: #4CAF50;
 }
-	
-.innertube {
-	/* Padding for content */
-	margin: 15px;
-	width: 95%;
+
+.tab-group {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 40px 0;
 }
 
-.innertube a {
-	text-decoration: none;
-	color: blue;
+.tab-group:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-.innertube a:hover {
-	text-decoration: underline;
-	color: green;
+.tab-group li a { /* The Login and Register tabs */
+  display: block;
+  text-decoration: none;
+  padding: 15px;
+  background: rgba(160, 179, 176, 0.25);
+  color: #a0b3b0;
+  font-size: 20px;
+  float: left;
+  width: 50%;
+  text-align: center;
+  cursor: pointer;
+  -webkit-transition: .5s ease;
+  transition: .5s ease;
 }
 
-.entry_table {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	width: 50%;
-	float: left;
+.tab-group li a:hover { /* When hovering over the tabs */
+  background: #179b77;
+  color: #ffffff;
+}
+.tab-group .active a {
+  background: #4CAF50; /* #1ab188 */
+  color: #ffffff;
 }
 
-.backbone_inserts {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	width: 50%;
-	float: right;
+.tab-content > div:last-child {
+  display: none;
 }
 
-.logo {
-	float: left;
-	padding: 10px;
-	margin-right: 15%;
+.top-row:after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
-a.external::after {
-	background-image: url(/upstrain/images/external_link.png);
-    background-size: 12px 12px;
-    display: inline-block;
-    width: 12px; 
-    height: 12px;
-    content:"";
-	margin-left: 3px;
-	margin-right: 12px;
+.top-row > div { /* Makes input boxes smaller */
+  float: left;
+  width: 48%;
+  margin-right: 4%;
 }
 
-a.edit::after {
-	background-image: url(/upstrain/images/edit.png);
-    background-size: 12px 12px;
-    display: inline-block;
-    width: 12px; 
-    height: 12px;
-    content:"";
-	margin-left: 3px;
-	margin-right: 12px;
-}
-
-table {
-	border: none;
-	border-spacing: 0;
-	background-color: rgba(127, 255, 212, 0.5);
-}
-
-table th {
-	padding-right: 10px;
-	text-align: left;
-	vertical-align: bottom;
-}
-
-table td {
-	padding-right: 10px;
-	text-align: left;
-	margin-right: 10px;
-	font-size: small;
-}
-
-table.entry th {
-	text-decoration: underline;
-	white-space: nowrap;
-}
-
-table.entry td {
-	white-space: nowrap;
-}
-
-table.user_entries th {
-	border-bottom: 1px solid black;
-	text-align: left;
-}
-
-table.user_entries td {
-	vertical-align: top;
-	border-bottom: 1px solid black;
+.top-row > div:last-child { /* Puts input boxes next to each other */
+  margin: 0;
 }
