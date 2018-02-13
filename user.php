@@ -1,11 +1,12 @@
-<!DOCTYPE html>
-
-
 <?php
 	session_start();
 	// IMPLEMENT WHEN LOGIN WORKS
 	//if(!isset($_SESSION['user_id'])){
 	//	
+	//}
+	$isadmin = TRUE;
+	//if(isset($_SESSION['isadmin'])) {
+	//	$isadmin = TRUE;
 	//}
 	
 	// Fetch the user id from URL
@@ -64,18 +65,19 @@
 			} 
 			// ... or show user page
 			else {
-				
 				// Connect to database
 				include 'scripts\db.php';
 				
 				// Fetch user information from database
 				$usersql = "SELECT first_name AS fname, last_name AS lname, "
-				."email, phone, username AS uname FROM users WHERE user_id = '$id'";
+				."email, phone, username AS uname, admin FROM users WHERE user_id = '$id'";
 				$user_result = mysqli_query($link, $usersql);
 				
 				// Fetch information about entries from database
 				$entrysql = "SELECT entry.id AS eid, entry.comment, entry.year_created, entry.date_db, "
-				."entry.entry_reg, backbone.name AS bname, strain.name AS sname, entry_inserts.*, ins.name AS iname FROM entry "
+				."entry.entry_reg, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
+				."strain.name AS sname, entry_inserts.*, ins.name AS iname FROM entry "
+				."LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
 				."LEFT JOIN backbone ON entry.backbone = backbone.id "
 				."LEFT JOIN strain ON entry.strain = strain.id "
                 ."LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
@@ -93,7 +95,11 @@
 			
 				?>
 				<!-- Show user information -->
-				<h2>User <?php echo $info["uname"] ?></h2>
+				<!-- Shows user as admin or user -->
+				<?php if ($info["admin"] == 1) echo "<h2>Admin ";
+				else echo "<h2>User ";
+				echo $info["uname"]."</h2>"; ?>
+				<br>
 				<h3>Contact information</h3>
 				<p>Name: <?php echo $info["fname"]." ".$info["lname"] ?>
 				<br>Email: <?php echo $info["email"] ?>
@@ -103,7 +109,7 @@
 				<!-- Show entry information -->
 				<h3>User entries</h3>
 				<!-- Create table -->
-				<table>
+				<table class="user_entries">
 					<tr>
 						<th>Entry ID</th>
 						<th>Strain</th>
@@ -114,22 +120,29 @@
 						<th>Comment</th>
 					</tr>
 				
-					<?php 
-					// Fill table one entry at a time
+					<?php // Fill table one entry at a time
 					while ($entry) {
 						$current_entry = $entry["eid"];
 						
+						// Part 1 of entry row
 						$tpart_1 = "<tr>"
-						."<td>".$entry["eid"]."</td>"
+						."<td><a href=\"entry.php?upstrain_id=".$entry["uid"]."\">".$entry["uid"]."</a></td>"
 						."<td>".$entry["sname"]."</td>"
 						."<td>".$entry["bname"]."</td>";
-				
+						
+						if ($isadmin) {
+							$edit = "<td style=\"border: none;\">"
+							."<a href=\"#\">Edit entry</a></td>";
+						} else $edit = "";
+						
+						// Part 3 of entry row
 						$tpart_3 = "<td>".$entry["year_created"]."</td>"
 						."<td>".$entry["entry_reg"]."</td>"
 						."<td>".$entry["comment"]."</td>"
+						.$edit
 						."</tr>";
 						
-						// Find all inserts
+						// Part 2 of entry row, find all inserts
 						$inserts = $entry["iname"];
 						$entry = mysqli_fetch_assoc($entry_result);
 						while (TRUE) {
