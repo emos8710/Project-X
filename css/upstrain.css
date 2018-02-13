@@ -151,6 +151,17 @@ a.external::after {
 	margin-right: 12px;
 }
 
+a.edit::after {
+	background-image: url(/upstrain/images/edit.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
+}
+
 table {
 	border: none;
 	border-spacing: 0;

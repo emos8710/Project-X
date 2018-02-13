@@ -135,7 +135,7 @@
 						
 						if ($isadmin) {
 							$edit = "<td style=\"border: none;\">"
-							."<a href=\"#\">Edit entry</a></td>";
+							."<a class=\"edit\" href=\"#\">Edit entry</a></td>";
 						} else $edit = "";
 						
 						// Part 3 of entry row
