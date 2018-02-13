@@ -4,15 +4,46 @@
 		<!-- Logo -->
 		<div class="logo">
 			<h1>UpStrain</h1>
-			<p>The plasmid database for iGEM Uppsala</p>
+			<p1>The plasmid database for iGEM Uppsala</p1>
 		</div>
 		
-		<!-- Navigation buttons -->
-		<a <?php if(basename($_SERVER['PHP_SELF'])=="index.php"){echo "class=\"active\" ";} ?> href="index.php">Home</a>
-		<a <?php if(basename($_SERVER['PHP_SELF'])=="search.php"){echo "class=\"active\" ";} ?> href="search.php">Search</a>
-		<a <?php if(basename($_SERVER['PHP_SELF'])=="new_insert.php"){echo "class=\"active\" ";} ?> href="new_insert.php">New entry</a>
-		<a <?php if(basename($_SERVER['PHP_SELF'])=="help.php"){echo "class=\"active\" ";} ?> href="help.php">Help</a>
-		<a class="login<?php if(basename($_SERVER['PHP_SELF'])=="login.php"){echo " active";} ?>" href="login.php">Log in</a>
+		<!-- NAVIGATION BUTTONS -->
+			<!-- Home -->
+			<a <?php 
+					if(basename($_SERVER['PHP_SELF'])=="index.php"){
+						echo "class=\"active\" ";
+					} 
+				?> href="index.php">Home</a>
+				
+			<!-- Search -->
+			<a <?php 
+					if(basename($_SERVER['PHP_SELF'])=="search.php"){
+						echo "class=\"active\" ";
+					} 
+				?> href="search.php">Search</a>
+			
+			<!--  New Entry -->
+			<a <?php 
+					if(basename($_SERVER['PHP_SELF'])=="new_insert.php"){
+						echo "class=\"active\" ";
+					} 
+				?> href="new_insert.php">New entry</a>
+				
+			<!-- Help -->
+			<a <?php 
+					if(basename($_SERVER['PHP_SELF'])=="help.php"){
+						echo "class=\"active\" ";
+					} 
+				?> href="help.php">Help</a>
+			
+			<!-- Login -->
+			<a class="login 
+				<?php 
+					if(basename($_SERVER['PHP_SELF'])=="logsyst.php"){
+						echo " active";
+					} 
+				?>" href="logsyst.php">Log in</a>
+		
 		
 		<!-- Quick search -->
 		<div class="quicksearch">
