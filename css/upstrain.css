@@ -113,7 +113,6 @@ img.quicksearch {
 .innertube a {
 	text-decoration: none;
 	color: blue;
-	
 }
 
 .innertube a:hover {
@@ -154,21 +153,37 @@ a.external::after {
 
 table {
 	border: none;
+	border-spacing: 0;
 	background-color: rgba(127, 255, 212, 0.5);
 }
 
-table.entry th {
+table th {
 	padding-right: 10px;
 	text-align: left;
 	vertical-align: bottom;
+}
+
+table td {
+	padding-right: 10px;
+	text-align: left;
+	margin-right: 10px;
+	font-size: small;
+}
+
+table.entry th {
 	text-decoration: underline;
 	white-space: nowrap;
 }
 
 table.entry td {
-	padding-right: 10px;
-	text-align: left;
-	margin-right: 10px;
-	font-size: small;
 	white-space: nowrap;
+}
+
+table.user_entries th {
+	border-bottom: 1px solid black;
+}
+
+table.user_entries td {
+	vertical-align: top;
+	border-bottom: 1px solid black;
 }
