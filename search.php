@@ -26,22 +26,22 @@
 
             <p>
             <label>Upstrain ID: 
-                <input type="text" name="id_criteria" value="<?php echo $id_criteria;?>"/></label>
+                <input type="text" name="id_criteria"/></label>
             </p>
             
             <p>
             <label>Strain: 
-                <input type="text" name="strain_criteria" value="<?php echo $strain_criteria;?>"/></label>
+                <input type="text" name="strain_criteria"/></label>
             </p>
             
             <p>
             <label>Backbone: 
-                <input type="text" name="backbone_criteria" value="<?php echo $backbone_criteria;?>"/></label>
+                <input type="text" name="backbone_criteria"/></label>
             </p>
             
             <p>    
             <label>Insert: 
-                <input type="text" name="insert_criteria" value="<?php echo $insert_criteria;?>"/></label>
+                <input type="text" name="insert_criteria"/></label>
             </p>
             
             <p>
@@ -54,28 +54,28 @@
             
             <p>    
             <label>Biobrick registry ID: 
-                <input type="text" name="bb_id_criteria" value="<?php echo $bb_id_criteria;?>"/></label>
+                <input type="text" name="bb_id_criteria"/></label>
             </p>
             
             <p>    
             <label>Comment: 
-                <input type="text" name="comment_criteria" ows ="4" cols="50" value="<?php echo $comment_criteria;?>"/></label>
+                <input type="text" name="comment_criteria" ows ="4" cols="50"/></label>
             </p>
             
             <p>    
             <label>Year created: 
                 <input type="text" name="creation_year_criteria" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2})" 
-                placeholder="YYYY" value="<?php echo $creation_year_criteria;?>"/></label>
+                placeholder="YYYY" /></label>
             </p>
             
             <p>    
             <label>Date inserted: 
-                <input type="text" name="inserted_date_criteria" value="<?php echo $inserted_date_criteria;?>"/></label>
+                <input type="text" name="inserted_date_criteria"/></label>
             </p>
             
             <p>    
             <label>Creator: 
-                <input type="text" name="creator_criteria" value="<?php echo $creator_criteria;?>"/></label>
+                <input type="text" name="creator_criteria"/></label>
             </p>
             
             
@@ -159,16 +159,18 @@
                 $ConditionArray[] = "(t2.first_name = '$creator_criteria' OR t2.last_name = '$creator_criteria')";
         }        
         
-        $entrysql = "SELECT t1.comment AS cmt, t1.year_created AS year, "
+        $entrysql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
 	."t1.date_db AS date, t1.entry_reg AS biobrick, t4.name AS strain, "
-	."t5.name AS ins, t3.name AS backbone, t2.user_id AS user_id, "
-	."t2.first_name AS fname, t2.last_name AS lname, t6.upstrain_id AS up_id "
-        . " FROM entry AS t1 "
+	."t5.insert_id AS ins, t3.name AS backbone, t2.user_id AS user_id, "
+	."t2.first_name AS fname, t2.last_name AS lname, t10.upstrain_id AS up_id "
+        ."FROM ((ins_type AS t8), (entry AS t1)) "        
         ."INNER JOIN users AS t2 ON t1.creator = t2.user_id " 
         ."INNER JOIN backbone AS t3 ON t1.backbone = t3.id "
         ."INNER JOIN strain AS t4 ON t1.strain = t4.id "
-        ."INNER JOIN ins AS t5 ON t1.ins = t5.id "
-        ."INNER JOIN entry_upstrain AS t6 ON t1.id = t6.entry_id "        
+        ."INNER JOIN entry_inserts AS t5 ON t1.id = t5.entry_id "
+        ."INNER JOIN ins AS t6 ON t8.id = t6.type "        
+        ."INNER JOIN entry_inserts AS t9 ON t6.id = t9.insert_id "              
+        ."INNER JOIN entry_upstrain AS t10 ON t1.id = t10.entry_id "        
         ."WHERE ";     
                 
         
@@ -180,7 +182,6 @@
         }
 
         $result=mysqli_query($link, $sql);  
-
         
         $iserror = FALSE;
         if (mysqli_num_rows($result) < 1) {
