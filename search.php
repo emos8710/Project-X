@@ -105,7 +105,7 @@
         
         if(!empty($id_criteria)) {
             if (!preg_match('/[^A-Za-z0-9]/', $id_criteria)) { 
-                $ConditionArray[] = "t6.upstrain_id = '$id_criteria'";
+                $ConditionArray[] = "t10.upstrain_id = '$id_criteria'";
             } else {
                 echo nl2br ("\n \n Error: Non-valid character usage for 'ID'.");    
             }
@@ -124,7 +124,7 @@
         }    
         
         if(!empty($insert_criteria)) {
-            $ConditionArray[] = "t5.name = '$insert_criteria'";
+            $ConditionArray[] = "t6.name = '$insert_criteria'";
         }   
         
         if(!empty($bb_id_criteria_criteria)) {
@@ -161,7 +161,7 @@
         
         $entrysql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
 	."t1.date_db AS date, t1.entry_reg AS biobrick, t4.name AS strain, "
-	."t5.insert_id AS ins, t3.name AS backbone, t2.user_id AS user_id, "
+	."GROUP_CONCAT(DISTINCT t5.insert_id) AS ins, t3.name AS backbone, t2.user_id AS user_id, "
 	."t2.first_name AS fname, t2.last_name AS lname, t10.upstrain_id AS up_id "
         ."FROM ((ins_type AS t8), (entry AS t1)) "        
         ."INNER JOIN users AS t2 ON t1.creator = t2.user_id " 
@@ -173,7 +173,6 @@
         ."INNER JOIN entry_upstrain AS t10 ON t1.id = t10.entry_id "        
         ."WHERE ";     
                 
-        
         if (count($ConditionArray) > 0) {
             $sql = $entrysql . implode(' AND ', $ConditionArray);
             
@@ -181,14 +180,10 @@
             echo nl2br ("\n Error: Please enter search query");
         }
 
-        $result=mysqli_query($link, $sql);  
+        $result=mysqli_query($link, $sql);
         
         $iserror = FALSE;
-        if (mysqli_num_rows($result) < 1) {
-            $iserror = TRUE;
-            $error = "No matching results, try another search.";
-        }
-      }
+    }
         
     else if ($_SERVER['REQUEST_METHOD'] != 'POST') {
         header('HTTP/1.0 405 Method Not Allowed');
@@ -196,27 +191,34 @@
     }
 	 
 		
-if($iserror && !empty($ConditionArray)) {
-    echo "<h3>Error: ".$error."</h3>";
-    echo "<br>".
-    "<a href=\"javascript:history.go(-1)\">Go back</a>";
-    
-} else {
+    if (!empty($ConditionArray)) {
     echo "<table border='1' cellpadding='5'>";
     echo "<tr><th>upstrain ID</th><th>Strain</th><th>Backbone</th>"
     . "<th>Insert</th><th>Year</th><th>iGEM registry entry</th>"
     . "<th>Creator</th><th>Added date</th><th>Comment</th></tr>";
     // output data of each row
     while($row = $result->fetch_assoc()) {
+        if (empty($row["up_id"])) {
+            $iserror = TRUE;
+            $error = "No matching results, try another search.";
+        } else {
+        
         echo "<tr><td>" . $row["up_id"]. "</td><td>" . $row["strain"]. 
                 "</td><td>" . $row["backbone"]. "</td><td>" . $row["ins"].
                 "</td><td>" . $row["year"]. "</td><td>" . $row["biobrick"]. 
                 "</td><td>" . "<a href=\"user.php?user_id=".$row["user_id"]."\">". 
                 $row["fname"]. " " . $row["lname"]. "</td><td>" . $row["date"].
                 "</td><td>" . $row["cmt"]. "</td></tr>";
+        }
     }
     echo "</table>";
     echo $entrydata['cmt'];				
+} 
+
+    if ($iserror && !empty($ConditionArray)) {
+        echo "<h3> Error: ".$error."</h3>";
+        echo "<br>".
+        "<a href=\"javascript:history.go(-1)\">Go back</a>";
 }
 ?>
             
