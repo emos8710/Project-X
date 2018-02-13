@@ -181,6 +181,7 @@ table.entry td {
 
 table.user_entries th {
 	border-bottom: 1px solid black;
+	text-align: left;
 }
 
 table.user_entries td {
