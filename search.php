@@ -211,8 +211,7 @@
                 "</td><td>" . $row["cmt"]. "</td></tr>";
         }
     }
-    echo "</table>";
-    echo $entrydata['cmt'];				
+    echo "</table>";				
 } 
 
     if ($iserror && !empty($ConditionArray)) {
