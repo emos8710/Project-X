@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Search for entry</title>
-	<link href="upstrain.css" rel="stylesheet">
+	<link href="css/upstrain.css" rel="stylesheet">
     </head>
     <body>
         
@@ -88,7 +88,7 @@
     
             
     <?php
-    include 'db.php';
+    include 'scripts/db.php';
 
     if($_SERVER['REQUEST_METHOD'] == 'POST') {
         
