@@ -1,0 +1,201 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Sans-Serif;
+	line-height: 1.5em;
+}
+	
+h1, h2, h3, h4, h5, h6 {
+	color: black;
+	margin: 0;
+}
+
+p {
+	margin: 0;
+}
+	
+header {
+	background: #ccc;
+	padding: 15px;
+}
+
+main {
+	width: 100%;
+	float: left;
+	overflow: auto;
+	background: #ccc;
+}
+	
+footer {
+	clear: both;
+	background: #eee;
+}
+
+footer p {
+	font-size: small;
+}
+	
+.navigation {
+	background: #eee;
+	margin-top: 0;
+	clear: both;
+	overflow: hidden;
+}
+
+.navigation a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 22px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+.navigation a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navigation a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+.navigation a.login {
+	float: right;
+	margin-left: 20px;
+}
+
+.quicksearch {
+	float: right;
+}
+
+.quicksearch input[type=text] {
+	padding: 6px;
+	margin-top: 12px;
+}
+
+.quicksearch button {
+	float: right;
+	padding: 0;
+	margin-top: 12px;
+	cursor: pointer;
+	border: none;
+}
+
+.quicksearch button:hover {
+	background-color: #ccc;
+}
+
+img.quicksearch {
+	height: 31.5px;
+}
+
+.quicksearch a {
+	padding: 0;
+	font-size: small;
+}
+
+.quicksearch a:hover {
+	background-color: inherit;
+	color: #4CAF50;
+}
+	
+.innertube {
+	/* Padding for content */
+	margin: 15px;
+	width: 95%;
+}
+
+.innertube a {
+	text-decoration: none;
+	color: blue;
+}
+
+.innertube a:hover {
+	text-decoration: underline;
+	color: green;
+}
+
+.entry_table {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: left;
+}
+
+.backbone_inserts {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: right;
+}
+
+.logo {
+	float: left;
+	padding: 10px;
+	margin-right: 15%;
+}
+
+a.external::after {
+	background-image: url(/upstrain/images/external_link.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
+}
+
+a.edit::after {
+	background-image: url(/upstrain/images/edit.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
+}
+
+table {
+	border: none;
+	border-spacing: 0;
+	background-color: rgba(127, 255, 212, 0.5);
+}
+
+table th {
+	padding-right: 10px;
+	text-align: left;
+	vertical-align: bottom;
+}
+
+table td {
+	padding-right: 10px;
+	text-align: left;
+	margin-right: 10px;
+	font-size: small;
+}
+
+table.entry th {
+	text-decoration: underline;
+	white-space: nowrap;
+}
+
+table.entry td {
+	white-space: nowrap;
+}
+
+table.user_entries th {
+	border-bottom: 1px solid black;
+	text-align: left;
+}
+
+table.user_entries td {
+	vertical-align: top;
+	border-bottom: 1px solid black;
+}
