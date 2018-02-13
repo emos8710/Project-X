@@ -3,6 +3,13 @@
 
 <?php
 	session_start();
+	// IMPLEMENT WHEN LOGIN WORKS
+	//if(!isset($_SESSION['user_id'])){
+	//	
+	//}
+	//if(isset($_SESSION['isadmin'])) {
+	$isadmin = TRUE;
+	//}
 	
 	// Fetch the upstrain id from URL
 	$upstrain_id = $_GET["upstrain_id"];
