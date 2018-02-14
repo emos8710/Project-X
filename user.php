@@ -1,16 +1,24 @@
 <?php
 	session_start();
+	// Fetch the user id from URL
+	$user_id = $_GET["user_id"];
+	
 	// IMPLEMENT WHEN LOGIN WORKS
+	$isloggedin = TRUE;
 	//if(!isset($_SESSION['user_id'])){
+	//	$isloggedin = TRUE;
+	//}
+	//else {
 	//	
 	//}
-	$isadmin = TRUE;
+	$isadmin = FALSE;
 	//if(isset($_SESSION['isadmin'])) {
 	//	$isadmin = TRUE;
 	//}
-	
-	// Fetch the user id from URL
-	$user_id = $_GET["user_id"];
+	$isuser = FALSE;
+	//if($_session['user_id'] == $user_id) {
+	//	$isuser = TRUE;
+	//}
 	
 	// Connect to database
 	include 'scripts\db.php';
@@ -93,7 +101,7 @@
 				$info = mysqli_fetch_assoc($user_result);
 				$entry = mysqli_fetch_assoc($entry_result);
 			
-				?>
+				if ($isloggedin) {?>
 				<!-- Show user information -->
 				<!-- Shows user as admin or user -->
 				<?php if ($info["admin"] == 1) echo "<h2>Admin ";
@@ -104,6 +112,10 @@
 				<p>Name: <?php echo $info["fname"]." ".$info["lname"] ?>
 				<br>Email: <?php echo $info["email"] ?>
 				<br>Phone: <?php echo $info["phone"] ?></p>
+				
+				<?php } else {
+					echo "<p>You need to log in to see contact information.</p>";
+				}?>
 				<br>
 				
 				<!-- Show entry information -->
@@ -130,12 +142,13 @@
 						."<td>".$entry["sname"]."</td>"
 						."<td>".$entry["bname"]."</td>";
 						
-						if ($isadmin) {
+						// Decide if user can edit entries
+						if ($isadmin OR $isuser) {
 							$edit = "<td style=\"border: none;\">"
-							."<a href=\"#\">Edit entry</a></td>";
+							."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
 						} else $edit = "";
 						
-						// Part 3 of entry row
+						// Part 3 of entry row, with or without edit option
 						$tpart_3 = "<td>".$entry["year_created"]."</td>"
 						."<td>".$entry["entry_reg"]."</td>"
 						."<td>".$entry["comment"]."</td>"

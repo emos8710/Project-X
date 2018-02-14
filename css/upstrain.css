@@ -10,7 +10,7 @@ a.external::after {
 }
 
 a.edit::after {
-	background-image: url(/upstrain/images/edit.png);
+	background-image: url(../images/edit.png);
     background-size: 12px 12px;
     display: inline-block;
     width: 12px; 
