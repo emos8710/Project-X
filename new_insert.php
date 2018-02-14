@@ -20,7 +20,7 @@
         $strainErr = $backboneErr = $yearErr = $regErr = ""; 
         $strain = $backbone = $comment = $year = $private = $reg = ""; 
         
-        if($_SERVER["REQUEST_METHDO"] == "POST") {
+        if($_SERVER["REQUEST_METHOD"] == "POST") {
            
             if (empty($_POST["strain"])) {
                  $strainErr = "A strain is required"; 
