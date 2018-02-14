@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 11, 2018 at 03:32 PM
+-- Generation Time: Feb 13, 2018 at 04:26 PM
 -- Server version: 5.7.19
--- PHP Version: 5.6.31
+-- PHP Version: 7.1.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -242,20 +242,20 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_name` varchar(50) NOT NULL,
   `email` varchar(50) NOT NULL,
   `phone` varchar(14) NOT NULL,
-  `password` varchar(50) NOT NULL,
   `username` varchar(50) NOT NULL,
+  `password` varchar(50) NOT NULL,
+  `hash` varchar(100) NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '0',
   `admin` tinyint(1) NOT NULL DEFAULT '0',
-  `full_name` varchar(101) GENERATED ALWAYS AS (concat(`first_name`,' ',`last_name`)) VIRTUAL,
-  PRIMARY KEY (`user_id`),
-  UNIQUE KEY `password` (`password`)
+  PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `password`, `username`, `admin`) VALUES
-(1, 'test', 'testson', 'test.testson@testmail.com', '0123456789', 'testtest123', 'testymctestface', 0);
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`) VALUES
+(1, 'test', 'testson', 'test.testson@testmail.com', '0123456789', '', '', '', 0, 0);
 
 --
 -- Constraints for dumped tables
