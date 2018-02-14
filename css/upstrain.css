@@ -1,24 +1,4 @@
-a.external::after {
-	background-image: url(/upstrain/images/external_link.png);
-    background-size: 12px 12px;
-    display: inline-block;
-    width: 12px; 
-    height: 12px;
-    content:"";
-	margin-left: 3px;
-	margin-right: 12px;
-}
 
-a.edit::after {
-	background-image: url(../images/edit.png);
-    background-size: 12px 12px;
-    display: inline-block;
-    width: 12px; 
-    height: 12px;
-    content:"";
-	margin-left: 3px;
-	margin-right: 12px;
-}
 
 body {
 	margin: 0;
@@ -41,6 +21,19 @@ h1, h2, h3, h4, h5, h6 {
 	margin: 0;
 }
 
+h1.loginss {
+  text-align: center;
+  margin-bottom: 40px;
+  font-weight: 300;
+}
+
+h2.loginss {
+    text-align: center;
+    color: #1ab188;
+    font-weight: 1000;
+    margin: 0;
+}
+
 header {
 	background: #ccc;
 	padding: 15px;
@@ -49,7 +42,6 @@ header {
 html, body {
     max-width: 100%;
     overflow-x: hidden;
-	overflow-y: scroll;
 }
 
 main {
@@ -84,6 +76,33 @@ table.entry td {
 	white-space: nowrap;
 }
 
+a.loginss {
+  text-decoration: none;
+  color: #1ab188;
+}
+
+a.external::after {
+	background-image: url(../images/external_link.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
+}
+
+a.edit::after {
+	background-image: url(../images/edit.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
+}
+
 .backbone_inserts {
 	padding-top: 50px;
 	padding-bottom: 50px;
@@ -103,8 +122,6 @@ table.entry td {
   margin-bottom: 40px;
 }
 
-
-
 .innertube {
 	/* Padding for content */
 	margin: 15px;
@@ -114,7 +131,6 @@ table.entry td {
 .innertube a {
 	text-decoration: none;
 	color: blue;
-	
 }
 
 .innertube a:hover {

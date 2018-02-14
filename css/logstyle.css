@@ -2,40 +2,7 @@
   box-sizing: border-box;
 }
 
-html {
-  overflow-y: scroll;
-}
 
-body {
-  background: #ffffff; /* #c1bdba */
-  font-family: 'Titillium Web', sans-serif;
-}
-
-a.loginss {
-  text-decoration: none;
-  color: #1ab188;
-  -webkit-transition: .5s ease;
-  transition: .5s ease;
-}
-
-a:hover { 
-  color: #179b77;
-}
-
-
-h1.loginss {
-  text-align: center;
-  color: #000000;
-  font-weight: 300;
-  margin: 0 0 40px;
-}
-
-h2.loginss {
-    text-align: center;
-    color: #1ab188;
-    font-weight: 1000;
-    margin: 0;
-}
 
 span {
     color: #1ab188;
@@ -43,7 +10,7 @@ span {
 }
 
 p.loginss, p.forgot {
-    text-align: center;
+    text-align: right;
     color: #000000 ; /* #ffffff; */
     margin: 0px 0px 50px 0px;
 }
@@ -101,8 +68,7 @@ input.loginss, textarea.loginss {
   border: 1px solid #a0b3b0;
   color: #000000/* #ffffff */;
   border-radius: 0;
-  -webkit-transition: border-color .25s ease, box-shadow .25s ease;
-  transition: border-color .25s ease, box-shadow .25s ease;
+
 }
 input:focus, textarea:focus {
   outline: 0;
@@ -152,6 +118,7 @@ textarea {
   background: #179b77;
   color: #ffffff;
 }
+
 .tab-group .active a {
   background: #4CAF50; /* #1ab188 */
   color: #ffffff;
