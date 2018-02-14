@@ -1,5 +1,8 @@
 <?php
-	session_start();
+	if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
+		session_start();
+	}
+	
 	// Fetch the user id from URL
 	$user_id = $_GET["user_id"];
 	
@@ -25,7 +28,7 @@
 	
 	// Check if user exists
 	$id = mysqli_real_escape_string($link, $user_id);
-	$sql = "SELECT user_id FROM users WHERE user_id LIKE '$id'";
+	$sql = "SELECT user_id, username AS uname FROM users WHERE user_id LIKE '$id'";
 	$result = mysqli_query($link, $sql);
 
 	$iserror = FALSE;
@@ -39,15 +42,16 @@
 		$iserrr = TRUE;
 		$error = "This should never happen";
 	}
-	
-	// Close database connection
-	mysqli_close($link) or die("Could not close database connection");
 
 	if($iserror) {
 		$title = "Error: ".$error;
 	} else {
-		$title = "User ".$user_id;
+		$title = "User ".mysqli_fetch_assoc($result)['uname'];
+		mysqli_free_result($result);
 	}
+	
+	// Close database connection
+	mysqli_close($link) or die("Could not close database connection");
 ?>
 
 <head>

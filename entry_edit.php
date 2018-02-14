@@ -5,7 +5,7 @@
 	//if(!isset($_SESSION['user_id'])){
 	//	
 	//}
-	$isadmin = FALSE;
+	$isadmin = TRUE;
 	//if(isset($_SESSION['isadmin']) && $_SESSION['isadmin'] != 0) {
 	//	$isadmin = TRUE;
 	//} else {

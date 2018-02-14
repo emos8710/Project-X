@@ -36,13 +36,13 @@
 				$entryquery = mysqli_query($link, $entrysql);
 				
 				$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
-				."backbone.year_created AS year, backbone.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM backbone, entry, entry_upstrain, users WHERE "
+				."backbone.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM backbone, entry, entry_upstrain, users WHERE "
 				."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
 				."entry.backbone = backbone.id AND backbone.creator = users.user_id";
 				$backbonequery = mysqli_query($link, $backbonesql);
 				
-				$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
-				."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
+				$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.date_db AS date, "
+				."users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
 				."users, entry_inserts WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry_inserts.entry_id = "
 				."entry.id AND entry_inserts.insert_id = ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
 				$insertquery = mysqli_query($link, $insertsql);
@@ -50,28 +50,36 @@
 				$filesql = "SELECT name_new AS filename FROM upstrain_file WHERE upstrain_file.upstrain_id = '$id'";
 				$filequery = mysqli_query($link, $filesql);
 				
+				$mysqlerror = FALSE;
 				$rowserror = FALSE;
-				$filerows = mysqli_num_rows($filequery);
-				if($filerows < 1) {
-					$hasfile = FALSE;
-				} elseif($filerows == 1) {
-					$hasfile = TRUE;
-				}else {
-					$rowserror = TRUE;
-				}					
+				if(!$entryquery || !$backbonequery || !$insertquery || !$filequery) {
+					$mysqlerror = TRUE;
+				} else {
 				
-				$entryrows = mysqli_num_rows($entryquery);
-				$backbonerows = mysqli_num_rows($backbonequery);
-				$insertrows = mysqli_num_rows($insertquery);
-				
-				if(($entryrows != 1) || ($backbonerows != 1) || ($insertrows < 1)) {
-					$rowserror = TRUE;
+					$filerows = mysqli_num_rows($filequery);
+					if($filerows < 1) {
+						$hasfile = FALSE;
+					} elseif($filerows == 1) {
+						$hasfile = TRUE;
+					}else {
+						$rowserror = TRUE;
+						$errormsg = '<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>';
+					}					
+					
+					$entryrows = mysqli_num_rows($entryquery);
+					$backbonerows = mysqli_num_rows($backbonequery);
+					$insertrows = mysqli_num_rows($insertquery);
+					
+					if(($entryrows != 1) || ($backbonerows != 1) || ($insertrows < 1)) {
+						$rowserror = TRUE;
+						$errormsg = '<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>';
+					}
+					
 				}
 				
-				if($rowserror) {
-					echo "<h3 style=\"color:red\">Error: Database returned unexpected number of rows</h3>";
+				if($rowserror || $mysqlerror) {
+					echo $errormsg;
 				} else {
-					
 					$entrydata = mysqli_fetch_assoc($entryquery);
 					$backbonedata = mysqli_fetch_assoc($backbonequery);
 					
@@ -138,10 +146,6 @@
 								<td><?php echo $backbonedata["name"] ?></td>
 							</tr>
 							<tr>
-								<td><strong>Year created:</strong></td>
-								<td><?php echo $backbonedata["year"] ?></td>
-							</tr>
-							<tr>
 								<td><strong>iGEM registry entry:</strong></td>
 								<td><?php if($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == ''){ echo "N/A"; } 
 								else { echo "<a class=\"external\" href=\"http://parts.igem.org/Part:".$backbonedata["biobrick"]."\" target=\"_blank\">".$backbonedata["biobrick"]."</a>"; } ?></td>
@@ -165,10 +169,6 @@
 									<td><?php echo $inserts[$i]["name"]; ?></td>
 								</tr>
 								<tr>
-									<td><strong>Year created:</strong></td>
-									<td><?php echo $inserts[$i]["year"]; ?></td>
-								</tr>
-								<tr>
 								<tr>
 									<td><strong>iGEM registry entry:</strong></td>
 									<td><?php if($inserts[$i]["biobrick"] === null || $inserts[$i]["biobrick"] == ''){ echo "N/A"; } 
@@ -176,7 +176,7 @@
 								</tr>
 								<tr>
 									<td><strong>Added by:</strong></td>
-									<td><?php echo "<a href=\"user.php?user_id=".$inserts[$i]["user_id"]."\">".$inserts[$i]["fname"]." ".$inserts[i]["lname"]."</a>"; ?></td>
+									<td><?php echo "<a href=\"user.php?user_id=".$inserts[$i]["user_id"]."\">".$inserts[$i]["fname"]." ".$inserts[$i]["lname"]."</a>"; ?></td>
 								</tr>
 								<tr>
 									<td><strong>Date added:</strong></td>
