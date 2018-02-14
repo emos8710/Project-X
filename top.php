@@ -53,23 +53,13 @@ else {
 			?> href="help.php">Help</a>
 			
 		<!-- Profile (if logged in) -->
-		<?php /* if($loggedin) {
-			?>
-			<!-- <a <?php
-					if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']){
-					if(preg_match("#^user.php?user_id=".$_SESSION['user_id']."#i",basename($_SERVER['REQUEST_URI']))===1) {
-							echo "class=\"active\"";
-						}
-				?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My profile</a>
-			<?php
-		} -->
-		*/ 
-		if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) { ?>
+		<?php
+		if($loggedin) { ?>
 			<a <?php
-				if(basename($_SERVER['PHP_SELF'])=="user.php") {
+				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit=1") {
 					echo "class=\"active\" ";
 				} 
-				?> href="user.php">My Profile</a>
+				?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
 		<?php
 		}
 		?> 

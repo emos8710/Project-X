@@ -10,14 +10,14 @@
     $username = "admin";
     $password = "iamincontrolofthis";
     $dbname = "upstrain";
-    $link = mysqli_connect($hostname, $username, $password, $dbname);
+    $mysqli = $link = mysqli_connect($hostname, $username, $password, $dbname);
 
     if (!$link) {
         echo "Error: Unable to connect to MySQL." .mysqli_connect_error() . PHP_EOL . "<br>";
         exit;
     }
     
-    mysqli_select_db($link, $dbname);
+    mysqli_select_db($mysqli, $dbname);
 
 
 ?>

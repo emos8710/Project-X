@@ -1,6 +1,3 @@
-	<main>
-		<div class="innertube">	
-		
 			<?php
 			if($admin || $isuser) {
 				?>
@@ -45,6 +42,3 @@
 			<?php
 			}
 			?>
-			
-		</div>
-	</main
