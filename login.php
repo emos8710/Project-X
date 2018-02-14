@@ -20,6 +20,7 @@ else {
 	// Checks if the entered password matches the password saved for the user
 	// If the passwords match the results are saved to the session variables 
     if (password_verify($_POST['password'], $user['password'])) { 
+		$_SESSION['user_id']		= $user['user_id'];
         $_SESSION['first_name'] 	= $user['first_name'];
         $_SESSION['last_name'] 		= $user['last_name'];
 		$_SESSION['email'] 			= $user['email'];
