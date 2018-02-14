@@ -15,7 +15,7 @@
 	//if(isset($_SESSION['isadmin'])) {
 	//	$isadmin = TRUE;
 	//}
-	$isuser = FALSE;
+	$isuser = TRUE;
 	//if($_session['user_id'] == $user_id) {
 	//	$isuser = TRUE;
 	//}
