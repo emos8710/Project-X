@@ -21,6 +21,12 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 	<main>
 		<div class="innertube">
 			<p>Main</p>
+			<?php 
+				if(basename($_SERVER['PHP_SELF'])=="logout.php"){ ?>
+				<h1 class="loginss">You have been logged out!</h1>
+				<?php 
+				} ?>
+			
 		</div>
 	</main>
 	

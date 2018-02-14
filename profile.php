@@ -1,6 +1,8 @@
 <?php
 /* Displays user information and some useful messages */
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Check if user is logged in using the session variable
 if ( $_SESSION['logged_in'] != 1 ) {
@@ -18,11 +20,12 @@ else {
 <!DOCTYPE html>
 <html >
 <head>
-  <meta charset="UTF-8">
-  <title>Welcome <?= $first_name.' '.$last_name ?></title>
-  <?php include 'css/logstyle.css'; ?>
-  
+	<meta charset="UTF-8">
+	<title>Welcome <?= $first_name.' '.$last_name ?></title>
+	<link href="css/logstyle.css" rel="stylesheet">
+	<link href="css/upstrain.css" rel="stylesheet">
 </head>
+<?php include 'top.php'; ?>
 
 <body>
   <div class="form">
@@ -68,4 +71,5 @@ else {
 <script src="js/index.js"></script>
 
 </body>
+<?php include 'bottom.php'; ?>
 </html>
