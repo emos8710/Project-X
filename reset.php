@@ -30,7 +30,7 @@ else {
 <head>
   <meta charset="UTF-8">
   <title>Reset Your Password</title>
-  <?php include 'css/css.html'; ?>
+  <?php include 'css/logstyle.css'; ?>
 </head>
 
 <body>
