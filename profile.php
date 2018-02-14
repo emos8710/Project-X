@@ -29,7 +29,7 @@ else {
 
           <h1>Welcome</h1>
           
-          <p>
+          <p class="loginss">
           <?php 
      
           // Display message about account verification link only once
@@ -58,7 +58,7 @@ else {
           ?>
           
           <h2><?php echo $first_name.' '.$last_name; ?></h2>
-          <p><?= $email ?></p>
+          <p class="loginss"><?= $email ?></p>
           
           <a href="logout.php"><button class="button button-block" name="logout"/>Log Out</button></a>
 

@@ -10,6 +10,7 @@ session_start();
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login/Registration System</title>
+	<link href="css/upstrain.css" rel="stylesheet">
 	<link href="css/logstyle.css" rel="stylesheet">
 	<?php include 'top.php'; ?>
 </head>
@@ -36,7 +37,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 	<div class="tab-content">
 		<!-- Creating login page -->
 		<div id="login"> 
-		<h1>Welcome to UpStrain!</h1>
+		<h1 class="loginss">Welcome to UpStrain!</h1>
 		
 			<!-- Form is created, method is set to post, the id is login -->
 			<form action="logsyst.php" method="post" autocomplete="off">
@@ -68,7 +69,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 		  
 		<!-- Creating registration page -->
         <div id="register">   
-		<h1>Register a new account</h1>
+		<h1 class="loginss">Register a new account</h1>
 			
 			<!-- Form is created, method is set to post, the id is register -->
 			<form action="logsyst.php" method="post" autocomplete="off">

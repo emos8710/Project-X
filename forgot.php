@@ -49,13 +49,14 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Reset Password</title>
+	<link href="css/upstrain.css" rel="stylesheet">
 	<link href="css/logstyle.css" rel="stylesheet">
 	<?php include 'top.php'; ?>
 </head>
 
 <body>  
 	<div class="form">
-    <h1>Reset Your Password</h1>
+    <h1 class="loginss">Reset Your Password</h1>
 
 		<form action="forgot.php" method="post">
 			<div class="field-wrap">
@@ -65,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 				<input type="email"required autocomplete="off" name="email"/>
 			</div>
 	
-			<p class="forgot"><a href="logsyst.php">Back to the login page</a></p>
+			<p class="login"><a href="logsyst.php">Back to the login page</a></p>
 	
 			<button class="button button-block"/>Reset</button>
 		</form>

@@ -11,7 +11,7 @@ session_start();
 <body>
 <div class="form">
     <h1><?= 'Success'; ?></h1>
-    <p>
+    <p class="loginss">
     <?php 
     if( isset($_SESSION['message']) AND !empty($_SESSION['message']) ):
         echo $_SESSION['message'];    
