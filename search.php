@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+?>
+
 <!DOCTYPE html>
 <!--
 
@@ -20,10 +26,6 @@
         
         <form action="search.php" method="post" id="searchform">
             
-             <?php
-             session_start(); 
-             ?>
-
             <p>
             <label>Upstrain ID: 
                 <input type="text" name="id_criteria"/></label>

@@ -1,3 +1,9 @@
+<?php
+if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
+?>
+
 <!DOCTYPE html>
 
 <head>

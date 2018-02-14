@@ -39,7 +39,7 @@
 			
 			<!-- Login -->
 			<?php			
-				if(isset($_SESSION['active']) && $_SESSION['active']==true && isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) { 
+				if($_SESSION['active'] == TRUE && $_SESSION['logged_in'] == TRUE) { 
 			?>
 					<a class="login" href="logout.php">Log Out</a>
 			<?php 
@@ -50,9 +50,10 @@
 					<?php 
 						if(basename($_SERVER['PHP_SELF'])=="logsyst.php"){
 							echo " active";
-					}	
+					}?>" href="logsyst.php">Log in</a>	
+					<?php
 				}
-			?>" href="logsyst.php">Log in</a>
+				?>
 		
 		
 		<!-- Quick search -->
