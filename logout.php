@@ -21,7 +21,7 @@ session_destroy();
               
           <p class="loginss"><?= 'You have been logged out!'; ?></p>
           
-          <a href="logsyst.php"><button class="button button-block"/>Home</button></a>
+          <a class="loginss" href="logsyst.php"><button class="button button-block"/>Home</button></a>
 
     </div>
 </body>

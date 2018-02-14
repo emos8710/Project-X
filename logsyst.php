@@ -19,8 +19,8 @@ session_start();
 	<div class="form">
       
 		<ul class="tab-group">
-		<li class="tab active"><a href="#login">Log In</a></li>
-		<li class="tab"><a href="#register">Register</a></li>
+		<li class="tab active"><a class="loginss" href="#login">Log In</a></li>
+		<li class="tab"><a class="loginss" href="#register">Register</a></li>
 		</ul>
 	  
 <?php 
@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 		<h1 class="loginss">Welcome to UpStrain!</h1>
 		
 			<!-- Form is created, method is set to post, the id is login -->
-			<form action="logsyst.php" method="post" autocomplete="off">
+			<form class="loginss" action="logsyst.php" method="post" autocomplete="off">
 								
 				<!-- Username field -->
 				<div class="field-wrap"> 	
@@ -59,7 +59,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 				</div>
           		  
 				<!-- Link to Reset Password -->
-				<p class="forgot"><a href="forgot.php">Reset password</a></p>
+				<p class="forgot"><a class="loginss" href="forgot.php">Reset password</a></p>
           		  
 				<!-- Login button -->
 				<button class="button button-block" name="login" />Log In</button>
@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 		<h1 class="loginss">Register a new account</h1>
 			
 			<!-- Form is created, method is set to post, the id is register -->
-			<form action="logsyst.php" method="post" autocomplete="off">
+			<form class="loginss" action="logsyst.php" method="post" autocomplete="off">
 				
 				<!-- First name field -->
 				<div class="top-row">

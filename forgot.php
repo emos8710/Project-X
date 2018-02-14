@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	<div class="form">
     <h1 class="loginss">Reset Your Password</h1>
 
-		<form action="forgot.php" method="post">
+		<form class="loginss" action="forgot.php" method="post">
 			<div class="field-wrap">
 				<label>
 					Email Address<span class="req">*</span>
@@ -66,7 +66,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 				<input type="email"required autocomplete="off" name="email"/>
 			</div>
 	
-			<p class="login"><a href="logsyst.php">Back to the login page</a></p>
+			<p class="login"><a class="loginss" href="logsyst.php">Back to the login page</a></p>
 	
 			<button class="button button-block"/>Reset</button>
 		</form>

@@ -11,7 +11,7 @@ body {
   font-family: 'Titillium Web', sans-serif;
 }
 
-a {
+a.loginss {
   text-decoration: none;
   color: #1ab188;
   -webkit-transition: .5s ease;
@@ -115,7 +115,7 @@ textarea {
 }
 
 
-.form {
+.form.loginss {
   background: #f0f8ff; 
   padding: 40px;
   max-width: 600px;

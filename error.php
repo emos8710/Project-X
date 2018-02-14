@@ -25,7 +25,7 @@ session_start();
     endif;
     ?>
     </p>     
-    <a href="logsyst.php"><button class="button button-block"/>Home</button></a>
+    <a class="loginss" href="logsyst.php"><button class="button button-block"/>Home</button></a>
 </div>
 </body>
 </html>
