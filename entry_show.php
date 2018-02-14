@@ -30,19 +30,19 @@
 				
 				$entrysql = "SELECT entry.comment AS cmt, entry.year_created AS year, "
 				."entry.date_db AS date, entry.entry_reg AS biobrick, strain.name AS strain, "
-				."users.full_name AS uname, users.user_id AS user_id FROM entry, entry_upstrain, "
+				."users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM entry, entry_upstrain, "
 				."users, strain WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = "
 				."entry.id AND entry.creator = users.user_id AND entry.strain = strain.id";
 				$entryquery = mysqli_query($link, $entrysql);
 				
 				$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
-				."backbone.year_created AS year, backbone.date_db AS date, users.full_name AS uname, users.user_id AS user_id FROM backbone, entry, entry_upstrain, users WHERE "
+				."backbone.year_created AS year, backbone.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM backbone, entry, entry_upstrain, users WHERE "
 				."entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
 				."entry.backbone = backbone.id AND backbone.creator = users.user_id";
 				$backbonequery = mysqli_query($link, $backbonesql);
 				
 				$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.year_created AS year, "
-				."ins.date_db AS date, users.full_name AS uname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
+				."ins.date_db AS date, users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
 				."users, entry_inserts WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry_inserts.entry_id = "
 				."entry.id AND entry_inserts.insert_id = ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
 				$insertquery = mysqli_query($link, $insertsql);
@@ -108,7 +108,7 @@
 							</tr>
 							<tr>
 								<td><strong>Added by:</strong></td>
-								<td><?php echo "<a href=\"user.php?user_id=".$entrydata["user_id"]."\">".$entrydata["uname"]."</a>"; ?></td>
+								<td><?php echo "<a href=\"user.php?user_id=".$entrydata["user_id"]."\">".$entrydata["fname"]." ".$entrydata["lname"]."</a>"; ?></td>
 							</tr>
 							<tr>
 							<td><strong>Date added:</strong></td>
@@ -148,7 +148,7 @@
 							</tr>
 							<tr>
 								<td><strong>Added by:</strong></td>
-								<td><?php echo "<a href=\"user.php?user_id=".$backbonedata["user_id"]."\">".$backbonedata["uname"]."</a>"; ?></td>
+								<td><?php echo "<a href=\"user.php?user_id=".$backbonedata["user_id"]."\">".$backbonedata["fname"]." ".$backbonedata["lname"]."</a>"; ?></td>
 							</tr>
 							<tr>
 								<td><strong>Date added:</strong></td>
@@ -176,7 +176,7 @@
 								</tr>
 								<tr>
 									<td><strong>Added by:</strong></td>
-									<td><?php echo "<a href=\"user.php?user_id=".$inserts[$i]["user_id"]."\">".$inserts[$i]["uname"]."</a>"; ?></td>
+									<td><?php echo "<a href=\"user.php?user_id=".$inserts[$i]["user_id"]."\">".$inserts[$i]["fname"]." ".$inserts[i]["lname"]."</a>"; ?></td>
 								</tr>
 								<tr>
 									<td><strong>Date added:</strong></td>
