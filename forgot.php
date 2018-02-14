@@ -58,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	<div class="form">
     <h1 class="loginss">Reset Your Password</h1>
 
-		<form class="loginss" action="forgot.php" method="post">
+		<form action="forgot.php" method="post">
 			<div class="field-wrap">
 				<label>
 					Email Address<span class="req">*</span>

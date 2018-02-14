@@ -36,7 +36,7 @@ else {
 <body>
     <div class="form">
 		<h1>Choose a new password</h1>
-        <form class="loginss" action="reset_password.php" method="post">
+        <form action="reset_password.php" method="post">
 			<div class="field-wrap">
 				<label>
 					New Password<span class="req">*</span>

@@ -40,7 +40,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 		<h1 class="loginss">Welcome to UpStrain!</h1>
 		
 			<!-- Form is created, method is set to post, the id is login -->
-			<form class="loginss" action="logsyst.php" method="post" autocomplete="off">
+			<form action="logsyst.php" method="post" autocomplete="off">
 								
 				<!-- Username field -->
 				<div class="field-wrap"> 	
@@ -72,7 +72,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 		<h1 class="loginss">Register a new account</h1>
 			
 			<!-- Form is created, method is set to post, the id is register -->
-			<form class="loginss" action="logsyst.php" method="post" autocomplete="off">
+			<form action="logsyst.php" method="post" autocomplete="off">
 				
 				<!-- First name field -->
 				<div class="top-row">
