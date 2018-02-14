@@ -2,7 +2,9 @@
 /* Form for resetting password */
 
 require 'db.php';
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Checking that the email and hash variables are set
 // Get carries the variables passed to the script via the URL parameters
@@ -28,9 +30,12 @@ else {
 <!DOCTYPE html>
 <html >
 <head>
-  <meta charset="UTF-8">
-  <title>Reset Your Password</title>
-  <?php include 'css/logstyle.css'; ?>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Reset Your Password</title>
+  	<link href="css/upstrain.css" rel="stylesheet">
+	<link href="css/logstyle.css" rel="stylesheet">
+	<?php include 'top.php'; ?>
 </head>
 
 <body>

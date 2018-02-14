@@ -1,5 +1,7 @@
 <?php 
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 ?>
 <?php
 
@@ -65,6 +67,7 @@ else {
 
 					// If the insertion succeeds the user is set to logged in, but not active (0)
 					if ( $mysqli->query($sql) ){
+						$_SESSION['user_id']= $user_id = $mysqli->query("SELECT user_id FROM users WHERE username='$username'") or die($mysqli->error());
 						$_SESSION['logged_in'] = true; // So we know the user has logged in
 						$_SESSION['active'] = 0; //0 until user activates their account with verify.php
 						$_SESSION['message'] = 	"Thank you for registering! 

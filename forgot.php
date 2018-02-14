@@ -1,7 +1,9 @@
 <?php 
 /* Reset Password form */
 require 'db.php';
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 // Checks if the form is submitted with method="post"
 if ($_SERVER['REQUEST_METHOD']=='POST'){
@@ -33,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 		
 							Please click on this link to reset your password:
 
-							http://localhost/login-system/reset.php?email='.$email.'&hash='.$hash;  
+							http://localhost/reset.php?email='.$email.'&hash='.$hash;  
 
 		mail($to, $subject, $message_body);
 		
