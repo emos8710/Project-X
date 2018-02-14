@@ -7,21 +7,26 @@
 	$user_id = $_SESSION['user_id'];
 	
 	// IMPLEMENT WHEN LOGIN WORKS
-	$isloggedin = TRUE;
-	//if(!isset($_SESSION['user_id'])){
-	//	$isloggedin = TRUE;
-	//}
-	//else {
-	//	
-	//}
-	$isadmin = FALSE;
-	//if(isset($_SESSION['isadmin'])) {
-	//	$isadmin = TRUE;
-	//}
-	$isuser = TRUE;
-	//if($_session['user_id'] == $user_id) {
-	//	$isuser = TRUE;
-	//}
+	if(!isset($_SESSION['user_id'])){
+		$isloggedin = TRUE;
+	}
+	else {
+		$isadmin = FALSE;
+	}
+	
+	if(isset($_SESSION['admin']) && $_SESSION['admin']==1) {
+		$isadmin = TRUE;
+	}
+	else {
+		$isadmin = FALSE;
+	}
+	
+	if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) {
+		$isuser = TRUE;
+	}
+	else {
+		$isuser = FALSE;
+	}
 	
 	// Connect to database
 	include 'scripts\db.php';
