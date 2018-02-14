@@ -2,7 +2,7 @@
 		<div class="innertube">	
 		
 			<?php
-			if($isadmin || $isuser) {
+			if($admin || $isuser) {
 				?>
 
 				<?php

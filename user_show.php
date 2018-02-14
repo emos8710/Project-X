@@ -38,7 +38,7 @@
 				$info = mysqli_fetch_assoc($user_result);
 				$entry = mysqli_fetch_assoc($entry_result);
 			
-				if ($isloggedin) {?>
+				if ($loggedin) {?>
 				<!-- Show user information -->
 				<!-- Shows user as admin or user -->
 				<?php if ($info["admin"] == 1) echo "<h2>Admin ";
@@ -60,7 +60,7 @@
 				?>
 				<br>
 				
-				<?php if($isadmin || $isuser) {
+				<?php if($admin || $isuser) {
 					?>
 					<p>
 					<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit=1">Edit user information</a>
@@ -96,7 +96,7 @@
 						."<td>".$entry["bname"]."</td>";
 						
 						// Decide if user can edit entries
-						if ($isadmin OR $isuser) {
+						if ($admin) {
 							$edit = "<td style=\"border: none;\">"
 							."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
 						} else $edit = "";
@@ -113,7 +113,7 @@
 						$entry = mysqli_fetch_assoc($entry_result);
 						while (TRUE) {
 							// Check if different entry or end of results
-							if(!$entry OR $entry["eid"] != $current_entry) {
+							if(!$entry || $entry["eid"] != $current_entry) {
 								break;
 							}
 							// Add next insert to list

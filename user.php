@@ -6,20 +6,6 @@
 	// Fetch the user id from URL
 	$user_id = $_GET["user_id"];
 	
-	// IMPLEMENT WHEN LOGIN WORKS
-	if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true){
-		$isloggedin = TRUE;
-	}
-	else {
-		$isloggedin = FALSE;
-	}
-	
-	if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-		$isadmin = TRUE;
-	} else {
-		$isadmin = FALSE;
-	}
-	
 	if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) {
 		$isuser = TRUE;
 	} else {

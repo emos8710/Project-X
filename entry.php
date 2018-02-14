@@ -7,20 +7,6 @@
 		session_start();
 	}
 	
-	// IMPLEMENT WHEN LOGIN WORKS
-	if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true){
-		$isloggedin = TRUE;
-	}
-	else {
-		$isloggedin = FALSE;
-	}
-	
-	if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
-		$isadmin = TRUE;
-	} else {
-		$isadmin = FALSE;
-	}
-	
 	// Fetch the upstrain id from URL
 	if (isset($_GET["upstrain_id"])) {
 		$upstrain_id = $_GET["upstrain_id"];

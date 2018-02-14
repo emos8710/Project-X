@@ -18,7 +18,7 @@
 				
 				echo "<h2>UpStrain Entry ".$upstrain_id."</h2>";
 				
-				if($isadmin) {
+				if($admin) {
 					?>
 					<p>
 					<a class="edit" href="<?php echo $_SERVER['REQUEST_URI'] ?>&edit=1">Edit entry</a>
