@@ -1,21 +1,9 @@
 <main>
+	<div class="innertube">
 	
 	<?php
-	// IMPLEMENT WHEN LOGIN WORKS
-	//if(!isset($_SESSION['user_id'])){
-	//	
-	//}
-	$isadmin = TRUE;
-	//if(isset($_SESSION['isadmin']) && $_SESSION['isadmin'] != 0) {
-	//	$isadmin = TRUE;
-	//} else {
-	//	isadmin = FALSE;
-	//}
-	
 	if($isadmin) {
 		?>
-	
-	<div class="innertube">
 
 		<?php
 		include 'scripts/db.php';
@@ -42,12 +30,10 @@
 		<p>
 		Down here, there will be some sublime messages that will give you an absolute confidence
 		<br>
-		in whether your edit was amazingly successful, or a total fuckup. 
+		in whether your edit was amazingly successful, or a total mess. 
 		<br>
 		It will be <strong><u>glorious</u></strong>.
 		</p>
-		
-	</div>
 	
 		<?php
 		} else {
@@ -60,5 +46,6 @@
 			
 		}
 		?>
-
+		
+	</div>
 </main>
