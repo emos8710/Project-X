@@ -117,7 +117,7 @@
 				<br>
 				<h3>Contact information</h3>
 				<p>Name: <?php echo $info["fname"]." ".$info["lname"] ?>
-				<br>Email: <?php echo $info["email"] ?>
+				<br>Email: <?php echo "<a href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?>
 				<br>Phone: <?php echo $info["phone"] ?></p>
 				
 				<?php } else {
@@ -173,7 +173,7 @@
 						
 						// Part 3 of entry row, with or without edit option
 						$tpart_3 = "<td>".$entry["year_created"]."</td>"
-						."<td>".$entry["entry_reg"]."</td>"
+						."<td><a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]." target=\"_blank\">".$entry["entry_reg"]."</a></td>"
 						."<td>".$entry["comment"]."</td>"
 						.$edit
 						."</tr>";
