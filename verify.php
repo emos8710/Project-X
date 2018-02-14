@@ -1,9 +1,7 @@
 <?php 
 /* Verifies the user */
 require 'db.php';
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
 // Makes sure that the email and hash variables aren't empty
 if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
@@ -18,9 +16,7 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
         header("location: error.php");
     }
     else {
-		$user = $result->fetch_assoc(); // $user is now an array containing the rows belonging to the matched username in the query
-        $_SESSION['user_id'] = $user['user_id'];
-		$_SESSION['message'] = "Your account has been activated!";
+        $_SESSION['message'] = "Your account has been activated!";
         
         // Set the user status to active (active = 1)
         $mysqli->query("UPDATE users SET active='1' WHERE email='$email'") or die($mysqli->error);

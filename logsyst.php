@@ -1,9 +1,7 @@
 <?php 
 /* This is the login system page! */
 require 'db.php';
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 ?>
 
 <!DOCTYPE html>

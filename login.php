@@ -1,7 +1,5 @@
 <?php 
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 ?>
 <?php
 /* The login process */
@@ -17,7 +15,7 @@ if ($result->num_rows==0){
 }
 // Otherwise, the username exists
 else { 
-    $user = $result->fetch_assoc(); // $user is now an array containing the rows belonging to the matched username in the query
+    $user = $result->fetch_assoc(); // $user is not an array containing the rows belonging to the matched username in the query
 
 	// Checks if the entered password matches the password saved for the user
 	// If the passwords match the results are saved to the session variables 

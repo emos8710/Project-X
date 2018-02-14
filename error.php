@@ -1,8 +1,6 @@
 <?php
 /* Displays all error messages */
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 ?>
 <!DOCTYPE html>
 <html>

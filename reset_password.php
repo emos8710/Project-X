@@ -1,9 +1,7 @@
 <?php
 /* Password reset process, updates database with new user password */
 require 'db.php';
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 
 // Make sure the form is being submitted with method="post"
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 

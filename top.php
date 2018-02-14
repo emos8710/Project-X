@@ -4,6 +4,12 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
 } else {
 	$loggedin = FALSE;
 }
+
+if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
+	$admin = TRUE;
+} else {
+	$admin = FALSE;
+}
 ?>
 
 <!-- Navigation bar and logo -->
@@ -46,26 +52,30 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
 			?> href="help.php">Help</a>
 			
 		<!-- Profile (if logged in) -->
-		<?php /* if($loggedin) {
+		<?php if($loggedin) {
 			?>
-			<!-- <a <?php
-					if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']){
+			
+			<a <?php
+					if(preg_match("#^user.php?user_id=".$_SESSION['user_id']."#i", basename($_SERVER['REQUEST_URI'])) === 1) {
 						echo "class=\"active\"";
 					}
 				?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My profile</a>
 			<?php
-		} -->
-		*/ 
-		if(isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) { ?>
-			<a <?php
-				if(basename($_SERVER['PHP_SELF'])=="user.php") {
-					echo "class=\"active\" ";
-				} 
-				?> href="user.php">My Profile</a>
-		<?php
 		}
-		?> 
-				
+		?>
+		
+		<!-- Control Panel (if admin) -->
+		<?php if($admin) {
+			?>
+			
+			<a <?php
+					if(basename($_SERVER['PHP_SELF']) == "control_panel.php") {
+						echo "class=\"active\"";
+					}
+				?> href="control_panel.php">Control Panel</a>
+			<?php
+		}
+		?>	
 			
 		<!-- Login -->
 		<?php			

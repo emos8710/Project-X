@@ -1,8 +1,6 @@
 <?php
 /* Log out process, unsets and destroys session variables */
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+session_start();
 session_unset();
 session_destroy(); 
 ?>
@@ -19,7 +17,12 @@ session_destroy();
 
 <body>
     <div class="form">
-          <h1 class="loginss">You have been logged out!</h1>
+          <h1 class="loginss">Thanks for stopping by</h1>
+              
+          <p class="loginss"><?= 'You have been logged out!'; ?></p>
+          
+          <a class="loginss" href="logsyst.php"><button class="button button-block"/>Home</button></a>
+
     </div>
 </body>
 </html>
