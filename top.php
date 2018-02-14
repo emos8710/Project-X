@@ -1,4 +1,5 @@
 <!-- Navigation bar and logo -->
+
 	<nav class="navigation">
 	
 		<!-- Logo -->
@@ -37,12 +38,21 @@
 				?> href="help.php">Help</a>
 			
 			<!-- Login -->
-			<a class="login 
-				<?php 
-					if(basename($_SERVER['PHP_SELF'])=="logsyst.php"){
-						echo " active";
-					} 
-				?>" href="logsyst.php">Log in</a>
+			<?php			
+				if(isset($_SESSION['active']) && $_SESSION['active']==true && isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true) { 
+			?>
+					<a class="login" href="logout.php">Log Out</a>
+			<?php 
+				}
+				else{ 
+			?>
+					<a class="login 
+					<?php 
+						if(basename($_SERVER['PHP_SELF'])=="logsyst.php"){
+							echo " active";
+					}	
+				}
+			?>" href="logsyst.php">Log in</a>
 		
 		
 		<!-- Quick search -->
