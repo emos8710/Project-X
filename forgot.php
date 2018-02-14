@@ -63,7 +63,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 				<label>
 					Email Address<span class="req">*</span>
 				</label>
-				<input type="email"required autocomplete="off" name="email"/>
+				<input class="loginss" type="email"required autocomplete="off" name="email"/>
 			</div>
 	
 			<p class="login"><a class="loginss" href="logsyst.php">Back to the login page</a></p>

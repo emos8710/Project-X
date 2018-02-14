@@ -90,7 +90,7 @@ label.highlight { /* ???? */
   color: #000000; /* #ffffff; */
 }
 
-input, textarea {
+input.loginss, textarea.loginss {
   font-size: 22px;
   display: block;
   width: 100%;

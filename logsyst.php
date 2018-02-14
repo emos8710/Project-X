@@ -47,7 +47,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label> 
 						Username <span class="req">*</span>
 					</label>
-					<input type="text" required autocomplete="on" name="username"/>
+					<input class="loginss" type="text" required autocomplete="on" name="username"/>
 				</div>
 								
 				<!-- Password field -->
@@ -55,7 +55,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label> 
 						Password <span class="req">*</span>
 					</label>
-					<input type="password" required autocomplete="off" name="password"/>
+					<input class="loginss" type="password" required autocomplete="off" name="password"/>
 				</div>
           		  
 				<!-- Link to Reset Password -->
@@ -80,7 +80,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label> 
 						First Name <span class="req">*</span>
 					</label>
-					<input type="text" required autocomplete="off" name='firstname' />
+					<input class="loginss" type="text" required autocomplete="off" name='firstname' />
 				</div>
         
 				<!-- Last name field -->
@@ -88,7 +88,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label> 
 						Last Name <span class="req">*</span>
 					</label>
-					<input type="text"required autocomplete="off" name='lastname' />
+					<input class="loginss" type="text"required autocomplete="off" name='lastname' />
 				</div>
 				</div>
 
@@ -97,7 +97,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label>
 						Email Address <span class="req">*</span>
 					</label>
-					<input type="email"required autocomplete="off" name='email' />
+					<input class="loginss" type="email"required autocomplete="off" name='email' />
 				</div>
 				
 				<!-- Phone number field -->
@@ -105,7 +105,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label>
 						Phone number
 					</label>
-					<input type="number" autocomplete="off" name='phone' />
+					<input class="loginss" type="number" autocomplete="off" name='phone' />
 				</div>
 				
 				<!-- Username field -->
@@ -113,7 +113,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label>
 						Username <span class="req">*</span>
 					</label>
-					<input type="text" required autocomplete="off" name='username' />
+					<input class="loginss" type="text" required autocomplete="off" name='username' />
 				</div>
 				
 				<!-- Password field -->
@@ -122,7 +122,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label>
 						Password <span class="req">*</span>
 					</label>
-					<input type="password"required autocomplete="off" name='password'/>
+					<input class="loginss" type="password"required autocomplete="off" name='password'/>
 				</div>
 				
 				<!-- Confirm password field -->
@@ -130,7 +130,7 @@ if($_SERVER['REQUEST_METHOD']=='POST'){ 	// Checks if the post method was used t
 					<label>
 						Confirm password <span class="req">*</span>
 					</label>
-					<input type="password"required autocomplete="off" name='confpassword'/>
+					<input class="loginss" type="password"required autocomplete="off" name='confpassword'/>
 				</div>
 				</div> 
 				<!-- Registration button -->

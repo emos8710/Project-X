@@ -41,19 +41,19 @@ else {
 				<label>
 					New Password<span class="req">*</span>
 				</label>
-				<input type="password"required name="newpassword" autocomplete="off"/>
+				<input class="loginss" type="password"required name="newpassword" autocomplete="off"/>
 			</div>
               
 			<div class="field-wrap">
 				<label>
 					Confirm New Password<span class="req">*</span>
 				</label>
-				<input type="password"required name="confirmpassword" autocomplete="off"/>
+				<input class="loginss" type="password"required name="confirmpassword" autocomplete="off"/>
 			</div>
           
 			<!-- This input field is needed, to get the email of the user -->
-			<input type="hidden" name="email" value="<?= $email ?>">    
-			<input type="hidden" name="hash" value="<?= $hash ?>">    
+			<input  class="loginss" type="hidden" name="email" value="<?= $email ?>">    
+			<input  class="loginss" type="hidden" name="hash" value="<?= $hash ?>">    
               
 			<button class="button button-block"/>Reset</button>
           
