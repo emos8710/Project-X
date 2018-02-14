@@ -1,5 +1,20 @@
 <main>
-
+	
+	<?php
+	// IMPLEMENT WHEN LOGIN WORKS
+	//if(!isset($_SESSION['user_id'])){
+	//	
+	//}
+	$isadmin = FALSE;
+	//if(isset($_SESSION['isadmin']) && $_SESSION['isadmin'] != 0) {
+	//	$isadmin = TRUE;
+	//} else {
+	//	isadmin = FALSE;
+	//}
+	
+	if($isadmin) {
+		?>
+	
 	<div class="innertube">
 
 		<?php
@@ -33,5 +48,17 @@
 		</p>
 		
 	</div>
+	
+		<?php
+		} else {
+		
+			?>
+			<h3 style="color:red">You are not allowed to edit entries (you are not an admin).</h3>
+			<br>
+			<a href="entry.php?upstrain_id=<?php echo "$upstrain_id" ?> ">Go back to entry page</a>
+			<?php
+			
+		}
+		?>
 
 </main>
