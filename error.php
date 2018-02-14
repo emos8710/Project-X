@@ -5,9 +5,13 @@ session_start();
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Error</title>
-  <?php include 'css/css.html'; ?>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Error</title>
+	<link href="css/logstyle.css" rel="stylesheet">
+	<?php include 'top.php'; ?>
 </head>
+
 <body>
 <div class="form">
     <h1>Error</h1>

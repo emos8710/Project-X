@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Reset Password</title>
-	<link href="css/upstrain.css" rel="stylesheet">
+	<link href="css/logstyle.css" rel="stylesheet">
 	<?php include 'top.php'; ?>
 </head>
 
