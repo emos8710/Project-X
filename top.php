@@ -62,7 +62,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 			?> href="help.php">Help</a>
 			
 		<?php
-		if($loggedin) { ?>
+		if($loggedin && isset($_SESSION['user_id'])) { ?>
 			<!-- Profile (if logged in) -->
 			<a <?php
 				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit=1") {
