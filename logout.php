@@ -13,13 +13,16 @@ session_destroy();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Logged out</title>
 	<link href="css/upstrain.css" rel="stylesheet">
-	<link href="css/logstyle.css" rel="stylesheet">
-	<?php include 'top.php'; ?>
+
 </head>
 
 <body>
+	<?php include 'top.php'; ?>
+<main>
     <div class="form">
-          <h1 class="loginss">You have been logged out!</h1>
+          <h1 class="login">You have been logged out!</h1>
     </div>
+</main>
+	<?php include 'bottom.php'; ?>
 </body>
 </html>

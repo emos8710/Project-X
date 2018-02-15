@@ -7,8 +7,8 @@ if (session_status() == PHP_SESSION_NONE) {
 /* The login process */
 
 // Protection against SQL-injections 
-$username = $mysqli->escape_string($_POST['username']); 					// Extra characters are removed
-$result = $mysqli->query("SELECT * FROM users WHERE username='$username'");	// $result becomes the row resulting from the query
+$username 	= $mysqli->escape_string($_POST['username']); 					// Extra characters are removed
+$result 	= $mysqli->query("SELECT * FROM users WHERE username='$username'");	// $result becomes the row resulting from the query
 
 // If $result contains no rows then the user does not exist
 if ($result->num_rows==0){ 				
@@ -17,8 +17,8 @@ if ($result->num_rows==0){
 }
 // Otherwise, the username exists
 else { 
-    $user = $result->fetch_assoc(); // $user is now an array containing the rows belonging to the matched username in the query
-
+    $user = $result->fetch_assoc(); // $user is now an array containing the rows belonging to the matched username in the query 
+		  
 	// Checks if the entered password matches the password saved for the user
 	// If the passwords match the results are saved to the session variables 
     if (password_verify($_POST['password'], $user['password'])) { 
@@ -30,12 +30,19 @@ else {
 		$_SESSION['username'] 		= $user['username'];
         $_SESSION['active'] 		= $user['active'];
 		$_SESSION['admin'] 			= $user['admin'];
-        
-		// The session is set to logged in
-        $_SESSION['logged_in'] = true;
-
+		
+		// Keep reminding the user this account is not active, until they activate
+        if ($_SESSION['active']==false){
+				$_SESSION['message'] = 	"Your account is inactive. You will able to log in when the administrator has verified your account.";
+				$_SESSION['logged_in']==false;
+				header("location: error.php");
+        }
+		elseif ($_SESSION['active']==true){
+				// The session is set to logged in
+				$_SESSION['logged_in'] = true;
+				header("location: index.php");
+		}
 		// The user is sent to the profile page
-        header("location: index.php");
     }
 	// If the passwords do not match an error is sent to error.php
     else {

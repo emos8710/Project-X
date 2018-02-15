@@ -71,21 +71,20 @@ else {
 						$_SESSION['user_id']= $user_id = $id_query->fetch_assoc()['user_id'];
 						$_SESSION['logged_in'] = true; // So we know the user has logged in
 						$_SESSION['active'] = 0; //0 until user activates their account with verify.php
-						$_SESSION['message'] = 	"Thank you for registering! 
-												A confirmation link has been sent to the administrator. 
-												Your account will be activated when the administrator has confirmed that you are a 
-												member of the iGEM team this year. 
-					
-												If the account is not activated within 72 hours, your UpStrain account will be removed.";
+						$_SESSION['message'] = 	"A confirmation link has been sent to the administrator." 
+												." Your account will be activated when the administrator has confirmed that you are a 
+												member of the iGEM team this year."
+	
+												." If the account is not activated within 72 hours, your UpStrain account will be removed.";
 
 						// Send registration confirmation link (verify.php)
 						$to      		= $email;
 						$subject 		= 'Account Verification ( UpStrain )';
-						$message_body 	= 	'Hi, thanks for registering!
+						$message_body 	= 	'Hi, thanks for registering!'
 
-											Please click this link to activate '.$first_name.'s UpStrain account:
+											.' Please click this link to activate '.$first_name.'s UpStrain account:'
 
-											http://localhost/verify.php?email='.$email.'&hash='.$hash;  
+											.' http://localhost/verify.php?email='.$email.'&hash='.$hash;  
 
 						mail( $to, $subject, $message_body );
 						header("location: profile.php"); 

@@ -27,7 +27,6 @@ if (session_status() == PHP_SESSION_NONE) {
 				endif;
 				?>
 			</p>     
-			<a class="login" href="logsyst.php"><button class="button"/>Back</button></a>
 		</div>
 	</main>
 	<?php include 'bottom.php'; ?>

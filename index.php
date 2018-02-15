@@ -26,7 +26,7 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 				<h1 class="loginss">You have been logged out!</h1>
 				<?php 
 				} ?>
-			
+				
 		</div>
 	</main>
 	
