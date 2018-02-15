@@ -51,30 +51,30 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Reset Password</title>
 	<link href="css/upstrain.css" rel="stylesheet">
-	<link href="css/logstyle.css" rel="stylesheet">
-	<?php include 'top.php'; ?>
 </head>
 
-<body>  
-	<div class="form">
-    <h1 class="loginss">Reset Your Password</h1>
-
-		<form action="forgot.php" method="post">
-			<div class="field-wrap">
-				<label>
-					Email Address<span class="req">*</span>
-				</label>
-				<input class="loginss" type="email"required autocomplete="off" name="email"/>
-			</div>
-	
-			<p class="login"><a class="loginss" href="logsyst.php">Back to the login page</a></p>
-	
-			<button class="button button-block"/>Reset</button>
-		</form>
-	</div>
-          
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="js/index.js"></script>
+<body>
+	<?php include 'top.php'; ?>
+	<main>
+		<div class="form">
+			<h1 class="login">Reset Your Password</h1>
+			<form action="forgot.php" method="post">
+			
+				<div class="field-wrap">
+					<label>
+						Email Address<span class="req">*</span>
+					</label>
+					<input class="login" type="email"required autocomplete="off" name="email"/>
+				</div>
+		
+				<a class="login" id="right" href="logsyst.php">Back to log in</a>
+				<button class="button"/>Reset</button>
+			</form>
+		</div>
+	<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+	<script src="js/index.js"></script>
+    </main>
+	<?php include 'bottom.php'; ?>
 </body>
 
 </html>

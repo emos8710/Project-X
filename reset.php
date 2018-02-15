@@ -32,41 +32,40 @@ else {
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Reset Your Password</title>
+	<title>Password Reset</title>
   	<link href="css/upstrain.css" rel="stylesheet">
-	<link href="css/logstyle.css" rel="stylesheet">
-	<?php include 'top.php'; ?>
 </head>
 
 <body>
-    <div class="form">
-		<h1>Choose a new password</h1>
-        <form action="reset_password.php" method="post">
-			<div class="field-wrap">
-				<label>
-					New Password<span class="req">*</span>
-				</label>
-				<input class="loginss" type="password"required name="newpassword" autocomplete="off"/>
-			</div>
-              
-			<div class="field-wrap">
-				<label>
-					Confirm New Password<span class="req">*</span>
-				</label>
-				<input class="loginss" type="password"required name="confirmpassword" autocomplete="off"/>
-			</div>
-          
-			<!-- This input field is needed, to get the email of the user -->
-			<input  class="loginss" type="hidden" name="email" value="<?= $email ?>">    
-			<input  class="loginss" type="hidden" name="hash" value="<?= $hash ?>">    
-              
-			<button class="button button-block"/>Reset</button>
-          
-          </form>
-
-    </div>
-<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
-<script src="js/index.js"></script>
-
+	<?php include 'top.php'; ?>
+	<main>
+		<div class="form">
+			<h1>Choose a new password</h1>
+			<form action="reset_password.php" method="post">
+				<div class="field-wrap">
+					<label>
+						New Password<span class="req">*</span>
+					</label>
+					<input class="login" type="password"required name="newpassword" autocomplete="off"/>
+				</div>
+				  
+				<div class="field-wrap">
+					<label>
+						Confirm New Password<span class="req">*</span>
+					</label>
+					<input class="login" type="password"required name="confirmpassword" autocomplete="off"/>
+				</div>
+			  
+				<!-- This input field is needed, to get the email of the user -->
+				<input  class="login" type="hidden" name="email" value="<?= $email ?>">    
+				<input  class="login" type="hidden" name="hash" value="<?= $hash ?>">    
+				  
+				<button class="button"/>Reset</button>
+			</form>
+		</div>
+		<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<script src="js/index.js"></script>
+	</main>
+	<?php include 'bottom.php'; ?>
 </body>
 </html>

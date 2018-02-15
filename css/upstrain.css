@@ -1,5 +1,7 @@
-
-
+* {
+  box-sizing: border-box;
+}
+/* GENERAL */
 body {
 	margin: 0;
 	padding: 0;
@@ -7,54 +9,56 @@ body {
 	font-family: Sans-serif;
 }
 
+nav {
+	width: 100%;
+	min-width: 1000px;
+	position: fixed;
+}
+
+main {
+	margin-top: 68px;
+	overflow-y: auto;
+	width: 100%;
+	float: left;
+	background: #ccc;
+}
+
 footer {
 	clear: both;
 	background: #eee;
+}
+
+.innertube {	/* Padding for content */
+	margin: 15px;
+	width: 95%;
+}
+
+/* TEXT HEADERS */
+h1, h2, h3, h4, h5, h6 {
+	color: black;
+	margin: 0;
+}
+
+h1.login {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+}
+
+/* TEXT BLOCKS */
+p {
+	margin: 0;
 }
 
 footer p {
 	font-size: small;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	color: black;
-	margin: 0;
+p.login {
+    margin-bottom: 15px;
 }
 
-h1.loginss {
-  text-align: center;
-  margin-bottom: 40px;
-  font-weight: 300;
-}
-
-h2.loginss {
-    text-align: center;
-    color: #1ab188;
-    font-weight: 1000;
-    margin: 0;
-}
-
-header {
-	background: #ccc;
-	padding: 15px;
-}
-
-html, body {
-    max-width: 100%;
-    overflow-x: hidden;
-}
-
-main {
-	width: 100%;
-	float: left;
-	overflow: auto;
-	background: #ccc;
-}
-
-p { /* "The plasmid database for iGEM uppsala" */
-	margin: 0;
-}
-
+/* TABLES */
 table {
 	border: none;
 	background-color: rgba(127, 255, 212, 0.5);
@@ -76,31 +80,72 @@ table.entry td {
 	white-space: nowrap;
 }
 
-a.loginss {
+/* SPAN */
+span.req {
+    color: #1ab188;
+    font-weight: bold;
+}
+
+/* LINKS */
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+a.login {
   text-decoration: none;
   color: #1ab188;
 }
 
-a.external::after {
-	background-image: url(../images/external_link.png);
-    background-size: 12px 12px;
-    display: inline-block;
-    width: 12px; 
-    height: 12px;
-    content:"";
-	margin-left: 3px;
-	margin-right: 12px;
+div.innertube a {
+	color: blue;
 }
 
-a.edit::after {
-	background-image: url(../images/edit.png);
-    background-size: 12px 12px;
-    display: inline-block;
-    width: 12px; 
-    height: 12px;
-    content:"";
-	margin-left: 3px;
-	margin-right: 12px;
+div.innertube a:hover {
+	color: green;
+}
+
+.navigation a {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 22px 16px;
+    font-size: 17px;
+}
+.navigation a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.navigation a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.navigation a.login {
+	float: right;
+	margin-left: 20px;
+}
+
+div.quicksearch a {
+	padding: 0;
+	font-size: small;
+}
+
+div.quicksearch a:hover {
+	color: #4CAF50;
+	background-color: inherit;
+}
+
+/* DIVS */
+div.form {
+  background: #f0f8ff; 
+  padding: 40px;
+  max-width: 600px;
+  margin: auto;
 }
 
 .backbone_inserts {
@@ -117,25 +162,8 @@ a.edit::after {
 	float: left;
 }
 
-.field-wrap {
-  position: relative;
-  margin-bottom: 40px;
-}
-
-.innertube {
-	/* Padding for content */
-	margin: 15px;
-	width: 95%;
-}
-
-.innertube a {
-	text-decoration: none;
-	color: blue;
-}
-
-.innertube a:hover {
-	text-decoration: underline;
-	color: green;
+.field-wrap {	/* For wrapping input fields */
+  margin-bottom: 20px;
 }
 
 .logo {
@@ -151,37 +179,28 @@ a.edit::after {
 	overflow: hidden;
 }
 
-.navigation a {
-    float: left;
-    color: black;
-    text-align: center;
-    padding: 22px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-.navigation a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.navigation a.active { /* Login button in top */
-    background-color: #4CAF50;
-    color: white;
-}
-.navigation a.login {
-	float: right;
-	margin-left: 20px;
-}
-
 .quicksearch {
 	float: right;
 }
 
-.quicksearch input[type=text] {
+/* INPUT FIELDS */
+input {
 	padding: 6px;
+	border: 1px solid #a0b3b0;
+}
+
+.quicksearch input[type=text] {
 	margin-top: 12px;
 }
 
+input.login {
+  width: 100%;
+  height: 100%;
+  color: #000000;
+  border-radius: 0;
+}
+
+/* BUTTONS */
 .quicksearch button {
 	float: right;
 	padding: 0;
@@ -194,20 +213,71 @@ a.edit::after {
 	background-color: #ccc;
 }
 
+.button {
+	border: none;
+	padding: 15px 0;
+	font-size: 35px;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	background: #4CAF50;
+	color: white;
+	display: block;
+	width: 100%;
+}
+.button:hover {
+  background: #179b77;
+}
+
+/* IMAGES */
 img.quicksearch {
-	height: 31.5px;
+	height: 29px;
 }
 
-.quicksearch a {
-	padding: 0;
-	font-size: small;
+a.external::after { /* Adds external link image after link */
+	background-image: url(../images/external_link.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
 }
 
-.quicksearch a:hover {
-	background-color: inherit;
-	color: #4CAF50;
+a.edit::after {	/* Adds edit image after link */
+	background-image: url(../images/edit.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+	margin-left: 3px;
+	margin-right: 12px;
 }
 
+/* LOGIN SYSTEM SPECIFIC */
 .top-row > div:last-child { /* Puts input boxes next to each other */
   margin: 0;
+}
+
+.top-row > div { /* Makes input boxes smaller */
+  float: left;
+  width: 48%;
+  margin-right: 4%;
+}
+
+.top-row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.tab-content > div:last-child { /* Hides login or register tab when not active */
+  display: none;
+}
+
+#right {
+	float: right;
+	margin-bottom: 15px;
 }
