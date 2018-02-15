@@ -111,7 +111,7 @@ if (session_status() == PHP_SESSION_NONE) {
 							<label>
 								Username <span class="req">*</span>
 							</label>
-							<input class="login" type="text" required autocomplete="off" name='username' />
+							<input class="login" pattern=".{3,50}" type="text" required autocomplete="off" name='username' required title="The username must be between 3-50 characters"/>
 						</div>
 						
 						<!-- Password field -->
@@ -120,7 +120,7 @@ if (session_status() == PHP_SESSION_NONE) {
 							<label>
 								Password <span class="req">*</span>
 							</label>
-							<input class="login" type="password"required autocomplete="off" name='password'/>
+							<input class="login" pattern=".{8,}" type="password" required autocomplete="off" name='password' required title="The password must be at least 8 characters"/>
 						</div>
 						
 						<!-- Confirm password field -->
@@ -128,9 +128,10 @@ if (session_status() == PHP_SESSION_NONE) {
 							<label>
 								Confirm password <span class="req">*</span>
 							</label>
-							<input class="login" type="password"required autocomplete="off" name='confpassword'/>
+							<input class="login" pattern=".{8,}" type="password" required autocomplete="off" name='confpassword' required title="The password must be at least 8 characters"/>
 						</div>
 						</div> 
+						
 						<!-- Registration button -->
 						<button type="submit" class="button" name="register" />Register</button>
 					
