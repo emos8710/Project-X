@@ -46,14 +46,14 @@ else {
 					<label>
 						New Password<span class="req">*</span>
 					</label>
-					<input class="login" type="password"required name="newpassword" autocomplete="off"/>
+					<input class="login" pattern=".{8,}" type="password"required name="newpassword" autocomplete="off" required title="The password must be at least 8 characters"/>
 				</div>
 				  
 				<div class="field-wrap">
 					<label>
 						Confirm New Password<span class="req">*</span>
 					</label>
-					<input class="login" type="password"required name="confirmpassword" autocomplete="off"/>
+					<input class="login" pattern=".{8,}" type="password"required name="confirmpassword" autocomplete="off" required title="The password must be at least 8 characters"/>
 				</div>
 			  
 				<!-- This input field is needed, to get the email of the user -->
