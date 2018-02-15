@@ -13,7 +13,8 @@ else {
 }
 
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
-    session_unset();     // unset $_SESSION variable for the run-time 
+    $_SESSION['logged_in']=false;
+	session_unset();     // unset $_SESSION variable for the run-time 
     session_destroy();   // destroy session data in storage
 }
 else{
