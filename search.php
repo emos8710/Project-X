@@ -262,7 +262,9 @@
         "<a href=\"javascript:history.go(-1)\">Go back</a>";
 }
 ?>
-                      
+            
+            
+            
    </main>
         <?php include 'bottom.php'; ?>
     </body>
