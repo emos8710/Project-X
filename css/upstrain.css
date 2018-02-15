@@ -111,7 +111,7 @@ div.innertube a:hover {
 }
 
 .navigation a {
-    float: left;
+	float: left;
     color: black;
     text-align: center;
     padding: 22px 16px;
@@ -128,7 +128,6 @@ div.innertube a:hover {
 }
 
 .navigation a.login {
-	float: right;
 	margin-left: 20px;
 }
 
@@ -139,7 +138,6 @@ a.login {
 div.quicksearch a {
 	padding: 0;
 	font-size: small;
-	float: left;
 }
 
 div.quicksearch a:hover {
@@ -165,31 +163,44 @@ div.form {
 .entry_table {
 	padding-top: 50px;
 	padding-bottom: 50px;
-	width: 50%;
+	width: 60%;
 	float: left;
 }
 
-.field-wrap {	/* For wrapping input fields in login system */
+.field-wrap {	/* For wrapping input fields in the login system */
   margin-bottom: 20px;
 }
 
-.logo {
-	float: left;
+div.logo {
 	padding: 10px;
-	margin-right: 15%;
+	float: left;
+	clear: left;
 }
 
 nav.navigation {
-	white-space: nowrap;
+	
+	overflow: hidden;
 	background: #eee;
 	margin-top: 0;
 	clear: both;
-	overflow: hidden;
+	max-height: 68px;
+}
+
+div.nav-wrapper {
+	white-space: nowrap;
+}
+
+div.right-wrapper {
+	
+	padding: 0;
+	float: right;
+	clear: right;
 }
 
 div.quicksearch {
-	display: inline-block;
+	
 	padding-top: 10px;
+	float: left;
 }
 
 /* INPUT FIELDS */
