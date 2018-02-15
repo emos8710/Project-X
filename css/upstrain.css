@@ -33,6 +33,13 @@ footer {
 	width: 95%;
 }
 
+form {
+	margin: 0;
+}
+form.quicksearch {
+	height: 29px;
+}
+
 /* TEXT HEADERS */
 h1, h2, h3, h4, h5, h6 {
 	color: black;
@@ -95,11 +102,6 @@ a:hover {
 	text-decoration: none;
 }
 
-a.login {
-  text-decoration: none;
-  color: #1ab188;
-}
-
 div.innertube a {
 	color: blue;
 }
@@ -130,9 +132,14 @@ div.innertube a:hover {
 	margin-left: 20px;
 }
 
+a.login {
+  color: #1ab188;
+}
+
 div.quicksearch a {
 	padding: 0;
 	font-size: small;
+	float: left;
 }
 
 div.quicksearch a:hover {
@@ -162,7 +169,7 @@ div.form {
 	float: left;
 }
 
-.field-wrap {	/* For wrapping input fields */
+.field-wrap {	/* For wrapping input fields in login system */
   margin-bottom: 20px;
 }
 
@@ -172,15 +179,17 @@ div.form {
 	margin-right: 15%;
 }
 
-.navigation {
+nav.navigation {
+	white-space: nowrap;
 	background: #eee;
 	margin-top: 0;
 	clear: both;
 	overflow: hidden;
 }
 
-.quicksearch {
-	float: right;
+div.quicksearch {
+	display: inline-block;
+	padding-top: 10px;
 }
 
 /* INPUT FIELDS */
@@ -189,27 +198,26 @@ input {
 	border: 1px solid #a0b3b0;
 }
 
-.quicksearch input[type=text] {
-	margin-top: 12px;
+input.login {
+	width: 100%;
+	height: 100%;
+	color: #000000;
 }
 
-input.login {
-  width: 100%;
-  height: 100%;
-  color: #000000;
-  border-radius: 0;
+input.quicksearch {
+	float: left;
+	margin: 0;
 }
 
 /* BUTTONS */
-.quicksearch button {
-	float: right;
-	padding: 0;
-	margin-top: 12px;
+button.quicksearch {
 	cursor: pointer;
 	border: none;
+	padding: 0;
+	height: 29px;
 }
 
-.quicksearch button:hover {
+button.quicksearch:hover {
 	background-color: #ccc;
 }
 
@@ -231,7 +239,7 @@ input.login {
 
 /* IMAGES */
 img.quicksearch {
-	height: 29px;
+	height: 100%;
 }
 
 a.external::after { /* Adds external link image after link */

@@ -98,8 +98,8 @@ else {
 	
 	<!-- Quick search -->
 	<div class="quicksearch">
-		<form action="entry.php">
-			<input type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
+		<form class="quicksearch" action="entry.php">
+			<input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
 			<button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png"></img></button>
 		</form>
 		<a href="search.php">Advanced search</a>
