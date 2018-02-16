@@ -153,17 +153,17 @@ div.form {
   margin: auto;
 }
 
-.backbone_inserts {
+div.backbone_inserts {
 	padding-top: 50px;
 	padding-bottom: 50px;
 	width: 50%;
 	float: right;
 }
 
-.entry_table {
+div.entry_table {
 	padding-top: 50px;
 	padding-bottom: 50px;
-	width: 60%;
+	width: 50%;
 	float: left;
 }
 
@@ -275,6 +275,36 @@ a.edit::after {	/* Adds edit image after link */
 	margin-right: 12px;
 }
 
+button.control-panel-edit::after { /* Add edit image to "edit" button */
+	background-image: url(../images/edit.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+	margin-left: 3px;
+}
+
+button.control-panel-delete::after { /* Add trashcan image to "delete" button */
+	background-image: url(../images/trash.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+	margin-left: 3px;
+}
+
+button.control-panel-admin::after { /* Add admin image to "make admin" button */
+	background-image: url(../images/admin.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+	margin-left: 3px;
+}
+
 /* LOGIN SYSTEM SPECIFIC */
 .top-row > div:last-child { /* Puts input boxes next to each other */
   margin: 0;
@@ -299,4 +329,21 @@ a.edit::after {	/* Adds edit image after link */
 #right {
 	float: right;
 	margin-bottom: 15px;
+}
+
+/* CONTROL PANEL */
+div.control_panel_hidden { /* Hides control panel content (page uses Javascript to show selected div) */
+	display:none;
+}
+
+div.control_panel_show { /* Style for region where the hidden divs' content will be shown */
+	
+}
+
+div.control_panel_menu { /* Styling the navigation of the control panel */
+	
+}
+
+ul.control_panel_nav { /* Style the navigation list */
+	list-style-type: none;
 }
