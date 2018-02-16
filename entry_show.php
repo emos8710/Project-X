@@ -21,7 +21,7 @@
 				if($admin) {
 					?>
 					<p>
-					<a class="edit" href="<?php echo $_SERVER['REQUEST_URI'] ?>&edit=1">Edit entry</a>
+					<a class="edit" href="<?php echo $_SERVER['REQUEST_URI'] ?>&edit">Edit entry</a>
 					</p>
 					<?php
 				}

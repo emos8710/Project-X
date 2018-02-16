@@ -52,7 +52,7 @@
 			<?php if(($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($isadmin || $isuser))) {
 				?>
 				<p>
-				<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit=1">Edit user information</a>
+				<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit">Edit user information</a>
 				</p>
 				<?php
 			}

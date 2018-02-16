@@ -44,7 +44,7 @@
 		// Close database connection
 		mysqli_close($link) or die("Could not close database connection");
 		
-		if (isset($_GET["edit"]) && $_GET["edit"] == "1") {
+		if (isset($_GET["edit"])) {
 			$edit = TRUE;
 		} else {
 			$edit = FALSE;

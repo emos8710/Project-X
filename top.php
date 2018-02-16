@@ -65,7 +65,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 		<?php
 		if($loggedin && isset($_SESSION['user_id'])) { ?>
 			<a <?php
-				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit=1") {
+				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit") {
 					echo "class=\"active\" ";
 				} 
 				?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
