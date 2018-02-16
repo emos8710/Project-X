@@ -1,4 +1,13 @@
 <?php
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
+    $_SESSION['logged_in']=false;
+	session_unset();     // unset $_SESSION variable for the run-time 
+    session_destroy();   // destroy session data in storage
+}
+else {
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+}
+
 if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
 	$loggedin = TRUE;
 } else {
@@ -10,15 +19,6 @@ if(isset($_SESSION['admin']) && $_SESSION['admin']==1) {
 }
 else {
 	$admin=FALSE;
-}
-
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
-    $_SESSION['logged_in']=false;
-	session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
-}
-else {
-	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 }
 ?>
 
