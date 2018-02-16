@@ -213,6 +213,7 @@ if (isset($_GET['content'])) {
 											<button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmDelete(event)"/>
 										</form>
 									</td>
+								</tr>
 								<?php
 							}
 						}
