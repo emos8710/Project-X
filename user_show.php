@@ -49,7 +49,7 @@
 			?>
 			<br>
 			
-			<?php if($admin || $isuser) {
+			<?php if(($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($isadmin || $isuser))) {
 				?>
 				<p>
 				<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit=1">Edit user information</a>
@@ -64,6 +64,14 @@
 			<h3>User entries</h3>
 			<!-- Create table -->
 			<table class="user_entries">
+			<?php if (mysqli_num_rows($entry_result) < 1) {
+				?>
+				<tr>
+					<td><strong>User has not added any entries (yet)</strong></td>
+				</tr>
+				<?php
+			} else {
+				?>
 				<tr>
 					<th>Entry ID</th>
 					<th>Strain</th>
@@ -75,46 +83,48 @@
 				</tr>
 			
 				<?php // Fill table one entry at a time
-				while ($entry) {
-					$current_entry = $entry["eid"];
-					
-					// Part 1 of entry row
-					$tpart_1 = "<tr>"
-					."<td><a href=\"entry.php?upstrain_id=".$entry["uid"]."\">".$entry["uid"]."</a></td>"
-					."<td>".$entry["sname"]."</td>"
-					."<td>".$entry["bname"]."</td>";
-					
-					// Decide if user can edit entries
-					if ($admin) {
-						$edit = "<td style=\"border: none;\">"
-						."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
-					} else $edit = "";
-					
-					// Part 3 of entry row, with or without edit option
-					$tpart_3 = "<td>".$entry["year_created"]."</td>"
-					."<td><a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]." target=\"_blank\">".$entry["entry_reg"]."</a></td>"
-					."<td>".$entry["comment"]."</td>"
-					.$edit
-					."</tr>";
-					
-					// Part 2 of entry row, find all inserts
-					$inserts = $entry["iname"];
-					$entry = mysqli_fetch_assoc($entry_result);
-					while (TRUE) {
-						// Check if different entry or end of results
-						if(!$entry || $entry["eid"] != $current_entry) {
-							break;
-						}
-						// Add next insert to list
-						$inserts = $inserts."<br>".$entry["iname"];
-						$entry = mysqli_fetch_assoc($entry_result);
-					}
 				
-					$tpart_2 = "<td>".$inserts."</td>";
+					while ($entry) {
+						$current_entry = $entry["eid"];
+						
+						// Part 1 of entry row
+						$tpart_1 = "<tr>"
+						."<td><a href=\"entry.php?upstrain_id=".$entry["uid"]."\">".$entry["uid"]."</a></td>"
+						."<td>".$entry["sname"]."</td>"
+						."<td>".$entry["bname"]."</td>";
+						
+						// Decide if user can edit entries
+						if ($admin) {
+							$edit = "<td style=\"border: none;\">"
+							."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
+						} else $edit = "";
+						
+						// Part 3 of entry row, with or without edit option
+						$tpart_3 = "<td>".$entry["year_created"]."</td>"
+						."<td><a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]." target=\"_blank\">".$entry["entry_reg"]."</a></td>"
+						."<td>".$entry["comment"]."</td>"
+						.$edit
+						."</tr>";
+						
+						// Part 2 of entry row, find all inserts
+						$inserts = $entry["iname"];
+						$entry = mysqli_fetch_assoc($entry_result);
+						while (TRUE) {
+							// Check if different entry or end of results
+							if(!$entry || $entry["eid"] != $current_entry) {
+								break;
+							}
+							// Add next insert to list
+							$inserts = $inserts."<br>".$entry["iname"];
+							$entry = mysqli_fetch_assoc($entry_result);
+						}
 					
-					// Piece together the parts to form a row of the table
-					echo $tpart_1.$tpart_2.$tpart_3;
+						$tpart_2 = "<td>".$inserts."</td>";
+						
+						// Piece together the parts to form a row of the table
+						echo $tpart_1.$tpart_2.$tpart_3;
+					}
 				}
-			// End table
-			echo "</table>"; 
-		?>
+				?>
+			<!-- End table -->
+			</table>

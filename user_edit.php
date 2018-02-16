@@ -1,5 +1,5 @@
 			<?php
-			if($admin || $isuser) {
+			if(($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($isadmin || $isuser))) {
 				?>
 
 				<?php

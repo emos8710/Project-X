@@ -60,10 +60,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 					echo "class=\"active\" ";
 				} 
 			?> href="help.php">Help</a>
-			
+
+		<!-- Profile (if logged in) -->			
 		<?php
 		if($loggedin && isset($_SESSION['user_id'])) { ?>
-			<!-- Profile (if logged in) -->
 			<a <?php
 				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit=1") {
 					echo "class=\"active\" ";
@@ -72,9 +72,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 		<?php
 		}
 		?> 
-				
-		<?php if($admin) { ?>
-			<!-- Control Panel (if admin) -->
+
+		<!-- Control Panel (if admin) -->		
+		<?php if($loggedin && $admin && isset($_SESSION['user_id'])) { ?>
 			<a <?php
 					if(basename($_SERVER['PHP_SELF'])=="control_panel.php") {
 						echo "class=\"active\"";
