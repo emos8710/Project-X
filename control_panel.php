@@ -89,7 +89,7 @@ if (isset($_GET['content'])) {
 					<p>
 					<?php
 					
-					// Perform form delete request
+					// Perform form requests
 					if($_SERVER['REQUEST_METHOD'] == 'POST') {
 						include 'db.php';
 						
@@ -158,6 +158,9 @@ if (isset($_GET['content'])) {
 							<?php
 							header("Refresh: 10; url=".$_SERVER['REQUEST_URI']);
 						}
+						
+						mysqli_close($link) or die("Could not close connection to database");
+						
 					}
 					?>
 					</p>
