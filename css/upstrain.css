@@ -282,7 +282,6 @@ button.control-panel-edit::after { /* Add edit image to "edit" button */
     width: 16px; 
     height: 16px;
     content:"";
-	margin-left: 3px;
 }
 
 button.control-panel-delete::after { /* Add trashcan image to "delete" button */
@@ -292,7 +291,6 @@ button.control-panel-delete::after { /* Add trashcan image to "delete" button */
     width: 16px; 
     height: 16px;
     content:"";
-	margin-left: 3px;
 }
 
 button.control-panel-admin::after { /* Add admin image to "make admin" button */
@@ -302,7 +300,6 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
     width: 16px; 
     height: 16px;
     content:"";
-	margin-left: 3px;
 }
 
 /* LOGIN SYSTEM SPECIFIC */
@@ -331,12 +328,7 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
 	margin-bottom: 15px;
 }
 
-/* CONTROL PANEL */
-div.control_panel_hidden { /* Hides control panel content (page uses Javascript to show selected div) */
-	display:none;
-}
-
-div.control_panel_show { /* Style for region where the hidden divs' content will be shown */
+div.control_panel_show { /* Style for region where the desired content will be shown */
 	
 }
 

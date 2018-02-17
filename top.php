@@ -3,9 +3,11 @@ if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 
     $_SESSION['logged_in']=false;
 	session_unset();     // unset $_SESSION variable for the run-time 
     session_destroy();   // destroy session data in storage
+	$timeout_message = "You have been logged out due to inactivity. Please log in again.";
 }
 else {
 	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+	$timeout_message = "";
 }
 
 if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
@@ -83,6 +85,9 @@ else {
 		<?php 
 		}
 		?>
+		
+		<?php echo "<strong style=\"font-size:10 color:red\">".$timeout_message."<strong>"; ?>
+		
 	</div>
 	
 	<div class="right-wrapper">

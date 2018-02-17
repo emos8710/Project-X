@@ -19,13 +19,22 @@
 </head>
 
 <body>
-
-    <?php include 'top.php'; ?>
+	
+    <?php include 'top.php'; 
+	
+	// Temporary variable so testing will be easier
+	$loggedin = TRUE;
+	
+	?>
 
     <!-- Main content goes here -->
     <main>
         <div class="innertube">
-            <h2>New Entry</h2>
+		
+		<?php if ($loggedin) {
+			?>
+			
+			<h2>New Entry</h2>
 
             <?php
             $strainErr = $backboneErr = $yearErr = "";
@@ -145,16 +154,17 @@
                 </p>
 
             </form>
-
-
-
         </div>
+		
+		<?php	
+		} else {
+			?>
+			<h3 style="color:red">Access denied (you are not logged in).</h3>
+			<?php
+		}
+		?>
 
-
-
-
-
-    </main>
+	</main>
 
     <?php include 'bottom.php'; ?>
 
