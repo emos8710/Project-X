@@ -65,7 +65,7 @@ if (isset($_GET['content'])) {
 	
 	<?php include 'top.php';
 	
-	if($admin) {
+	if($loggedin && $admin) {
 		?>
 		
 		<main>
