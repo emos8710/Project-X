@@ -71,8 +71,10 @@
 } else {
 	include 'entry_show.php';
 }
+?>
 
-include 'bottom.php'; ?>
+
+<?php include 'bottom.php'; ?>
 
 </body>
 
