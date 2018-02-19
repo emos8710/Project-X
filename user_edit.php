@@ -1,4 +1,6 @@
 			<?php
+			if (count(get_included_files()) == 1) exit("Access restricted.");
+			
 			if($loggedin && $active && ($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
 				?>
 

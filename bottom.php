@@ -1,3 +1,5 @@
+<?php if (count(get_included_files()) == 1) exit("Access restricted."); ?>
+
 <!-- Site footer -->
 <footer>
 		<div class="innertube">

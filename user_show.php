@@ -1,4 +1,6 @@
 		<?php
+			if (count(get_included_files()) == 1) exit("Access restricted.");
+			
 			// Connect to database
 			include 'scripts\db.php';
 			

@@ -1,4 +1,7 @@
 <?php
+
+if (count(get_included_files()) == 1) exit("Access restricted.");
+
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     $_SESSION['logged_in']=false;
 	session_unset();     // unset $_SESSION variable for the run-time 
