@@ -49,7 +49,7 @@
 			?>
 			<br>
 			
-			<?php if(($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
+			<?php if($loggedin && $active && ($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
 				?>
 				<p>
 				<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit">Edit user information</a>

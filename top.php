@@ -22,6 +22,13 @@ if(isset($_SESSION['admin']) && $_SESSION['admin']==1) {
 else {
 	$admin=FALSE;
 }
+
+if(isset($_SESSION['active']) && $_SESSION['active']==1) {
+	$active=TRUE;
+}
+else {
+	$active=FALSE;
+}
 ?>
 
 <!-- Navigation bar and logo -->

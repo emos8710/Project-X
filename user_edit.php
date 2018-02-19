@@ -1,5 +1,5 @@
 			<?php
-			if(($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
+			if($loggedin && $active && ($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
 				?>
 
 				<?php
@@ -35,10 +35,24 @@
 				<?php
 				
 			} else {
-				?>
-			<h3 style="color:red">You are not allowed to edit this profile (you are not the owner or an admin).</h3>
-			<br>
-			<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
-			<?php
+				if (!$active) {
+					?>
+					<h3 style="color:red">Access denied (your account is not activated).</h3>
+					<br>
+					<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
+					<?php					
+				} else if (!$loggedin) {
+					?>
+					<h3 style="color:red">Access denied (you are not logged in).</h3>
+					<br>
+					<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
+					<?php
+				} else {
+					?>
+					<h3 style="color:red">You are not allowed to edit this profile (you are not the owner or an admin).</h3>
+					<br>
+					<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
+					<?php
+				}
 			}
 			?>

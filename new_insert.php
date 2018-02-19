@@ -22,8 +22,9 @@
 	
     <?php include 'top.php'; 
 	
-	// Temporary variable so testing will be easier
+	// Temporary variables so testing will be easier
 	$loggedin = TRUE;
+	$active = TRUE;
 	
 	?>
 
@@ -157,6 +158,10 @@
         </div>
 		
 		<?php	
+		} else if (!$active) {
+			?>
+			<h3 style="color:red">Access denied (your account is not activated).</h3>
+			<?php			
 		} else {
 			?>
 			<h3 style="color:red">Access denied (you are not logged in).</h3>

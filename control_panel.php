@@ -14,7 +14,7 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 </head>
 
 <?php
-//Set default content for the content display div
+//Set display for the content div
 if (isset($_GET['content'])) {
 	$current_content = $_GET['content'];
 } else {
@@ -65,7 +65,7 @@ if (isset($_GET['content'])) {
 	
 	<?php include 'top.php';
 	
-	if($admin) {
+	if($loggedin && $active && $admin) {
 		?>
 		
 		<main>
@@ -78,6 +78,7 @@ if (isset($_GET['content'])) {
 					<ul class="control_panel_nav">
 						<li><a href="?content=manage_users">Manage users</a></li>
 						<li><a href="?content=manage_entries">Manage entries</a></li>
+						<li><a href="?content=event_log">Event log</a></li>
 					</ul>
 				</div>
 				
@@ -113,27 +114,23 @@ if (isset($_GET['content'])) {
 								echo "This should never happen";
 							}
 							
-							$check_admin_sql = "SELECT admin from users WHERE user_id = ".$id;
+							$check_admin_sql = "SELECT admin, active from users WHERE user_id = ".$id;
 							$check_admin_query = mysqli_query($link, $check_admin_sql) or die("MySQL error: ".mysqli_error($link));
 							if (mysqli_fetch_array($check_admin_query)[0] == '1'): $is_admin = TRUE; else: $is_admin = FALSE; endif;
+							if (mysqli_fetch_array($check_admin_query)[1] == '1'): $is_active = TRUE; else: $is_active = FALSE; endif;
 							
 							if ($delete) {
 								
 								if ($user_id == $_SESSION['user_id']) {
-									?>
-									<strong style="color:red">You cannot remove yourself!</strong>
-									<?php
+									$delete_msg = "<strong style=\"color:red\">You cannot remove yourself!</strong>";
 								} else if ($is_admin) {
-									?>
-									<strong style="color:red">You cannot remove an admin!</strong>
-									<?php
+									$delete_msg = "<strong style=\"color:red\">You cannot remove an admin!</strong>";
 								} else {
 									$deletesql = "DELETE FROM users WHERE user_id = ".$id;
 									$deletequery = mysqli_query($link, $deletesql) or die("MySQL error: ".mysqli_error($link));							
-									?>
-									<strong style="color:green">User successfully deleted!</strong>
-									<?php
+									$delete_msg = "<strong style=\"color:green\">User successfully deleted!</strong>";
 								}
+								echo $delete_msg;
 								?>
 								<br>
 								Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
@@ -148,16 +145,15 @@ if (isset($_GET['content'])) {
 									<strong style="color:red">You are already an admin!</strong>
 									<?php
 								} else if ($is_admin) {
-									?>
-									<strong style="color:red">User is already an admin!</strong>
-									<?php
+									$admin_msg = "<strong style=\"color:red\">User is already an admin!</strong>";
+								} else if (!$is_active) {
+									$admin_msg = "<strong style=\"color:red\">User is not activated!</strong>";
 								} else {
 									$adminsql = "UPDATE users SET admin='1' WHERE user_id = ".$id;
 									$adminquery = mysqli_query($link, $adminsql);
-									?>
-									<strong style="color:green">User <?php echo $user_id; ?> is now an admin!</strong>
-									<?php
+									$admin_msg = "<strong style=\"color:green\">User ".$user_id."is now an admin!</strong>";
 								}
+								echo $admin_msg;
 								?>
 								<br>
 								Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
@@ -234,6 +230,10 @@ if (isset($_GET['content'])) {
 					} else if ($current_content == "manage_entries") {
 						?>
 						<h3>Manage entries</h3>
+						<?php
+					} else if ($current_content == "event_log") {
+						?>
+						<h3>Event log</h3>
 						<?php
 					} else {
 						echo "";

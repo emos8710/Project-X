@@ -66,7 +66,8 @@
 
 <!-- Body content of page -->
 
-<?php if($edit) {
+<?php 
+if($edit) {
 	include 'entry_edit.php';
 } else {
 	include 'entry_show.php';
