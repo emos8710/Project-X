@@ -78,7 +78,7 @@ if (isset($_GET['content'])) {
 					<ul class="control_panel_nav">
 						<li><a href="?content=manage_users">Manage users</a></li>
 						<li><a href="?content=manage_entries">Manage entries</a></li>
-					</ul>
+						<li><a href="?content=event_log">Event log</a></li>
 				</div>
 				
 				<br>
@@ -234,6 +234,10 @@ if (isset($_GET['content'])) {
 					} else if ($current_content == "manage_entries") {
 						?>
 						<h3>Manage entries</h3>
+						<?php
+					} else if ($current_content == "event_log") {
+						?>
+						<h3>Event log</h3>
 						<?php
 					} else {
 						echo "";

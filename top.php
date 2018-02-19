@@ -1,4 +1,5 @@
 <?php
+
 if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     $_SESSION['logged_in']=false;
 	session_unset();     // unset $_SESSION variable for the run-time 
@@ -16,12 +17,19 @@ if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
 	$loggedin = FALSE;
 }
 
-if(isset($_SESSION['admin']) && $_SESSION['admin']==1) {
-	$admin=TRUE;
+if(isset($_SESSION['admin']) && $_SESSION['admin'] == 1) {
+	$admin = TRUE;
 }
 else {
-	$admin=FALSE;
+	$admin = FALSE;
 }
+
+if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
+	$active = TRUE;
+}else {
+	$active = FALSE;
+}
+
 ?>
 
 <!-- Navigation bar and logo -->
@@ -86,7 +94,7 @@ else {
 		}
 		?>
 		
-		<?php echo "<strong style=\"font-size:10 color:red\">".$timeout_message."<strong>"; ?>
+		<strong style=\"font-size:10 color:red\"><?php echo $timeout_message ?> </strong>
 		
 	</div>
 	
