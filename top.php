@@ -77,7 +77,7 @@ else {
 
 		<!-- Profile (if logged in) -->			
 		<?php
-		if($loggedin && isset($_SESSION['user_id'])) { ?>
+		if(isset($_SESSION['active']) && $active && $loggedin && isset($_SESSION['user_id'])) { ?>
 			<a <?php
 				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit") {
 					echo "class=\"active\" ";
@@ -112,7 +112,7 @@ else {
 		
 		<!-- Login -->
 		<?php			
-			if($loggedin) {
+			if(isset($_SESSION['active']) && $active && $loggedin) {
 		?>
 				<a class="login" href="logout.php">Log out</a>
 		<?php 

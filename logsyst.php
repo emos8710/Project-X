@@ -13,6 +13,7 @@ if (session_status() == PHP_SESSION_NONE) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Login/Registration System</title>
 	<link href="css/upstrain.css" rel="stylesheet">
+	<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 </head>
 
 <body>
@@ -131,6 +132,8 @@ if (session_status() == PHP_SESSION_NONE) {
 							<input class="login" pattern=".{8,}" type="password" required autocomplete="off" name='confpassword' required title="The password must be at least 8 characters"/>
 						</div>
 						</div> 
+						
+						<!-- <div class="g-recaptcha" data-sitekey="6LfhdEcUAAAAAHLGQv6w2M5JJVLrSDT4zPlYxiWZ"></div> -->
 						
 						<!-- Registration button -->
 						<button type="submit" class="button" name="register" />Register</button>

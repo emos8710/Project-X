@@ -20,7 +20,7 @@ if (session_status() == PHP_SESSION_NONE) {
     <h1 class="login"><?= 'Success'; ?></h1>
     <p class="login">
     <?php 
-    if( isset($_SESSION['message']) AND !empty($_SESSION['message']) ){
+    if(isset($_SESSION['message']) AND !empty($_SESSION['message']) ){
         echo $_SESSION['message'];
 	}
     else{
