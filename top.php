@@ -3,15 +3,15 @@
 if (count(get_included_files()) == 1) exit("Access restricted.");
 
  /* Logs out user if no activity in a certain time (at the moment 2 minutes) */ 
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > (12*60*60))) {
     $_SESSION['logged_in']=false;
 	session_unset();     // unset $_SESSION variable for the run-time 
     session_destroy();   // destroy session data in storage
-	$timeout_message = "You have been logged out due to inactivity. Please log in again.";
+	$loggedout_message="hejhej hejhej bla bla bla";
+	header("Refresh:0");
 }
 else {
 	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
-	$timeout_message = "";
 }
 
 if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
@@ -98,9 +98,7 @@ else {
 		<?php 
 		}
 		?>
-		
-		<?php echo "<strong style=\"font-size:10 color:red\">".$timeout_message."<strong>"; ?>
-		
+				
 	</div>
 	
 	<div class="right-wrapper">
@@ -132,3 +130,9 @@ else {
 			?>
 	</div>
 </nav>
+
+<?php 
+if (isset($loggedout_message)) {
+	echo $loggedout_message;
+}
+?>
