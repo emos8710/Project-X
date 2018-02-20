@@ -30,7 +30,6 @@ footer {
 
 .innertube {	/* Padding for content */
 	margin: 15px;
-	width: 95%;
 }
 
 /* FORMS */
@@ -80,22 +79,28 @@ p.login {
 table {
 	border: none;
 	background-color: rgba(127, 255, 212, 0.5);
+	border-spacing: 0;
 }
 
-table.entry th {
+th {
 	padding-right: 10px;
-	text-align: left;
-	vertical-align: bottom;
-	text-decoration: underline;
+	text-align: center;
+	text-decoration: none;
 	white-space: nowrap;
+	border-bottom: 1px solid black;
 }
 
-table.entry td {
+td {
 	padding-right: 10px;
 	text-align: left;
-	margin-right: 10px;
+	vertical-align: top;
 	font-size: small;
-	white-space: nowrap;
+	border-bottom: 1px solid black;
+	max-width: 400px;
+}
+
+td.comment {
+	min-width: 200px;
 }
 
 /* SPAN */

@@ -104,7 +104,7 @@
 						// Part 3 of entry row, with or without edit option
 						$tpart_3 = "<td>".$entry["year_created"]."</td>"
 						."<td><a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]." target=\"_blank\">".$entry["entry_reg"]."</a></td>"
-						."<td>".$entry["comment"]."</td>"
+						."<td class=\"comment\">".$entry["comment"]."</td>"
 						.$edit
 						."</tr>";
 						
