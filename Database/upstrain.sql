@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 13, 2018 at 04:26 PM
+-- Generation Time: Feb 20, 2018 at 08:39 AM
 -- Server version: 5.7.19
 -- PHP Version: 7.1.9
 
@@ -243,7 +243,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `email` varchar(50) NOT NULL,
   `phone` varchar(14) NOT NULL,
   `username` varchar(50) NOT NULL,
-  `password` varchar(50) NOT NULL,
+  `password` varchar(100) NOT NULL,
   `hash` varchar(100) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `admin` tinyint(1) NOT NULL DEFAULT '0',
