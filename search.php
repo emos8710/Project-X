@@ -113,7 +113,7 @@
         
         if(!empty($id_criteria)) {
             if (!preg_match('/[^A-Za-z0-9]/', $id_criteria)) { 
-                $ConditionArray[] = "t10.upstrain_id = '$id_criteria'";
+                $ConditionArray[] = "t9.upstrain_id = '$id_criteria'";
             } else {
                 $ischarvalid = FALSE;
                 echo nl2br ("\n \n Error: Non-valid character usage for 'ID'.");    
@@ -204,17 +204,18 @@
         ."LEFT JOIN entry_upstrain AS t9 ON t1.id = t9.entry_id "                
         ."WHERE ";
         
-                
+        $sql = "";
+        $result = "";
+        $iserror = FALSE;
+        
         if (count($ConditionArray) > 0) {
             $sql = $entrysql . implode(' AND ', $ConditionArray) . " GROUP BY up_id";
+            $result=mysqli_query($link, $sql);
+            $iserror = FALSE;
                       
         } else if ($ischarvalid && count($ConditionArray) == 0) {
             echo nl2br ("\n Error: Please enter search query");
         }
-
-        $result=mysqli_query($link, $sql);
-        
-        $iserror = FALSE;
         
        mysqli_close($link) or die("Could not close database connection");
     }
@@ -225,7 +226,7 @@
     }
 	 
 		
-    if (!empty($ConditionArray)) {
+   if (!empty($result)) {
     echo "<table border='1' cellpadding='5'>";
     echo "<tr><th>upstrain ID</th><th>Strain</th><th>Backbone</th>"
     . "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM registry entry</th>"
@@ -256,9 +257,8 @@
                 "</td><td>" . $row["cmt"]. "</td></tr>";
         }
     }
-    echo "</table>";				
-} 
-
+    echo "</table>";				 
+   }
     if ($iserror && !empty($ConditionArray)) {
         echo "<h3> Error: ".$error."</h3>";
         echo "<br>".
