@@ -55,6 +55,7 @@ h1.login {
 /* TEXT BLOCKS */
 p {
 	margin: 0;
+	font-weight: normal;
 }
 
 footer p {
@@ -131,6 +132,16 @@ div.innertube a:hover {
 	margin-left: 20px;
 }
 
+a.logo {
+	padding: 10px;
+	margin: 0;
+	text-align: left;
+}
+
+a.logo:hover {
+	background-color: inherit;
+}
+
 a.login {
   color: #1ab188;
 }
@@ -172,7 +183,6 @@ div.entry_table {
 }
 
 div.logo {
-	padding: 10px;
 	float: left;
 	clear: left;
 }
