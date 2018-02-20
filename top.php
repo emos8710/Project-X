@@ -99,7 +99,7 @@ else {
 		}
 		?>
 		
-		<?php echo "<strong style=\"font-size:10 color:red\">".$timeout_message."<strong>"; ?>
+		<?php echo "<strong style=\"font-size:10 color:red\">".$timeout_message."</strong>"; ?>
 		
 	</div>
 	
