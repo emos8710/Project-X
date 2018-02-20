@@ -80,7 +80,7 @@
 					<th>Backbone</th>
 					<th>Inserts</th>
 					<th>Year created</th>
-					<th>Registry</th>
+					<th>iGEM Registry</th>
 					<th>Comment</th>
 				</tr>
 			
@@ -101,9 +101,17 @@
 							."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
 						} else $edit = "";
 						
-						// Part 3 of entry row, with or without edit option
+						// Create biobrick registry link (or not)
+						if($entry["entry_reg"] === null || $entry["entry_reg"] == ''){ 
+							$biobrick = "N/A";              
+						} else { 
+							$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]
+							."\" target=\"_blank\">".$entry["entry_reg"]."</a>"; 
+						}
+						
+						// Part 3 of entry row, with or without registry link and edit option
 						$tpart_3 = "<td>".$entry["year_created"]."</td>"
-						."<td><a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]." target=\"_blank\">".$entry["entry_reg"]."</a></td>"
+						."<td>".$biobrick."</td>"
 						."<td class=\"comment\">".$entry["comment"]."</td>"
 						.$edit
 						."</tr>";

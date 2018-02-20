@@ -54,6 +54,7 @@
 					<input name="submit-form" value="Search" type="submit">
 					
 				</div>
+				
 				<div>
 					<div class="field-wrap">
 						<label>Biobrick registry ID</label>
@@ -84,15 +85,9 @@
 						<label>Comment</label>
 						<input type="text" name="comment_criteria" ows ="4" cols="50"/>
 					</div>
-					
-					
 				</div>
-				
-				
-				
 			</form>
 		
-    
 		<?php
 		include 'scripts/db.php';
 
@@ -189,12 +184,12 @@
 			
 			
 			$entrysql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
-		."t1.date_db AS date, t1.entry_reg AS biobrick, t4.name AS strain, "
-		."GROUP_CONCAT(DISTINCT t6.name) AS insname, "
+			."t1.date_db AS date, t1.entry_reg AS biobrick, t4.name AS strain, "
+			."GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS insname, "
 			."t3.name AS backbone, "
 			."t2.user_id AS user_id, "
-			."GROUP_CONCAT(DISTINCT t7.name) AS instype, "
-		."t2.first_name AS fname, t2.last_name AS lname, "
+			."GROUP_CONCAT(DISTINCT t7.name SEPARATOR ', ') AS instype, "
+			."t2.first_name AS fname, t2.last_name AS lname, "
 			."t9.upstrain_id AS up_id "
 			."FROM (entry AS t1) "
 			."LEFT JOIN entry_inserts AS t5 ON t5.entry_id = t1.id "
@@ -210,11 +205,12 @@
 			$result = "";
 			$iserror = FALSE;
 			
+			$num_result_rows = 0;
 			if (count($ConditionArray) > 0) {
 				$sql = $entrysql . implode(' AND ', $ConditionArray) . " GROUP BY up_id";
-				$result=mysqli_query($link, $sql);
+				$result = mysqli_query($link, $sql);
 				$num_result_rows = mysqli_num_rows($result);
-						  
+				
 			} else if ($ischarvalid && count($ConditionArray) == 0) {
 				echo nl2br ("\n Error: Please enter search query");
 			}
@@ -224,10 +220,9 @@
 			
 		else if ($_SERVER['REQUEST_METHOD'] != 'POST') {
 			header('HTTP/1.0 405 Method Not Allowed');
-		exit;
+			exit;
 		}
 		 
-			
 		if ($num_result_rows > 0) {
 			echo "<table>";
 			echo "<tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
@@ -236,12 +231,12 @@
 			
 			// output data of each row
 			while($row = $result->fetch_assoc()) {
-				  $biobrick = "";
-				  if($row["biobrick"] === null || $row["biobrick"] == ''){ 
-					  $biobrick = "N/A";              
-					} else { 
-					  $biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$row["biobrick"]."\" target=\"_blank\">".$row["biobrick"]."</a>"; 
-					}
+				$biobrick = "";
+				if($row["biobrick"] === null || $row["biobrick"] == ''){ 
+					$biobrick = "N/A";              
+				} else { 
+					$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$row["biobrick"]."\" target=\"_blank\">".$row["biobrick"]."</a>"; 
+				}
 					
 				echo "<tr><td><a href=\"entry.php?upstrain_id=". $row["up_id"]."\">".$row["up_id"]."</a>".
 						"</td><td>" . $row["strain"].

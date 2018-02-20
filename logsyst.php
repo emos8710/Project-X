@@ -25,7 +25,7 @@ if (session_status() == PHP_SESSION_NONE) {
 				if (isset($_POST['login'])) { 			// The login page is shown
 					require 'login.php';   
 				}
-				elseif (isset($_POST['register'])) { 	// The registration form
+				elseif (isset($_POST['register'])) { 	// The registration form is shown
 					require 'register.php';   
 				}
 			}
