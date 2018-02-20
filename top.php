@@ -2,8 +2,7 @@
 
 if (count(get_included_files()) == 1) exit("Access restricted.");
 
- /* Logs out user if no activity in a certain time (at the moment 2 minutes) */ 
-if ($_SESSION['logged_in']==true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 30)) {
+if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
     $_SESSION['logged_in']=false;
 	session_unset();     // unset $_SESSION variable for the run-time 
     session_destroy();   // destroy session data in storage
