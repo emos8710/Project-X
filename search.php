@@ -206,6 +206,8 @@
 			$iserror = FALSE;
 			
 			$num_result_rows = 0;
+			
+			// If there are results, show them
 			if (count($ConditionArray) > 0) {
 				$sql = $entrysql . implode(' AND ', $ConditionArray) . " GROUP BY up_id";
 				$result = mysqli_query($link, $sql);
@@ -214,52 +216,49 @@
 			} else if ($ischarvalid && count($ConditionArray) == 0) {
 				echo nl2br ("\n Error: Please enter search query");
 			}
-			
-		   mysqli_close($link) or die("Could not close database connection");
-		}
-			
-		else if ($_SERVER['REQUEST_METHOD'] != 'POST') {
-			header('HTTP/1.0 405 Method Not Allowed');
-			exit;
-		}
-		 
-		if ($num_result_rows > 0) {
-			echo "<table>";
-			echo "<tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
-			. "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM Registry</th>"
-			. "<th>Creator</th><th>Added date</th><th>Comment</th></tr>";
-			
-			// output data of each row
-			while($row = $result->fetch_assoc()) {
-				$biobrick = "";
-				if($row["biobrick"] === null || $row["biobrick"] == ''){ 
-					$biobrick = "N/A";              
-				} else { 
-					$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$row["biobrick"]."\" target=\"_blank\">".$row["biobrick"]."</a>"; 
+			if ($num_result_rows > 0) {
+				echo "<table>";
+				echo "<tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
+				. "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM Registry</th>"
+				. "<th>Creator</th><th>Added date</th><th>Comment</th></tr>";
+				
+				// output data of each row
+				while($row = $result->fetch_assoc()) {
+					$biobrick = "";
+					if($row["biobrick"] === null || $row["biobrick"] == ''){ 
+						$biobrick = "N/A";              
+					} else { 
+						$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$row["biobrick"]."\" target=\"_blank\">".$row["biobrick"]."</a>"; 
+					}
+						
+					echo "<tr><td><a href=\"entry.php?upstrain_id=". $row["up_id"]."\">".$row["up_id"]."</a>".
+							"</td><td>" . $row["strain"].
+							"</td><td>" . $row["backbone"]. 
+							"</td><td>" . $row["insname"].
+							"</td><td>" . $row["instype"].
+							"</td><td>" . $row["year"]. 
+							"</td><td>" . $biobrick. 
+							"</td><td>" . "<a href=\"user.php?user_id=".$row["user_id"]."\">". 
+							$row["fname"]. " " . $row["lname"]. "</td><td>" . $row["date"].
+							"</td><td class=\"comment\">" . $row["cmt"]. "</td></tr>";
 				}
-					
-				echo "<tr><td><a href=\"entry.php?upstrain_id=". $row["up_id"]."\">".$row["up_id"]."</a>".
-						"</td><td>" . $row["strain"].
-						"</td><td>" . $row["backbone"]. 
-						"</td><td>" . $row["insname"].
-						"</td><td>" . $row["instype"].
-						"</td><td>" . $row["year"]. 
-						"</td><td>" . $biobrick. 
-						"</td><td>" . "<a href=\"user.php?user_id=".$row["user_id"]."\">". 
-						$row["fname"]. " " . $row["lname"]. "</td><td>" . $row["date"].
-						"</td><td class=\"comment\">" . $row["cmt"]. "</td></tr>";
-			}
-			echo "</table>";	
+				echo "</table>";	
 		
-		} else {
-		   $iserror = TRUE;
-		   $error = "No matching results, try another search.";
-		}
-		if ($iserror && !empty($ConditionArray)) {
-			echo "<h3> Error: ".$error."</h3>";
+			}
+			// If there are no rows, create error
+			else {
+				$iserror = TRUE;
+				$error = "No matching results, try another search.";
+			}
+			// Show errors
+			if ($iserror && !empty($ConditionArray)) {
+				echo "<h3> Error: ".$error."</h3>";
+			}
+			
+			mysqli_close($link) or die("Could not close database connection");
 		}
 		?>
-                        
+        
         </div>    
 	</main>
     <?php include 'bottom.php'; ?>

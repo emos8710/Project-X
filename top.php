@@ -78,9 +78,10 @@ else {
 				} 
 			?> href="help.php">Help</a>
 
-		<!-- Profile (if logged in) -->			
+			
 		<?php
 		if(isset($_SESSION['active']) && $active && $loggedin && isset($_SESSION['user_id'])) { ?>
+			<!-- Profile (if logged in) -->
 			<a <?php
 				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit") {
 					echo "class=\"active\" ";
@@ -90,8 +91,9 @@ else {
 		}
 		?> 
 
-		<!-- Control Panel (if admin) -->		
+				
 		<?php if($loggedin && $admin && isset($_SESSION['user_id'])) { ?>
+			<!-- Control Panel (if admin) -->
 			<a <?php
 					if(basename($_SERVER['PHP_SELF'])=="control_panel.php") {
 						echo "class=\"active\"";
