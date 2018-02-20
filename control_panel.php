@@ -45,16 +45,16 @@ if (isset($_GET['content'])) {
 	$userquery = mysqli_query($link, $usersql) or die("MySQL error: ".mysqli_error($link));
 	
 	// Fetch all entries
-	$entrysql = "SELECT entry.id AS eid, entry.comment, entry.year_created, entry.date_db, "
-	."entry.entry_reg, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-	."strain.name AS sname, entry_inserts.*, ins.name AS iname, users.user_id, users.username FROM entry "
+	$entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
+	."entry.entry_reg AS biobrick, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
+	."strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname FROM entry "
 	."LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
 	."LEFT JOIN backbone ON entry.backbone = backbone.id "
 	."LEFT JOIN strain ON entry.strain = strain.id "
 	."LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
 	."LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
 	."LEFT JOIN users ON entry.creator = users.user_id "
-	."ORDER BY entry.id";
+	."ORDER BY eid";
 	$entryquery = mysqli_query($link, $entrysql) or die("MySQL error: ".mysqli_error($link));
 	
 	mysqli_close($link) or die("Could not close connection to database");
@@ -127,8 +127,8 @@ if (isset($_GET['content'])) {
 									$delete_msg = "<strong style=\"color:red\">You cannot remove an admin!</strong>";
 								} else {
 									$deletesql = "DELETE FROM users WHERE user_id = ".$id;
-									$deletequery = mysqli_query($link, $deletesql) or die("MySQL error: ".mysqli_error($link));							
-									$delete_msg = "<strong style=\"color:green\">User successfully deleted!</strong>";
+									if (!$deletequery = mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: Cannot remove user (user probably has entries).</strong>";
+										else: $delete_msg = "<strong style=\"color:green\">User successfully deleted!</strong>"; endif;
 								}
 								echo $delete_msg;
 								?>
@@ -168,68 +168,138 @@ if (isset($_GET['content'])) {
 						</p>
 						
 						<p>
-						<table class="control-panel-users">
-					
-							<?php if (mysqli_num_rows($userquery) < 1) {
-								?>
-								<tr>
-									<td>No users to show</td>
-								</tr>
-								<?php
-							} else {
-								?>
-								
-								<col><col><col><col><col><col><col><col><col><col>
-								<tr>
-									<th>User ID</th>
-									<th>Username</th
-									<th>Name</th>
-									<th>E-mail address</th>
-									<th>Phone number</th>
-									<th>User level</th>
-									<th colspan="3">Actions</th>
-								</tr>
-								
-								<?php
-								while($user = mysqli_fetch_assoc($userquery)) {
+							<table class="control-panel-users">
+						
+								<?php if (mysqli_num_rows($userquery) < 1) {
 									?>
 									<tr>
-										<td><?php echo $user['user_id']; ?></td>
-										<td><?php echo $user['username']; ?></td>
-										<td><?php echo $user['first_name']." ".$user['last_name']; ?></td>
-										<td><?php echo $user['email']; ?></td>
-										<td><?php echo $user['phone']; ?></td>
-										<td><?php if ($user['admin'] == 1): echo "Admin"; else: echo "User"; endif; ?></td>
-										<td>
-											<form class="control-panel" action="user.php?user_id=<?php echo $user['user_id']; ?>&edit" method="POST">
-												<button class="control-panel-edit" title="Edit user" />
-											</form>
-										</td>
-										<td>
-											<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-												<input type="hidden" name="admin" value="<?php echo $user['user_id']; ?>">
-												<button type="submit" class="control-panel-admin" title="Make admin" onclick="confirmAdmin(event)"/>
-											</form>
-										</td>
-										<td>
-											<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-												<input type="hidden" name="delete" value="<?php echo $user['user_id']; ?>">
-												<button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmDelete(event)"/>
-											</form>
-										</td>
+										<td>No users to show</td>
 									</tr>
 									<?php
+								} else {
+									?>
+									<col><col><col><col><col><col><col><col><col><col>
+									<tr>
+										<th>User ID</th>
+										<th>Username</th>
+										<th>Name</th>
+										<th>E-mail address</th>
+										<th>Phone number</th>
+										<th>User level</th>
+										<th colspan="3">Actions</th>
+									</tr>
+									
+									<?php
+									while($user = mysqli_fetch_assoc($userquery)) {
+										?>
+										<tr>
+											<td><?php echo $user['user_id']; ?></td>
+											<td><?php echo $user['username']; ?></td>
+											<td><?php echo $user['first_name']." ".$user['last_name']; ?></td>
+											<td><?php echo $user['email']; ?></td>
+											<td><?php echo $user['phone']; ?></td>
+											<td><?php if ($user['admin'] == 1): echo "Admin"; else: echo "User"; endif; ?></td>
+											<td>
+												<form class="control-panel" action="user.php?user_id=<?php echo $user['user_id']; ?>&edit" method="POST">
+													<button class="control-panel-edit" title="Edit user" />
+												</form>
+											</td>
+											<td>
+												<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
+													<input type="hidden" name="admin" value="<?php echo $user['user_id']; ?>">
+													<button type="submit" class="control-panel-admin" title="Make admin" onclick="confirmAdmin(event)"/>
+												</form>
+											</td>
+											<td>
+												<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
+													<input type="hidden" name="delete" value="<?php echo $user['user_id']; ?>">
+													<button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmDelete(event)"/>
+												</form>
+											</td>
+										</tr>
+										<?php
+									}
 								}
-							}
-							?>
-						
-					</table>
-					</p>
+								?>
+							</table>
+						</p>
 						
 						<?php	
-					} else if ($current_content == "manage_entries") {
+					} else if ($current_content == "manage_entries") {						
 						?>
 						<h3>Manage entries</h3>
+						
+						<p>
+							<table class="control-panel-entries">
+													
+								<?php
+								if (mysqli_num_rows($entryquery) < 1) {
+									?>
+									<tr>
+										<td>No entries to show</td>
+									</tr>
+									<?php
+								} else {
+									$row = mysqli_fetch_assoc($entryquery);
+									$entry_inserts = array(); // create empty array for linking each entry with its inserts
+									$rows = [];
+									while ($row) { // will return FALSE when no more rows
+									array_push($rows, $row);
+										$current_id = $row['eid']; // fetch current entry ID
+										$inserts = []; // empty array for storing inserts
+										while ($current_id == $row['eid']) { // loop over all rows with the same entry ID
+											array_push($inserts, $row['iname']); // add this row's insert to the array
+											$row = mysqli_fetch_assoc($entryquery); // next row
+											if(!$row) break; //break if no more rows
+										}
+										$entry_inserts[$current_id] = $inserts; // associate entry ID with its inserts in the array.
+									}
+									mysqli_data_seek($entryquery, 0); // reset result to beginning
+									
+									?>
+									<col><col><col><col><col><col><col><col><col><col>
+									<tr>
+										<th>Upstrain ID</th>
+										<th>Date added</th>
+										<th>Strain</th>
+										<th>Backbone</th>
+										<th>Inserts</th>
+										<th>Year created</th>
+										<th>iGEM Registry</th>
+										<th>Comment</th>
+										<th>Created by</th>
+										<th colspan="2">Actions</th>
+									</tr>
+									<?php
+									foreach ($rows as $row) {
+										?>
+										<tr>
+											<td><a href="entry.php?upstrain_id=<?php echo $row['uid']; ?>"><?php echo $row['uid']; ?></a></td>
+											<td><?php echo $row['date']; ?></td>
+											<td><?php echo $row['sname']; ?></td>
+											<td><?php echo $row['bname']; ?></td>
+											<?php 
+											$current_entry = $row['eid'];
+											$current_inserts = $entry_inserts[$current_entry];
+											$ins_string = "";
+											for ($i = 0; $i < count($current_inserts); $i++) {
+												if ($i == count($current_inserts) - 1): $ins_string = $ins_string.$current_inserts[$i];
+												else: $ins_string = $ins_string.$current_inserts[$i].", ";
+												endif;
+											}
+											?>
+											<td><?php echo $ins_string; ?></td>
+											<td><?php echo $row['year']; ?></td>
+											<td><?php echo $row['biobrick']; ?></td>
+											<td><?php echo $row['cmt']; ?> </td>
+											<td><a href="user.php?user_id=<?php echo $row['usid']; ?>"><?php echo $row['usname']; ?></a></td>
+										</tr>
+										<?php
+									}
+								}
+								?>
+							</table>
+						</p>
 						<?php
 					} else if ($current_content == "event_log") {
 						?>
