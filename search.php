@@ -11,10 +11,10 @@
 -->
 <html>
     <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Search for entry</title>
-	<link href="css/upstrain.css" rel="stylesheet">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Search for entry</title>
+		<link href="css/upstrain.css" rel="stylesheet">
     </head>
     <body>
         
@@ -22,75 +22,77 @@
         
 	<main>
 		<div class="innertube">
-			<h2>Search for entry </h2>
-                      
-        
-        <form action="search.php" method="post" id="searchform">
-
-            <p>
-            <label>Upstrain ID: 
-                <input type="text" name="id_criteria"/></label>
-            </p>
-            
-            <p>
-            <label>Strain: 
-                <input type="text" name="strain_criteria"/></label>
-            </p>
-            
-            <p>
-            <label>Backbone: 
-                <input type="text" name="backbone_criteria"/></label>
-            </p>
-            
-            <p>    
-            <label>Insert: 
-                <input type="text" name="insert_criteria"/></label>
-            </p>
-            
-            <p>
-            <label>Insert Type:
-               <select name="insert_type">
-               <option value=""></option>    
-               <option value="promotor">Promotor</option>
-               <option value="coding">Coding</option>
-            </select>
-            </label>       
-            </p>
-            
-            <p>    
-            <label>Biobrick registry ID: 
-                <input type="text" name="bb_id_criteria" placeholder="BBa_K----"/></label>
-            </p>
-            
-            <p>    
-            <label>Comment: 
-                <input type="text" name="comment_criteria" ows ="4" cols="50"/></label>
-            </p>
-            
-            <p>    
-            <label>Year created: 
-                <input type="text" name="creation_year_criteria" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2}" 
-                placeholder="YYYY" /></label>
-            </p>
-            
-            <p>    
-            <label>Date inserted: 
-                <input type="text" name="inserted_date_criteria" pattern = "((?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})" 
-                       placeholder="YYYY-MM-DD"/></label>
-            </p>
-            
-            <p>    
-            <label>Creator: 
-                <input type="text" name="creator_criteria"/></label>
-            </p>
-            
-            
-            <input name="submit-form" value="Search" type="submit" class="btn btn-lg btn-success">
-            
-            </form>
-                </div>
+			<form class="search-form" action="search.php" method="post" id="searchform">
+				<h2>Search for entry </h2>
+				<div>
+					<div class="field-wrap"
+						<label>Upstrain ID</label>
+						<input type="text" name="id_criteria"/>
+					</div>
+					
+					<div class="field-wrap">
+						<label>Strain</label>
+						<input type="text" name="strain_criteria"/>
+					</div>
+					
+					<div class="field-wrap">
+						<label>Insert</label>
+						<input type="text" name="insert_criteria"/>
+					</div>
+					
+					<div class="field-wrap">
+						<label>Year created</label>
+						<input type="text" name="creation_year_criteria" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2}" 
+						placeholder="YYYY" />
+					</div>
+					
+					<div class="field-wrap">
+						<label>Creator</label>
+						<input type="text" name="creator_criteria"/>
+					</div>
+					
+					<input name="submit-form" value="Search" type="submit">
+					
+				</div>
+				<div>
+					<div class="field-wrap">
+						<label>Biobrick registry ID</label>
+						<input type="text" name="bb_id_criteria" placeholder="BBa_K----"/>
+					</div>
+					
+					<div class="field-wrap">
+						<label>Backbone</label>
+						<input type="text" name="backbone_criteria"/>
+					</div>
+					
+					<div class="field-wrap">
+						<label>Insert Type</label>
+						<select name="insert_type">
+							<option value=""></option>    
+							<option value="promotor">Promotor</option>
+							<option value="coding">Coding</option>
+						</select>    
+					</div>
+					
+					<div class="field-wrap">
+						<label>Date inserted</label>
+						<input type="text" name="inserted_date_criteria" pattern = "((?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})" 
+							   placeholder="YYYY-MM-DD"/>
+					</div>
+					
+					<div class="field-wrap">
+						<label>Comment</label>
+						<input type="text" name="comment_criteria" ows ="4" cols="50"/>
+					</div>
+					
+					
+				</div>
+				
+				
+				
+			</form>
+		</div>
     
-            
     <?php
     include 'scripts/db.php';
 
