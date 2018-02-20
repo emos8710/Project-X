@@ -4,7 +4,8 @@ if (count(get_included_files()) == 1) exit("Access restricted.");
 
  /* Logs out user if no activity in a certain time (at the moment 2 minutes) */ 
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > (20))) {
-    if !(basename($_SERVER['PHP_SELF']=="logout.php")) {
+    /* If the logout button is pressed the refresh is not made */
+	if !(basename($_SERVER['PHP_SELF']=="logout.php")) {
 		$_SESSION['logged_in']=false;
 		header("Refresh:0; url=logout.php");
 		session_unset();     // unset $_SESSION variable for the run-time 
