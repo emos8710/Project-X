@@ -211,7 +211,7 @@
         if (count($ConditionArray) > 0) {
             $sql = $entrysql . implode(' AND ', $ConditionArray) . " GROUP BY up_id";
             $result=mysqli_query($link, $sql);
-            $iserror = FALSE;
+            $num_result_rows = mysqli_num_rows($result);
                       
         } else if ($ischarvalid && count($ConditionArray) == 0) {
             echo nl2br ("\n Error: Please enter search query");
@@ -226,7 +226,7 @@
     }
 	 
 		
-   if (!empty($result)) {
+   if ($num_result_rows > 0) {
     echo "<table border='1' cellpadding='5'>";
     echo "<tr><th>upstrain ID</th><th>Strain</th><th>Backbone</th>"
     . "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM registry entry</th>"
@@ -234,10 +234,6 @@
     
     // output data of each row
     while($row = $result->fetch_assoc()) {
-        if (empty($row["up_id"])) {
-            $iserror = TRUE;
-            $error = "No matching results, try another search.";
-        } else {
           $biobrick = "";
           if($row["biobrick"] === null || $row["biobrick"] == ''){ 
               $biobrick = "N/A";              
@@ -256,8 +252,11 @@
                 $row["fname"]. " " . $row["lname"]. "</td><td>" . $row["date"].
                 "</td><td>" . $row["cmt"]. "</td></tr>";
         }
-    }
-    echo "</table>";				 
+    echo "</table>";	
+    
+   } else {
+       $iserror = TRUE;
+       $error = "No matching results, try another search.";
    }
     if ($iserror && !empty($ConditionArray)) {
         echo "<h3> Error: ".$error."</h3>";
@@ -265,8 +264,7 @@
         "<a href=\"javascript:history.go(-1)\">Go back</a>";
 }
 ?>
-            
-            
+                        
             
    </main>
         <?php include 'bottom.php'; ?>
