@@ -5,23 +5,18 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Check if user is logged in using the session variable
-if ( $_SESSION['logged_in'] != 1 ) {
-  $_SESSION['message'] = "You must log in before viewing your profile page!";
-  header("location: error.php");    
-}
-else {
-    // Makes it easier to read
-    $first_name	= $_SESSION['first_name'];
-    $last_name 	= $_SESSION['last_name'];
-    $email 		= $_SESSION['email'];
-    $active 	= $_SESSION['active'];
-}
+// Makes it easier to read
+$first_name	= $_SESSION['first_name'];
+$last_name 	= $_SESSION['last_name'];
+$email 		= $_SESSION['email'];
+$active 	= $_SESSION['active'];
+
 ?>
+
 <!DOCTYPE html>
-<html >
 <head>
 	<meta charset="UTF-8">
-	<title>Welcome <?= $first_name.' '.$last_name ?></title>
+	<title>Welcome <?php echo $first_name.' '.$last_name; ?></title>
 	<link href="css/upstrain.css" rel="stylesheet">
 </head>
 
