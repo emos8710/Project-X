@@ -1,6 +1,6 @@
 <?php
 
-if (count(get_included_files()) == 1) exit("Access restricted.");
+/* if (count(get_included_files()) == 1) exit("Access restricted.");*/
  
 /* Verifies the user */
 require 'db.php';
