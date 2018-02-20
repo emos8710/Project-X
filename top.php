@@ -100,13 +100,9 @@ else {
 		<?php 
 		}
 		?>
-<<<<<<< HEAD
 		
 		<?php echo "<strong style=\"font-size:10 color:red\">".$timeout_message."</strong>"; ?>
 		
-=======
-				
->>>>>>> 1cca8d976eff636190cdecf4c9048220f39c08d2
 	</div>
 	
 	<div class="right-wrapper">
