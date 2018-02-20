@@ -40,8 +40,10 @@ else {
 <nav class="navigation">
 	<!-- Logo -->
 	<div class="logo">
+		<a class="logo" href="index.php">
 		<h1>UpStrain</h1>
 		<p>The plasmid database for iGEM Uppsala</p>
+		</a>
 	</div>
 	
 	<div class="nav-wrapper">
