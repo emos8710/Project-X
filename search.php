@@ -13,7 +13,7 @@
     <head>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<title>Search for entry</title>
+		<title>Search for entries</title>
 		<link href="css/upstrain.css" rel="stylesheet">
     </head>
 <body>
@@ -23,7 +23,7 @@
 	<main>
 		<div class="innertube">
 			<form class="search-form" action="search.php" method="post" id="searchform">
-				<h2>Search for entry </h2>
+				<h2>Search for entries</h2>
 				<div>
 					<div class="field-wrap"
 						<label>Upstrain ID</label>

@@ -23,14 +23,8 @@ if (isset($_GET['content'])) {
 ?>
 
 <script>
-	function confirmDelete(e)
-	{
-		if(!confirm('Do you really want to delete this user?'))e.preventDefault();
-	}
-	
-	function confirmAdmin(e)
-	{
-		if(!confirm('Do you really want to make this user an admin?'))e.preventDefault();
+	function confirmAction(e, msg) {
+		if(!confirm(msg))e.preventDefault();
 	}
 </script>
 
@@ -47,7 +41,7 @@ if (isset($_GET['content'])) {
 	// Fetch all entries
 	$entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
 	."entry.entry_reg AS biobrick, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-	."strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname FROM entry "
+	."strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
 	."LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
 	."LEFT JOIN backbone ON entry.backbone = backbone.id "
 	."LEFT JOIN strain ON entry.strain = strain.id "
@@ -56,6 +50,10 @@ if (isset($_GET['content'])) {
 	."LEFT JOIN users ON entry.creator = users.user_id "
 	."ORDER BY eid";
 	$entryquery = mysqli_query($link, $entrysql) or die("MySQL error: ".mysqli_error($link));
+	
+	// Fetch event log
+	$logsql = "SELECT * from event_log ORDER by time DESC";
+	$logquery = mysqli_query($link, $logsql) or die("MySQL error: ".mysqli_error($link));
 	
 	mysqli_close($link) or die("Could not close connection to database");
 
@@ -75,6 +73,7 @@ if (isset($_GET['content'])) {
 				
 				<!-- Nav menu with links to display desired content -->
 				<div class="control_panel_menu">
+				<h3>Navigation</h3>
 					<ul class="control_panel_nav">
 						<li><a href="?content=manage_users">Manage users</a></li>
 						<li><a href="?content=manage_entries">Manage entries</a></li>
@@ -93,12 +92,14 @@ if (isset($_GET['content'])) {
 						
 						<h3>Manage users</h3>
 					
-						<p>
 						<?php
 						
 						// Perform form requests
 						if($_SERVER['REQUEST_METHOD'] == 'POST') {
-							include 'db.php';
+							?>
+							<p>
+							<?php
+							include 'scripts/db.php';
 							
 							$delete = FALSE;
 							$make_admin = FALSE;
@@ -131,11 +132,6 @@ if (isset($_GET['content'])) {
 										else: $delete_msg = "<strong style=\"color:green\">User successfully deleted!</strong>"; endif;
 								}
 								echo $delete_msg;
-								?>
-								<br>
-								Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
-								<?php
-								header("Refresh: 10; url=".$_SERVER['REQUEST_URI']);
 							}
 							
 							if ($make_admin) {
@@ -154,30 +150,31 @@ if (isset($_GET['content'])) {
 									$admin_msg = "<strong style=\"color:green\">User ".$user_id."is now an admin!</strong>";
 								}
 								echo $admin_msg;
-								?>
-								<br>
-								Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
-								<?php
-								header("Refresh: 10; url=".$_SERVER['REQUEST_URI']);
+								
 							}
 							
 							mysqli_close($link) or die("Could not close connection to database");
 							
+							?>
+							<br>
+							Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
+							<?php
+							header("Refresh: 10; url=".$_SERVER['REQUEST_URI']);
+							?>
+							</p>
+							<?php
 						}
 						?>
-						</p>
+						
 						
 						<p>
-							<table class="control-panel-users">
-						
 								<?php if (mysqli_num_rows($userquery) < 1) {
 									?>
-									<tr>
-										<td>No users to show</td>
-									</tr>
+									<strong>No users to show</strong>
 									<?php
 								} else {
 									?>
+									<table class="control-panel-users">
 									<col><col><col><col><col><col><col><col><col><col>
 									<tr>
 										<th>User ID</th>
@@ -207,13 +204,13 @@ if (isset($_GET['content'])) {
 											<td>
 												<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
 													<input type="hidden" name="admin" value="<?php echo $user['user_id']; ?>">
-													<button type="submit" class="control-panel-admin" title="Make admin" onclick="confirmAdmin(event)"/>
+													<button type="submit" class="control-panel-admin" title="Make admin" onclick="confirmAction(event, 'Really want to make this user admin?')"/>
 												</form>
 											</td>
 											<td>
 												<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
 													<input type="hidden" name="delete" value="<?php echo $user['user_id']; ?>">
-													<button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmDelete(event)"/>
+													<button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmAction(event, 'Really want to delete this user?')"/>
 												</form>
 											</td>
 										</tr>
@@ -229,22 +226,54 @@ if (isset($_GET['content'])) {
 						?>
 						<h3>Manage entries</h3>
 						
+						<?php
+						if($_SERVER['REQUEST_METHOD'] == 'POST') {
+							?>
+							<p>
+							<?php
+							
+							include 'scripts/db.php';
+							
+							$delete_entry = FALSE;
+							if (isset($_POST['delete'])) {
+								$entry_id = $_POST['delete'];
+								$id = mysqli_real_escape_string($link, $entry_id);
+								$delete_entry = TRUE;
+							} else {
+								echo "This should never happen.";
+							}
+							
+							if ($delete_entry) {
+								$deletesql = "DELETE FROM entry WHERE id = ".$entry_id;
+								if(!$deletequery = mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: ".mysqli_error($link)."</strong>";
+								else: $delete_msg = "<strong style=\"color:green\">Entry successfully deleted!</strong>";
+								endif;
+								echo $delete_msg;
+							}
+							
+							?>
+							<br>
+							Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
+							<?php
+							header("Refresh: 10; url=".$_SERVER['REQUEST_URI']);
+							?>
+							</p>
+							<?php
+						}
+						?>
+						
 						<p>
-							<table class="control-panel-entries">
-													
 								<?php
 								if (mysqli_num_rows($entryquery) < 1) {
 									?>
-									<tr>
-										<td>No entries to show</td>
-									</tr>
+									<strong>No entries to show</strong>
 									<?php
 								} else {
 									$row = mysqli_fetch_assoc($entryquery);
 									$entry_inserts = array(); // create empty array for linking each entry with its inserts
 									$rows = [];
 									while ($row) { // will return FALSE when no more rows
-									array_push($rows, $row);
+										array_push($rows, $row);
 										$current_id = $row['eid']; // fetch current entry ID
 										$inserts = []; // empty array for storing inserts
 										while ($current_id == $row['eid']) { // loop over all rows with the same entry ID
@@ -257,6 +286,7 @@ if (isset($_GET['content'])) {
 									mysqli_data_seek($entryquery, 0); // reset result to beginning
 									
 									?>
+									<table class="control-panel-entries">
 									<col><col><col><col><col><col><col><col><col><col>
 									<tr>
 										<th>Upstrain ID</th>
@@ -292,7 +322,18 @@ if (isset($_GET['content'])) {
 											<td><?php echo $row['year']; ?></td>
 											<td><?php echo $row['biobrick']; ?></td>
 											<td><?php echo $row['cmt']; ?> </td>
-											<td><a href="user.php?user_id=<?php echo $row['usid']; ?>"><?php echo $row['usname']; ?></a></td>
+											<td><a href="user.php?user_id=<?php echo $row['usid']; ?>"><?php echo $row['fname']." ".$row['lname']; ?></a></td>
+											<td>
+												<form class="control-panel" action="entry.php?upstrain_id=<?php echo $row['uid']; ?>&edit" method="POST">
+													<button class="control-panel-edit" title="Edit user" />
+												</form>
+											</td>
+											<td>
+												<form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
+													<input type="hidden" name="delete" value="<?php echo $row['eid']; ?>">
+													<button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Really want to delete this entry?')"/>
+												</form>
+											</td>
 										</tr>
 										<?php
 									}
@@ -301,9 +342,46 @@ if (isset($_GET['content'])) {
 							</table>
 						</p>
 						<?php
-					} else if ($current_content == "event_log") {
+					} else if ($current_content == "event_log") {						
 						?>
+						<p>
 						<h3>Event log</h3>
+						
+						<?php
+						if (mysqli_num_rows($logquery) < 1) {
+							?>
+							<strong>No events logged.</strong>
+							<?php
+						} else {
+							?>
+							<table class="control-panel-log">
+								<col><col><col><col><col>
+								<tr>
+									<th>Timestamp</th>
+									<th>Event type</th>
+									<th>Object ID</th>
+									<th>Object type</th>
+									<th>Comment</th>
+								</tr>
+								
+								<?php
+								while ($log = mysqli_fetch_assoc($logquery)) {
+									?>
+									<tr>
+										<td><?php echo $log['time']; ?></td>
+										<td><?php echo $log['type']; ?></td>
+										<td><?php echo $log['object_id']; ?></td>
+										<td><?php echo $log['object']; ?></td>
+										<td><?php echo $log['edit_comment']; ?></td>
+									</tr>
+									<?php
+								}
+								?>
+							</table>
+							<?php
+						}
+						?>
+						</p>
 						<?php
 					} else {
 						echo "";

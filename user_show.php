@@ -64,77 +64,77 @@
 			
 			<!-- Show entry information -->
 			<h3>User entries</h3>
-			<!-- Create table -->
-			<table class="user_entries">
+			
 			<?php if (mysqli_num_rows($entry_result) < 1) {
 				?>
-				<tr>
-					<td><strong>User has not added any entries (yet)</strong></td>
-				</tr>
+				<strong>User has not added any entries (yet).</strong>
 				<?php
 			} else {
 				?>
-				<tr>
-					<th>Entry ID</th>
-					<th>Strain</th>
-					<th>Backbone</th>
-					<th>Inserts</th>
-					<th>Year created</th>
-					<th>iGEM Registry</th>
-					<th>Comment</th>
-				</tr>
-			
-				<?php // Fill table one entry at a time
+								
+				<!-- Create table -->
+				<table class="user_entries">
+					<tr>
+						<th>Entry ID</th>
+						<th>Strain</th>
+						<th>Backbone</th>
+						<th>Inserts</th>
+						<th>Year created</th>
+						<th>iGEM Registry</th>
+						<th>Comment</th>
+					</tr>
 				
-					while ($entry) {
-						$current_entry = $entry["eid"];
-						
-						// Part 1 of entry row
-						$tpart_1 = "<tr>"
-						."<td><a href=\"entry.php?upstrain_id=".$entry["uid"]."\">".$entry["uid"]."</a></td>"
-						."<td>".$entry["sname"]."</td>"
-						."<td>".$entry["bname"]."</td>";
-						
-						// Decide if user can edit entries
-						if ($admin) {
-							$edit = "<td style=\"border: none;\">"
-							."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
-						} else $edit = "";
-						
-						// Create biobrick registry link (or not)
-						if($entry["entry_reg"] === null || $entry["entry_reg"] == ''){ 
-							$biobrick = "N/A";              
-						} else { 
-							$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]
-							."\" target=\"_blank\">".$entry["entry_reg"]."</a>"; 
-						}
-						
-						// Part 3 of entry row, with or without registry link and edit option
-						$tpart_3 = "<td>".$entry["year_created"]."</td>"
-						."<td>".$biobrick."</td>"
-						."<td class=\"comment\">".$entry["comment"]."</td>"
-						.$edit
-						."</tr>";
-						
-						// Part 2 of entry row, find all inserts
-						$inserts = $entry["iname"];
-						$entry = mysqli_fetch_assoc($entry_result);
-						while (TRUE) {
-							// Check if different entry or end of results
-							if(!$entry || $entry["eid"] != $current_entry) {
-								break;
-							}
-							// Add next insert to list
-							$inserts = $inserts."<br>".$entry["iname"];
-							$entry = mysqli_fetch_assoc($entry_result);
-						}
+					<?php // Fill table one entry at a time
 					
-						$tpart_2 = "<td>".$inserts."</td>";
+						while ($entry) {
+							$current_entry = $entry["eid"];
+							
+							// Part 1 of entry row
+							$tpart_1 = "<tr>"
+							."<td><a href=\"entry.php?upstrain_id=".$entry["uid"]."\">".$entry["uid"]."</a></td>"
+							."<td>".$entry["sname"]."</td>"
+							."<td>".$entry["bname"]."</td>";
+							
+							// Decide if user can edit entries
+							if ($admin) {
+								$edit = "<td style=\"border: none;\">"
+								."<a class=\"edit\" href=\"entry.php?upstrain_id=".$entry["uid"]."&edit=1\">Edit</a></td>";
+							} else $edit = "";
+							
+							// Create biobrick registry link (or not)
+							if($entry["entry_reg"] === null || $entry["entry_reg"] == ''){ 
+								$biobrick = "N/A";              
+							} else { 
+								$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$entry["entry_reg"]
+								."\" target=\"_blank\">".$entry["entry_reg"]."</a>"; 
+							}
+							
+							// Part 3 of entry row, with or without registry link and edit option
+							$tpart_3 = "<td>".$entry["year_created"]."</td>"
+							."<td>".$biobrick."</td>"
+							."<td class=\"comment\">".$entry["comment"]."</td>"
+							.$edit
+							."</tr>";
+							
+							// Part 2 of entry row, find all inserts
+							$inserts = $entry["iname"];
+							$entry = mysqli_fetch_assoc($entry_result);
+							while (TRUE) {
+								// Check if different entry or end of results
+								if(!$entry || $entry["eid"] != $current_entry) {
+									break;
+								}
+								// Add next insert to list
+								$inserts = $inserts."<br>".$entry["iname"];
+								$entry = mysqli_fetch_assoc($entry_result);
+							}
 						
-						// Piece together the parts to form a row of the table
-						echo $tpart_1.$tpart_2.$tpart_3;
+							$tpart_2 = "<td>".$inserts."</td>";
+							
+							// Piece together the parts to form a row of the table
+							echo $tpart_1.$tpart_2.$tpart_3;
+						}
 					}
-				}
-				?>
-			<!-- End table -->
-			</table>
+					?>
+				<!-- End table -->
+				</table>
