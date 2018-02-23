@@ -91,7 +91,7 @@
 
                 <p> <table id="dynamic">
                     <label for="Ins">Insert </label>
-                    <input type='text' name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="auto" multiple/>
+                    <input type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="auto" />
                     <button type="button" name="add" id="add_input">+ Add insert</button>
                 </table>
                 </p>
@@ -101,11 +101,11 @@
 
                 <p>
                     <label for="Ins_Type">Insert type </label>
-                    <select name="insert_type">
-                        <option value="promotor">Promotor</option>
-                        <option value="coding_seq">Coding sequence</option>
+                    <select name="insert_type[]">
+                        <option value="Promotor">Promotor</option>
+                        <option value="Coding sequence">Coding sequence</option>
                         <option value="RBS">RBS</option>
-                        <option value="other">Other</option>
+                        <option value="Other">Other</option>
                     </select></p>
 
                 <p> 
@@ -115,12 +115,12 @@
 
                 <p> 
                     <label for="FileToUpload">Sequence </label>
-                    <input type="file" name="fileToUpload" id="FileToUpload">
+                    <input type="file" name="file" id="FileToUpload">
 
                 </p>
                 <p>
                     <label for="Year">Year </label>
-                    <input type="text" name = "year" id="Year" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2})" 
+                    <input type="text" name = "year" id="Year"  maxlengh= "4" pattern = "(?:19|20)[0-9]{2})" 
                            placeholder="YYYY" value="<?php echo $year; ?>" required/>
                     <span class="error">* <?php echo $yearErr; ?></span>
                     <br/></p>
@@ -161,9 +161,8 @@
         var max = 5; 
         $("#add_input").click(function() {
             if(i <= max) {
-               $("#dynamic").append('<tr id="row' + i + '"><td><input type="text" name="ins[]" id ="Ins" multiple/></td><td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>'); 
+               $("#dynamic").append('<tr id="row' + i + '"><td><input type="text" name="ins[]" id ="Ins" /></td><td><select name="insert_type[]"><option value="Promotor">Promotor</option><option value="Coding sequence">Coding sequence</option><option value="RBS">RBS</option><option value="Other">Other</option></select></td><td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>'); 
                i++;
-               
             } else {
            
             }
