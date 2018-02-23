@@ -1,3 +1,5 @@
+<?php if (count(get_included_files()) == 1) exit("Access restricted."); ?>
+
 <main>
 	<div class="innertube">
 
@@ -18,10 +20,10 @@
 				
 				echo "<h2>UpStrain Entry ".$upstrain_id."</h2>";
 				
-				if($admin) {
+				if($loggedin && $active && $admin) {
 					?>
 					<p>
-					<a class="edit" href="<?php echo $_SERVER['REQUEST_URI'] ?>&edit=1">Edit entry</a>
+					<a class="edit" href="<?php echo $_SERVER['REQUEST_URI'] ?>&edit">Edit entry</a>
 					</p>
 					<?php
 				}

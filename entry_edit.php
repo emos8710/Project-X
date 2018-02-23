@@ -1,8 +1,10 @@
+<?php if (count(get_included_files()) == 1) exit("Access restricted."); ?>
+
 <main>
 	<div class="innertube">
 	
 	<?php
-	if($admin) {
+	if($loggedin && $active && $admin) {
 		?>
 
 		<?php
@@ -37,13 +39,25 @@
 	
 		<?php
 		} else {
-		
-			?>
-			<h3 style="color:red">You are not allowed to edit entries (you are not an admin).</h3>
-			<br>
-			<a href="entry.php?upstrain_id=<?php echo "$upstrain_id" ?> ">Go back to entry page</a>
-			<?php
-			
+			if (!$loggedin) {
+				?>
+				<h3 style="color:red">Access denied (you are not logged in).</h3>
+				<br>
+				<a href="entry.php?upstrain_id=<?php echo "$upstrain_id" ?> ">Go back to entry page</a>
+				<?php
+			} else if (!$active) {
+				?>
+				<h3 style="color:red">Access denied (you r account is not activated).</h3>
+				<br>
+				<a href="entry.php?upstrain_id=<?php echo "$upstrain_id" ?> ">Go back to entry page</a>
+				<?php
+			} else {
+				?>
+				<h3 style="color:red">You are not allowed to edit entries (you are not an admin).</h3>
+				<br>
+				<a href="entry.php?upstrain_id=<?php echo "$upstrain_id" ?> ">Go back to entry page</a>
+				<?php
+			}
 		}
 		?>
 		

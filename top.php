@@ -1,4 +1,21 @@
 <?php
+
+if (count(get_included_files()) == 1) exit("Access restricted.");
+
+ /* Logs out user if no activity in a certain time (at the moment 2 minutes) */ 
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > (20))) {
+    /* If the logout button is pressed the refresh is not made */
+	if (basename($_SERVER['PHP_SELF']!="logout.php")) {
+		$_SESSION['logged_in']=false;
+		header("Refresh:0; url=logout.php");
+		session_unset();     // unset $_SESSION variable for the run-time 
+		session_destroy();   // destroy session data in storage
+	}
+}
+else {
+	$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+}
+
 if(isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true) {
 	$loggedin = TRUE;
 } else {
@@ -12,13 +29,11 @@ else {
 	$admin=FALSE;
 }
 
-if (isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > 120)) {
-    $_SESSION['logged_in']=false;
-	session_unset();     // unset $_SESSION variable for the run-time 
-    session_destroy();   // destroy session data in storage
+if(isset($_SESSION['active']) && $_SESSION['active']==1) {
+	$active=TRUE;
 }
-else{
-$_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
+else {
+	$active=FALSE;
 }
 ?>
 
@@ -27,8 +42,10 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 <nav class="navigation">
 	<!-- Logo -->
 	<div class="logo">
+		<a class="logo" href="index.php">
 		<h1>UpStrain</h1>
 		<p>The plasmid database for iGEM Uppsala</p>
+		</a>
 	</div>
 	
 	<div class="nav-wrapper">
@@ -60,20 +77,22 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 					echo "class=\"active\" ";
 				} 
 			?> href="help.php">Help</a>
+
 			
 		<?php
-		if($loggedin) { ?>
+		if(isset($_SESSION['active']) && $active && $loggedin && isset($_SESSION['user_id'])) { ?>
 			<!-- Profile (if logged in) -->
 			<a <?php
-				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit=1") {
+				if(basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id'] || basename($_SERVER['REQUEST_URI']) == "user.php?user_id=".$_SESSION['user_id']."&edit") {
 					echo "class=\"active\" ";
 				} 
 				?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
 		<?php
 		}
 		?> 
+
 				
-		<?php if($admin) { ?>
+		<?php if($loggedin && $admin && isset($_SESSION['user_id'])) { ?>
 			<!-- Control Panel (if admin) -->
 			<a <?php
 					if(basename($_SERVER['PHP_SELF'])=="control_panel.php") {
@@ -83,6 +102,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 		<?php 
 		}
 		?>
+		
 	</div>
 	
 	<div class="right-wrapper">
@@ -97,7 +117,7 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 		
 		<!-- Login -->
 		<?php			
-			if($loggedin) {
+			if(isset($_SESSION['active']) && $active && $loggedin) {
 		?>
 				<a class="login" href="logout.php">Log out</a>
 		<?php 
@@ -114,3 +134,9 @@ $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
 			?>
 	</div>
 </nav>
+
+<?php 
+if (isset($loggedout_message)) {
+	echo $loggedout_message;
+}
+?>

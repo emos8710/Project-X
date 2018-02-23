@@ -1,4 +1,7 @@
-<?php 
+<?php
+
+/* if (count(get_included_files()) == 1) exit("Access restricted.");*/
+ 
 /* Verifies the user */
 require 'db.php';
 if (session_status() == PHP_SESSION_NONE) {

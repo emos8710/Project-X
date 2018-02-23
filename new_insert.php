@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 
+<?php
+	if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
+		session_start();
+	}
+?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +19,23 @@
 </head>
 
 <body>
-
-    <?php include 'top.php'; ?>
+	
+    <?php include 'top.php'; 
+	
+	// Temporary variables so testing will be easier
+	$loggedin = TRUE;
+	$active = TRUE;
+	
+	?>
 
     <!-- Main content goes here -->
     <main>
         <div class="innertube">
-            <h2>New Entry</h2>
+		
+		<?php if ($loggedin) {
+			?>
+			
+			<h2>New Entry</h2>
 
             <?php
             $strainErr = $backboneErr = $yearErr = "";
@@ -139,16 +155,21 @@
                 </p>
 
             </form>
-
-
-
         </div>
+		
+		<?php	
+		} else if (!$active) {
+			?>
+			<h3 style="color:red">Access denied (your account is not activated).</h3>
+			<?php			
+		} else {
+			?>
+			<h3 style="color:red">Access denied (you are not logged in).</h3>
+			<?php
+		}
+		?>
 
-
-
-
-
-    </main>
+	</main>
 
     <?php include 'bottom.php'; ?>
 

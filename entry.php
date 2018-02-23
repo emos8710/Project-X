@@ -37,7 +37,7 @@
 	mysqli_close($link) or die("Could not close database connection");
 	
 	
-	if (isset($_GET["edit"]) && $_GET["edit"] == "1") {
+	if (isset($_GET["edit"])) {
 		$edit = TRUE;
 	} else {
 		$edit = FALSE;
@@ -66,7 +66,8 @@
 
 <!-- Body content of page -->
 
-<?php if($edit) {
+<?php 
+if($edit) {
 	include 'entry_edit.php';
 } else {
 	include 'entry_show.php';

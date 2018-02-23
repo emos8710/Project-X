@@ -30,9 +30,9 @@ footer {
 
 .innertube {	/* Padding for content */
 	margin: 15px;
-	width: 95%;
 }
 
+/* FORMS */
 form {
 	margin: 0;
 }
@@ -40,10 +40,19 @@ form.quicksearch {
 	height: 29px;
 }
 
+form.search-form, form.insert-form {
+	
+}
+
 /* TEXT HEADERS */
 h1, h2, h3, h4, h5, h6 {
 	color: black;
 	margin: 0;
+}
+
+h2 {
+	margin-bottom: 20px;
+	font-weight: 500;
 }
 
 h1.login {
@@ -55,6 +64,7 @@ h1.login {
 /* TEXT BLOCKS */
 p {
 	margin: 0;
+	font-weight: normal;
 }
 
 footer p {
@@ -68,23 +78,28 @@ p.login {
 /* TABLES */
 table {
 	border: none;
-	background-color: rgba(127, 255, 212, 0.5);
+	border-spacing: 0;
 }
 
-table.entry th {
+th {
 	padding-right: 10px;
-	text-align: left;
-	vertical-align: bottom;
-	text-decoration: underline;
+	text-align: center;
+	text-decoration: none;
 	white-space: nowrap;
+	border-bottom: 1px solid black;
 }
 
-table.entry td {
+td {
 	padding-right: 10px;
 	text-align: left;
-	margin-right: 10px;
+	vertical-align: top;
 	font-size: small;
-	white-space: nowrap;
+	border-bottom: 1px solid black;
+	max-width: 400px;
+}
+
+td.comment {
+	min-width: 200px;
 }
 
 /* SPAN */
@@ -131,6 +146,16 @@ div.innertube a:hover {
 	margin-left: 20px;
 }
 
+a.logo {
+	padding: 10px;
+	margin: 0;
+	text-align: left;
+}
+
+a.logo:hover {
+	background-color: inherit;
+}
+
 a.login {
   color: #1ab188;
 }
@@ -153,17 +178,17 @@ div.form {
   margin: auto;
 }
 
-.backbone_inserts {
+div.backbone_inserts {
 	padding-top: 50px;
 	padding-bottom: 50px;
 	width: 50%;
 	float: right;
 }
 
-.entry_table {
+div.entry_table {
 	padding-top: 50px;
 	padding-bottom: 50px;
-	width: 60%;
+	width: 50%;
 	float: left;
 }
 
@@ -172,7 +197,6 @@ div.form {
 }
 
 div.logo {
-	padding: 10px;
 	float: left;
 	clear: left;
 }
@@ -204,9 +228,13 @@ div.quicksearch {
 }
 
 /* INPUT FIELDS */
-input {
+input, select {
 	padding: 6px;
 	border: 1px solid #a0b3b0;
+}
+
+select {
+	width: 176px;
 }
 
 input.login {
@@ -275,6 +303,33 @@ a.edit::after {	/* Adds edit image after link */
 	margin-right: 12px;
 }
 
+button.control-panel-edit::after { /* Add edit image to "edit" button */
+	background-image: url(../images/edit.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
+button.control-panel-delete::after { /* Add trashcan image to "delete" button */
+	background-image: url(../images/trash.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
+button.control-panel-admin::after { /* Add admin image to "make admin" button */
+	background-image: url(../images/admin.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
 /* LOGIN SYSTEM SPECIFIC */
 .top-row > div:last-child { /* Puts input boxes next to each other */
   margin: 0;
@@ -299,4 +354,21 @@ a.edit::after {	/* Adds edit image after link */
 #right {
 	float: right;
 	margin-bottom: 15px;
+}
+
+form.search-form > div { /* Split search and input forms */
+	max-width: 200px;
+	float: left;
+}
+
+div.control_panel_show { /* Style for region where the desired content will be shown */
+	
+}
+
+div.control_panel_menu { /* Styling the navigation of the control panel */
+	
+}
+
+ul.control_panel_nav { /* Style the navigation list */
+	list-style-type: none;
 }
