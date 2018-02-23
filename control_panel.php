@@ -197,8 +197,10 @@ if (isset($_GET['content'])) {
 											<td><?php echo $user['phone']; ?></td>
 											<td><?php if ($user['admin'] == 1): echo "Admin"; else: echo "User"; endif; ?></td>
 											<td>
-												<form class="control-panel" action="user.php?user_id=<?php echo $user['user_id']; ?>&edit" method="POST">
-													<button class="control-panel-edit" title="Edit user" />
+												<form class="control-panel" action="user.php" method="GET">
+													<input type="hidden" name="user_id" value="<?php echo "".$user['user_id'].""; ?>">
+													<input type="hidden" name="edit">
+													<button class="control-panel-edit" title="Edit user" type="submit"/>
 												</form>
 											</td>
 											<td>
@@ -324,8 +326,10 @@ if (isset($_GET['content'])) {
 											<td><?php echo $row['cmt']; ?> </td>
 											<td><a href="user.php?user_id=<?php echo $row['usid']; ?>"><?php echo $row['fname']." ".$row['lname']; ?></a></td>
 											<td>
-												<form class="control-panel" action="entry.php?upstrain_id=<?php echo $row['uid']; ?>&edit" method="POST">
-													<button class="control-panel-edit" title="Edit user" />
+												<form class="control-panel" action="entry.php" method="GET">
+													<input type="hidden" name="upstrain_id" value="<?php echo "".$row['uid'].""; ?>">
+													<input type="hidden" name="edit">
+													<button class="control-panel-edit" title="Edit entry" />
 												</form>
 											</td>
 											<td>

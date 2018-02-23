@@ -19,20 +19,14 @@
 </head>
 
 <body>
-	
-    <?php include 'top.php'; 
-	
-	// Temporary variables so testing will be easier
-	$loggedin = TRUE;
-	$active = TRUE;
-	
-	?>
+
+	<?php include 'top.php'; ?>
 
     <!-- Main content goes here -->
     <main>
         <div class="innertube">
 		
-		<?php if ($loggedin) {
+		<?php if ($loggedin && $active) {
 			?>
 			
 			<h2>New Entry</h2>
@@ -158,13 +152,13 @@
         </div>
 		
 		<?php	
-		} else if (!$active) {
+		} else if (!$loggedin) {
 			?>
-			<h3 style="color:red">Access denied (your account is not activated).</h3>
+			<h3 style="color:red">Access denied (you are not logged in).</h3>
 			<?php			
 		} else {
 			?>
-			<h3 style="color:red">Access denied (you are not logged in).</h3>
+			<h3 style="color:red">Access denied (your account is not activated).</h3>
 			<?php
 		}
 		?>

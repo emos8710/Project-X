@@ -102,25 +102,23 @@
 	
 	<main>
 		<div class="innertube">	
-		
-	
-	<?php
-	
-	// Print error text...
-	if($iserror) {
-		echo "<h3>Error: ".$error."</h3>";
-		echo "<br>".
-		"<a href=\"javascript:history.go(-1)\">Go back</a>";
-	} else {
-		if($edit) {
-			include 'user_edit.php';
-		} else {
-			include 'user_show.php';
-		}
-	}
-	
-	?>
-	
+			<?php
+			
+			// Print error text...
+			if($iserror) {
+				echo "<h3>Error: ".$error."</h3>";
+				echo "<br>".
+				"<a href=\"javascript:history.go(-1)\">Go back</a>";
+			// ... Or show user information or edit page
+			} else {
+				if($edit) {
+					include 'user_edit.php';
+				} else {
+					include 'user_show.php';
+				}
+			}
+			
+			?>
 		</div>
 	</main>
 
