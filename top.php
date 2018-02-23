@@ -1,6 +1,6 @@
 <?php
 
-if (count(get_included_files()) == 1) exit("Access restricted.");
+if (count(get_included_files()) == 1) exit("Access restricted."); //prevent direct access
 
  /* Logs out user if no activity in a certain time (at the moment 2 minutes) */ 
 if (isset($_SESSION['logged_in']) && $_SESSION['logged_in']==true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > (100000))) {

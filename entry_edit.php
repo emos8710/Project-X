@@ -1,13 +1,6 @@
-<?php if (count(get_included_files()) == 1) exit("Access restricted."); ?>
+<?php if (count(get_included_files()) == 1) exit("Access restricted.");
 
-<main>
-	<div class="innertube">
-	
-	<?php
 	if($loggedin && $active && $admin) {
-		?>
-
-		<?php
 		include 'scripts/db.php';
 		
 		//do some database shit
@@ -47,7 +40,7 @@
 				<?php
 			} else if (!$active) {
 				?>
-				<h3 style="color:red">Access denied (you r account is not activated).</h3>
+				<h3 style="color:red">Access denied (your account is not activated).</h3>
 				<br>
 				<a href="entry.php?upstrain_id=<?php echo "$upstrain_id" ?> ">Go back to entry page</a>
 				<?php
@@ -59,7 +52,3 @@
 				<?php
 			}
 		}
-		?>
-		
-	</div>
-</main>
