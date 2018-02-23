@@ -27,7 +27,7 @@
 				<div>
 					<div class="field-wrap"
 						<label>Upstrain ID</label>
-						<input type="text" name="id_criteria" placeholder="UUYYYYXXX"/>
+						<input type="text" name="id_criteria" placeholder="UUYYYYXXX" pattern = "UU\d{7,10}" title="Upstrain ID must match pattern UUYYYYXXX."/>
 					</div>
 					
 					<div class="field-wrap">
@@ -42,8 +42,8 @@
 					
 					<div class="field-wrap">
 						<label>Year created</label>
-						<input type="text" name="creation_year_criteria" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2}" 
-						placeholder="YYYY" />
+                                                <input type="text" name="creation_year_criteria" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2}" 
+						placeholder="YYYY" title ="Must contain four digits for year."/>
 					</div>
 					
 					<div class="field-wrap">
@@ -58,7 +58,7 @@
 				<div>
 					<div class="field-wrap">
 						<label>Biobrick registry ID</label>
-						<input type="text" name="bb_id_criteria" placeholder="BBa_K----"/>
+						<input type="text" name="bb_id_criteria" placeholder="BBa_K[X]" pattern="BBa_K\d{4,12}" title ="Biobrick ID must match pattern BBa_KXXXXX."/>
 					</div>
 					
 					<div class="field-wrap">
@@ -77,13 +77,13 @@
 					
 					<div class="field-wrap">
 						<label>Date inserted</label>
-						<input type="text" name="inserted_date_criteria" pattern = "((?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})" 
-							   placeholder="YYYY-MM-DD"/>
+						<input type="date" name="inserted_date_criteria" pattern = "((?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})" 
+							   placeholder="YYYY-MM-DD" title="Must match date pattern YYYY-MM-DD"/>
 					</div>
 					
 					<div class="field-wrap">
 						<label>Comment</label>
-						<input type="text" name="comment_criteria" ows ="4" cols="50"/>
+						<input type="text" name="comment_criteria" rows ="4" cols="50"/>
 					</div>
 				</div>
 			</form>
