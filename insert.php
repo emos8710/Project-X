@@ -1,21 +1,9 @@
 
 <?php
+// if(count(get_included_files()) == 1) exit("Access restricted");
 
-$hostname = "localhost";
-$username = "root";
-$password = "";
-$dbname = "upstrain_kristina";
-$link = new mysqli($hostname, $username, $password, $dbname);
+include 'scripts/db.php';
 
-if ($link->connect_error) {
-    die('Connect Error (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
-    exit();
-}
-//
-//else{
-//echo 'Success... ' . mysqli_get_host_info($link) . "\n";
-//}
-//
 // Variables
 
 $year = $_REQUEST['year'];
@@ -24,8 +12,7 @@ $strain = $_REQUEST['strain'];
 $backbone = $_REQUEST['backbone'];
 $reg_id = $_REQUEST['registry'];
 $current_date = date("Y-m-d");
-
-$creator = 1;  
+ 
 $creator = $_POST['user_id']; 
 
 
