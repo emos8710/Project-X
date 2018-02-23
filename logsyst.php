@@ -1,6 +1,6 @@
 <?php 
 /* This is the login system page! */
-require 'db.php';
+require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
