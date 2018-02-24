@@ -190,7 +190,7 @@ if (isset($_GET['content'])) {
 									while($user = mysqli_fetch_assoc($userquery)) {
 										?>
 										<tr>
-											<td><?php echo $user['user_id']; ?></td>
+											<td><a href="user.php?user_id=<?php echo $user['user_id']; ?>"><?php echo $user['user_id']; ?></a></td>
 											<td><?php echo $user['username']; ?></td>
 											<td><?php echo $user['first_name']." ".$user['last_name']; ?></td>
 											<td><?php echo $user['email']; ?></td>
