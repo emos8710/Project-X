@@ -51,7 +51,7 @@
 			?>
 			<br>
 			
-			<?php if($loggedin && $active && ($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
+			<?php if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) {
 				?>
 				<p>
 				<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit">Edit user information</a>

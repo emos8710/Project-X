@@ -1,10 +1,6 @@
 <?php
 if (count(get_included_files()) == 1) exit("Access restricted."); // prevent direct access (included only)
 
-$adminpage = $info['admin'] == 1; // check if current page is an admin's
-$adminpage_owner = ($adminpage && $isowner);
-$userpage_owner_or_admin = (!$adminpage && ($isowner || $admin));
-
 // Displays page if user is logged in and activated and has the right privileges
 if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) {
 	?>

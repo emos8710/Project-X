@@ -88,7 +88,7 @@
 			// Print error text...
 			if ($is_user_error || $is_mysql_error) {
 				if ($is_user_error): echo "<h3>Error: ".$user_error."</h3>";
-				elseif ($is_mysql_error): echo "<br><h3>Error: ".$mysql_error."</h3>";
+				elseif ($is_mysql_error): echo "<h3>Error: ".$mysql_error."</h3>";
 				endif;
 				echo "<br>".
 				"<a href=\"javascript:history.go(-1)\">Go back</a>";
@@ -121,6 +121,10 @@
 				
 				//Fetch user info
 				$info = mysqli_fetch_assoc($user_result);
+				
+				$adminpage = $info['admin'] == 1; // check if current page is an admin's
+				$adminpage_owner = ($adminpage && $isowner);
+				$userpage_owner_or_admin = (!$adminpage && ($isowner || $admin));
 			
 				if($edit) {
 					include 'user_edit.php';
