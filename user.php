@@ -59,10 +59,10 @@
 		}
 		
 		if(isset($_SESSION['user_id']) && $_SESSION['user_id'] == $user_id) {
-			$isuser = TRUE;
+			$isowner = TRUE;
 		}
 		else {
-			$isuser = FALSE;
+			$isowner = FALSE;
 		}
 	}
 	
@@ -92,12 +92,9 @@
 			<?php
 			
 			// Print error text...
-			if($is_user_error) {
-				echo "<h3>Error: ".$user_error."</h3>";
-				echo "<br>".
-				"<a href=\"javascript:history.go(-1)\">Go back</a>";
-			} else if($is_mysql_error) {
-				echo "<h3>Error: ".$user_error."</h3>";
+			if ($is_user_error || $is_mysql_error) {
+				if($is_user_error) echo "<h3>Error: ".$user_error."</h3><br>";
+				if($is_mysql_error) echo "<br><h3>Error: ".$mysql_error."</h3>";
 				echo "<br>".
 				"<a href=\"javascript:history.go(-1)\">Go back</a>";
 			// ... Or show user information or edit page

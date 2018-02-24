@@ -1,8 +1,12 @@
 <?php
-if (count(get_included_files()) == 1) exit("Access restricted.");
+if (count(get_included_files()) == 1) exit("Access restricted."); // prevent direct access (included only)
 
-// Displays page if user is logged in and activated
-if($loggedin && $active && ($info['admin'] == 1 && $isuser) || ($info['admin'] == 0 && ($admin || $isuser))) {
+$adminpage = $info['admin'] == 1; // check if current page is an admin's
+$adminpage_owner = ($adminpage && $isowner);
+$userpage_owner_or_admin = (!$adminpage && ($isowner || $admin));
+
+// Displays page if user is logged in and activated and has the right privileges
+if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) {
 	?>
 	
 	<?php
@@ -125,23 +129,21 @@ if($loggedin && $active && ($info['admin'] == 1 && $isuser) || ($info['admin'] =
 	if (!$loggedin) {
 		?>
 		<h3 style="color:red">Access denied (you are not logged in).</h3>
-		<br>
-		<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
 		<?php
 	}
 	else if (!$active) {
 		?>
 		<h3 style="color:red">Access denied (your account is not activated yet).</h3>
-		<br>
-		<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
-		<?php					
+		<?php			
 	} 
 	else {
 		?>
 		<h3 style="color:red">You are not allowed to edit this profile (you are not the owner or an admin).</h3>
-		<br>
-		<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
 		<?php
 	}
+	?>
+	<br>
+	<a href="entry.php?upstrain_id=<?php echo "$user_id" ?> ">Go back to the user page</a>
+	<?php
 }
 ?>
