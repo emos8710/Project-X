@@ -184,7 +184,8 @@
 			
 			
 			$entrysql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
-			."t1.date_db AS date, t1.entry_reg AS biobrick, t4.name AS strain, "
+			."t1.date_db AS date, t1.entry_reg AS biobrick, "
+                        ."t1.private AS private, t4.name AS strain, "
 			."GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS insname, "
 			."t3.name AS backbone, "
 			."t2.user_id AS user_id, "
@@ -230,7 +231,9 @@
 					} else { 
 						$biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:".$row["biobrick"]."\" target=\"_blank\">".$row["biobrick"]."</a>"; 
 					}
-						
+					if (!$loggedin && $row["private"] == 1)	{
+                                            
+                                        } else {
 					echo "<tr><td><a href=\"entry.php?upstrain_id=". $row["up_id"]."\">".$row["up_id"]."</a>".
 							"</td><td>" . $row["strain"].
 							"</td><td>" . $row["backbone"]. 
@@ -242,6 +245,7 @@
 							$row["fname"]. " " . $row["lname"]. "</td><td>" . $row["date"].
 							"</td><td class=\"comment\">" . $row["cmt"]. "</td></tr>";
 				}
+                            }
 				echo "</table>";	
 		
 			}
