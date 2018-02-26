@@ -102,6 +102,10 @@ td.comment {
 	min-width: 200px;
 }
 
+table.control-panel-history th,td{
+	text-align: left;
+}
+
 /* SPAN */
 span.req {
     color: #1ab188;
@@ -303,6 +307,24 @@ a.edit::after {	/* Adds edit image after link */
 	margin-right: 12px;
 }
 
+button.control-panel-restore::after { /* Add restore image to "restore" button */
+	background-image: url(../images/restore.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
+button.control-panel-history::after { /* Add history image to "history" button */
+	background-image: url(../images/history.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
 button.control-panel-edit::after { /* Add edit image to "edit" button */
 	background-image: url(../images/edit.png);
     background-size: 16px 16px;
@@ -367,6 +389,12 @@ div.control_panel_show { /* Style for region where the desired content will be s
 
 div.control_panel_menu { /* Styling the navigation of the control panel */
 	
+}
+
+div.panel-history-show {
+	width: 40%;
+	float: right;
+	margin-right: 20px;
 }
 
 ul.control_panel_nav { /* Style the navigation list */
