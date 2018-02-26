@@ -5,7 +5,7 @@
 	
 	//Function for parsing URL variable (making sure user ID is proper)
 	function check_user_id($input) {
-	return preg_match('/^\d+$/', $input) == 1;
+		return preg_match('/^\d+$/', $input) == 1;
 	}
 	
 	$is_user_error = !isset($_GET['user_id']);
@@ -13,7 +13,7 @@
 	if ($is_user_error) {
 		$user_error = "No user id specified.";
 	} else {
-		// Fetch the user id from URL
+		// Fetch the user id from URL and check if it is valid
 		$user_id = $_GET['user_id'];
 		
 		$is_user_error = !check_user_id($user_id);
@@ -119,12 +119,12 @@
 				// Close database connection
 				mysqli_close($link) or die("Could not close database connection");
 				
-				//Fetch user info
+				// Fetch user info
 				$info = mysqli_fetch_assoc($user_result);
 				
 				$adminpage = $info['admin'] == 1; // check if current page is an admin's
 				$adminpage_owner = ($adminpage && $isowner);
-				$userpage_owner_or_admin = (!$adminpage && ($isowner || $admin));
+				$userpage_owner_or_admin = ($isowner || $admin);
 			
 				if($edit) {
 					include 'user_edit.php';
