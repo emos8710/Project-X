@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 25, 2018 at 03:18 PM
+-- Generation Time: Feb 26, 2018 at 11:14 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -448,10 +448,10 @@ DELIMITER $$
 -- Events
 --
 DROP EVENT `AutoDeleteUserLog`$$
-CREATE DEFINER=`admin`@`localhost` EVENT `AutoDeleteUserLog` ON SCHEDULE AT '2018-02-26 16:16:32' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users_log WHERE time < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+CREATE DEFINER=`admin`@`localhost` EVENT `AutoDeleteUserLog` ON SCHEDULE EVERY 1 DAY STARTS '2018-02-26 12:13:51' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users_log WHERE time < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 DROP EVENT `AutoDeleteEntryLog`$$
-CREATE DEFINER=`admin`@`localhost` EVENT `AutoDeleteEntryLog` ON SCHEDULE AT '2018-02-26 16:17:36' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_log WHERE time < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+CREATE DEFINER=`admin`@`localhost` EVENT `AutoDeleteEntryLog` ON SCHEDULE EVERY 1 DAY STARTS '2018-02-26 12:14:19' ON COMPLETION NOT PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_log WHERE time < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 DELIMITER ;
 COMMIT;
