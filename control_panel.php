@@ -364,7 +364,7 @@ if ($show_history) $history_content = $_GET['history'];
 				</div>
 				
 				<!-- Desired content is displayed here -->
-				<div class="control_panel_show">
+				<div class="control-panel-show">
 				
 					<?php if ($current_content == "manage_users") {
 						$current_url = "control_panel.php?content=manage_users";

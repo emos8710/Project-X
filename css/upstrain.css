@@ -383,8 +383,9 @@ form.search-form > div { /* Split search and input forms */
 	float: left;
 }
 
-div.control_panel_show { /* Style for region where the desired content will be shown */
-	
+div.control-panel-show { /* Style for region where the desired content will be shown */
+	float: left;
+	width: 40%;
 }
 
 div.control_panel_menu { /* Styling the navigation of the control panel */
@@ -392,7 +393,7 @@ div.control_panel_menu { /* Styling the navigation of the control panel */
 }
 
 div.panel-history-show {
-	width: 40%;
+	width: 30%;
 	float: right;
 	margin-right: 20px;
 }
