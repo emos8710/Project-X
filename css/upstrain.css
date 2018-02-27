@@ -475,6 +475,25 @@ img.quicksearch {
 	height: 100%;
 }
 
+button.control-panel-restore::after { /* Add restore image to "restore" button */
+	background-image: url(../images/restore.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
+
+button.control-panel-history::after { /* Add history image to "history" button */
+	background-image: url(../images/history.png);
+    background-size: 16px 16px;
+    display: inline-block;
+    width: 16px; 
+    height: 16px;
+    content:"";
+}
+
 button.control-panel-edit::after { /* Add edit image to "edit" button */
 	background-image: url(../images/edit.png);
     background-size: 16px 16px;
@@ -524,8 +543,16 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
 }
 
 /* ---------- CONTROL PANEL ---------- */
-div.control_panel_show { /* Style for region where the desired content will be shown */
-	
+
+div.panel-history-show {
+	width: 30%;
+	float: right;
+	margin-right: 20px;
+}
+
+div.control-panel-show { /* Style for region where the desired content will be shown */
+	float: left;
+	width: 40%;
 }
 
 div.control_panel_menu { /* Styling the navigation of the control panel */
