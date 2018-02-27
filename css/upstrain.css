@@ -1,18 +1,12 @@
 * {
   box-sizing: border-box;
 }
-/* GENERAL */
+/* ---------- GENERAL ---------- */
 body {
 	margin: 0;
 	padding: 0;
 	line-height: 1.5em;
-	font-family: Sans-serif;
-}
-
-nav {
-	width: 100%;
-	min-width: 1000px;
-	position: fixed;
+	font-family: Arial; /* Sans-serif; */
 }
 
 main {
@@ -20,34 +14,34 @@ main {
 	overflow-y: auto;
 	width: 100%;
 	float: left;
-	background: #ccc;
+	background: #E1F5FE;  /* Changed */
 }
 
+/* Navigation bar */
+nav {
+	width: 100%;
+	min-width: 1000px;
+	position: fixed;
+}
+/* Footer */
 footer {
 	clear: both;
-	background: #eee;
+	background: #E1F5FE; /* Changed */ 
 }
 
 .innertube {	/* Padding for content */
 	margin: 15px;
 }
 
-/* FORMS */
-form {
-	margin: 0;
-}
-form.quicksearch {
-	height: 29px;
+.field-wrap {	/* For wrapping input fields in the login system */
+  margin-bottom: 20px;
 }
 
-form.search-form, form.insert-form {
-	
-}
-
-/* TEXT HEADERS */
+/* Headers */
 h1, h2, h3, h4, h5, h6 {
-	color: black;
+	color: #001F3F; /* Changed */
 	margin: 0;
+	font-size: 28px; /* Added */
 }
 
 h2 {
@@ -55,13 +49,7 @@ h2 {
 	font-weight: 500;
 }
 
-h1.login {
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: 300;
-}
-
-/* TEXT BLOCKS */
+/* Text */
 p {
 	margin: 0;
 	font-weight: normal;
@@ -69,13 +57,47 @@ p {
 
 footer p {
 	font-size: small;
+	text-align: center; /* Added */
 }
 
+
+/* ---------- FORMS ---------- */
+form {
+	margin: 0;
+}
+
+/* Quicksearch */
+form.quicksearch {
+	height: 29px;
+}
+
+/* Search, insert */
+form.search-form, form.insert-form {
+	
+}
+
+/* Search */
+form.search-form > div, form.insert-form >div {
+	max-width: 500px; /* Changed. Makes search form wider */
+	float: left;
+}
+
+/* ---------- LOGIN SPECIFIC ---------- */
+/* Header */
+h1.login {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 300;
+  font-size: 35px;
+}
+
+/* Text */
 p.login {
     margin-bottom: 15px;
 }
 
-/* TABLES */
+
+/* ---------- TABLES ---------- */
 table {
 	border: none;
 	border-spacing: 0;
@@ -102,17 +124,13 @@ td.comment {
 	min-width: 200px;
 }
 
-table.control-panel-history th,td{
-	text-align: left;
-}
-
-/* SPAN */
+/* ---------- SPAN ---------- */
 span.req {
-    color: #1ab188;
+    color: #001F3F;
     font-weight: bold;
 }
 
-/* LINKS */
+/* ---------- LINKS ---------- */
 a {
 	text-decoration: none;
 }
@@ -121,170 +139,7 @@ a:hover {
 	text-decoration: none;
 }
 
-div.innertube a {
-	color: blue;
-}
-
-div.innertube a:hover {
-	color: green;
-}
-
-.navigation a {
-	float: left;
-    color: black;
-    text-align: center;
-    padding: 22px 16px;
-    font-size: 17px;
-}
-.navigation a:hover {
-    background-color: #ddd;
-    color: black;
-}
-
-.navigation a.active {
-    background-color: #4CAF50;
-    color: white;
-}
-
-.navigation a.login {
-	margin-left: 20px;
-}
-
-a.logo {
-	padding: 10px;
-	margin: 0;
-	text-align: left;
-}
-
-a.logo:hover {
-	background-color: inherit;
-}
-
-a.login {
-  color: #1ab188;
-}
-
-div.quicksearch a {
-	padding: 0;
-	font-size: small;
-}
-
-div.quicksearch a:hover {
-	color: #4CAF50;
-	background-color: inherit;
-}
-
-/* DIVS */
-div.form {
-  background: #f0f8ff; 
-  padding: 40px;
-  max-width: 600px;
-  margin: auto;
-}
-
-div.backbone_inserts {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	width: 50%;
-	float: right;
-}
-
-div.entry_table {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	width: 50%;
-	float: left;
-}
-
-.field-wrap {	/* For wrapping input fields in the login system */
-  margin-bottom: 20px;
-}
-
-div.logo {
-	float: left;
-	clear: left;
-}
-
-nav.navigation {
-	
-	overflow: hidden;
-	background: #eee;
-	margin-top: 0;
-	clear: both;
-	max-height: 68px;
-}
-
-div.nav-wrapper {
-	white-space: nowrap;
-}
-
-div.right-wrapper {
-	
-	padding: 0;
-	float: right;
-	clear: right;
-}
-
-div.quicksearch {
-	
-	padding-top: 10px;
-	float: left;
-}
-
-/* INPUT FIELDS */
-input, select {
-	padding: 6px;
-	border: 1px solid #a0b3b0;
-}
-
-select {
-	width: 176px;
-}
-
-input.login {
-	width: 100%;
-	height: 100%;
-	color: #000000;
-}
-
-input.quicksearch {
-	float: left;
-	margin: 0;
-}
-
-/* BUTTONS */
-button.quicksearch {
-	cursor: pointer;
-	border: none;
-	padding: 0;
-	height: 29px;
-}
-
-button.quicksearch:hover {
-	background-color: #ccc;
-}
-
-.button {
-	border: none;
-	padding: 15px 0;
-	font-size: 35px;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: .1em;
-	background: #4CAF50;
-	color: white;
-	display: block;
-	width: 100%;
-}
-.button:hover {
-  background: #179b77;
-}
-
-/* IMAGES */
-img.quicksearch {
-	height: 100%;
-}
-
+/* Images */
 a.external::after { /* Adds external link image after link */
 	background-image: url(../images/external_link.png);
     background-size: 12px 12px;
@@ -307,22 +162,317 @@ a.edit::after {	/* Adds edit image after link */
 	margin-right: 12px;
 }
 
-button.control-panel-restore::after { /* Add restore image to "restore" button */
-	background-image: url(../images/restore.png);
-    background-size: 16px 16px;
-    display: inline-block;
-    width: 16px; 
-    height: 16px;
-    content:"";
+/* ??? */ 
+div.innertube a {
+	color: blue;
 }
 
-button.control-panel-history::after { /* Add history image to "history" button */
-	background-image: url(../images/history.png);
-    background-size: 16px 16px;
-    display: inline-block;
-    width: 16px; 
-    height: 16px;
-    content:"";
+div.innertube a:hover {
+	color: green;
+}
+
+/* Navigation bar */
+.navigation a {
+	float: left;
+    color: #E1F5FE; /* Changed. Text color in navigation buttons */ 
+    /* text-align: center; */ /* Deleted. */ 
+    padding: 22px 16px;
+    font-size: 19px; /* Changed. Larger text size in nav. buttons */
+	
+	/* Rounded corners on top */  /* Added: all */
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+ 
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+ 
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+}
+.navigation a:hover {
+    background-color: #0074D9; /* Changed. Background color when hovering over nav. buttons */
+    color: #E1F5FE; /* Changed. Text color when hovering over nav. buttons */
+}
+
+.navigation a.active {
+    background-color: #E1F5FE; /* Changed. Background color on active nav. button. */
+    color: #001F3F; /* Changed. Text color on active nav. button */
+}
+
+/* Login */
+.navigation a.login {
+	margin-left: 5px; /* Changed. Smaller margin on login button in nav. */
+	color: #E1F5FE; 
+}
+
+.navigation a.login.active {
+	background-color: #E1F5FE; /* Changed. Background color on active nav. button. */
+    color: #001F3F; /* Changed. Text color on active nav. button */
+}
+
+a.login {
+  color: #0074D9; /* Changed. New color to "New? Click here to register!" */
+}
+
+/* Logo */
+a.logo { /* Removed: margin */
+	padding: 0; /* Changed. Makes the logo fit in the navigation. */
+	margin-right: 20px; /* Added. Less space between logo and nav. buttons */
+	text-align: left;
+}
+
+a.logo:hover {
+	background-color: inherit;
+}
+
+/* Quicksearch */ 
+div.quicksearch a {
+	padding: 0;
+	font-size: small;
+}
+
+div.quicksearch a:hover {
+	color: #0074D9; /* Changed. Text color when hovering over quicksearch text */
+	background-color: inherit;
+}
+
+/* ---------- DIVS ---------- */
+/* Forms */
+div.form {
+  background: #E1F5FE; /* Changed. Background color in forms. */
+  padding: 40px;
+  max-width: 600px;
+  margin: auto;
+}
+
+/* inserts */
+div.backbone_inserts {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: right;
+}
+
+/* Entries */
+div.entry_table {
+	padding-top: 50px;
+	padding-bottom: 50px;
+	width: 50%;
+	float: left;
+}
+
+/* Logo */
+div.logo {
+	float: left;
+	clear: left; /* Does not allow floating elements to the left of the logo*/
+}
+
+/* "Private" Checkbox */
+div.checkbox {
+	margin-top: 30px;
+	float: right;
+	padding: 30px;
+	width: 50%;
+}
+
+/* ---------- NAVIGATION BAR ---------- */
+nav.navigation {
+	overflow: hidden;
+	background: #001F3F;  /* Changed. Background color in navigation bar. */
+	margin-top: 0;
+	clear: both; /* Does not alow floating elements on either side of navigation bar */ 
+	max-height: 68px;
+}
+
+/* Wrappers */
+div.nav-wrapper { /* Entire */
+	white-space: nowrap;
+}
+
+div.right-wrapper { /* Quicksearch and login */
+	padding: 0;
+	float: right;
+	clear: right;
+}
+
+/* Quicksearch */
+div.quicksearch {
+	padding-top: 10px;
+	float: left;
+}
+
+/* ---------- INPUT FIELDS ---------- */
+input.all, select.all, input.login {
+	padding: 6px;
+	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	font-size: 16px; /* Added. Increased font size in input boxes */
+	padding: 4px 7px; /* Added. Less padding within input boxes */ 
+	/* outline: 0; */ /* Added. No outline around active input box */
+	width:100%; /* Added. The input boxes are no longer overlapping but separated */
+}
+
+label { /* Added: All */
+	font-size: 15px; /* Added. Change of text size above input boxes */ 
+	color: #001F3F; /* Added. Text color of text above input boxes  */
+	font-style: italic;
+}
+
+
+/* Quicksearch */
+input.quicksearch {
+	float: left;
+	margin: 0;
+	padding: 5px;	
+	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	font-size: 16px; /* Added. Increased font size in input boxes */
+	outline: 0; /* Added. No outline around active input box */
+	height: 29px;
+}
+
+/* Insert */
+input.insert, select.insert {
+	padding: 6px;
+	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	font-size: 16px; /* Added. Increased font size in input boxes */
+	padding: 4px 7px; /* Added. Less padding within input boxes */ 
+	/* outline: 0; */ /* Added. No outline around active input box */
+	width:70%;
+	float: right;
+}	
+
+textarea.insert {
+	padding: 6px;
+	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	font-size: 16px; /* Added. Increased font size in input boxes */
+	padding: 4px 7px; /* Added. Less padding within input boxes */ 
+	/* outline: 0; */ /* Added. No outline around active input box */
+	width:100%;
+	float: right;
+	margin-bottom: 30px;
+}
+
+/* Multiple inserts */
+input.insert-mini, select.insert-mini {
+	padding: 5px;
+	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	font-size: 16px; /* Added. Increased font size in input boxes */ 
+	/* outline: 0; */ /* Added. No outline around active input box */
+	width:100%;
+	float: right;
+	margin-top: 5px;
+	margin-bottom: 1px;
+
+}
+
+/* Sequence input */
+input.button {
+	padding: 4px 7px; /* Added. Less padding within input boxes */ 
+	border: 0;
+	font-size: 16px; /* Added. Increased font size in input boxes */
+	width:70%;
+	float: right;
+}
+
+
+/* ---------- BUTTONS ---------- */
+.button {
+	border: none;
+	/* padding: 15px 0; */ /* Removed. The text is centered in button. */
+	font-size: 20px; /* Changed. Smaller text in buttons */
+	font-weight: 500; /* Changed. Less bold text in buttons  */
+	/* text-transform: uppercase;*/ /* Removed. No uppercase text in buttons. */
+	letter-spacing: .1em;
+	background: #001F3F; /* Changed. Background color in buttons. */
+	color: #E1F5FE; /* Changed. Text color in buttons. */
+	display: block;
+	width: 100%;
+	height: 30px; /* Added. Less thick button.  */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+}
+
+.button:hover {
+  color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
+/* Quicksearch */
+button.quicksearch {
+	cursor: pointer;
+	border: none;
+	padding: 0;
+	height: 29px;
+	background: #0074D9; /* Changed. Background color in buttons. */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+}
+
+button.quicksearch:hover {
+	background-color: #001F3F; /* Changed. Background color when hovering over quicksearch button */
+}
+
+/* "Add insert" button in insert entry page */
+button.insert-mini {
+	cursor: pointer;
+	border: none;
+	padding: 4px;
+	height: 29px;
+	background: #0074D9; /* Changed. Background color in buttons. */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	display: block;
+	background: #001F3F; /* Changed. Background color in buttons. */
+	color: #E1F5FE; /* Changed. Text color in buttons. */
+	float: right;
+}
+
+button.insert-mini:hover {
+color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
+/* "Remove insert" button in insert entry page */
+button.btn_remove {
+	margin-top: 5px; /* Makes the button line up relatively well with the input box */
+	margin-bottom: 1px;
+	cursor: pointer;
+	border: none;
+	padding: 6px;
+	height: 30px;
+	background: #0074D9; /* Changed. Background color in buttons. */
+	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	display: block;
+	background: #001F3F; /* Changed. Background color in buttons. */
+	color: #E1F5FE; /* Changed. Text color in buttons. */
+	float: right;
+}
+
+button.btn_remove:hover {
+color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
+/* ---------- IMAGES ---------- */
+/* Quicksearch icon */
+img.quicksearch {
+	height: 100%;
 }
 
 button.control-panel-edit::after { /* Add edit image to "edit" button */
@@ -352,7 +502,7 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
     content:"";
 }
 
-/* LOGIN SYSTEM SPECIFIC */
+/* ---------- LOGIN SYSTEM SPECIFIC ---------- */
 .top-row > div:last-child { /* Puts input boxes next to each other */
   margin: 0;
 }
@@ -373,31 +523,26 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
   display: none;
 }
 
-#right {
-	float: right;
-	margin-bottom: 15px;
-}
-
-form.search-form > div { /* Split search and input forms */
-	max-width: 200px;
-	float: left;
-}
-
-div.control-panel-show { /* Style for region where the desired content will be shown */
-	float: left;
-	width: 40%;
+/* ---------- CONTROL PANEL ---------- */
+div.control_panel_show { /* Style for region where the desired content will be shown */
+	
 }
 
 div.control_panel_menu { /* Styling the navigation of the control panel */
 	
 }
 
-div.panel-history-show {
-	width: 30%;
-	float: right;
-	margin-right: 20px;
-}
-
 ul.control_panel_nav { /* Style the navigation list */
 	list-style-type: none;
+}
+
+/* IDs */
+#logo { /* Added: All */
+  max-height: 68px; /* Added. Logo less high */
+  max-width: 250px; /* Added. Logo less wide */
+}
+
+#right {
+	float: right;
+	margin-bottom: 15px;
 }
