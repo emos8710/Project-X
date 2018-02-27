@@ -2,18 +2,7 @@
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
 	session_start();
 }
-?>
 
-<!DOCTYPE html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Control Panel</title>
-	<link href="css/upstrain.css" rel="stylesheet">
-</head>
-
-<?php
 //Set display for the content div
 if (isset($_GET['content'])) {
 	$current_content = $_GET['content'];
@@ -34,39 +23,43 @@ if ($show_history) $history_content = $_GET['history'];
 
 <?php
 
-	// Database stuff
-	
-	include 'scripts/db.php';
-	
-	// Fetch all users (admins first)
-	$usersql = "SELECT user_id, username, first_name, last_name, email, phone, admin FROM users ORDER BY admin DESC, user_id ASC";
-	$userquery = mysqli_query($link, $usersql) or die("MySQL error: ".mysqli_error($link));
-	
-	// Fetch all entries
-	$entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
-	."entry.entry_reg AS biobrick, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-	."strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
-	."LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
-	."LEFT JOIN backbone ON entry.backbone = backbone.id "
-	."LEFT JOIN strain ON entry.strain = strain.id "
-	."LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
-	."LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
-	."LEFT JOIN users ON entry.creator = users.user_id "
-	."ORDER BY eid";
-	$entryquery = mysqli_query($link, $entrysql) or die("MySQL error: ".mysqli_error($link));
-	
-	// Fetch event log
-	$logsql = "SELECT * from event_log ORDER by time DESC";
-	$logquery = mysqli_query($link, $logsql) or die("MySQL error: ".mysqli_error($link));
-	
-	mysqli_close($link) or die("Could not close connection to database");
+// Database stuff
 
+include 'scripts/db.php';
+
+// Fetch all users (admins first)
+$usersql = "SELECT user_id, username, first_name, last_name, email, phone, admin FROM users ORDER BY admin DESC, user_id ASC";
+$userquery = mysqli_query($link, $usersql) or die("MySQL error: ".mysqli_error($link));
+
+// Fetch all entries
+$entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
+."entry.entry_reg AS biobrick, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
+."strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
+."LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
+."LEFT JOIN backbone ON entry.backbone = backbone.id "
+."LEFT JOIN strain ON entry.strain = strain.id "
+."LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
+."LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
+."LEFT JOIN users ON entry.creator = users.user_id "
+."ORDER BY eid";
+$entryquery = mysqli_query($link, $entrysql) or die("MySQL error: ".mysqli_error($link));
+
+// Fetch event log
+$logsql = "SELECT * from event_log ORDER by time DESC";
+$logquery = mysqli_query($link, $logsql) or die("MySQL error: ".mysqli_error($link));
+
+mysqli_close($link) or die("Could not close connection to database");
+
+$title = "Control Panel";
 ?>
+
+<!DOCTYPE html>
+
+<?php include 'top.php'; ?>
 
 <body>
 	
-	<?php include 'top.php';
-	
+	<?php 
 	if($loggedin && $active && $admin) {
 		?>
 		

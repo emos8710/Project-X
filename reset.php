@@ -25,19 +25,15 @@ else {
     $_SESSION['message'] = "The reset link is not valid, try again!";
     header("location: error.php");  
 }
+
+$title = "Reset password";
 ?>
 
 <!DOCTYPE html>
-<html >
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Password Reset</title>
-  	<link href="css/upstrain.css" rel="stylesheet">
-</head>
+
+<?php include 'top.php'; ?>
 
 <body>
-	<?php include 'top.php'; ?>
 	<main>
 		<div class="form">
 			<h1>Choose a new password</h1>

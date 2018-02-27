@@ -2,8 +2,7 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-?>
-<?php
+
 /* The login process */
 
 // Protection against SQL-injections 

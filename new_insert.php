@@ -1,41 +1,21 @@
-<!DOCTYPE html>
-
 <?php
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+$title = "New Entry";
 ?>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Entry</title>
-    <link href="css/upstrain.css" rel="stylesheet">
-   
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type = "text/javascript" src = "http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
+<!DOCTYPE html>
 
-</head>
+<?php include 'top.php'; ?>
 
 <body>
-
-    <?php
-    include 'top.php';
-
-    // Temporary variables so testing will be easier
-    $loggedin = TRUE;
-    $active = TRUE;
-    ?>
-
     <!-- Main content goes here -->
     <main>
         <div class="innertube">
 
             <?php if ($loggedin) {
-                ?>
-            <?php
                 $strainErr = $backboneErr = $yearErr = "";
                 $strain = $backbone = $comment = $year = $reg = $inst = "";
 
@@ -173,6 +153,11 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
     </main>
 
     <?php include 'bottom.php'; ?>
+
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type = "text/javascript" src = "http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
+<script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
 
 </body>
 </html>

@@ -4,20 +4,17 @@ require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+$title = "Login/Registration System";
 ?>
 
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Login/Registration System</title>
-	<link href="css/upstrain.css" rel="stylesheet">
-	<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
-</head>
 
+<?php include 'top.php'; ?>
+
+<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 <body>
-	<?php include 'top.php'; ?>
+
 	<main>
 		<div class="form">
 			<?php 

@@ -3,18 +3,14 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
+
+$title = "Login Error";
 ?>
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Error</title>
-	<link href="css/upstrain.css" rel="stylesheet">
-</head>
+
+<?php include 'top.php'; ?>
 
 <body>
-	<?php include 'top.php'; ?>
 	<main>
 		<div class="form">
 			<h1 class="login">Error</h1>
