@@ -1,22 +1,26 @@
 
 <?php
-// if(count(get_included_files()) == 1) exit("Access restricted");
 
-include 'scripts/db.php';
+// if(count(get_included_files()) == 1) exit("Access restricted");
+//include 'scripts/db.php';
+$hostname = "localhost";
+$username = "root";
+$password = "";
+$dbname = "upstrain_kristina";
+$link = new mysqli($hostname, $username, $password, $dbname);
+
+//if(isset($_POST['submit'])) {
+    
 
 // Variables
-
 $year = $_REQUEST['year'];
 $comment = $_REQUEST['comment'];
 $strain = $_REQUEST['strain'];
 $backbone = $_REQUEST['backbone'];
 $reg_id = $_REQUEST['registry'];
 $current_date = date("Y-m-d");
- 
-$creator = $_POST['user_id']; 
-
-
-$file = "";
+$creator = 1;
+//$creator = $_POST['user_id']; 
 
 
 // Strain 
@@ -47,9 +51,9 @@ $strain_row_id = $strain_row["id"];
 $check2 = "SELECT name FROM backbone WHERE name LIKE '$backbone'";
 $check_query2 = mysqli_query($link, $check2);
 if (mysqli_num_rows($check_query2) < 1) {
-    $sql_backbone = "INSERT INTO backbone (name, date_db) VALUES (?,?)";
+    $sql_backbone = "INSERT INTO backbone (name, date_db,creator) VALUES (?,?,?)";
     $stmt_backbone = $link->prepare($sql_backbone);
-    $stmt_backbone->bind_param("ss", $backbone, $current_date);
+    $stmt_backbone->bind_param("ssi", $backbone, $current_date,$creator);
     $stmt_backbone->execute();
     $stmt_backbone->close();
 } else {
@@ -66,17 +70,23 @@ $back_row = mysqli_fetch_assoc($back_s_query);
 $back_row_id = $back_row["id"];
 
 // Entry
-$sql_entry = "INSERT INTO entry (year_created, comment, date_db, entry_reg, backbone, strain) VALUES (?,?,?,?,?,?)";
+$sql_entry = "INSERT INTO entry (year_created, comment, date_db, entry_reg, backbone, strain,creator) VALUES (?,?,?,?,?,?,?)";
 $stmt_entry = $link->prepare($sql_entry);
-$stmt_entry->bind_param("isssii", $year, $comment, $current_date, $reg_id, $back_row_id, $strain_row_id);
-$stmt_entry->execute(); 
+$stmt_entry->bind_param("isssiii", $year, $comment, $current_date, $reg_id, $back_row_id, $strain_row_id, $creator);
+$stmt_entry->execute();
 $stmt_entry->close();
 
 $entry_s_id = "SELECT * FROM entry ORDER BY id DESC LIMIT 1";
 $entry_id_query = mysqli_query($link, $entry_s_id);
-$entry_id_row = mysqli_fetch_assoc($entry_id_query); 
-$entry_id = $entry_id_row["id"]; 
-$up_id = "UU".date("Y").$entry_id; 
+$entry_id_row = mysqli_fetch_assoc($entry_id_query);
+$entry_id = $entry_id_row["id"];
+
+$year_created_s = "SELECT upstrain_id FROM entry_upstrain WHERE entry_id = $entry_id";
+$year_created_query = mysqli_query($link, $year_created_s);
+$year_created_row = mysqli_fetch_assoc($year_created_query);
+$upstrain_id = $year_created_row["upstrain_id"];
+echo $upstrain_id;
+
 
 // Insert
 $ins_name = $_POST["ins"];
@@ -85,68 +95,86 @@ $num = count($ins_name);
 
 if ($num > 0) {
     for ($i = 0; $i < $num; $i++) {
-            $ins_s = "SELECT id from ins WHERE name LIKE '$ins_name[$i]'";
-            $ins_s_query = mysqli_query($link, $ins_s);
-            $ins_row = mysqli_fetch_assoc($ins_s_query);
-            $ins_id = $ins_row["id"];
+        $ins_s = "SELECT id from ins WHERE name LIKE '$ins_name[$i]'";
+        $ins_s_query = mysqli_query($link, $ins_s);
+        $ins_row = mysqli_fetch_assoc($ins_s_query);
+        $ins_id = $ins_row["id"];
 
-            $entry_ins = "INSERT INTO entry_inserts (entry_id, insert_id) VALUES(?,?)";
-            $stmt_entry_ins = $link->prepare($entry_ins);
-            $stmt_entry_ins->bind_param("ii", $entry_id, $ins_id);
-            $stmt_entry_ins->execute();
-            $stmt_entry_ins->close();
-            
+        $entry_ins = "INSERT INTO entry_inserts (entry_id, insert_id) VALUES(?,?)";
+        $stmt_entry_ins = $link->prepare($entry_ins);
+        $stmt_entry_ins->bind_param("ii", $entry_id, $ins_id);
+        $stmt_entry_ins->execute();
+        $stmt_entry_ins->close();
+
         if (trim($ins_name[$i] != '')) {
             $check3 = "SELECT name FROM ins WHERE name LIKE '$ins_name[$i]'";
             $check_query3 = mysqli_query($link, $check3);
             if (mysqli_num_rows($check_query3) < 1) {
-                
-                $ins_type_s = "SELECT id FROM ins_type WHERE name LIKE '$ins_type[$i]'"; 
+
+                $ins_type_s = "SELECT id FROM ins_type WHERE name LIKE '$ins_type[$i]'";
                 $ins_type_s_query = mysqli_query($link, $ins_type_s);
                 $ins_type_row = mysqli_fetch_assoc($ins_type_s_query);
                 $ins_type_id = $ins_type_row["id"];
                 //echo $ins_type_id; 
-                
-                $sql_ins = "INSERT INTO ins (name,date_db,type) VALUES (?,?,?)";
+
+                $sql_ins = "INSERT INTO ins (name,date_db,type,creator) VALUES (?,?,?,?)";
                 $stmt_ins = $link->prepare($sql_ins);
-                $stmt_ins->bind_param("sss", $ins_name[$i], $current_date, $ins_type_id);
+                $stmt_ins->bind_param("sssi", $ins_name[$i], $current_date, $ins_type_id, $creator);
                 $stmt_ins->execute();
                 $stmt_ins->close();
-                
-            }   
+            }
         }
     }
 } else {
+    
 }
 
 //Sequence
-$org_name_file = $_FILES['file']['name']; 
-$sql_file = "INSERT INTO upstrain_file (name_original) VALUES(?)"; 
-$stmt_file = $link->prepare($sql_file); 
-$stmt_file->bind_param("s", $org_name_file); 
-$stmt_file->execute(); 
-$stmt_file->close(); 
 
-if (is_uploaded_file($_FILES['file']['tmp_name']) && $_FILES['file']['error'] == 0) {
-$path = "files/".up_id;  
-      if (!file_exists($path)) {
-          if(move_uploaded_file($_FILES['file']['tmp_name'], $path)) {
-             echo "The file was uploaded successfully. ";  
-          } else {
-              echo "The file was not uploaded successfully"; 
-          }
-      } else {
-          echo "File already esists. Please upload another file."; 
-      }
-} 
-else {
-    echo "(Error Code: ". $_FILES['file']['error']. ")"; 
-} 
+if (is_uploaded_file($_FILES['my_file']['tmp_name']) && $_FILES['my_file']['error'] == 0) {
+    $path = "files/" . $upstrain_id;
+    $lines = file($_FILES['my_file']['tmp_name']);
+    $header = $lines[0];
+    $firstc = $header[0];
+    $num_lines = count($lines);
+    $seq = "";
+
+    for ($i = 1; $i < $num_lines; $i++) {
+        $seq .= $lines[$i];
+    }
+    
+    if ($firstc == '>' && preg_match("/^[A-Z\s]+$/", $seq)) {
+        if (!file_exists($path)) {
+            if (move_uploaded_file($_FILES['my_file']['tmp_name'], $path)) {
+                $org_name_file = $_FILES['my_file']['name'];
+                $sql_file = "INSERT INTO upstrain_file (name_original, upstrain_id) VALUES(?,?)";
+                $stmt_file = $link->prepare($sql_file);
+                $stmt_file->bind_param("ss", $org_name_file, $upstrain_id);
+                $stmt_file->execute();
+                $stmt_file->close();
+                echo "The file was uploaded successfully. ";
+            } else {
+                echo "The file was not uploaded successfully";
+            }
+        } else {
+            echo "File already exists. Please upload another file.";
+        }
+    } else {
+        
+    }
+} else {
+    //echo "(Error Code: " . $_FILES['my_file']['error'] . ")";
+}
+
+
 
 //Private
 
+if (isset($_POST['private']) && $_POST['private'] == 'Private') {
+    
+}
+//}
 
-$link->close() or die('Could not close connection to database');
 
 
 
