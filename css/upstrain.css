@@ -73,7 +73,8 @@ form.quicksearch {
 
 /* Search, insert */
 form.search-form, form.insert-form {
-	
+	float: left;
+	width:100%;
 }
 
 /* Search */
@@ -163,13 +164,13 @@ a.edit::after {	/* Adds edit image after link */
 }
 
 /* ??? */ 
-div.innertube a {
+/* div.innertube a {
 	color: blue;
 }
 
 div.innertube a:hover {
 	color: green;
-}
+} */
 
 /* Navigation bar */
 .navigation a {
@@ -546,7 +547,8 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
 
 div.panel-history-show {
 	width: 30%;
-	float: right;
+	float: left;
+	clear: both;
 	margin-right: 20px;
 }
 
@@ -555,12 +557,44 @@ div.control-panel-show { /* Style for region where the desired content will be s
 	width: 40%;
 }
 
-div.control_panel_menu { /* Styling the navigation of the control panel */
-	
+div.control_panel_menu ul, div.entry_nav ul{ /* Style the navigation list */
+	width:100%;
+	clear: right;
 }
 
-ul.control_panel_nav { /* Style the navigation list */
-	list-style-type: none;
+.control_panel_menu a, .entry_nav a {
+	float: left; 
+	background: #0074D9;
+    color: white; /* Changed. Text color in navigation buttons */ 
+    /* text-align: center; */ /* Deleted. */ 
+    padding: 10px 10px;
+    font-size: 17px; /* Changed. Larger text size in nav. buttons */
+	margin: 5px;
+	
+	/* Rounded corners on top */  /* Added: all */
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+ 
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+ 
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	
+	/* Rounded corners on bottom */ /* Added: all */
+	-webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+ 
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+ 
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+}
+
+.control_panel_nav a:hover, .entry_nav a:hover {
+	background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
+	color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }
 
 /* IDs */
