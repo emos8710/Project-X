@@ -1,95 +1,101 @@
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 /* ---------- GENERAL ---------- */
+
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
-	margin: 0;
-	padding: 0;
-	line-height: 1.5em;
-	font-family: Arial; /* Sans-serif; */
+    margin: 0;
+    padding: 0;
+    line-height: 1.5em;
+    font-family: Arial; /* Sans-serif; */
 }
 
 main {
-	margin-top: 68px;
-	overflow-y: auto;
-	width: 100%;
-	float: left;
-	background: #E1F5FE;  /* Changed */
+    margin-top: 68px;
+    overflow-y: auto;
+    width: 100%;
+    float: left;
+    background: #E1F5FE;  /* Changed */
 }
 
 /* Navigation bar */
 nav {
-	width: 100%;
-	min-width: 1000px;
-	position: fixed;
+    width: 100%;
+    min-width: 1000px;
+    position: fixed;
 }
 /* Footer */
 footer {
-	clear: both;
-	background: #E1F5FE; /* Changed */ 
+    clear: both;
+    background: #E1F5FE; /* Changed */ 
 }
 
 .innertube {	/* Padding for content */
-	margin: 15px;
+    margin: 15px;
 }
 
 .field-wrap {	/* For wrapping input fields in the login system */
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 /* Headers */
 h1, h2, h3, h4, h5, h6 {
-	color: #001F3F; /* Changed */
-	margin: 0;
-	font-size: 28px; /* Added */
+    color: #001F3F; /* Changed */
+    margin: 0;
+    font-size: 28px; /* Added */
 }
 
 h2 {
-	margin-bottom: 20px;
-	font-weight: 500;
+    margin-bottom: 20px;
+    font-weight: 500;
 }
 
 /* Text */
 p {
-	margin: 0;
-	font-weight: normal;
+    margin: 0;
+    font-weight: normal;
 }
 
 footer p {
-	font-size: small;
-	text-align: center; /* Added */
+    font-size: small;
+    text-align: center; /* Added */
 }
 
 
 /* ---------- FORMS ---------- */
 form {
-	margin: 0;
+    margin: 0;
 }
 
 /* Quicksearch */
 form.quicksearch {
-	height: 29px;
+    height: 29px;
 }
 
 /* Search, insert */
 form.search-form, form.insert-form {
-	float: left;
-	width:100%;
+    float: left;
+    width:100%;
 }
 
 /* Search */
 form.search-form > div, form.insert-form >div {
-	max-width: 500px; /* Changed. Makes search form wider */
-	float: left;
+    max-width: 500px; /* Changed. Makes search form wider */
+    float: left;
 }
 
 /* ---------- LOGIN SPECIFIC ---------- */
 /* Header */
 h1.login {
-  text-align: center;
-  margin-bottom: 20px;
-  font-weight: 300;
-  font-size: 35px;
+    text-align: center;
+    margin-bottom: 20px;
+    font-weight: 300;
+    font-size: 35px;
 }
 
 /* Text */
@@ -100,29 +106,41 @@ p.login {
 
 /* ---------- TABLES ---------- */
 table {
-	border: none;
-	border-spacing: 0;
+    border: none;
+    border-spacing: 0;
+    margin-top: 10px;
+}
+
+table.control-panel-history th {
+    text-align: left;
+    border-bottom: none;
+    font-size: 12px;
+}
+
+table.control-panel-history td {
+    font-size: 10px;
+    border-bottom: none;
 }
 
 th {
-	padding-right: 10px;
-	text-align: center;
-	text-decoration: none;
-	white-space: nowrap;
-	border-bottom: 1px solid black;
+    padding-right: 10px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap;
+    border-bottom: 1px solid black;
 }
 
 td {
-	padding-right: 10px;
-	text-align: left;
-	vertical-align: top;
-	font-size: small;
-	border-bottom: 1px solid black;
-	max-width: 400px;
+    padding-right: 10px;
+    text-align: left;
+    vertical-align: top;
+    font-size: small;
+    border-bottom: 1px solid black;
+    max-width: 400px;
 }
 
 td.comment {
-	min-width: 200px;
+    min-width: 200px;
 }
 
 /* ---------- SPAN ---------- */
@@ -133,62 +151,62 @@ span.req {
 
 /* ---------- LINKS ---------- */
 a {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 a:hover {
-	text-decoration: none;
+    text-decoration: none;
 }
 
 /* Images */
 a.external::after { /* Adds external link image after link */
-	background-image: url(../images/external_link.png);
+    background-image: url(../images/external_link.png);
     background-size: 12px 12px;
     display: inline-block;
     width: 12px; 
     height: 12px;
     content:"";
-	margin-left: 3px;
-	margin-right: 12px;
+    margin-left: 3px;
+    margin-right: 12px;
 }
 
 a.edit::after {	/* Adds edit image after link */
-	background-image: url(../images/edit.png);
+    background-image: url(../images/edit.png);
     background-size: 12px 12px;
     display: inline-block;
     width: 12px; 
     height: 12px;
     content:"";
-	margin-left: 3px;
-	margin-right: 12px;
+    margin-left: 3px;
+    margin-right: 12px;
 }
 
 /* ??? */ 
 /* div.innertube a {
-	color: blue;
+        color: blue;
 }
 
 div.innertube a:hover {
-	color: green;
+        color: green;
 } */
 
 /* Navigation bar */
 .navigation a {
-	float: left;
+    float: left;
     color: #E1F5FE; /* Changed. Text color in navigation buttons */ 
     /* text-align: center; */ /* Deleted. */ 
     padding: 22px 16px;
     font-size: 19px; /* Changed. Larger text size in nav. buttons */
-	
-	/* Rounded corners on top */  /* Added: all */
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
- 
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
- 
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
+
+    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
 }
 .navigation a:hover {
     background-color: #0074D9; /* Changed. Background color when hovering over nav. buttons */
@@ -202,318 +220,318 @@ div.innertube a:hover {
 
 /* Login */
 .navigation a.login {
-	margin-left: 5px; /* Changed. Smaller margin on login button in nav. */
-	color: #E1F5FE; 
+    margin-left: 5px; /* Changed. Smaller margin on login button in nav. */
+    color: #E1F5FE; 
 }
 
 .navigation a.login.active {
-	background-color: #E1F5FE; /* Changed. Background color on active nav. button. */
+    background-color: #E1F5FE; /* Changed. Background color on active nav. button. */
     color: #001F3F; /* Changed. Text color on active nav. button */
 }
 
 a.login {
-  color: #0074D9; /* Changed. New color to "New? Click here to register!" */
+    color: #0074D9; /* Changed. New color to "New? Click here to register!" */
 }
 
 /* Logo */
 a.logo { /* Removed: margin */
-	padding: 0; /* Changed. Makes the logo fit in the navigation. */
-	margin-right: 20px; /* Added. Less space between logo and nav. buttons */
-	text-align: left;
+    padding: 0; /* Changed. Makes the logo fit in the navigation. */
+    margin-right: 20px; /* Added. Less space between logo and nav. buttons */
+    text-align: left;
 }
 
 a.logo:hover {
-	background-color: inherit;
+    background-color: inherit;
 }
 
 /* Quicksearch */ 
 div.quicksearch a {
-	padding: 0;
-	font-size: small;
+    padding: 0;
+    font-size: small;
 }
 
 div.quicksearch a:hover {
-	color: #0074D9; /* Changed. Text color when hovering over quicksearch text */
-	background-color: inherit;
+    color: #0074D9; /* Changed. Text color when hovering over quicksearch text */
+    background-color: inherit;
 }
 
 /* ---------- DIVS ---------- */
 /* Forms */
 div.form {
-  background: #E1F5FE; /* Changed. Background color in forms. */
-  padding: 40px;
-  max-width: 600px;
-  margin: auto;
+    background: #E1F5FE; /* Changed. Background color in forms. */
+    padding: 40px;
+    max-width: 600px;
+    margin: auto;
 }
 
 /* Headers */
 div.innertube h2.help_nav {
-	text-align: center;
-	font-size: 35px;
-	margin-top: 30px; 
+    text-align: center;
+    font-size: 35px;
+    margin-top: 30px; 
 }
 
 div.innertube h3.help_nav {
-	text-align: center;
-	font-size: 25px; 
-	margin-top: 10px; 
-	margin-bottom: 10px;
+    text-align: center;
+    font-size: 25px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
 }
 
 h4.help_nav {
-	text-align: center;
-	font-size: 17px;
-	margin-top: 0px;
-	margin-bottom: 10px;
+    text-align: center;
+    font-size: 17px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 
 /* inserts */
 div.backbone_inserts {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	width: 50%;
-	float: right;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 50%;
+    float: right;
 }
 
 /* Entries */
 div.entry_table {
-	padding-top: 50px;
-	padding-bottom: 50px;
-	width: 50%;
-	float: left;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    width: 50%;
+    float: left;
 }
 
 /* Logo */
 div.logo {
-	float: left;
-	clear: left; /* Does not allow floating elements to the left of the logo*/
+    float: left;
+    clear: left; /* Does not allow floating elements to the left of the logo*/
 }
 
 /* "Private" Checkbox */
 div.checkbox {
-	margin-top: 30px;
-	float: right;
-	padding: 30px;
-	width: 50%;
+    margin-top: 30px;
+    float: right;
+    padding: 30px;
+    width: 50%;
 }
 
 /* navigation stuff in help, control panel etc  */ 
 
 div.control_panel_menu, div.entry_nav{
-	float: left; 
-	width:100%; 
-	margin-left:0; 
+    float: left; 
+    width:100%; 
+    margin-left:0; 
 }
 
 div.help_nav {
-	float: center; 
-	width: 70%; 
-	margin-left:22%;
-	margin-right:16%;
+    float: center; 
+    width: 70%; 
+    margin-left:22%;
+    margin-right:16%;
 }
 
 /* ---------- NAVIGATION BAR ---------- */
 nav.navigation {
-	overflow: hidden;
-	background: #001F3F;  /* Changed. Background color in navigation bar. */
-	margin-top: 0;
-	clear: both; /* Does not alow floating elements on either side of navigation bar */ 
-	max-height: 68px;
+    overflow: hidden;
+    background: #001F3F;  /* Changed. Background color in navigation bar. */
+    margin-top: 0;
+    clear: both; /* Does not alow floating elements on either side of navigation bar */ 
+    max-height: 68px;
 }
 
 /* Wrappers */
 div.nav-wrapper { /* Entire */
-	white-space: nowrap;
+    white-space: nowrap;
 }
 
 div.right-wrapper { /* Quicksearch and login */
-	padding: 0;
-	float: right;
-	clear: right;
+    padding: 0;
+    float: right;
+    clear: right;
 }
 
 /* Quicksearch */
 div.quicksearch {
-	padding-top: 10px;
-	float: left;
+    padding-top: 10px;
+    float: left;
 }
 
 /* ---------- INPUT FIELDS ---------- */
 input.all, select.all, input.login {
-	padding: 6px;
-	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	font-size: 16px; /* Added. Increased font size in input boxes */
-	padding: 4px 7px; /* Added. Less padding within input boxes */ 
-	/* outline: 0; */ /* Added. No outline around active input box */
-	width:100%; /* Added. The input boxes are no longer overlapping but separated */
+    padding: 6px;
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 16px; /* Added. Increased font size in input boxes */
+    padding: 4px 7px; /* Added. Less padding within input boxes */ 
+    /* outline: 0; */ /* Added. No outline around active input box */
+    width:100%; /* Added. The input boxes are no longer overlapping but separated */
 }
 
 label { /* Added: All */
-	font-size: 15px; /* Added. Change of text size above input boxes */ 
-	color: #001F3F; /* Added. Text color of text above input boxes  */
-	font-style: italic;
+    font-size: 15px; /* Added. Change of text size above input boxes */ 
+    color: #001F3F; /* Added. Text color of text above input boxes  */
+    font-style: italic;
 }
 
 
 /* Quicksearch */
 input.quicksearch {
-	float: left;
-	margin: 0;
-	padding: 5px;	
-	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	font-size: 16px; /* Added. Increased font size in input boxes */
-	outline: 0; /* Added. No outline around active input box */
-	height: 29px;
+    float: left;
+    margin: 0;
+    padding: 5px;	
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 16px; /* Added. Increased font size in input boxes */
+    outline: 0; /* Added. No outline around active input box */
+    height: 29px;
 }
 
 /* Insert */
 input.insert, select.insert {
-	padding: 6px;
-	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	font-size: 16px; /* Added. Increased font size in input boxes */
-	padding: 4px 7px; /* Added. Less padding within input boxes */ 
-	/* outline: 0; */ /* Added. No outline around active input box */
-	width:70%;
-	float: right;
+    padding: 6px;
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 16px; /* Added. Increased font size in input boxes */
+    padding: 4px 7px; /* Added. Less padding within input boxes */ 
+    /* outline: 0; */ /* Added. No outline around active input box */
+    width:70%;
+    float: right;
 }	
 
 textarea.insert {
-	padding: 6px;
-	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	font-size: 16px; /* Added. Increased font size in input boxes */
-	padding: 4px 7px; /* Added. Less padding within input boxes */ 
-	/* outline: 0; */ /* Added. No outline around active input box */
-	width:100%;
-	float: right;
-	margin-bottom: 30px;
+    padding: 6px;
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 16px; /* Added. Increased font size in input boxes */
+    padding: 4px 7px; /* Added. Less padding within input boxes */ 
+    /* outline: 0; */ /* Added. No outline around active input box */
+    width:100%;
+    float: right;
+    margin-bottom: 30px;
 }
 
 /* Multiple inserts */
 input.insert-mini, select.insert-mini {
-	padding: 5px;
-	border: 1px solid #001F3F; /* Changed. Border color around input boxes */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	font-size: 16px; /* Added. Increased font size in input boxes */ 
-	/* outline: 0; */ /* Added. No outline around active input box */
-	width:100%;
-	float: right;
-	margin-top: 5px;
-	margin-bottom: 1px;
+    padding: 5px;
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */ 
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 16px; /* Added. Increased font size in input boxes */ 
+    /* outline: 0; */ /* Added. No outline around active input box */
+    width:100%;
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 1px;
 
 }
 
 /* Sequence input */
 input.button {
-	padding: 4px 7px; /* Added. Less padding within input boxes */ 
-	border: 0;
-	font-size: 16px; /* Added. Increased font size in input boxes */
-	width:70%;
-	float: right;
+    padding: 4px 7px; /* Added. Less padding within input boxes */ 
+    border: 0;
+    font-size: 16px; /* Added. Increased font size in input boxes */
+    width:70%;
+    float: right;
 }
 
 
 /* ---------- BUTTONS ---------- */
 .button {
-	border: none;
-	/* padding: 15px 0; */ /* Removed. The text is centered in button. */
-	font-size: 20px; /* Changed. Smaller text in buttons */
-	font-weight: 500; /* Changed. Less bold text in buttons  */
-	/* text-transform: uppercase;*/ /* Removed. No uppercase text in buttons. */
-	letter-spacing: .1em;
-	background: #001F3F; /* Changed. Background color in buttons. */
-	color: #E1F5FE; /* Changed. Text color in buttons. */
-	display: block;
-	width: 100%;
-	height: 30px; /* Added. Less thick button.  */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    border: none;
+    /* padding: 15px 0; */ /* Removed. The text is centered in button. */
+    font-size: 20px; /* Changed. Smaller text in buttons */
+    font-weight: 500; /* Changed. Less bold text in buttons  */
+    /* text-transform: uppercase;*/ /* Removed. No uppercase text in buttons. */
+    letter-spacing: .1em;
+    background: #001F3F; /* Changed. Background color in buttons. */
+    color: #E1F5FE; /* Changed. Text color in buttons. */
+    display: block;
+    width: 100%;
+    height: 30px; /* Added. Less thick button.  */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
 }
 
 .button:hover {
-  color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+    color: #0074D9; /* Changed. Text color when hovering over buttons */ 
 }
 
 /* Quicksearch */
 button.quicksearch {
-	cursor: pointer;
-	border: none;
-	padding: 0;
-	height: 29px;
-	background: #0074D9; /* Changed. Background color in buttons. */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    cursor: pointer;
+    border: none;
+    padding: 0;
+    height: 29px;
+    background: #0074D9; /* Changed. Background color in buttons. */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
 }
 
 button.quicksearch:hover {
-	background-color: #001F3F; /* Changed. Background color when hovering over quicksearch button */
+    background-color: #001F3F; /* Changed. Background color when hovering over quicksearch button */
 }
 
 /* "Add insert" button in insert entry page */
 button.insert-mini {
-	cursor: pointer;
-	border: none;
-	padding: 4px;
-	height: 29px;
-	background: #0074D9; /* Changed. Background color in buttons. */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	display: block;
-	background: #001F3F; /* Changed. Background color in buttons. */
-	color: #E1F5FE; /* Changed. Text color in buttons. */
-	float: right;
+    cursor: pointer;
+    border: none;
+    padding: 4px;
+    height: 29px;
+    background: #0074D9; /* Changed. Background color in buttons. */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    display: block;
+    background: #001F3F; /* Changed. Background color in buttons. */
+    color: #E1F5FE; /* Changed. Text color in buttons. */
+    float: right;
 }
 
 button.insert-mini:hover {
-color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+    color: #0074D9; /* Changed. Text color when hovering over buttons */ 
 }
 
 /* "Remove insert" button in insert entry page */
 button.btn_remove {
-	margin-top: 5px; /* Makes the button line up relatively well with the input box */
-	margin-bottom: 1px;
-	cursor: pointer;
-	border: none;
-	padding: 6px;
-	height: 30px;
-	background: #0074D9; /* Changed. Background color in buttons. */
-	-moz-border-radius: 5px; /* Added. Rounded corners in firefox */
-	-webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
-	border-radius: 5px; /* Added. Rounded corners in other browsers. */
-	display: block;
-	background: #001F3F; /* Changed. Background color in buttons. */
-	color: #E1F5FE; /* Changed. Text color in buttons. */
-	float: right;
+    margin-top: 5px; /* Makes the button line up relatively well with the input box */
+    margin-bottom: 1px;
+    cursor: pointer;
+    border: none;
+    padding: 6px;
+    height: 30px;
+    background: #0074D9; /* Changed. Background color in buttons. */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    display: block;
+    background: #001F3F; /* Changed. Background color in buttons. */
+    color: #E1F5FE; /* Changed. Text color in buttons. */
+    float: right;
 }
 
 button.btn_remove:hover {
-color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+    color: #0074D9; /* Changed. Text color when hovering over buttons */ 
 }
 
 /* ---------- IMAGES ---------- */
 /* Quicksearch icon */
 img.quicksearch {
-	height: 100%;
+    height: 100%;
 }
 
 button.control-panel-restore::after { /* Add restore image to "restore" button */
-	background-image: url(../images/restore.png);
+    background-image: url(../images/restore.png);
     background-size: 16px 16px;
     display: inline-block;
     width: 16px; 
@@ -523,7 +541,7 @@ button.control-panel-restore::after { /* Add restore image to "restore" button *
 
 
 button.control-panel-history::after { /* Add history image to "history" button */
-	background-image: url(../images/history.png);
+    background-image: url(../images/history.png);
     background-size: 16px 16px;
     display: inline-block;
     width: 16px; 
@@ -532,7 +550,7 @@ button.control-panel-history::after { /* Add history image to "history" button *
 }
 
 button.control-panel-edit::after { /* Add edit image to "edit" button */
-	background-image: url(../images/edit.png);
+    background-image: url(../images/edit.png);
     background-size: 16px 16px;
     display: inline-block;
     width: 16px; 
@@ -541,7 +559,7 @@ button.control-panel-edit::after { /* Add edit image to "edit" button */
 }
 
 button.control-panel-delete::after { /* Add trashcan image to "delete" button */
-	background-image: url(../images/trash.png);
+    background-image: url(../images/trash.png);
     background-size: 16px 16px;
     display: inline-block;
     width: 16px; 
@@ -550,7 +568,7 @@ button.control-panel-delete::after { /* Add trashcan image to "delete" button */
 }
 
 button.control-panel-admin::after { /* Add admin image to "make admin" button */
-	background-image: url(../images/admin.png);
+    background-image: url(../images/admin.png);
     background-size: 16px 16px;
     display: inline-block;
     width: 16px; 
@@ -560,133 +578,136 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
 
 /* ---------- LOGIN SYSTEM SPECIFIC ---------- */
 .top-row > div:last-child { /* Puts input boxes next to each other */
-  margin: 0;
+    margin: 0;
 }
 
 .top-row > div { /* Makes input boxes smaller */
-  float: left;
-  width: 48%;
-  margin-right: 4%;
+    float: left;
+    width: 48%;
+    margin-right: 4%;
 }
 
 .top-row:after {
-  content: "";
-  display: table;
-  clear: both;
+    content: "";
+    display: table;
+    clear: both;
 }
 
 .tab-content > div:last-child { /* Hides login or register tab when not active */
-  display: none;
+    display: none;
 }
 
 /* ---------- CONTROL PANEL ---------- */
 
 div.panel-history-show {
-	width: 30%;
-	float: left;
-	clear: both;
-	margin-right: 20px;
+    display: inline-block;
+    margin-top: 30px;
 }
 
 div.control-panel-show { /* Style for region where the desired content will be shown */
-	float: left;
-	width: 40%;
+    float: left;
+    width: 50%;
+    margin-right: 125px;
+}
+
+div.control_panel_menu {
+    margin-bottom: 15px;
 }
 
 div.control_panel_menu ul, div.entry_nav ul, div.help_nav ul{ /* Style the navigation list */
-	width:100%;
-	clear: right;
-	padding: 0;
+    width:100%;
+    clear: right;
+    padding: 0;
 }
 
 .control_panel_menu a, .entry_nav a, .help_nav a {
-	float: left; 
-	background: #81D4FA; /* #0074D9; */
+    float: left; 
+    background: #81D4FA; /* #0074D9; */
     color: #001F3F;/* Changed. Text color in navigation buttons */ 
     /* text-align: center; */ /* Deleted. */ 
     padding: 10px 10px;
     font-size: 17px; /* Changed. Larger text size in nav. buttons */
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left: 3px;
-	margin-right: 30px;
-	
-	/* Rounded corners on top */  /* Added: all */
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
- 
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
- 
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
-	
-	/* Rounded corners on bottom */ /* Added: all */
-	-webkit-border-bottom-left-radius: 7px;
-	-webkit-border-bottom-right-radius: 7px;
- 
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
- 
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 3px;
+    margin-right: 30px;
+
+    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
 .control_panel_nav a:hover, .entry_nav a:hover, .help_nav a:hover{
-	background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
-	color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+    background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
+    color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }
 
 /* HELP PAGE */ 
 div.innertube div.help_page_show {
-	float: left;
-	width:84%;
-	margin-top: 5px;
-	margin-left: 8%; 
-	margin-right: 8%;
-	text-align: justify;
+    float: left;
+    width:84%;
+    margin-top: 5px;
+    margin-left: 8%; 
+    margin-right: 8%;
+    text-align: justify;
     text-justify: inter-word;
-	border: 3px solid #81D4FA;
-	padding-left:15px;
-	padding-right: 15px; 
-	
-	/* Rounded corners on top */  /* Added: all */
-	-webkit-border-top-left-radius: 7px;
-	-webkit-border-top-right-radius: 7px;
- 
-	-moz-border-radius-topleft: 7px;
-	-moz-border-radius-topright: 7px;
- 
-	border-top-left-radius: 7px;
-	border-top-right-radius: 7px;
-	
-	/* Rounded corners on bottom */ /* Added: all */
-	-webkit-border-bottom-left-radius: 7px;
-	-webkit-border-bottom-right-radius: 7px;
- 
-	-moz-border-radius-bottomleft: 7px;
-	-moz-border-radius-bottomright: 7px;
- 
-	border-bottom-left-radius: 7px;
-	border-bottom-right-radius: 7px;
+    border: 3px solid #81D4FA;
+    padding-left:15px;
+    padding-right: 15px; 
+
+    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
 }
 
 div.help_text {
-	width:68%;
-	margin-left: 16%;
-	margin-right: 16%;
-	font-style: italic;
-	text-align: justify;
+    width:68%;
+    margin-left: 16%;
+    margin-right: 16%;
+    font-style: italic;
+    text-align: justify;
     text-justify: inter-word;
 }
 
 /* IDs */
 #logo { /* Added: All */
-  max-height: 68px; /* Added. Logo less high */
-  max-width: 250px; /* Added. Logo less wide */
+    max-height: 68px; /* Added. Logo less high */
+    max-width: 250px; /* Added. Logo less wide */
 }
 
 #right {
-	float: right;
-	margin-bottom: 15px;
+    float: right;
+    margin-bottom: 15px;
 }
