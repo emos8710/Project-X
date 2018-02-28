@@ -219,10 +219,6 @@ $title = "New entry";
                         <textarea name="comment" id="Comment" rows ="4" cols="50"
                                   value="<?php echo $comment; ?>" required> </textarea> </p>
 
-                        <p id="submit">
-
-                            <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                      value="<?php echo $comment; ?>" > </textarea>
                     </div>
 
 
@@ -257,10 +253,7 @@ $title = "New entry";
 
                             <textarea name="comment" id="Comment" rows ="4" cols="50"
                                       value="<?php echo $comment; ?>" required> </textarea> </p>
-                            <p id="submit">
-
-                                <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                          value="<?php echo $comment; ?>" > </textarea>
+                            
                         </div>
 
 
@@ -336,7 +329,7 @@ $title = "New entry";
                     </main>
 
                     <?php include 'bottom.php'; ?>
-
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
                     </body>
                     </html>
 
