@@ -114,36 +114,66 @@ if (isset($_GET['content'])) {
 
                             <p>
                                 <label for="Strain">Strain </label>
-                                <input type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
-                                <span class="error">* <?php echo $strainErr; ?></span>
+                                <select name="strain" required>
+                                            <?php
+                                            include 'scripts/db.php';
+                                            $sql_strain = mysqli_query($link, "SELECT name FROM strain");
+                                            while ($row = $sql_strain->fetch_assoc()) {
+                                                echo "<option>" . $row['name'] . "</option>";
+                                            }
+                                            mysqli_close($link);
+                                            ?>
+                                        </select>
+                                <span class="error">* <?php echo $backboneErr; ?></span>
                                 <br/></p>
 
                             <p>
                                 <label for="Backbone">Backbone </label>
-                                <input type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/> 
+                                <select name="backbone" required>
+                                            <?php
+                                            include 'scripts/db.php';
+                                            $sql_backbone = mysqli_query($link, "SELECT name FROM backbone");
+                                            while ($row = $sql_backbone->fetch_assoc()) {
+                                                echo "<option>" . $row['name'] . "</option>";
+                                            }
+                                            mysqli_close($link);
+                                            ?>
+                                        </select>
                                 <span class="error">* <?php echo $backboneErr; ?></span>
                                 <br/></p>
 
                             <p> <table id="dynamic">
-                                <label for="Ins">Insert </label>
-                                <input type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead"/>
-                                <button type="button" name="add" id="add_input">+ More inserts</button>
-                            </table>
-                            </p>
-
-                            </p>
-
-
-                            <p>
+                                <thead>Insert</thead>
+                                <td>
                                 <label for="Ins_Type">Insert type </label>
                                 <select name="insert_type[]">
                                     <option value="Promotor">Promotor</option>
                                     <option value="Coding sequence">Coding sequence</option>
                                     <option value="RBS">RBS</option>
                                     <option value="Other">Other</option>
-                                </select></p>
+                                </select></td>
 
-                            <p> 
+                            <td> 
+                                <label for="Ins">Insert name </label>
+                                <select name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead">
+                                    <?php
+                                            include 'scripts/db.php';
+                                            $sql_ins = mysqli_query($link, "SELECT name FROM ins");
+                                            while ($row = $sql_ins->fetch_assoc()) {
+                                                echo "<option>" . $row['name'] . "</option>";
+                                            }
+                                            mysqli_close($link);
+                                            ?>
+                                </select>
+                                <button type="button" name="add" id="add_input">+ More inserts</button>
+                            </td>
+                            </table>
+                            </p>
+
+                            </p>
+
+
+                            
                                 <label for="Registry">Registry id</label>
                                 <input type="text" name="registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
                             </p>
@@ -178,7 +208,7 @@ if (isset($_GET['content'])) {
                     } else if ($current_content == "new_strain") {
                         ?>
                         <p><span class="error">* required field.</span></p>
-                        <form method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
+                        <form method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>" enctype="multipart/form-data">
                             <p>
                                 <label for="Strain">Strain </label>
                                 <input type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
@@ -188,8 +218,9 @@ if (isset($_GET['content'])) {
                             <p> 
                                 <label for="Comment">Comment </label>
                                 <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                          value="<?php echo $comment; ?>" > </textarea> </p>
-                            <p id="submit">
+                                          value="<?php echo $comment; ?>" required> </textarea> </p>
+                            
+                           <p id="submit">
                                 <input type="submit" name="submit" value="Submit" />
 
                             </p>
@@ -198,7 +229,7 @@ if (isset($_GET['content'])) {
                     } else if ($current_content == "new_backbone") {
                         ?>
                         <p><span class="error">* required field.</span></p>
-                        <form method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
+                        <form method="post" action="<?php echo htmlspecialchars("add_backbone.php"); ?>" enctype="multipart/form-data">
                             <p>
                                 <label for="Backbone">Backbone </label>
                                 <input type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/> 
@@ -211,7 +242,7 @@ if (isset($_GET['content'])) {
                             <p> 
                                 <label for="Comment">Comment </label>
                                 <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                          value="<?php echo $comment; ?>" > </textarea> </p>
+                                          value="<?php echo $comment; ?>" required> </textarea> </p>
                             <p id="submit">
                                 <input type="submit" name="submit" value="Submit" />
 
@@ -220,7 +251,7 @@ if (isset($_GET['content'])) {
                         <?php
                     } else if ($current_content == "new_insert") {
                         ?>
-                        <form method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
+                        <form method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>" enctype="multipart/form-data">
                             <p> <table id="dynamic">
                                 <label for="Ins">Insert </label>
                                 <input type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead"/>
@@ -284,7 +315,7 @@ if (isset($_GET['content'])) {
         var max = 5;
         $("#add_input").click(function () {
             if (i <= max) {
-                $("#dynamic").append('<tr id="row' + i + '"><td><input type="text" name="ins[]" id ="Ins" /></td><td><select name="insert_type[]"><option value="Promotor">Promotor</option><option value="Coding sequence">Coding sequence</option><option value="RBS">RBS</option><option value="Other">Other</option></select></td><td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
+                $("#dynamic").append('<tr id="row' + i + '"><td><select name="insert_type[]"><option value="Promotor">Promotor</option><option value="Coding sequence">Coding sequence</option><option value="RBS">RBS</option><option value="Other">Other</option></select></td><td><select name="ins[]" value="<?php echo $inst; ?>" id ="Ins" </select></td><td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
                 i++;
             } else {
 
