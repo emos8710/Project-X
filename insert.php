@@ -29,19 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //$creator = $_POST['user_id']; 
 
     
-    
-    
-// Insert new strain if not existing
-    $check = "SELECT name FROM strain WHERE name LIKE '$strain'";
-    $check_query = mysqli_query($link, $check);
-    if (mysqli_num_rows($check_query) < 1) {
-        $sql_strain = "INSERT INTO strain (name) VALUES (?)";
-        $stmt_strain = $link->prepare($sql_strain);
-        $stmt_strain->bind_param("s", $strain);
-        $stmt_strain->execute();
-        $stmt_strain->close();
-    } else {
-        //Insert strain_id into entry
+//Strain
+
+//Insert strain_id into entry
         $strain_id = "INSERT INTO entry (strain) VALUES (?)";
         $stmt_strainid = $link->prepare($strain_id);
         $stmt_strainid->bind_param("i", $strain_row_id);
