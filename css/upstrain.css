@@ -246,6 +246,27 @@ div.form {
   margin: auto;
 }
 
+/* Headers */
+div.innertube h2.help_nav {
+	text-align: center;
+	font-size: 35px;
+	margin-top: 30px; 
+}
+
+div.innertube h3.help_nav {
+	text-align: center;
+	font-size: 25px; 
+	margin-top: 10px; 
+	margin-bottom: 10px;
+}
+
+h4.help_nav {
+	text-align: center;
+	font-size: 17px;
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
 /* inserts */
 div.backbone_inserts {
 	padding-top: 50px;
@@ -274,6 +295,21 @@ div.checkbox {
 	float: right;
 	padding: 30px;
 	width: 50%;
+}
+
+/* navigation stuff in help, control panel etc  */ 
+
+div.control_panel_menu, div.entry_nav{
+	float: left; 
+	width:100%; 
+	margin-left:0; 
+}
+
+div.help_nav {
+	float: center; 
+	width: 70%; 
+	margin-left:22%;
+	margin-right:16%;
 }
 
 /* ---------- NAVIGATION BAR ---------- */
@@ -557,19 +593,23 @@ div.control-panel-show { /* Style for region where the desired content will be s
 	width: 40%;
 }
 
-div.control_panel_menu ul, div.entry_nav ul{ /* Style the navigation list */
+div.control_panel_menu ul, div.entry_nav ul, div.help_nav ul{ /* Style the navigation list */
 	width:100%;
 	clear: right;
+	padding: 0;
 }
 
-.control_panel_menu a, .entry_nav a {
+.control_panel_menu a, .entry_nav a, .help_nav a {
 	float: left; 
 	background: #81D4FA; /* #0074D9; */
     color: #001F3F;/* Changed. Text color in navigation buttons */ 
     /* text-align: center; */ /* Deleted. */ 
     padding: 10px 10px;
     font-size: 17px; /* Changed. Larger text size in nav. buttons */
-	margin: 5px;
+	margin-top: 5px;
+	margin-bottom: 5px;
+	margin-left: 3px;
+	margin-right: 30px;
 	
 	/* Rounded corners on top */  /* Added: all */
 	-webkit-border-top-left-radius: 7px;
@@ -592,9 +632,52 @@ div.control_panel_menu ul, div.entry_nav ul{ /* Style the navigation list */
 	border-bottom-right-radius: 7px;
 }
 
-.control_panel_nav a:hover, .entry_nav a:hover {
+.control_panel_nav a:hover, .entry_nav a:hover, .help_nav a:hover{
 	background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
 	color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+}
+
+/* HELP PAGE */ 
+div.innertube div.help_page_show {
+	float: left;
+	width:84%;
+	margin-top: 5px;
+	margin-left: 8%; 
+	margin-right: 8%;
+	text-align: justify;
+    text-justify: inter-word;
+	border: 3px solid #81D4FA;
+	padding-left:15px;
+	padding-right: 15px; 
+	
+	/* Rounded corners on top */  /* Added: all */
+	-webkit-border-top-left-radius: 7px;
+	-webkit-border-top-right-radius: 7px;
+ 
+	-moz-border-radius-topleft: 7px;
+	-moz-border-radius-topright: 7px;
+ 
+	border-top-left-radius: 7px;
+	border-top-right-radius: 7px;
+	
+	/* Rounded corners on bottom */ /* Added: all */
+	-webkit-border-bottom-left-radius: 7px;
+	-webkit-border-bottom-right-radius: 7px;
+ 
+	-moz-border-radius-bottomleft: 7px;
+	-moz-border-radius-bottomright: 7px;
+ 
+	border-bottom-left-radius: 7px;
+	border-bottom-right-radius: 7px;
+}
+
+div.help_text {
+	width:68%;
+	margin-left: 16%;
+	margin-right: 16%;
+	font-style: italic;
+	text-align: justify;
+    text-justify: inter-word;
 }
 
 /* IDs */

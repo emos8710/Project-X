@@ -21,26 +21,22 @@ $title = "Help";
 <!-- Main content goes here -->
 <main>
 	<div class="innertube">
-				
-				<div class="control_panel_menu">
-					<h2>Help page</h2>
-					<p>
+					<h2 class="help_nav">Help page</h2>
+					<div class="help_text">
 						If you are new to the site this help page can be used 
 						as a guideline for how to use the different features,
 						such as the search function, the insert new entry function and
 						your own personal user page.
 						Most of these features are only available for registered users,
 						so we do advise you to register an account if you have not already done so.
-						
-					</p>
-					<br>
-					<br>
-			<h3>Navigation</h3>
-				<ul class="help_page_nav">
-					<li><a href="?content=search_entries">Search for entries</a></li>
-					<li><a href="?content=insert_entries">Insert new entry </a></li>
-					<li><a href="?content=edit_profile">Edit my profile</a></li>
-											<li><a href="?content=edit_entries">Edit my entries</a></li>
+					</div>
+					
+			<div class="help_nav">
+				<ul>
+					<a href="?content=search_entries">Search for entries</a>
+					<a href="?content=insert_entries">Insert new entry </a>
+					<a href="?content=edit_profile">Edit my profile</a>
+					<a href="?content=edit_entries">Edit my entries</a>
 				</ul>
 			</div>
 				
@@ -51,7 +47,7 @@ $title = "Help";
 									
 					?>
 											<br>
-					<h3>How to search the database for entries</h3>
+					<h3 class="help_nav">How to search the database for entries</h3>
 											<p>
 												If you wish to serach for entries in the database, click on the "Search" link in the
 												navigation bar. This will bring you to the Search page, where there are a number of
@@ -66,7 +62,7 @@ $title = "Help";
 												you to their user page where contact information is available.
 												<br>
 												<br>
-												Good luck!
+												<h4 class="help_nav"> Good luck!</h4>
 											</p>
 											
 											<?php
@@ -74,7 +70,7 @@ $title = "Help";
 											
 											?>
 											<br>
-											<h3> How to insert new entries into database </h3>
+											<h3 class="help_nav"> How to insert new entries into database </h3>
 											<p>
 												One of the key features of Upstrain is the ability to add new entries
 												into the database, which can only be done if you have a registered account and if
@@ -89,7 +85,7 @@ $title = "Help";
 												private. Making the entry private means that non-registered users would not be able to view the entry.
 												<br>
 												<br>
-												Good luck!
+												<h4 class="help_nav"> Good luck!</h4>
 											</p>
 											
 											<?php
@@ -97,7 +93,7 @@ $title = "Help";
 											
 											?>
 											<br>
-											<h3> How to edit your user profile </h3>
+											<h3 class="help_nav"> How to edit your user profile </h3>
 											<p>
 												To edit your user information, click on "My profile" in the navigation bar
 												to access your personal user profile. Your contact information is displayed
@@ -106,7 +102,7 @@ $title = "Help";
 												Click on this button to access and edit your user information.
 												<br>
 												<br>
-												Good luck!
+												<h4 class="help_nav"> Good luck!</h4>
 											</p>
 											
 											<?php
@@ -114,7 +110,7 @@ $title = "Help";
 											
 											?>
 											<br>
-											<h3> How to edit your previous entries </h3>
+											<h3 class="help_nav"> How to edit your previous entries </h3>
 											<p>
 												If you want to edit your previously inserted entries,
 												click on "My profile" in the navigation bar to access your personal user
@@ -125,7 +121,7 @@ $title = "Help";
 												entry information can be edited as you please.
 												<br>
 												<br>
-												Good luck!
+												<h4 class="help_nav"> Good luck!</h4>
 											</p>
 																							
 											
@@ -134,7 +130,8 @@ $title = "Help";
 											echo "";
 										}
 										?>
-							</div>	 
+											
+			</div>	 
 				
 	</div>
 </main>
