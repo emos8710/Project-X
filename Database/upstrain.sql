@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 26, 2018 at 12:05 PM
+-- Generation Time: Feb 28, 2018 at 01:40 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -33,8 +33,8 @@ CREATE TABLE IF NOT EXISTS `backbone` (
   `name` varchar(50) NOT NULL,
   `Bb_reg` varchar(50) DEFAULT NULL,
   `date_db` varchar(10) NOT NULL,
-  `year_created` int(4) NOT NULL,
   `creator` int(3) NOT NULL,
+  `comment` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `bb_name` (`name`),
   UNIQUE KEY `bb_regname` (`Bb_reg`),
@@ -45,8 +45,52 @@ CREATE TABLE IF NOT EXISTS `backbone` (
 -- Dumping data for table `backbone`
 --
 
-INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `year_created`, `creator`) VALUES
-(2, 'test', 'test', '2018-02-10', 2018, 1);
+INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `creator`, `comment`) VALUES
+(2, 'test', 'test', '2018-02-10', 1, 'bleh');
+
+--
+-- Triggers `backbone`
+--
+DELIMITER $$
+CREATE TRIGGER `log_backbone_add` AFTER INSERT ON `backbone` FOR EACH ROW insert into event_log (object, object_id, time, type) values("Backbone", new.id, NOW(), "Added")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_backbone_delete` BEFORE DELETE ON `backbone` FOR EACH ROW insert into event_log (object, object_id, time, type) values("Backbone", old.id, NOW(), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_backbone_update` AFTER UPDATE ON `backbone` FOR EACH ROW insert into event_log (object, object_id, time, type) values("Backbone", old.id, NOW(), "Edited")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_deleted_backbone` BEFORE DELETE ON `backbone` FOR EACH ROW insert into backbone_log(BB_reg, comment, creator, date_db, id, name, time, type) values(old.BB_reg, old.comment, old.creator, old.date_db, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_updated_backbone` AFTER UPDATE ON `backbone` FOR EACH ROW insert into backbone_log(BB_reg, comment, creator, date_db, id, name, time, type) values(old.BB_reg, old.comment, old.creator, old.date_db, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Edited")
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `backbone_log`
+--
+
+CREATE TABLE IF NOT EXISTS `backbone_log` (
+  `id` int(3) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `Bb_reg` varchar(50) DEFAULT NULL,
+  `date_db` varchar(10) NOT NULL,
+  `creator` int(3) NOT NULL,
+  `comment` varchar(200) NOT NULL,
+  `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(15) NOT NULL,
+  `time` int(100) UNSIGNED NOT NULL,
+  PRIMARY KEY (`old_data_id`),
+  KEY `bb_creat_id` (`creator`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -56,7 +100,7 @@ INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `year_created`, `crea
 
 CREATE TABLE IF NOT EXISTS `entry` (
   `id` int(3) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
-  `comment` varchar(100) DEFAULT NULL,
+  `comment` varchar(100) NOT NULL,
   `year_created` int(4) NOT NULL,
   `date_db` varchar(10) NOT NULL,
   `entry_reg` varchar(50) DEFAULT NULL,
@@ -64,6 +108,7 @@ CREATE TABLE IF NOT EXISTS `entry` (
   `strain` int(3) NOT NULL,
   `creator` int(3) NOT NULL,
   `private` tinyint(1) NOT NULL DEFAULT '0',
+  `created` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `entry_regname` (`entry_reg`),
   UNIQUE KEY `entry_reg` (`entry_reg`),
@@ -76,8 +121,8 @@ CREATE TABLE IF NOT EXISTS `entry` (
 -- Dumping data for table `entry`
 --
 
-INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `creator`, `private`) VALUES
-(001, 'testestestest', 2018, '2018-02-07', 'test', 2, 1, 1, 0);
+INSERT INTO `entry` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `creator`, `private`, `created`) VALUES
+(001, 'testestestest', 2018, '2018-02-07', 'test', 2, 1, 1, 0, 1);
 
 --
 -- Triggers `entry`
@@ -87,11 +132,11 @@ CREATE TRIGGER `create_upstrain_id` AFTER INSERT ON `entry` FOR EACH ROW INSERT 
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `log_entry_delete` BEFORE DELETE ON `entry` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("Entry", OLD.id, NOW(), "Deleted")
+CREATE TRIGGER `log_entry_add` AFTER INSERT ON `entry` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("Entry",NEW.id, NOW(), "Added")
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `log_entry_insert` AFTER INSERT ON `entry` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("Entry",NEW.id, NOW(), "Added")
+CREATE TRIGGER `log_entry_delete` BEFORE DELETE ON `entry` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("Entry", OLD.id, NOW(), "Deleted")
 $$
 DELIMITER ;
 DELIMITER $$
@@ -116,7 +161,8 @@ DELIMITER ;
 CREATE TABLE IF NOT EXISTS `entry_inserts` (
   `entry_id` int(3) UNSIGNED ZEROFILL NOT NULL,
   `insert_id` int(3) NOT NULL,
-  UNIQUE KEY `entry_ins_link` (`entry_id`,`insert_id`),
+  `position` int(11) NOT NULL,
+  UNIQUE KEY `entry_ins_link` (`entry_id`,`position`) USING BTREE,
   KEY `ins` (`insert_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -124,10 +170,57 @@ CREATE TABLE IF NOT EXISTS `entry_inserts` (
 -- Dumping data for table `entry_inserts`
 --
 
-INSERT INTO `entry_inserts` (`entry_id`, `insert_id`) VALUES
-(001, 3),
-(001, 4),
-(001, 5);
+INSERT INTO `entry_inserts` (`entry_id`, `insert_id`, `position`) VALUES
+(001, 3, 1),
+(001, 3, 3),
+(001, 4, 2);
+
+--
+-- Triggers `entry_inserts`
+--
+DELIMITER $$
+CREATE TRIGGER `log_entryinsert_add` AFTER INSERT ON `entry_inserts` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Entry-insert link", CONCAT(new.entry_id, "-", new.insert_id), NOW(), "Added")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_entryinsert_delete` BEFORE DELETE ON `entry_inserts` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Entry-insert link", CONCAT(old.entry_id, "-", old.insert_id), NOW(), "Delete")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_entryinsert_update` AFTER UPDATE ON `entry_inserts` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Entry-insert link", CONCAT(old.entry_id, "-", old.insert_id), NOW(), "Edited")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_deleted_entryinsert` BEFORE DELETE ON `entry_inserts` FOR EACH ROW insert into entry_inserts_log(entry_id, insert_id, position, time, type) values(old.entry_id, old.insert_id, old.position, UNIX_TIMESTAMP(NOW()), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_updated_entryinsert` AFTER UPDATE ON `entry_inserts` FOR EACH ROW insert into entry_inserts_log(entry_id, insert_id, position, time, type) values(old.entry_id, old.insert_id, old.position, UNIX_TIMESTAMP(NOW()), "Edited")
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `entry_inserts_log`
+--
+
+CREATE TABLE IF NOT EXISTS `entry_inserts_log` (
+  `entry_id` int(3) UNSIGNED ZEROFILL NOT NULL,
+  `insert_id` int(3) NOT NULL,
+  `position` int(11) NOT NULL,
+  `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(15) NOT NULL,
+  `time` int(100) UNSIGNED NOT NULL,
+  PRIMARY KEY (`old_data_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `entry_inserts_log`
+--
+
+INSERT INTO `entry_inserts_log` (`entry_id`, `insert_id`, `position`, `old_data_id`, `type`, `time`) VALUES
+(001, 5, 3, 1, 'Deleted', 1519824306);
 
 -- --------------------------------------------------------
 
@@ -192,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `event_log` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `time` varchar(20) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event_log`
@@ -214,7 +307,11 @@ INSERT INTO `event_log` (`object_id`, `object`, `type`, `event_id`, `time`) VALU
 (001, 'User', 'Edited', 14, '2018-02-26 13:00:33'),
 (002, 'Entry', 'Deleted', 15, '2018-02-26 13:01:53'),
 (003, 'Entry', 'Added', 16, '2018-02-26 13:02:57'),
-(003, 'Entry', 'Deleted', 17, '2018-02-26 13:03:15');
+(003, 'Entry', 'Deleted', 17, '2018-02-26 13:03:15'),
+(001, 'User', 'Edited', 18, '2018-02-27 12:16:50'),
+(001, 'User', 'Edited', 19, '2018-02-27 12:17:42'),
+(010, 'User', 'Added', 20, '2018-02-27 15:21:50'),
+(010, 'User', 'Edited', 21, '2018-02-27 15:23:34');
 
 -- --------------------------------------------------------
 
@@ -228,8 +325,8 @@ CREATE TABLE IF NOT EXISTS `ins` (
   `type` int(3) NOT NULL,
   `ins_reg` varchar(50) NOT NULL,
   `creator` int(3) NOT NULL,
-  `year_created` int(4) NOT NULL,
   `date_db` varchar(10) NOT NULL,
+  `comment` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `insert_name` (`name`),
   UNIQUE KEY `ins_regname` (`ins_reg`),
@@ -241,10 +338,56 @@ CREATE TABLE IF NOT EXISTS `ins` (
 -- Dumping data for table `ins`
 --
 
-INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `year_created`, `date_db`) VALUES
-(3, 'test ins', 2, 'test ins reg', 1, 2018, '2018-02-09'),
-(4, 'test ins 2', 3, 'test ins reg 2', 1, 2015, '2018-02-10'),
-(5, 'test ins 3', 3, 'test ins reg 3', 1, 1995, '2018-02-10');
+INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `date_db`, `comment`) VALUES
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blah'),
+(4, 'test ins 2', 3, 'test ins reg 2', 1, '2018-02-10', 'blah'),
+(5, 'test ins 3', 3, 'test ins reg 3', 1, '2018-02-10', 'blah');
+
+--
+-- Triggers `ins`
+--
+DELIMITER $$
+CREATE TRIGGER `log_insert_add` AFTER INSERT ON `ins` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Insert", new.id, NOW(), "Added")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_insert_delete` BEFORE DELETE ON `ins` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Insert", old.id, NOW(), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_insert_update` AFTER UPDATE ON `ins` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Insert", old.id, NOW(), "Edited")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_deleted_insert` BEFORE DELETE ON `ins` FOR EACH ROW insert into ins_log(comment, creator, date_db, id, ins_reg, name, time, type) values(old.comment, old.date_db, old.id, old. ins_reg, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_updated_insert` AFTER UPDATE ON `ins` FOR EACH ROW insert into ins_log(comment, creator, date_db, id, ins_reg, name, time, type) values(old.comment, old.date_db, old.id, old.ins_reg, old.name, UNIX_TIMESTAMP(NOW()), "Edited")
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ins_log`
+--
+
+CREATE TABLE IF NOT EXISTS `ins_log` (
+  `id` int(3) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `type` int(3) NOT NULL,
+  `ins_reg` varchar(50) NOT NULL,
+  `creator` int(3) NOT NULL,
+  `date_db` varchar(10) NOT NULL,
+  `comment` varchar(200) NOT NULL,
+  `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `event_type` varchar(15) NOT NULL,
+  `time` int(100) UNSIGNED NOT NULL,
+  PRIMARY KEY (`old_data_id`),
+  KEY `creator_id` (`creator`),
+  KEY `ins_type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -276,6 +419,7 @@ INSERT INTO `ins_type` (`id`, `name`) VALUES
 CREATE TABLE IF NOT EXISTS `strain` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
+  `comment` varchar(200) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `strain_name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
@@ -284,8 +428,48 @@ CREATE TABLE IF NOT EXISTS `strain` (
 -- Dumping data for table `strain`
 --
 
-INSERT INTO `strain` (`id`, `name`) VALUES
-(1, 'test');
+INSERT INTO `strain` (`id`, `name`, `comment`) VALUES
+(1, 'test', '');
+
+--
+-- Triggers `strain`
+--
+DELIMITER $$
+CREATE TRIGGER `log_strain_add` AFTER INSERT ON `strain` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Strain", new.id, NOW(), "Added")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_strain_delete` BEFORE DELETE ON `strain` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Strain", old.id, NOW(), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_strain_update` AFTER UPDATE ON `strain` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Strain", old.id, NOW(), "Edited")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_deleted_strain` BEFORE DELETE ON `strain` FOR EACH ROW insert into strain_log(comment, id, name, time, type) values(old.comment, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_updated_strain` AFTER UPDATE ON `strain` FOR EACH ROW insert into strain_log(comment, id, name, time, type) values(old.comment, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Edited")
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `strain_log`
+--
+
+CREATE TABLE IF NOT EXISTS `strain_log` (
+  `id` int(3) NOT NULL,
+  `name` varchar(50) NOT NULL,
+  `comment` varchar(200) NOT NULL,
+  `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(15) NOT NULL,
+  `time` int(100) UNSIGNED NOT NULL,
+  PRIMARY KEY (`old_data_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -329,7 +513,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `phone` (`phone`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
@@ -338,21 +522,22 @@ CREATE TABLE IF NOT EXISTS `users` (
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`) VALUES
 (1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0),
 (7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1),
-(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1);
+(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1),
+(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1);
 
 --
 -- Triggers `users`
 --
+DELIMITER $$
+CREATE TRIGGER `log_user_add` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("User", NEW.user_id, NOW(), "Added")
+$$
+DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_user_delete` BEFORE DELETE ON `users` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("User", OLD.user_id, NOW(), "Deleted")
 $$
 DELIMITER ;
 DELIMITER $$
 CREATE TRIGGER `log_user_edit` AFTER UPDATE ON `users` FOR EACH ROW insert into event_log(object, object_id, time, type) values("User", OLD.user_id, NOW(), "Edited")
-$$
-DELIMITER ;
-DELIMITER $$
-CREATE TRIGGER `log_user_insert` AFTER INSERT ON `users` FOR EACH ROW INSERT INTO event_log(object, object_id, time, type) VALUES("User", NEW.user_id, NOW(), "Added")
 $$
 DELIMITER ;
 DELIMITER $$
@@ -385,7 +570,7 @@ CREATE TABLE IF NOT EXISTS `users_log` (
   `type` varchar(15) NOT NULL,
   `time` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`old_data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users_log`
@@ -393,7 +578,10 @@ CREATE TABLE IF NOT EXISTS `users_log` (
 
 INSERT INTO `users_log` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`, `old_data_id`, `type`, `time`) VALUES
 (1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 1, 'Edited', 1519646383),
-(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testlord', '', '', 0, 0, 2, 'Edited', 1519646433);
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testlord', '', '', 0, 0, 2, 'Edited', 1519646433),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 3, 'Edited', 1519730210),
+(1, 'hej', 'hej', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 4, 'Edited', 1519730262),
+(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 0, 0, 5, 'Edited', 1519741414);
 
 --
 -- Constraints for dumped tables
@@ -448,6 +636,14 @@ CREATE EVENT `AutoDeleteEntryLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12
 CREATE EVENT `AutoDeleteUserLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12:57:31' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 CREATE EVENT `AutoEmptyLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 13:04:33' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.event_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteInsertLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 11:23:13' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.ins_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteBackboneLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:27:32' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.backbone_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteStrainLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:28:15' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.strain_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteEntryInsertLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:35:41' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_inserts_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 DELIMITER ;
 COMMIT;
