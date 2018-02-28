@@ -71,10 +71,10 @@ $title = "Control Panel";
 				<!-- Nav menu with links to display desired content -->
 				<div class="control_panel_menu">
 				<h3>Navigation</h3>
-					<ul class="control_panel_nav">
-						<li><a href="?content=manage_users">Manage users</a></li>
-						<li><a href="?content=manage_entries">Manage entries</a></li>
-						<li><a href="?content=event_log">Event log</a></li>
+					<ul>
+						<a href="?content=manage_users">Manage users</a>
+						<a href="?content=manage_entries">Manage entries</a>
+						<a href="?content=event_log">Event log</a></li>
 					</ul>
 				</div>
 				
