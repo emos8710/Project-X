@@ -564,8 +564,8 @@ div.control_panel_menu ul, div.entry_nav ul{ /* Style the navigation list */
 
 .control_panel_menu a, .entry_nav a {
 	float: left; 
-	background: #0074D9;
-    color: white; /* Changed. Text color in navigation buttons */ 
+	background: #81D4FA; /* #0074D9; */
+    color: #001F3F;/* Changed. Text color in navigation buttons */ 
     /* text-align: center; */ /* Deleted. */ 
     padding: 10px 10px;
     font-size: 17px; /* Changed. Larger text size in nav. buttons */
