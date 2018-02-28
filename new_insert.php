@@ -1,42 +1,23 @@
-<!DOCTYPE html>
-
 <?php
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-?>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Entry</title>
-    <link href="css/upstrain.css" rel="stylesheet">
-
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type = "text/javascript" src = "http://code.jquery.com/jquery-1.9.1.min.js"></script>
-    <script type="text/javascript" src="http://code.jquery.com/ui/1.10.1/jquery-ui.min.js"></script>
-    <script src="//code.jquery.com/jquery-2.1.4.min.js"></script>
-
-</head>
-<?php
 //Set display for the content div
 if (isset($_GET['content'])) {
     $current_content = $_GET['content'];
 } else {
     $current_content = '';
 }
+
+$title = "New entry"; 
 ?>
 
+<!DOCTYPE html>
+
+<?php include 'top.php'; ?>
+
 <body>
-
-    <?php
-    include 'top.php';
-
-    // Temporary variables so testing will be easier
-    $loggedin = TRUE;
-    $active = TRUE;
-    ?>
-
     <!-- Main content goes here -->
     <main>
         <div class="innertube">
@@ -110,7 +91,7 @@ if (isset($_GET['content'])) {
                 <!-- Desired content is displayed here -->
                 <!-- NEW ENTRY -->
                 <form class="insert-form" method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
-                    
+                    <div class="new_entry">
                         <?php if ($current_content == "new_entry") {
                             ?>
                             <p><span class="error">* required field.</span></p>
@@ -128,9 +109,6 @@ if (isset($_GET['content'])) {
                                     mysqli_close($link);
                                     ?>
                                 </select>
-                                <span class="error">* <?php echo $backboneErr; ?></span>
-                                <br/></p>
-                                <input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
                                 <span class="error">* <?php echo $strainErr; ?></span>
                                 <br/>
                             </div>
@@ -156,18 +134,9 @@ if (isset($_GET['content'])) {
 
                             <p> <table id="dynamic">
                                 <thead>Insert</thead>
-                                <td>
 
                                     <div class="field-wrap">
-                                        <table id="dynamic">
-                                            <label for="Ins">Insert </label>
-                                            <input class="insert" type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead"/>
-                                            <button class="insert-mini" type="button" name="add" id="add_input">+ More inserts</button>
-                                        </table>
-                                    </div>
-
-                                    <div class="field-wrap">
-
+                                        <td>
                                         <label for="Ins_Type">Insert type </label>
                                         <select class="insert" name="insert_type[]">
                                             <option value="Promotor">Promotor</option>
@@ -177,7 +146,7 @@ if (isset($_GET['content'])) {
 
                                         </select></td>
 
-                                <td> 
+                                        <td>
                                     <label for="Ins">Insert name </label>
                                     <select name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead">
                                         <?php
@@ -188,9 +157,9 @@ if (isset($_GET['content'])) {
                                         }
                                         mysqli_close($link);
                                         ?>
-                                    </select>
-                                    <button type="button" name="add" id="add_input">+ More inserts</button>
-                                </td>
+                                    </select></td>
+                                    <td> <button type="button" name="add" id="add_input">+ More inserts</button></td>
+                                
                             </table>
                         
 
@@ -210,7 +179,6 @@ if (isset($_GET['content'])) {
                             <input class="insert" type="text" name = "year" id="Year"  maxlengh= "4" pattern = "[0-9]{4}" 
                                    placeholder="YYYY" value="<?php echo $year; ?>" required/>
                             <span class="error">* <?php echo $yearErr; ?></span>
-                            <br/>
                         </div>
 
                         <div class="field-wrap"> 
@@ -223,11 +191,7 @@ if (isset($_GET['content'])) {
                             <label for="Private">Make this entry private </label>
                             <input class="checkbox" type="checkbox" name="private" value="Private"> 
                         </div>
-
-                                            <!-- <p id="submit">
-                                                <input type="submit" name="submit" value="Submit" />
-
-                                            </p> -->
+                            
                         <button id="submit" type="submit" class="button" name="insert" />Submit</button>
                 </div>
             </form>
@@ -311,26 +275,28 @@ if (isset($_GET['content'])) {
                     ?>
 
                     <form method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>" enctype="multipart/form-data">
-                        <p> <table id="dynamic">
+                        
 
                             <form class="insert-form" method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
                                 <div class="field-wrap"> 
                                     <table id="dynamic">
-                                        <label for="Ins">Insert </label>
-                                        <input class="insert" type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead"/>
-                                        <button class="insert-mini" type="button" name="add" id="add_input">+ More inserts</button>
-                                    </table>
-                                </div>
-
-                                <div class="field-wrap">
+                                        <td>
                                     <label for="Ins_Type">Insert type </label>
                                     <select class="insert" name="insert_type[]">
                                         <option value="Promotor">Promotor</option>
                                         <option value="Coding sequence">Coding sequence</option>
                                         <option value="RBS">RBS</option>
                                         <option value="Other">Other</option>
-                                    </select>
+                                    </select></td>
+                                    <td>
+                                        <label for="Ins">Insert name </label>
+                                        <input class="insert" type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead"/>
+                                    </td>
+                                    <td><button class="insert-mini" type="button" name="add" id="add_input">+ More inserts</button></td>
+                                    </table>
                                 </div>
+
+                                
 
                                 <div class="field-wrap"> 
                                     <label for="Registry">Registry id</label>
@@ -353,7 +319,7 @@ if (isset($_GET['content'])) {
 
                         </div>
 
-                        </div>
+                      
 
                         <?php
                     } else if (!$active) {
