@@ -111,6 +111,14 @@ table {
     margin-top: 10px;
 }
 
+table.control-panel-history th.top {
+    text-align: left;
+    border-bottom: none;
+    font-size: 14px;
+    padding-top: 10px;
+    text-decoration: underline;
+}
+
 table.control-panel-history th {
     text-align: left;
     border-bottom: none;

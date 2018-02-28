@@ -152,7 +152,7 @@ $title = "Control Panel";
                             <table class="control-panel-history">
                                 <col><col><col><col><col><col><col><col>
                                 <tr>
-                                    <th colspan="4">Current data</th>
+                                    <th class="top" colspan="7">Current data</th>
                                 </tr>
                                 <tr>
                                     <?php
@@ -184,7 +184,7 @@ $title = "Control Panel";
                                     ?>
                                 </tr>
                                 <tr>
-                                    <th colspan="7">Old data</th>
+                                    <th class="top" colspan="7">Old data</th>
                                 </tr>
                                 <?php
                                 if ($has_history) {
@@ -222,7 +222,7 @@ $title = "Control Panel";
                                 } else {
                                     ?>
                                     <tr>
-                                        <td colspan="7"><strong>No old data recorded.</td>
+                                        <td colspan="7"><strong>No old data recorded.</strong></td>
                                     </tr>
                                     <?php
                                 }
@@ -265,13 +265,13 @@ $title = "Control Panel";
                             <table class="control-panel-history">
                                 <col><col><col><col><col><col><col><col>
                                 <tr>
-                                    <th colspan="8">Current data</th>
+                                    <th class="top" colspan="8">Current data</th>
                                 </tr>
                                 <?php
                                 if ($is_deleted) {
                                     ?>
                                     <tr>
-                                        <td colspan="8"><strong>No active data (entry has been removed).</strong></td>
+                                        <td class="top" colspan="8"><strong>No active data (entry has been removed).</strong></td>
                                     </tr>
                                     <?php
                                 } else {
@@ -301,7 +301,7 @@ $title = "Control Panel";
                                 }
                                 ?>
                                 <tr>
-                                    <th colspan="8">Old data</th>
+                                    <th class="top" colspan="8">Old data</th>
                                 </tr>
                                 <?php
                                 if ($has_history) {
@@ -333,7 +333,7 @@ $title = "Control Panel";
                                 } else {
                                     ?>
                                     <tr>
-                                        <td colspan="8"><strong>No old data recorded.</td>
+                                        <td colspan="8"><strong>No old data recorded.</strong></td>
                                     </tr>
                                     <?php
                                 }
