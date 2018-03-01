@@ -3,7 +3,7 @@
 if (count(get_included_files()) == 1) exit("Access restricted.");
 
 /* Password reset process, updates database with new user password */
-require 'db.php';
+require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

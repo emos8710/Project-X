@@ -3,7 +3,7 @@
 /* if (count(get_included_files()) == 1) exit("Access restricted.");*/
  
 /* Verifies the user */
-require 'db.php';
+require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -23,12 +23,24 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
     else {
 		$user = $result->fetch_assoc(); // $user is now an array containing the rows belonging to the matched username in the query
         $_SESSION['user_id'] = $user['user_id'];
-		$_SESSION['message'] = "Your account has been activated!";
+		$_SESSION['first_name'] = $user['first_name'];
+		$_SESSION['message'] = "You have activated ".$_SESSION['first_name']."s account!";
         
         // Set the user status to active (active = 1)
         $mysqli->query("UPDATE users SET active='1' WHERE email='$email'") or die($mysqli->error);
         $_SESSION['active'] = 1;
         header("location: success.php");
+		
+		// Send an email to the user to let them know they are verified.
+		$currentyear	= $date('Y')
+		$to  			= $email;
+		$subject 		= 'Welcome!';
+		$message_body 	= 	'Hi,'
+							.'You have now been verified as a member of iGEM Uppsala year '.$currentyear.'!'
+							.'You can now log in to your UpStrain account.'
+							.'Welcome!'
+
+		mail( $to, $subject, $message_body );
     }
 }
 else {

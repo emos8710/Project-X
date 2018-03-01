@@ -1,7 +1,7 @@
 <?php
 /* Form for resetting password */
 
-require 'db.php';
+require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
