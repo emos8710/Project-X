@@ -10,19 +10,16 @@ $current_url = "control_panel.php?content=manage_users";
 <?php
 // Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
+    include 'scripts/db.php';
     ?>
     <p>
         <?php
-        include 'scripts/db.php';
-
         $delete = isset($_POST['delete']);
         $make_admin = isset($_POST['admin']);
         if ($delete) {
-            $user_id = $_POST['delete'];
-            $id = mysqli_real_escape_string($link, $user_id);
+            $id = mysqli_real_escape_string($link, $_POST['delete']);
         } else if ($make_admin) {
-            $user_id = $_POST['admin'];
-            $id = mysqli_real_escape_string($link, $user_id);
+            $id = mysqli_real_escape_string($link, $_POST['admin']);
         } else {
             echo "This should never happen";
         }
@@ -40,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
                 $delete_msg = "<strong style=\"color:red\">You cannot remove an admin!</strong>";
             } else {
                 $deletesql = "DELETE FROM users WHERE user_id = " . $id;
-                if (!$deletequery = mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: Cannot remove user (user probably has entries).</strong>";
+                if (!mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: Cannot remove user (user probably has entries).</strong>";
                 else: $delete_msg = "<strong style=\"color:green\">User successfully deleted!</strong>";
                 endif;
             }
