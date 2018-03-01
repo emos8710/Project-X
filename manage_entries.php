@@ -33,9 +33,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
         ?>
         <br>
         Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
-        <?php
-        header("Refresh: 10; url=" . $_SERVER['REQUEST_URI']);
-        ?>
     </p>
     <?php
 }
@@ -118,6 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
                 <td>
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
                         <input type="hidden" name="delete" value="<?php echo $row['eid']; ?>">
+                        <input type="hidden" name="header" value="refresh">
                         <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Really want to delete this entry?')"/>
                     </form>
                 </td>

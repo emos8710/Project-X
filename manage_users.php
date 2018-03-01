@@ -15,16 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
         <?php
         include 'scripts/db.php';
 
-        $delete = FALSE;
-        $make_admin = FALSE;
-        if (isset($_POST['delete'])) {
+        $delete = isset($_POST['delete']);
+        $make_admin = isset($_POST['admin']);
+        if ($delete) {
             $user_id = $_POST['delete'];
             $id = mysqli_real_escape_string($link, $user_id);
-            $delete = TRUE;
-        } else if (isset($_POST['admin'])) {
+        } else if ($make_admin) {
             $user_id = $_POST['admin'];
             $id = mysqli_real_escape_string($link, $user_id);
-            $make_admin = TRUE;
         } else {
             echo "This should never happen";
         }
@@ -71,9 +69,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
         ?>
         <br>
         Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
-        <?php
-        header("Refresh: 10; url=" . $_SERVER['REQUEST_URI']);
-        ?>
     </p>
     <?php
 }
@@ -130,12 +125,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
                 <td>
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
                         <input type="hidden" name="admin" value="<?php echo $user['user_id']; ?>">
+                        <input type="hidden" name="header" value="refresh">
                         <button type="submit" class="control-panel-admin" title="Make admin" onclick="confirmAction(event, 'Really want to make this user admin?')"/>
                     </form>
                 </td>
                 <td>
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
                         <input type="hidden" name="delete" value="<?php echo $user['user_id']; ?>">
+                        <input type="hidden" name="header" value="refresh">
                         <button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmAction(event, 'Really want to delete this user?')"/>
                     </form>
                 </td>
