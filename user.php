@@ -8,14 +8,13 @@ function check_user_id($input) {
     return preg_match('/^\d+$/', $input) == 1;
 }
 
+// Check that a user ID is specified and that it is proper
 $is_user_error = !isset($_GET['user_id']);
-
 if ($is_user_error) {
     $user_error = "No user id specified.";
 } else {
     // Fetch the user id from URL and check if it is valid
     $user_id = $_GET['user_id'];
-
     $is_user_error = !check_user_id($user_id);
     if ($is_user_error) {
         $user_error = "Invalid user ID.";
@@ -77,7 +76,7 @@ if ($is_user_error) {
     <main>
         <div class="innertube">	
             <?php
-// Print error text...
+			// Print error text...
             if ($is_user_error || $is_mysql_error) {
                 if ($is_user_error): echo "<h3>Error: " . $user_error . "</h3>";
                 elseif ($is_mysql_error): echo "<h3>Error: " . $mysql_error . "</h3>";

@@ -40,7 +40,7 @@ else {
 			// If the query returns more than one row, the email already exists
 			if($result->num_rows != 0) {
 				$_SESSION['message'] = 'The email is already registered to another user. 
-									Have to forgotten the password? - Click on Reset Password.';
+									Have you forgotten the password? - Click on Reset Password.';
 				header("location: error.php"); // An error message is sent to error.php
     
 			}

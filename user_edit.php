@@ -3,17 +3,12 @@ if (count(get_included_files()) == 1) exit("Access restricted."); // prevent dir
 
 // Displays page if user is logged in and is activated and has the right privileges
 if($loggedin && $active && $userpage_owner_or_admin) {
-	?>
-	
-	<?php
 	//Set display for the content div
 	if (isset($_GET['content'])) {
 		$current_content = $_GET['content'];
 	} else {
 		$current_content = "";
 	}
-
-	$user_id = $user_id;;
 	
 	// If a form has been submitted
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -21,54 +16,71 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		
 		$iserror = FALSE;
 		
-		// Change first and last name
+		// Change first and last name at the same time
 		if (isset($_POST['first_name']) && isset($_POST['last_name']) && $_POST['first_name'] != "" && $_POST['last_name'] != "") {
 			$fname = mysqli_real_escape_string($link, $_POST['first_name']);
 			$lname = mysqli_real_escape_string($link, $_POST['last_name']);
-			$update_msg = "name";
+			// Check if characters have been removed
+			if ($fname != $_POST['first_name']) {
+				$iserror = TRUE;
+				$update_msg = "First name contains invalid characters.";
+				goto errorTime;
+			}else if ($lname != $_POST['last_name']) {
+				$iserror = TRUE;
+				$update_msg = "Last name contains invalid characters.";
+				goto errorTime;
+			}
 			$update_sql = "UPDATE users SET first_name = ?, last_name = ? WHERE user_id = ".$user_id;
+			// Do the change
 			if ($stmt = mysqli_prepare($link, $update_sql)) {
 					mysqli_stmt_bind_param($stmt, "ss", $fname, $lname);
 					if (mysqli_stmt_execute($stmt)) {
-						$update_msg = "Successfully updated ".$update_msg.".";
+						$update_msg = "Successfully updated first and last name.";
 					} else {
 						$iserror = TRUE;
-						$update_msg = "Failed to execute statement. ".mysqli_stmt_error($stmt);
+						$update_msg = "Couldn't change first and last name, failed to execute statement. ".mysqli_stmt_error($stmt);
 					}
 					mysqli_stmt_close($stmt);
 				} else {
 					$iserror = TRUE;
-					$update_msg = "Failed to prepare statement. ".mysqli_stmt_error($stmt);
+					$update_msg = "Couldn't change first and last name, failed to prepare statement. ".mysqli_stmt_error($stmt);
 				}
+		// Change separate values
 		} else {
 			// Change first name
-			if (isset($_POST['first_name']) && $_POST['first_name'] != "" && $_POST['last_name'] == "") {
+			if (isset($_POST['first_name']) && $_POST['first_name'] != "" && $_POST['last_name'] === "") {
 				$to_update = "first_name";
+				$user_input = $_POST['first_name'];
 				$update_val = mysqli_real_escape_string($link, $_POST['first_name']);
 				$update_msg = "first name";
 			// Change last name
-			} else if (isset($_POST['last_name']) && $_POST['last_name'] != "" && $_POST['first_name'] == "") {
+			} else if (isset($_POST['last_name']) && $_POST['last_name'] != "" && $_POST['first_name'] === "") {
 				$to_update = "last_name";
+				$user_input = $_POST['last_name'];
 				$update_val = mysqli_real_escape_string($link, $_POST['last_name']);
 				$update_msg = "last name";
 			// Change user name
 			} else if (isset($_POST['user_name']) && $_POST['user_name'] != "") {
+				// Check if an admin is trying to change another admin's username
 				if ($adminpage && !$isowner) {
 					$iserror = TRUE;
 					$update_msg = "Can't change other admin's username.";
 				} else {
 					$to_update = "username";
+					$user_input = $_POST['user_name'];
 					$update_val = mysqli_real_escape_string($link, $_POST['user_name']);
 					$update_msg = "username";
 				}
 			// Change email
 			} else if (isset($_POST['email']) && $_POST['email'] != "") {
 				$to_update = "email";
+				$user_input = $_POST['email'];
 				$update_val = mysqli_real_escape_string($link, $_POST['email']);
 				$update_msg = "email";
 			// Change phone number
 			} else if (isset($_POST['phone']) && $_POST['phone'] != "") {
 				$to_update = "phone";
+				$user_input = $_POST['phone'];
 				$update_val = mysqli_real_escape_string($link, $_POST['phone']);
 				$update_msg = "phone number";
 			// Remove phone number
@@ -80,9 +92,45 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 					$iserror = TRUE;
 					$update_msg = "Failed to remove phone number. ".mysqli_error($link);
 				}
+			// Change password
+			} else if (isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['conf_password']) && $_POST['old_password'] != "" && $_POST['new_password'] != "" && $_POST['conf_password'] != "") {
+				if (strlen($_POST['new_password'])<8) {
+					$iserror = TRUE;
+					$update_msg = "The new password is too short.";
+					goto errorTime;
+				} else if ($_POST['new_password'] != $_POST['conf_password']) {
+					$iserror = TRUE;
+					$update_msg = "The new passwords don't match.";
+					goto errorTime;
+				}
+				// Check that the input old password matches the stored password
+				$result = mysqli_query($link, "SELECT password FROM users WHERE user_id = '$user_id'");
+				$password = mysqli_fetch_assoc($result);
+				$password = $password['password'];
+				if (!password_verify($_POST['old_password'], $password)) {
+					$iserror = TRUE;
+					$update_msg = "Wrong password.";
+					goto errorTime;
+				}
+				// Hash and change to new password
+				$hash = mysqli_real_escape_string($link, password_hash($_POST['new_password'], PASSWORD_BCRYPT));
+				$password_sql = "UPDATE users SET password = '$hash' WHERE user_id = '$user_id'";
+				if ($result = mysqli_query($link, $password_sql)) {
+					$update_msg = "Successfully changed the password.";
+				} else {
+					$iserror = TRUE;
+					$update_msg = "Failed to change the password. ".mysqli_error($link);
+				}
 			}
-			// Do the change
-			if (isset($update_val) && $update_val != "") {
+			// Execute the change of first name, last name, username, email or phone number
+			if (isset($update_val) && $update_val != "" && !$iserror) {
+				// Check if user input invalid characters
+				if ($update_val != $user_input) {
+					$iserror = TRUE;
+					$update_msg = "Input ".$to_update." contains invalid characters.";
+					goto errorTime;
+				}
+				// Prepare and execute statement
 				$update_sql = "UPDATE users SET ".$to_update." = ? WHERE user_id = ".$user_id;
 				if ($stmt = mysqli_prepare($link, $update_sql)) {
 					mysqli_stmt_bind_param($stmt, "s", $update_val);
@@ -90,21 +138,22 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 						$update_msg = "Successfully updated ".$update_msg.".";
 					} else {
 						$iserror = TRUE;
-						$update_msg = "Failed to execute statement. ".mysqli_stmt_error($stmt);
+						$update_msg = "Couldn't update ".$update_msg.", failed to execute statement. ".mysqli_stmt_error($stmt);
 					}
 					mysqli_stmt_close($stmt);
 				} else {
 					$iserror = TRUE;
-					$update_msg = "Failed to prepare statement. ".mysqli_stmt_error($stmt);
+					$update_msg = "Couldn't update ".$update_msg.", failed to prepare statement. ".mysqli_stmt_error($stmt);
 				}
 			}
 		}
+		errorTime:
+		// Style the success or error message. 
 		if ($iserror) {
 			$update_msg = "<strong style=\"color:red\">Error: ".$update_msg."</strong>";
 		} else if (isset($update_msg)) {
 			$update_msg = "<strong style=\"color:green\">".$update_msg."</strong>";
 		}
-		
 		
 		mysqli_close($link);
 	}
@@ -151,7 +200,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<?php if($current_content == "user_name") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
 				New user name
-				<input type="text" name="user_name"> 
+				<input type="text" name="user_name" pattern=".{3,50}" required title="The username must be between 3-50 characters"> 
 				<input type="submit" value="Submit">
 				<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
 			</form></li>
@@ -165,7 +214,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<?php if($current_content == "email") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
 				New email
-				<input type="email" name="email"> 
+				<input type="email" name="email" required> 
 				<input type="submit" value="Submit">
 				<a href="?user_id=<?php echo $user_id;?>&edit">Cancel</a>
 			</form></li>
@@ -188,6 +237,23 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 				<a href="?user_id=<?php echo $user_id;?>&edit">Cancel</a>
 			</form></li>
 		<?php } ?>
+		
+		<!-- Change password -->
+		<li><?php if ($current_content != "password") { ?>
+			<a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a>
+		<?php }
+			if($current_content == "password") { ?>
+				<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+					Old password
+					<input type="password" name="old_password" required>
+					New password
+					<input type="password" name="new_password" required pattern=".{8,}" title="The password must be at least 8 characters">
+					Confirm new password
+					<input type="password" name="conf_password" required pattern=".{8,}" title="The password must be at least 8 characters">
+					<input type="submit" value="Submit">
+					<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
+				</form></li>
+		<?php } ?>
 	<ul>
 	
 	<!-- Show success/error message -->
@@ -200,13 +266,11 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		?>
 		<h3 style="color:red">Access denied (you are not logged in).</h3>
 		<?php
-	}
-	else if (!$active) {
+	} else if (!$active) {
 		?>
 		<h3 style="color:red">Access denied (your account is not activated yet).</h3>
 		<?php			
-	} 
-	else {
+	} else {
 		?>
 		<h3 style="color:red">You are not allowed to edit this profile (you are not the owner or an admin).</h3>
 		<?php
