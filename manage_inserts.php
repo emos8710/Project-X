@@ -26,6 +26,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']) && isset($_P
             if (!mysqli_query($link, "DELETE FROM ins WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: Cannot remove insert (probably used by entries).</strong>";
             else: $msg = "<strong style=\"color:green\">Insert successfully removed!</strong>";
             endif;
+
+            echo $msg;
         } else {
             echo "This should never happen";
         }
