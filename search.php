@@ -456,24 +456,18 @@ $title = "Help";
 				
 				<div class="top-row">				
 					<div class="field-wrap">
-						<label>Year created</label>
-						<input class="all" type="text" name="creation_year_criteria" minlength= "4" maxlengh= "4" pattern = "(?:19|20)[0-9]{2}" 
-							placeholder="YYYY" title ="Must contain four digits for year."/>
-					</div>
-
-					<div class="field-wrap">
 						<label>Creator</label>
 						<input class="all" type="text" name="creator_criteria"/>
 					</div>
-				</div>
-				
-				<div class="top-row">
+
 					<div class="field-wrap">
 						<label>Biobrick registry ID</label>
 						<input class="all" type="text" name="bb_id_criteria" placeholder="BBa_K[X]" 
                                                        pattern="BBa_K\d{4,12}" title ="Biobrick ID must match pattern BBa_KXXXXX."/>
 					</div>
+				</div>
 				
+				<div class="top-row">				
 					<div class="field-wrap">
 						<label>Insert Type</label>
 						<select class="all" name="insert_type_criteria">
@@ -482,14 +476,14 @@ $title = "Help";
 							<option value="coding">Coding</option>
 						</select>    
 					</div>
-				</div>
 								
                                         <div class="field-wrap">
                                             <label>Date inserted</label>
                                             <input class="all" type="date" name="inserted_date_criteria" pattern = "((?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})" 
 						   placeholder="YYYY-MM-DD" title="Must match date pattern YYYY-MM-DD"/>
                                         </div>
-                            
+                                </div>
+                                    
                                         <div class="field-wrap">
                                             <label>Comment</label>
                                             <input class="all" type="text" name="comment_criteria" rows ="4" cols="50"/>
@@ -510,7 +504,6 @@ $title = "Help";
 		$name_criteria = mysqli_real_escape_string($link, $_REQUEST['name_criteria']);
 		$bb_id_criteria = mysqli_real_escape_string($link, $_REQUEST['bb_id_criteria']);
 		$comment_criteria = mysqli_real_escape_string($link, $_REQUEST['comment_criteria']);
-		$creation_year_criteria = mysqli_real_escape_string($link, $_REQUEST['creation_year_criteria']);
 		$inserted_date_criteria = mysqli_real_escape_string($link, $_REQUEST['inserted_date_criteria']);
 		$creator_criteria = mysqli_real_escape_string($link, $_REQUEST['creator_criteria']);
 		$insert_type_criteria = mysqli_real_escape_string($link, $_REQUEST['insert_type_criteria']);
@@ -547,15 +540,7 @@ $title = "Help";
 		if(!empty($comment_criteria)) {
 			$ConditionArray[] = "t1.comment = '$comment_criteria'";
 		}   
-		
-		if(!empty($creation_year_criteria)) {
-			if (is_numeric($creation_year_criteria)) {
-				$ConditionArray[] = "t1.year_created = $creation_year_criteria";
-			} else {
-				$ischarvalid = FALSE;
-				echo nl2br ("\n \n Error: Non-valid character usage for 'Year created'.");                
-			}
-		} 
+		 
 		
 		if(!empty($inserted_date_criteria)) {
 			if (!preg_match('/^(?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})/', $inserted_date_criteria)) {
@@ -582,7 +567,7 @@ $title = "Help";
 		
 		
 		$insertsql = "SELECT DISTINCT t1.id AS ins_id, t1.name AS ins_name, "
-		."t1.ins_reg AS ins_reg, t1.year_created AS ins_year, t1.date_db AS date_db, "
+		."t1.ins_reg AS ins_reg, t1.date_db AS date_db, "
 		."t2.username AS creator_name, t2.user_id AS user_id, t3.name AS ins_type FROM (ins AS t1) "
                 ."LEFT JOIN users AS t2 ON t2.user_id = t1.creator " 
                 ."LEFT JOIN ins_type AS t3 ON t3.id = t1.type "           
