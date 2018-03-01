@@ -41,4 +41,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$_SESSION['message']="The new password is too short! Please try again. The password must be at least 8 characters long.";
 		header("location: error.php");
 	}
+}
 ?>
