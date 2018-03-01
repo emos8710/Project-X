@@ -591,7 +591,7 @@ $title = "Help";
 		if ($num_result_rows > 0) {
 			echo "<table>";
 			echo "<tr><th>Insert ID</th><th>Insert Name</th><th>Insert Type</th>"
-			. "<th>Biobrick registry ID</th><th>Year created</th><th>Date added</th>"
+			. "<th>Biobrick registry ID</th><th>Date added</th>"
                         . "<th>Creator</th><th>Comment</th></tr>";
 			
 			// output data of each row
@@ -603,7 +603,6 @@ $title = "Help";
                                     "</td><td>" . $row["ins_name"].    
                                     "</td><td>" . $row["ins_type"]. 
                                     "</td><td>" . $row["ins_reg"].
-                                    "</td><td>" . $row["ins_year"].
                                     "</td><td>" . $row["date_db"].
                                     "</td><td><a href=\"user.php?user_id=". $row["user_id"]."\">".$row["creator_name"]."</a>".
                                     "</td><td>" . "".   
