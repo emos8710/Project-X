@@ -41,11 +41,11 @@ $title = "Help";
 			</div>
 				
 				<!-- Desired content is displayed here -->
-			<div class="help_page_show">
 			
 				<?php if ($current_content == "search_entries") {
 									
 					?>
+					<div class="help_page_show">
 											<br>
 					<h3 class="help_nav">How to search the database for entries</h3>
 											<p>
@@ -64,11 +64,13 @@ $title = "Help";
 												<br>
 												<h4 class="help_nav"> Good luck!</h4>
 											</p>
+					</div>
 											
 											<?php
 										} else if ($current_content == "insert_entries") {
 											
 											?>
+										<div class="help_page_show">
 											<br>
 											<h3 class="help_nav"> How to insert new entries into database </h3>
 											<p>
@@ -87,11 +89,13 @@ $title = "Help";
 												<br>
 												<h4 class="help_nav"> Good luck!</h4>
 											</p>
+										</div>
 											
 											<?php
 										} else if ($current_content == "edit_profile") {
 											
 											?>
+										<div class="help_page_show">
 											<br>
 											<h3 class="help_nav"> How to edit your user profile </h3>
 											<p>
@@ -104,11 +108,12 @@ $title = "Help";
 												<br>
 												<h4 class="help_nav"> Good luck!</h4>
 											</p>
-											
+										</div>
 											<?php
 										} else if ($current_content == "edit_entries") {
 											
 											?>
+										<div class="help_page_show">
 											<br>
 											<h3 class="help_nav"> How to edit your previous entries </h3>
 											<p>
@@ -123,7 +128,7 @@ $title = "Help";
 												<br>
 												<h4 class="help_nav"> Good luck!</h4>
 											</p>
-																							
+										</div>											
 											
 											<?php
 										} else {
