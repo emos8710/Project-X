@@ -150,8 +150,8 @@ if (mysqli_num_rows($insertquery) < 1) {
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['type']; ?></td>
                     <td><?php echo $row['date']; ?></td>
-                    <td><a class="external" href="http://parts.igem.org/Part:<?php echo $row['biobrick']; ?>"><?php echo $row['biobrick']; ?></a></td>
-                    <td><a href="user.php?ùser_id=<?php echo $row['uid']; ?>"><?php echo $row['fname'] . " " . $row['lname']; ?></a></td>
+                    <td><a class="external" href="http://parts.igem.org/Part:<?php echo $row['biobrick']; ?>" target="_blank"><?php echo $row['biobrick']; ?></a></td>
+                    <td><a href="user.php?user_id=<?php echo $row['uid']; ?>"><?php echo $row['fname'] . " " . $row['lname']; ?></a></td>
                     <td><?php echo $row['comment']; ?></td>
                     <td>
                         <form class="control-panel" action="#" method="GET">
