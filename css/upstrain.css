@@ -35,10 +35,6 @@ footer {
     background: #E1F5FE; /* Changed */ 
 }
 
-.innertube {	/* Padding for content */
-    margin: 15px;
-}
-
 .field-wrap {	/* For wrapping input fields in the login system */
     margin-bottom: 20px;
 }
@@ -54,7 +50,7 @@ h2 {
     text-align: center;
     font-size: 35px;
     margin-top: 30px; 
-	font-style: normal;
+    font-style: normal;
 }
 
 h3 {
@@ -282,7 +278,9 @@ div.quicksearch a:hover {
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
-	width:100%;
+    max-width:100%;
+    margin: 15px;
+
 }
 
 /* Forms */
@@ -617,26 +615,26 @@ div.control_panel_menu {
 
 /* float center */
 .float_center {
-	float: right;
-	position: relative; 
-	left: -50%; 
-	text-align: left;
+    float: right;
+    position: relative; 
+    left: -50%; 
+    text-align: left;
 }
 
 /* Help page */
 .float_center > .help_nav {
-	position: relative;
-	left: 50%; 
+    position: relative;
+    left: 50%; 
 }
 
 ul li { /* Help page nav */ 
-float: left;
-list-style-type: none;
-margin: 0 0px;
+    float: left;
+    list-style-type: none;
+    margin: 0 0px;
 }
 
 ul a { /* Help page nav button */
-	display: block; 
+    display: block; 
     background: #81D4FA; /* #0074D9; */
     color: #001F3F;/* Changed. Text color in navigation buttons */ 
     /* text-align: center; */ /* Deleted. */ 
@@ -669,12 +667,12 @@ ul a { /* Help page nav button */
 }
 
 ul a:hover { /* Help page nav buttons */ 
-	background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
+    background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
 
 .clear {
-  clear:both;
+    clear:both;
 }
 
 .control_panel_menu a, .entry_nav a {
