@@ -8,7 +8,7 @@ $current_url = "control_panel.php?content=manage_users";
 <h3>Manage users</h3>
 
 <?php
-// Perform form requests
+// Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
     ?>
     <p>
@@ -117,8 +117,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
                     </form>
                 </td>
                 <td>
-                    <form class="control-panel" action="<?php echo $current_url; ?>&history=user" method="POST">
-                        <input type="hidden" name="history" value="<?php echo $user['user_id']; ?>">
+                    <form class="control-panel" action="<?php echo $current_url; ?>" method="GET">
+                        <input type="hidden" name="content" value="manage_users">
+                        <input type="hidden" name="history" value="user">
+                        <input type="hidden" name="id" value="<?php echo $user['user_id']; ?>">
                         <button type="submit" class="control-panel-history" title="View user info history"/>
                     </form>
                 </td>

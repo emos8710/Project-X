@@ -34,22 +34,22 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
 }
 ?>
 
-<!--Favicon, scripts, meta tags, title, stylesheets-->
+<!--Scripts, meta tags, stylesheets, favicon, title-->
 <head>
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
     <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo $title; ?></title>
-    <link href="css/upstrain.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/upstrain.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+    <title><?php echo $title; ?></title>
 </head>
 
 
@@ -62,8 +62,8 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
         </a>
     </div>
 
+    <!-- NAVIGATION BUTTONS -->
     <div class="nav-wrapper">
-        <!-- NAVIGATION BUTTONS -->
         <!-- Home -->
         <a <?php
         if (basename($_SERVER['PHP_SELF']) === "index.php") {

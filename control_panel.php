@@ -1,4 +1,5 @@
 <?php
+// Start session if session closed
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -7,19 +8,12 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 $show_history = isset($_GET['history']);
 if ($show_history)
     $history_content = $_GET['history'];
-?>
 
-<script>
-    function confirmAction(e, msg) {
-        if (!confirm(msg))
-            e.preventDefault();
-    }
-</script>
-
-<?php
 // Handle headers
 if (isset($_POST['header']) && $_POST['header'] === "refresh") {
-    header("Refresh:10");
+    if (isset($current_url)): header("Refresh:10, url=" . $current_url);
+    else: header("Refresh:10");
+    endif;
 }
 
 // Database stuff
@@ -65,14 +59,14 @@ $title = "Control Panel";
         <main>
             <div class="innertube">
                 <h2>Control Panel</h2>
-                <br>
 
                 <!-- Nav menu with links to display desired content -->
                 <div class="control_panel_menu">
                     <ul>
-                        <a href="?content=manage_users">Manage users</a>
-                        <a href="?content=manage_entries">Manage entries</a>
-                        <a href="?content=event_log">Event log</a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_users">Manage users</a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_entries">Manage entries</a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_inserts">Manage inserts</a>
+                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=event_log">Event log</a>
                     </ul>
                 </div>
 
@@ -88,42 +82,49 @@ $title = "Control Panel";
                     include $_GET['content'] . ".php";
                     echo "</div>";
                 }
-                ?>
 
-                <div class="panel-history-show">
-                    <?php
-                    if ($show_history && $_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['history'])) {
+                if ($show_history) {
+                    ?>
+                    <div class="panel-history-show">
+                        <?php
                         if (isset($_POST['restore_data']) && isset($_POST['restore_user'])) {
                             include 'restore_user.php';
                         }
 
-                        if ($history_content == "user") {
+                        if ($history_content == "user" && isset($_GET['id'])) {
                             include 'user_history.php';
-                        } else if ($history_content == "entry") {
+                        } else if ($history_content == "entry" && isset($_GET['id'])) {
                             include 'entry_history.php';
                         } else {
                             echo "This should never happen";
                         }
-                    }
-                    ?>
-
-
-                </div>
-
+                        ?>
+                    </div>
+                    <?php
+                }
+                ?>
             </div>
-        </main>
 
-        <?php
-    } else {
-        ?>
-        <h3 style="color:red">Error: Access denied.</h3>
-        <br>
-        <a href="index.php">Go home</a>
-        <?php
-    }
+        </div>
+    </main>
 
-    include 'bottom.php';
+    <?php
+} else {
     ?>
+    <h3 style="color:red">Error: Access denied.</h3>
+    <br>
+    <a href="index.php">Go home</a>
+    <?php
+}
 
+include 'bottom.php';
+?>
+
+<script>
+    function confirmAction(e, msg) {
+        if (!confirm(msg))
+            e.preventDefault();
+    }
+</script>
 </body>
 </html>

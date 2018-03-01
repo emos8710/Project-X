@@ -4,7 +4,7 @@ if (count(get_included_files()) == 1)
 
 include 'scripts/db.php';
 
-$id = mysqli_real_escape_string($link, $_POST['history']);
+$id = mysqli_real_escape_string($link, $_GET['id']);
 
 $current_info_sql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
         . "entry.entry_reg AS biobrick, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "

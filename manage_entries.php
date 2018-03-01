@@ -107,8 +107,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
                     </form>
                 </td>
                 <td>
-                    <form class="control-panel" action="<?php echo $current_url; ?>&history=entry" method="POST">
-                        <input type="hidden" name="history" value="<?php echo $row['eid']; ?>">
+                    <form class="control-panel" action="<?php echo $current_url; ?>&history=entry" method="GET">
+                        <input type="hidden" name="content" value="manage_entries">
+                        <input type="hidden" name="history" value="entry">
+                        <input type="hidden" name="id" value="<?php echo $row['eid']; ?>">
                         <button type="submit" class="control-panel-history" title="View entry history"/>
                     </form>
                 </td>
