@@ -94,19 +94,6 @@ if ($is_user_error) {
                         . "email, phone, username AS uname, admin FROM users WHERE user_id = '$id'";
                 $user_result = mysqli_query($link, $usersql);
 
-                // Fetch information about entries from database
-                $entrysql = "SELECT entry.id AS eid, entry.comment, entry.year_created, entry.date_db, "
-                        . "entry.entry_reg, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-                        . "strain.name AS sname, entry_inserts.*, ins.name AS iname FROM entry "
-                        . "LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
-                        . "LEFT JOIN backbone ON entry.backbone = backbone.id "
-                        . "LEFT JOIN strain ON entry.strain = strain.id "
-                        . "LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
-                        . "LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
-                        . "WHERE entry.creator = '$id' "
-                        . "ORDER BY entry.id";
-                $entry_result = mysqli_query($link, $entrysql);
-
                 // Close database connection
                 mysqli_close($link) or die("Could not close database connection");
 

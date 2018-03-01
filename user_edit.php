@@ -10,7 +10,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		$current_content = "";
 	}
 	
-	// If a form has been submitted
+	// Update procedures
 	if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		include 'scripts/db.php';
 		
@@ -94,15 +94,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 				}
 			// Change password
 			} else if (isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['conf_password']) && $_POST['old_password'] != "" && $_POST['new_password'] != "" && $_POST['conf_password'] != "") {
-				if (strlen($_POST['new_password'])<8) {
-					$iserror = TRUE;
-					$update_msg = "The new password is too short.";
-					goto errorTime;
-				} else if ($_POST['new_password'] != $_POST['conf_password']) {
-					$iserror = TRUE;
-					$update_msg = "The new passwords don't match.";
-					goto errorTime;
-				}
+				
 				// Check that the input old password matches the stored password
 				$result = mysqli_query($link, "SELECT password FROM users WHERE user_id = '$user_id'");
 				$password = mysqli_fetch_assoc($result);
@@ -112,6 +104,21 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 					$update_msg = "Wrong password.";
 					goto errorTime;
 				}
+				// Make sure user is changing their own password, and that the new password qualifies
+				if ($_SESSION['user_id'] != $user_id) {
+					$iserror = TRUE;
+					$update_msg = "Can't change someone else's password!";
+					goto errorTime;
+				} else if (strlen($_POST['new_password'])<8) {
+					$iserror = TRUE;
+					$update_msg = "The new password is too short.";
+					goto errorTime;
+				} else if ($_POST['new_password'] != $_POST['conf_password']) {
+					$iserror = TRUE;
+					$update_msg = "The new passwords don't match.";
+					goto errorTime;
+				}
+				
 				// Hash and change to new password
 				$hash = mysqli_real_escape_string($link, password_hash($_POST['new_password'], PASSWORD_BCRYPT));
 				$password_sql = "UPDATE users SET password = '$hash' WHERE user_id = '$user_id'";
@@ -147,7 +154,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 				}
 			}
 		}
-		errorTime:
+		errorTime:	// Go here when there is an error
 		// Style the success or error message. 
 		if ($iserror) {
 			$update_msg = "<strong style=\"color:red\">Error: ".$update_msg."</strong>";
@@ -160,18 +167,18 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 	?>
 
  	<?php
+	// Show the user page
 	// Fetch user information from database
 	include 'scripts/db.php';
 	
 	$usersql = "SELECT first_name AS fname, last_name AS lname, "
 	."email, phone, username AS uname, admin FROM users WHERE user_id = '$id'";
 	$user_result = mysqli_query($link, $usersql);
-	mysqli_close($link);
+	mysqli_close($link) or die("Could not close database connection");
 	
 	$info = mysqli_fetch_assoc($user_result);
 	?>
 	 
-	<!-- do some edit form shit -->
 	<ul>
 		<!-- Edit name -->
 		<li>Name	<?php echo $info["fname"]." ".$info["lname"];
@@ -238,22 +245,25 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 			</form></li>
 		<?php } ?>
 		
-		<!-- Change password -->
-		<li><?php if ($current_content != "password") { ?>
-			<a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a>
-		<?php }
-			if($current_content == "password") { ?>
-				<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-					Old password
-					<input type="password" name="old_password" required>
-					New password
-					<input type="password" name="new_password" required pattern=".{8,}" title="The password must be at least 8 characters">
-					Confirm new password
-					<input type="password" name="conf_password" required pattern=".{8,}" title="The password must be at least 8 characters">
-					<input type="submit" value="Submit">
-					<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
-				</form></li>
-		<?php } ?>
+		<?php if ($_SESSION['user_id'] == $user_id) {
+		// Change password
+		?>
+			<li><?php if ($current_content != "password") { ?>
+				<a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a>
+			<?php }
+				if($current_content == "password") { ?>
+					<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+						Old password
+						<input type="password" name="old_password" required>
+						New password
+						<input type="password" name="new_password" required pattern=".{8,}" title="The password must be at least 8 characters">
+						Confirm new password
+						<input type="password" name="conf_password" required pattern=".{8,}" title="The password must be at least 8 characters">
+						<input type="submit" value="Submit">
+						<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
+					</form></li>
+			<?php }
+		} ?>
 	<ul>
 	
 	<!-- Show success/error message -->

@@ -39,7 +39,7 @@ if ($loggedin && $active) {?>
 	<h3>Contact information</h3>
 	<p>Name: <?php echo $info["fname"]." ".$info["lname"] ?>
 	<br>Email: <?php echo "<a href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?>
-	<br>Phone: <?php echo $info["phone"] ?></p>
+	<br>Phone number: <?php echo $info["phone"] ?></p>
 <?php } else {
 	?>
 	<h2>User profile</h2>
