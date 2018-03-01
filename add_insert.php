@@ -18,7 +18,7 @@ $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
     if (mysqli_num_rows($check_query) < 1) {
         $sql_ins = "INSERT INTO ins (name,type,ins_reg,creator,date_db,comment) VALUES (?,?,?,?,?,?)";
         $stmt_ins = $link->prepare($sql_strain);
-        $stmt_ins->bind_param('$name','$type', '$regid','$creator','$current_date', '$comment');
+        $stmt_ins->bind_param("ssssss",'$name','$type', '$regid','$creator','$current_date', '$comment');
         $stmt_ins->execute();
         $stmt_ins->close();
     } 

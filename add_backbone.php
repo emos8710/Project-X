@@ -15,7 +15,7 @@ include 'scripts/db.php';
 //Variables
     $backbone = mysqli_real_escape_string($link, $_REQUEST['backbone']);
     $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
-    $reg_id = mysqli_real_escape_string($link, $_REQUEST['registry']);
+    $reg_id = mysqli_real_escape_string($link, $_REQUEST['Bb_registry']);
     $current_date = date("Y-m-d");
     $creator = 1;
 //$creator = $_POST['user_id'];
@@ -24,9 +24,9 @@ include 'scripts/db.php';
     $check2 = "SELECT name FROM backbone WHERE name LIKE '$backbone'";
     $check_query2 = mysqli_query($link, $check2);
     if (mysqli_num_rows($check_query2) < 1) {
-        $sql_backbone = "INSERT INTO backbone (name, date_db,creator, comment) VALUES (?,?,?,?)";
+        $sql_backbone = "INSERT INTO backbone (name, Bb_reg, date_db,creator, comment) VALUES (?,?,?,?,?)";
         $stmt_backbone = $link->prepare($sql_backbone);
-        $stmt_backbone->bind_param("ssis", $backbone, $current_date, $creator, $comment);
+        $stmt_backbone->bind_param("sssis", '$backbone', '$reg_id', '$current_date', '$creator', '$comment');
         $stmt_backbone->execute();
         $stmt_backbone->close();
     }
