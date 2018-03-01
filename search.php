@@ -146,7 +146,7 @@ $title = "Help";
 		}  
 		
 		if(!empty($strain_criteria)) {
-			$ConditionArray[] = "t4.name = '$strain_criteria'";
+			$ConditionArray[] = "t4.name like '$strain_criteria'";
 		}   
 		
 		if(!empty($backbone_criteria)) {
@@ -161,7 +161,7 @@ $title = "Help";
 		if(!empty($insert_criteria)) {
 			$ConditionArray[] = "(t9.entry_id IN (SELECT entry_inserts.entry_id FROM "
 					."entry_inserts WHERE entry_inserts.insert_id IN (SELECT ins.id FROM "
-					. "ins WHERE (ins.name = '$insert_criteria'))))";
+					. "ins WHERE (LOCATE('$insert_criteria', ins.name) > 0))))";
 		}   
 		
 		if(!empty($bb_id_criteria)) {
@@ -174,7 +174,7 @@ $title = "Help";
 		}  
 		
 		if(!empty($comment_criteria)) {
-			$ConditionArray[] = "t1.comment = '$comment_criteria'";
+			$ConditionArray[] = "LOCATE('$comment_criteria', t1.comment) > 0";
 		}   
 		
 		if(!empty($creation_year_criteria)) {
@@ -524,7 +524,7 @@ $title = "Help";
 		}  
 		
 		if(!empty($name_criteria)) {
-			$ConditionArray[] = "t1.name = '$name_criteria'";
+			$ConditionArray[] = "LOCATE('$name_criteria', t1.name) > 0";
 		}   
 		   		  
 		
@@ -538,7 +538,7 @@ $title = "Help";
 		}  
 		
 		if(!empty($comment_criteria)) {
-			$ConditionArray[] = "t1.comment = '$comment_criteria'";
+			$ConditionArray[] = "LOCATE('$comment_criteria', t1.comment) > 0";
 		}   
 		 
 		
