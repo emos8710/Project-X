@@ -165,7 +165,13 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		mysqli_close($link);
 	}
 	?>
-
+	<!-- Confirm action popup -->
+	<script>
+    function confirmAction(e, msg) {
+        if (!confirm(msg))
+            e.preventDefault();
+    }
+	</script>
  	<?php
 	// Show the user page
 	// Fetch user information from database
@@ -207,8 +213,12 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<?php if($current_content == "user_name") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
 				New user name
-				<input type="text" name="user_name" pattern=".{3,50}" required title="The username must be between 3-50 characters"> 
-				<input type="submit" value="Submit">
+				<input type="text" name="user_name" pattern=".{3,50}" required title="The username must be 3-50 characters long">
+				<?php if($_SESSION['user_id'] == $user_id) { ?>
+					<input type="submit" value="Submit" onclick="confirmAction(event, 'Do you really want to change your username?')">
+				<?php } else { ?>
+					<input type="submit" value="Submit" onclick="confirmAction(event, 'This is not your account! Do you still want to change the username?')">
+				<?php } ?>
 				<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
 			</form></li>
 		<?php } ?>
@@ -268,6 +278,8 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 	
 	<!-- Show success/error message -->
 	<?php if($_SERVER['REQUEST_METHOD']=='POST' && isset($update_msg)): echo "<br>".$update_msg; endif; ?>
+	<!-- Back button -->
+	<a href="javascript:history.go(-1)">Go back</a>
 
 <?php
 // Hides page if the user is not logged in or activated
