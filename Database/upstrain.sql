@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Feb 28, 2018 at 01:40 PM
+-- Generation Time: Mar 01, 2018 at 02:01 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -285,7 +285,7 @@ CREATE TABLE IF NOT EXISTS `event_log` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `time` varchar(20) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event_log`
@@ -311,7 +311,12 @@ INSERT INTO `event_log` (`object_id`, `object`, `type`, `event_id`, `time`) VALU
 (001, 'User', 'Edited', 18, '2018-02-27 12:16:50'),
 (001, 'User', 'Edited', 19, '2018-02-27 12:17:42'),
 (010, 'User', 'Added', 20, '2018-02-27 15:21:50'),
-(010, 'User', 'Edited', 21, '2018-02-27 15:23:34');
+(010, 'User', 'Edited', 21, '2018-02-27 15:23:34'),
+(001, 'User', 'Edited', 22, '2018-03-01 10:19:26'),
+(001, 'User', 'Edited', 23, '2018-03-01 10:29:10'),
+(001, 'User', 'Edited', 24, '2018-03-01 11:19:19'),
+(001, 'User', 'Edited', 25, '2018-03-01 12:33:28'),
+(001, 'User', 'Edited', 26, '2018-03-01 13:36:12');
 
 -- --------------------------------------------------------
 
@@ -400,7 +405,7 @@ CREATE TABLE IF NOT EXISTS `ins_type` (
   `name` varchar(30) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `ins_type`
@@ -408,7 +413,8 @@ CREATE TABLE IF NOT EXISTS `ins_type` (
 
 INSERT INTO `ins_type` (`id`, `name`) VALUES
 (2, 'Coding'),
-(3, 'Promotor');
+(3, 'Promotor'),
+(4, 'RBS');
 
 -- --------------------------------------------------------
 
@@ -509,21 +515,21 @@ CREATE TABLE IF NOT EXISTS `users` (
   `hash` varchar(100) NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `admin` tinyint(1) NOT NULL DEFAULT '0',
+  `time` int(100) UNSIGNED NOT NULL,
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`),
-  UNIQUE KEY `username` (`username`),
-  UNIQUE KEY `phone` (`phone`)
+  UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`) VALUES
-(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0),
-(7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1),
-(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1),
-(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1);
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`, `time`) VALUES
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 0),
+(7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1, 0),
+(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 0),
+(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1, 0);
 
 --
 -- Triggers `users`
@@ -570,7 +576,7 @@ CREATE TABLE IF NOT EXISTS `users_log` (
   `type` varchar(15) NOT NULL,
   `time` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`old_data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users_log`
@@ -581,7 +587,12 @@ INSERT INTO `users_log` (`user_id`, `first_name`, `last_name`, `email`, `phone`,
 (1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testlord', '', '', 0, 0, 2, 'Edited', 1519646433),
 (1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 3, 'Edited', 1519730210),
 (1, 'hej', 'hej', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 4, 'Edited', 1519730262),
-(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 0, 0, 5, 'Edited', 1519741414);
+(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 0, 0, 5, 'Edited', 1519741414),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 6, 'Edited', 1519895966),
+(1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 7, 'Edited', 1519896550),
+(1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 8, 'Edited', 1519899559),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 9, 'Edited', 1519904008),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testlord', '', '', 0, 0, 10, 'Edited', 1519907772);
 
 --
 -- Constraints for dumped tables
@@ -644,6 +655,8 @@ CREATE EVENT `AutoDeleteBackboneLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28
 CREATE EVENT `AutoDeleteStrainLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:28:15' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.strain_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 CREATE EVENT `AutoDeleteEntryInsertLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:35:41' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_inserts_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteNonActiveUser` ON SCHEDULE EVERY 24 HOUR STARTS '2018-03-01 23:59:59' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 72 HOUR) AND active = '0'$$
 
 DELIMITER ;
 COMMIT;
