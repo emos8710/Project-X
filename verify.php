@@ -32,15 +32,15 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
         header("location: success.php");
 		
 		// Send an email to the user to let them know they are verified.
-		$currentyear	= $date('Y')
-		$to  			= $email;
+		$currentyear	= $date('Y');
+		$toemail		= $user['email'];
 		$subject 		= 'Welcome!';
 		$message_body 	= 	'Hi,'
 							.'You have now been verified as a member of iGEM Uppsala year '.$currentyear.'!'
 							.'You can now log in to your UpStrain account.'
-							.'Welcome!'
+							.'Welcome!';
 
-		mail( $to, $subject, $message_body );
+		mail( $toemail, $subject, $message_body );
     }
 }
 else {
