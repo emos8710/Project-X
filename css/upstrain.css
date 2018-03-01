@@ -44,15 +44,31 @@ footer {
 }
 
 /* Headers */
-h1, h2, h3, h4, h5, h6 {
+h1, h5, h6 {
     color: #001F3F; /* Changed */
     margin: 0;
     font-size: 28px; /* Added */
 }
 
 h2 {
-    margin-bottom: 20px;
-    font-weight: 500;
+    text-align: center;
+    font-size: 35px;
+    margin-top: 30px; 
+	font-style: normal;
+}
+
+h3 {
+    text-align: center;
+    font-size: 25px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+}
+
+h4 {
+    text-align: center;
+    font-size: 17px;
+    margin-top: 0px;
+    margin-bottom: 10px;
 }
 
 /* Text */
@@ -264,33 +280,17 @@ div.quicksearch a:hover {
 }
 
 /* ---------- DIVS ---------- */
+/* Innertube */
+div.innertube {
+	width:100%;
+}
+
 /* Forms */
 div.form {
     background: #E1F5FE; /* Changed. Background color in forms. */
     padding: 40px;
     max-width: 600px;
     margin: auto;
-}
-
-/* Headers */
-div.innertube h2.help_nav {
-    text-align: center;
-    font-size: 35px;
-    margin-top: 30px; 
-}
-
-div.innertube h3.help_nav {
-    text-align: center;
-    font-size: 25px; 
-    margin-top: 10px; 
-    margin-bottom: 10px;
-}
-
-h4.help_nav {
-    text-align: center;
-    font-size: 17px;
-    margin-top: 0px;
-    margin-bottom: 10px;
 }
 
 /* inserts */
@@ -329,13 +329,6 @@ div.control_panel_menu, div.entry_nav{
     float: left; 
     width:100%; 
     margin-left:0; 
-}
-
-div.help_nav {
-    float: center; 
-    width: 70%; 
-    margin-left:22%;
-    margin-right:16%;
 }
 
 /* ---------- NAVIGATION BAR ---------- */
@@ -622,13 +615,69 @@ div.control_panel_menu {
     margin-bottom: 15px;
 }
 
-div.control_panel_menu ul, div.entry_nav ul, div.help_nav ul{ /* Style the navigation list */
-    width:100%;
-    clear: right;
-    padding: 0;
+/* float center */
+.float_center {
+	float: right;
+	position: relative; 
+	left: -50%; 
+	text-align: left;
 }
 
-.control_panel_menu a, .entry_nav a, .help_nav a {
+/* Help page */
+.float_center > .help_nav {
+	position: relative;
+	left: 50%; 
+}
+
+ul li { /* Help page nav */ 
+float: left;
+list-style-type: none;
+margin: 0 0px;
+}
+
+ul a { /* Help page nav button */
+	display: block; 
+    background: #81D4FA; /* #0074D9; */
+    color: #001F3F;/* Changed. Text color in navigation buttons */ 
+    /* text-align: center; */ /* Deleted. */ 
+    padding: 10px 10px;
+    font-size: 17px; /* Changed. Larger text size in nav. buttons */
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 3px;
+    margin-right: 30px;
+
+    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+ul a:hover { /* Help page nav buttons */ 
+	background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
+    color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+}	
+
+.clear {
+  clear:both;
+}
+
+.control_panel_menu a, .entry_nav a {
     float: left; 
     background: #81D4FA; /* #0074D9; */
     color: #001F3F;/* Changed. Text color in navigation buttons */ 
@@ -661,14 +710,14 @@ div.control_panel_menu ul, div.entry_nav ul, div.help_nav ul{ /* Style the navig
     border-bottom-right-radius: 7px;
 }
 
-.control_panel_nav a:hover, .entry_nav a:hover, .help_nav a:hover{
+.control_panel_nav a:hover, .entry_nav a:hover{
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }
 
 /* HELP PAGE */ 
-div.innertube div.help_page_show {
-    float: left;
+.help_page_show {
+    float: center;
     width:84%;
     margin-top: 5px;
     margin-left: 8%; 
