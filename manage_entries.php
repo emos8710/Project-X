@@ -3,33 +3,42 @@ if (count(get_included_files()) == 1)
     exit("Access restricted");
 
 $current_url = "control_panel.php?content=manage_entries";
+
+// Connect to database
+include 'scripts/db.php';
+
+// Fetch all entries
+$entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
+        . "entry.entry_reg AS biobrick, entry.created AS created, entry.private AS private, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
+        . "strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
+        . "LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
+        . "LEFT JOIN backbone ON entry.backbone = backbone.id "
+        . "LEFT JOIN strain ON entry.strain = strain.id "
+        . "LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
+        . "LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
+        . "LEFT JOIN users ON entry.creator = users.user_id "
+        . "ORDER BY eid";
+$entryquery = mysqli_query($link, $entrysql) or die("MySQL error: " . mysqli_error($link));
+
+mysqli_close($link) or die("Could not close database connection");
 ?>
 
 <h3>Manage entries</h3>
 
 <?php
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     ?>
     <p>
         <?php
         include 'scripts/db.php';
 
-        $delete_entry = FALSE;
-        if (isset($_POST['delete'])) {
-            $entry_id = $_POST['delete'];
-            $id = mysqli_real_escape_string($link, $entry_id);
-            $delete_entry = TRUE;
-        } else {
-            echo "This should never happen.";
-        }
-
-        if ($delete_entry) {
-            $deletesql = "DELETE FROM entry WHERE id = " . $entry_id;
-            if (!$deletequery = mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: " . mysqli_error($link) . "</strong>";
-            else: $delete_msg = "<strong style=\"color:green\">Entry successfully deleted!</strong>";
-            endif;
-            echo $delete_msg;
-        }
+        $entry_id = $_POST['delete'];
+        $id = mysqli_real_escape_string($link, $entry_id);
+        $deletesql = "DELETE FROM entry WHERE id = " . $entry_id;
+        if (!mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: " . mysqli_error($link) . "</strong>";
+        else: $delete_msg = "<strong style=\"color:green\">Entry successfully deleted!</strong>";
+        endif;
+        echo $delete_msg;
         ?>
         <br>
         Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
@@ -63,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
         mysqli_data_seek($entryquery, 0); // reset result to beginning
         ?>
     <table class="control-panel-entries">
-        <col><col><col><col><col><col><col><col><col><col>
+        <col><col><col><col><col><col><col><col><col><col><col><col>
         <tr>
             <th>Upstrain ID</th>
             <th>Date added</th>
@@ -74,6 +83,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
             <th>iGEM Registry</th>
             <th>Comment</th>
             <th>Created by</th>
+            <th>Private</th>
+            <th>Created physically</th>
             <th colspan="3">Actions</th>
         </tr>
         <?php
@@ -99,6 +110,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
                 <td><?php echo $row['biobrick']; ?></td>
                 <td><?php echo $row['cmt']; ?> </td>
                 <td><a href="user.php?user_id=<?php echo $row['usid']; ?>"><?php echo $row['fname'] . " " . $row['lname']; ?></a></td>
+                <td><?php
+                    if ($row['private'] == 1): echo "Yes";
+                    else: echo "No";
+                    endif;
+                    ?></td>
+                <td><?php
+                    if ($row['created'] == 1): echo "Yes";
+                    else: echo "No";
+                    endif;
+                    ?></td>
                 <td>
                     <form class="control-panel" action="entry.php" method="GET">
                         <input type="hidden" name="upstrain_id" value="<?php echo "" . $row['uid'] . ""; ?>">

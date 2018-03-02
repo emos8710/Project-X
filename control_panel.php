@@ -24,23 +24,6 @@ include 'scripts/db.php';
 $usersql = "SELECT user_id, username, first_name, last_name, email, phone, admin FROM users ORDER BY admin DESC, user_id ASC";
 $userquery = mysqli_query($link, $usersql) or die("MySQL error: " . mysqli_error($link));
 
-// Fetch all entries
-$entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
-        . "entry.entry_reg AS biobrick, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-        . "strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
-        . "LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
-        . "LEFT JOIN backbone ON entry.backbone = backbone.id "
-        . "LEFT JOIN strain ON entry.strain = strain.id "
-        . "LEFT JOIN entry_inserts ON entry_inserts.entry_id = entry.id "
-        . "LEFT JOIN ins ON entry_inserts.insert_id = ins.id AND entry_inserts.entry_id = entry.id "
-        . "LEFT JOIN users ON entry.creator = users.user_id "
-        . "ORDER BY eid";
-$entryquery = mysqli_query($link, $entrysql) or die("MySQL error: " . mysqli_error($link));
-
-// Fetch event log
-$logsql = "SELECT * from event_log ORDER by time DESC";
-$logquery = mysqli_query($link, $logsql) or die("MySQL error: " . mysqli_error($link));
-
 mysqli_close($link) or die("Could not close connection to database");
 
 $title = "Control Panel";
@@ -87,14 +70,18 @@ $title = "Control Panel";
                     ?>
                     <div class="panel-history-show">
                         <?php
-                        if (isset($_POST['restore_data']) && isset($_POST['restore_user'])) {
-                            include 'restore_user.php';
+                        if (isset($_POST['restore_data'])) {
+                            if (isset($_POST['restore_user'])) {
+                                include 'restore_user.php';
+                            } else if (isset($_POST['restore_instype'])) {
+                                include 'restore_instype.php';
+                            } else {
+                                echo "This should never happen";
+                            }
                         }
 
-                        if ($history_content == "user" && isset($_GET['id'])) {
-                            include 'user_history.php';
-                        } else if ($history_content == "entry" && isset($_GET['id'])) {
-                            include 'entry_history.php';
+                        if (isset($_GET['id'])) {
+                            include $history_content . '_history.php';
                         } else {
                             echo "This should never happen";
                         }

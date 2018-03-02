@@ -36,8 +36,8 @@ mysqli_close($link) or die("Could not close connection to database");
             ?>
             <th>Username</th>
             <th>Name</th>
-            <th>E-mail address</th>
-            <th>Phone number</th>
+            <th>E-mail</th>
+            <th>Phone</th>
             <th>Admin</th>
         </tr>
         <tr>
@@ -64,8 +64,8 @@ mysqli_close($link) or die("Could not close connection to database");
             <th>Event type</th>
             <th>Username</th>
             <th>Name</th>
-            <th>E-mail address</th>
-            <th>Phone number</th>
+            <th>E-mail</th>
+            <th>Phone</th>
             <th>Time recorded</th>
             <th>Restore</th>
         </tr>
@@ -83,7 +83,6 @@ mysqli_close($link) or die("Could not close connection to database");
                     <form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
                         <input type="hidden" name="restore_data" value="<?php echo $data['id']; ?>">
                         <input type="hidden" name="restore_user" value="<?php echo $data['uid']; ?>">
-                        <input type="hidden" name="history" value="<?php echo $id; ?>"> 
                         <input type="hidden" name="header" value="refresh">
                         <button type="submit" class="control-panel-restore" title="Restore" onclick="confirmAction(event, 'Restore user <?php echo $data['uid']; ?> to this record?')"/>
                     </form>

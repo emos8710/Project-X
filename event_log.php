@@ -3,6 +3,15 @@ if (count(get_included_files()) == 1)
     exit("Access restricted");
 
 $current_url = "control_panel.php?content=event_log";
+
+// Connect to database
+include 'scripts/db.php';
+
+// Fetch event log
+$logsql = "SELECT * from event_log ORDER by time DESC";
+$logquery = mysqli_query($link, $logsql) or die("MySQL error: " . mysqli_error($link));
+
+mysqli_close($link) or die("Could not close database connection");
 ?>
 
 <h3>Event log</h3>
