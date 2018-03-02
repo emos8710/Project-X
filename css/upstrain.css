@@ -761,7 +761,7 @@ ul.help_nav a, ul.search_nav a{ /* Help page nav button */
     border-bottom-right-radius: 7px;
 }
 
-ul.help_nav a:hover, ul.search_nav a:hover { /* Help page nav buttons */ 
+ul.help_nav a:hover, ul.search_nav a:hover, .control_panel_menu a:hover { /* Help page nav buttons */ 
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
