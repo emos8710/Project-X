@@ -75,6 +75,15 @@ $title = "New entry";
                     $data = htmlspecialchars($data);
                     return $data;
                 }
+
+                function load_ins_type() {
+                    include 'scripts/db.php';
+                    $sql_ins_type = mysqli_query($link, "SELECT * FROM ins_type");
+                    while ($row = $sql_ins_type->fetch_assoc()) {
+                        echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
+                    }
+                    mysqli_close($link);
+                }
                 ?>
 
 
@@ -189,7 +198,7 @@ $title = "New entry";
                                 <label for="Private">Make this entry private </label>
                                 <input class="checkbox" type="checkbox" name="private" value="Private"> 
                             </div>
-                            
+
                             <div class="checkbox">
                                 <label for="Created">This entry is created </label>
                                 <input class="checkbox" type="checkbox" name="created" value="Created"> 
@@ -333,13 +342,20 @@ $title = "New entry";
 </body>
 </html>
 
+
+
 <script>
     $(document).ready(function () {
         var i = 1;
         var max = 5;
         $("#add_input").click(function () {
             if (i <= max) {
-                $("#dynamic").append('<tr id="row' + i + '"><td><input type="text" name="ins[]" id ="Ins" /></td><td><select name="insert_type[]"><option value="Promotor">Promotor</option><option value="Coding sequence">Coding sequence</option><option value="RBS">RBS</option><option value="Other">Other</option></select></td><td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
+                $("#dynamic").append('<tr id="row' + i + '">\n\
+                <td><select class="insert" name="insert_type[]" id="Ins_type" ><option value="">Select insert type</option>\n\
+                <?php echo load_ins_type(); ?></select><td>\n\
+                <select class="insert" name="ins[]" id ="Ins"><option value="">\n\
+                Select insert name</option></select></td>\n\
+                <td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
                 i++;
             } else {
 
@@ -372,7 +388,6 @@ $title = "New entry";
     $(document).ready(function () {
         $("#Ins_type").change(function () {
             var type_id = $(this).val();
-            //if (type_id != "") {
             $.ajax({
                 url: 'dropdown.php',
                 method: "POST",
@@ -382,7 +397,6 @@ $title = "New entry";
                     $("#Ins").html(data);
                 }
             });
-            //}
 
         });
     });

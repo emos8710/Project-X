@@ -2,7 +2,7 @@
 
 <?php
 
-if (count(get_included_files()) == 1) exit("Access resricted");
+if (count(get_included_files()) == 1) exit("Access restricted");
 
 include 'scripts/db.php';
 
