@@ -46,14 +46,14 @@ h1, h5, h6 {
     font-size: 28px; /* Added */
 }
 
-h2 {
+h2.help, h2.home {
     text-align: center;
     font-size: 35px;
     margin-top: 30px; 
     font-style: normal;
 }
 
-h3 {
+h3.help, h3.home {
     text-align: center;
     font-size: 25px; 
     margin-top: 10px; 
@@ -755,6 +755,24 @@ div.help_text {
     text-align: justify;
     text-justify: inter-word;
 }
+
+div.home {
+	width:80%;
+    margin-left: 10%;
+    margin-right: 10%;
+	font-style: italic;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
+div.igem_text, div.upstrain_text {
+	width:80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    text-align: justify;
+    text-justify: inter-word;
+}
+
 
 /* IDs */
 #logo { /* Added: All */

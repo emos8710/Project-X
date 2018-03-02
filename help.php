@@ -20,7 +20,7 @@ $title = "Help";
 <body>
 <!-- Main content goes here -->
 <main>
-	<h2>Help page</h2>
+	<h2 class="help">Help page</h2>
 	<div class="help_text">
 		If you are new to the site this help page can be used 
 		as a guideline for how to use the different features,
