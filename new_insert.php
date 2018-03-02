@@ -79,7 +79,6 @@ $title = "New entry";
 
 
                 <h2>New Entry</h2>
-                <h3>Navigation</h3>
                 <div class="entry_nav">
                     <ul>
                         <a href="?content=new_entry">New entry</a>
@@ -96,10 +95,11 @@ $title = "New entry";
                     <p><span class="error">* required field.</span></p>
                     <form class="insert-form" method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
                         <div class="new_entry">
+
                             <div class="field-wrap">
                                 <label for="Strain">Strain </label>
 
-                                <select name="strain" required>
+                                <select name="strain_name" required>
                                     <?php
                                     include 'scripts/db.php';
                                     $sql_strain = mysqli_query($link, "SELECT name FROM strain");
@@ -116,7 +116,7 @@ $title = "New entry";
                             <div class="field-wrap">
                                 <label for="Backbone">Backbone </label>
 
-                                <select name="backbone" required>
+                                <select name="backbone_name" required>
                                     <?php
                                     include 'scripts/db.php';
                                     $sql_backbone = mysqli_query($link, "SELECT name FROM backbone");
@@ -131,36 +131,34 @@ $title = "New entry";
                                 <br/>
                             </div>
 
+                            <div class="field-wrap">
+                                <table id="dynamic">
+                                    <thead>Insert</thead>
 
-                            <p> <table id="dynamic">
-                                <thead>Insert</thead>
 
-                                <div class="field-wrap">
                                     <td>
                                         <label for="Ins_Type">Insert type </label>
-                                        <select class="insert" name="insert_type[]">
-                                            <option value="Promotor">Promotor</option>
-                                            <option value="Coding sequence">Coding sequence</option>
-                                            <option value="RBS">RBS</option>
-                                            <option value="Other">Other</option>
-
-                                        </select></td>
-
-                                    <td>
-                                        <label for="Ins">Insert name </label>
-                                        <select name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead">
+                                        <select class="insert" name="insert_type[]" id="Ins_type" >
+                                            <option value="">Select insert type</option>
                                             <?php
                                             include 'scripts/db.php';
-                                            $sql_ins = mysqli_query($link, "SELECT name FROM ins");
-                                            while ($row = $sql_ins->fetch_assoc()) {
-                                                echo "<option>" . $row['name'] . "</option>";
+                                            $sql_ins_type = mysqli_query($link, "SELECT * FROM ins_type");
+                                            while ($row = $sql_ins_type->fetch_assoc()) {
+                                                echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
                                             }
                                             mysqli_close($link);
                                             ?>
                                         </select></td>
+
+                                    <td>
+                                        <label for="Ins">Insert name </label>
+                                        <select class="insert" name="ins[]" id ="Ins">
+                                            <option value="">Select insert name</option>
+                                        </select></td>
                                     <td> <button type="button" name="add" id="add_input">+ More inserts</button></td>
 
-                            </table>
+                                </table>
+                            </div>
 
 
                             <div class="field-wrap"> 
@@ -191,6 +189,11 @@ $title = "New entry";
                                 <label for="Private">Make this entry private </label>
                                 <input class="checkbox" type="checkbox" name="private" value="Private"> 
                             </div>
+                            
+                            <div class="checkbox">
+                                <label for="Created">This entry is created </label>
+                                <input class="checkbox" type="checkbox" name="created" value="Created"> 
+                            </div>
 
                             <button id="submit" type="submit" class="button" name="insert" />Submit</button>
                         </div>
@@ -203,7 +206,7 @@ $title = "New entry";
                     <p><span class="error">* required field.</span></p>
 
                     <form method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>" enctype="multipart/form-data">
-                        <p>
+
                         <div class="field-wrap">
 
                             <label for="Strain">Strain </label>
@@ -269,7 +272,7 @@ $title = "New entry";
                             <table id="dynamic">
                                 <td>
                                     <label for="Ins_Type">Insert type </label>
-                                    <select class="insert" name="insert_type[]">
+                                    <select class="insert" name="insert_type[]" id="Ins_type">
                                         <option value="Promotor">Promotor</option>
                                         <option value="Coding sequence">Coding sequence</option>
                                         <option value="RBS">RBS</option>
@@ -323,6 +326,10 @@ $title = "New entry";
     </main>
 
     <?php include 'bottom.php'; ?>
+
+    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+
 </body>
 </html>
 
@@ -360,3 +367,24 @@ $title = "New entry";
     });
 
 </script>
+
+<script>
+    $(document).ready(function () {
+        $("#Ins_type").change(function () {
+            var type_id = $(this).val();
+            //if (type_id != "") {
+            $.ajax({
+                url: 'dropdown.php',
+                method: "POST",
+                data: {inst: type_id},
+                dataType: "text",
+                success: function (data) {
+                    $("#Ins").html(data);
+                }
+            });
+            //}
+
+        });
+    });
+</script>
+
