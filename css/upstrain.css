@@ -278,9 +278,7 @@ div.quicksearch a:hover {
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
-    max-width:100%;
     margin: 15px;
-
 }
 
 /* Forms */
@@ -328,6 +326,31 @@ div.control_panel_menu, div.entry_nav{
     width:100%; 
     margin-left:0; 
 }
+
+div.info {
+	margin: 10px;
+	width:100%;
+}
+
+div.innertube div.igem_text {
+	float: left; 
+	width: 40%;
+	padding:0;
+	display: inline-block;
+	margin: 0;
+	text-align: justify;
+    text-justify: inter-word;
+}
+
+div.innertube div.upstrain_text {
+	float: right;
+	width: 40%; 
+	padding: 0; 
+	margin: 0;
+	text-align: justify;
+    text-justify: inter-word;
+}
+
 
 /* ---------- NAVIGATION BAR ---------- */
 nav.navigation {
@@ -627,13 +650,13 @@ div.control_panel_menu {
     left: 50%; 
 }
 
-ul.help_nav li { /* Help page nav */ 
+ul.help_nav li, ul.search_nav li{ /* Help page nav */ 
     float: left;
     list-style-type: none;
     margin: 0 0px;
 }
 
-ul.help_nav a { /* Help page nav button */
+ul.help_nav a, ul.search_nav a{ /* Help page nav button */
     display: block; 
     background: #81D4FA; /* #0074D9; */
     color: #001F3F;/* Changed. Text color in navigation buttons */ 
@@ -666,7 +689,7 @@ ul.help_nav a { /* Help page nav button */
     border-bottom-right-radius: 7px;
 }
 
-ul.help_nav a:hover { /* Help page nav buttons */ 
+ul.help_nav a:hover, ul.search_nav a:hover { /* Help page nav buttons */ 
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
@@ -756,19 +779,11 @@ div.help_text {
     text-justify: inter-word;
 }
 
-div.home {
+div.innertube div.home {
 	width:80%;
     margin-left: 10%;
     margin-right: 10%;
 	font-style: italic;
-    text-align: justify;
-    text-justify: inter-word;
-}
-
-div.igem_text, div.upstrain_text {
-	width:80%;
-    margin-left: 10%;
-    margin-right: 10%;
     text-align: justify;
     text-justify: inter-word;
 }

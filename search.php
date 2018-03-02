@@ -25,12 +25,12 @@ $title = "Help";
             <h2>Search</h2>
             
             <!-- Nav menu with links to display desired content -->
-                <div class="help_nav">
+                <div class="search_nav">
                 
-                        <ul>
-                            <a href="?content=search_entries">Search for entries</a>
-                            <a href="?content=search_users">Search for users</a>
-                            <a href="?content=search_inserts">Search for inserts</a>
+                        <ul class="search_nav">
+                            <li><a href="?content=search_entries">Search for entries</a></li>
+                            <li><a href="?content=search_users">Search for users</a></li>
+                            <li><a href="?content=search_inserts">Search for inserts</a></li>
                         </ul>
                 
                 </div>

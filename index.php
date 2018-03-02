@@ -14,8 +14,9 @@ $title = "UpStrain";
 <body>
 	<!-- Main content goes here -->
 	<main>
-		<h2 class="home">Welcome to Upstrain!</h2>
+	<div class="innertube">
 		<div class="home">
+		<h2 class="home">Welcome to Upstrain!</h2>
 		Upstrain is the plasmid database for the Uppsala iGEM association, where information is stored about
 		bacterial strains and their inserted plasmids. These plasmids subsuqently consist of certain backbones and
         specific insert sequence types, such as promotor or coding sequences. All this information about a certain
@@ -24,8 +25,9 @@ $title = "UpStrain";
 		</div>
         <br>
         <br>
-        <h3 class="home">About iGEM </h3>
+
 		<div class="igem_text">
+        <h3 class="home">About iGEM </h3>
 		iGEM stands for International Genetically Engineered Machine and it is an annual competition in
         synthetic biology where teams of students from all around the world work over the summer to
         design and build a biological system of their own choice, which is then implemented in living cells.
@@ -49,8 +51,8 @@ $title = "UpStrain";
         worked with the problem with antibiotic resistance and with the novel technologies CRISPR and microfluidics.
         </div>
         
+		<div class="upstrain_text">
 		<h3 class="home">About Upstrain</h3>
-        <div class="upstrain_text">
 		The Upstrain database was created in 2018 as a data storage solution for the iGEM Uppsala team. Before the database was 
         created, all the information about parts and bacterial strains that were engineered during the course of the competition 
         were simply stored in an excel sheet made available for all the team members. This solution however was not an efficient
@@ -68,6 +70,7 @@ $title = "UpStrain";
         The basic functionality of the database is relatively straightforward and has a simple user interface, which hopefully will 
         be incorporated into the daily use of future iGEM teams at Uppsala university as an efficient and convenient solution for 
         data managment.
+		</div>
 		</div>
 
 			<?php 
