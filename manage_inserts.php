@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']) && isset($_P
 
 /* Fetch data from database */
 
-include 'db.php';
+include 'scripts/db.php';
 
 // Fetch all inserts
 $insertsql = "SELECT ins.id AS id, ins.name AS name, ins.ins_reg AS biobrick, ins.date_db AS date, ins.comment AS comment, ins_type.name AS type, "

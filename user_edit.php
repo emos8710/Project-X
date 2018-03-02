@@ -279,7 +279,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 	<!-- Show success/error message -->
 	<?php if($_SERVER['REQUEST_METHOD']=='POST' && isset($update_msg)): echo "<br>".$update_msg; endif; ?>
 	<!-- Back button -->
-	<a href="javascript:history.go(-1)">Go back</a>
+	<a href="?user_id=<?php echo $user_id; ?>">Back to user page</a>
 
 <?php
 // Hides page if the user is not logged in or activated
