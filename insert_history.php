@@ -3,37 +3,31 @@ if (count(get_included_files()) == 1)
     exit("Access restricted");
 
 include 'scripts/db.php';
-$restore_id = mysqli_real_escape_string($link, $_POST['restore_data']);
-$instype_id = mysqli_real_escape_string($link, $_POST['restore_instype']);
 
-$check_exists = mysqli_query($link, "SELECT * from ins_type WHERE id = " . $instype_id);
-$deleted = (mysqli_num_rows($check_exists) < 1);
+$id = mysqli_real_escape_string($link, $_GET['id']);
 
-if ($deleted) {
-    $restore_sql = "INSERT INTO ins_type(id, name) "
-            . "SELECT id, name FROM ins_type_log WHERE old_data_id = " . $restore_id . ";";
-} else {
-    $old_data_sql = "SELECT id, name FROM ins_type_log WHERE old_data_id = " . $restore_id . ";";
+$current_info_sql = "SELECT ins.name, ins.ins_reg AS biobrick, ins.comment AS cmt, "
+        . "ins_type.name AS type, users.first_name AS fname, users.last_name AS lname "
+        . "FROM ins "
+        . "LEFT JOIN ins_type ON ins.type = ins_type.id "
+        . "LEFT JOIN users ON ins.creator = users.user_id "
+        . "WHERE ins.id = " . $id;
+$current_info_query = mysqli_query($link, $current_info_sql);
+$old_info_sql = "SELECT FROM_UNIXTIME(ins_log.time) AS time, ins_log.event_type AS etype, "
+        . "ins_log.name AS name, ins_log.old_data_id AS oid, ins_log.id AS id, ins_log.comment AS cmt, "
+        . "users.first_name AS fname, users.last_name AS lname, ins_type.name AS itype "
+        . "FROM ins_log "
+        . "LEFT JOIN ins_type ON ins_log.type = ins_type.id "
+        . "LEFT JOIN users ON ins_log.creator = users.user_id "
+        . "WHERE ins_log.id = " . $id;
+$old_info_query = mysqli_query($link, $old_info_sql);
 
-    $old_data = mysqli_fetch_assoc(mysqli_query($link, $old_data_sql));
-    $restore_sql = "UPDATE ins_type SET id = '" . $old_data['id'] . "', name = '" . $old_data['name'] . "' WHERE id = " . $instype_id . ";";
-}
+$is_deleted = (mysqli_num_rows($current_info_query) < 1);
+$has_history = (mysqli_num_rows($old_info_query) >= 1);
 
-$restore_query = mysqli_query($link, $restore_sql);
+mysqli_close($link) or die("Could not close connection to database");
+
 ?>
-<p>
-    <?php
-    if (!$restore_query) {
-        ?>
-        <strong style="color:red">Error: <?php echo mysqli_error($link); ?></strong>
-        <?php
-    } else {
-        ?>
-        <strong style="color:green">Insrt type info successfulyl restored!</strong>
-        <?php
-    }
-    mysqli_close($link) or die("Could not close database connection");
-    ?>
-    <br>
-    Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
-</p>
+
+<h3>Insert <?php echo $id; ?> info history</h3>
+<em>Logged history is automatically removed after 30 days.</em>

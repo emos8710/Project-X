@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 01, 2018 at 02:01 PM
+-- Generation Time: Mar 02, 2018 at 11:09 AM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `entry` (
   KEY `backbone_id` (`backbone`),
   KEY `strain_id` (`strain`),
   KEY `creator_id` (`creator`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `entry`
@@ -144,11 +144,11 @@ CREATE TRIGGER `log_entry_update` AFTER UPDATE ON `entry` FOR EACH ROW insert in
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_deleted_entry` BEFORE DELETE ON `entry` FOR EACH ROW INSERT into entry_log(backbone, comment, creator, date_db, entry_reg, id, private, strain, year_created, type, time) VALUES(OLD.backbone, OLD.comment, OLD.creator, OLD.date_db, OLD.entry_reg, OLD.id, OLD.private, OLD.strain, OLD.year_created, "Deleted", UNIX_TIMESTAMP(NOW()))
+CREATE TRIGGER `save_deleted_entry` BEFORE DELETE ON `entry` FOR EACH ROW INSERT into entry_log(backbone, comment, creator, date_db, entry_reg, id, private, strain, year_created, type, time, created) VALUES(OLD.backbone, OLD.comment, OLD.creator, OLD.date_db, OLD.entry_reg, OLD.id, OLD.private, OLD.strain, OLD.year_created, "Deleted", UNIX_TIMESTAMP(NOW()), old.created)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_updated_entry` AFTER UPDATE ON `entry` FOR EACH ROW INSERT INTO entry_log(backbone, comment, creator, date_db, entry_reg, id, private, strain, year_created, type, time) VALUES(OLD.backbone, OLD.comment, OLD.creator, OLD.date_db, OLD.entry_reg, OLD.id, OLD.private, OLD.strain, OLD.year_created, "Edited", UNIX_TIMESTAMP(NOW()))
+CREATE TRIGGER `save_updated_entry` AFTER UPDATE ON `entry` FOR EACH ROW INSERT INTO entry_log(backbone, comment, creator, date_db, entry_reg, id, private, strain, year_created, type, time, created) VALUES(OLD.backbone, OLD.comment, OLD.creator, OLD.date_db, OLD.entry_reg, OLD.id, OLD.private, OLD.strain, OLD.year_created, "Edited", UNIX_TIMESTAMP(NOW()), old.created)
 $$
 DELIMITER ;
 
@@ -241,6 +241,7 @@ CREATE TABLE IF NOT EXISTS `entry_log` (
   `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(15) NOT NULL,
   `time` int(1) UNSIGNED NOT NULL,
+  `created` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`old_data_id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
@@ -248,9 +249,9 @@ CREATE TABLE IF NOT EXISTS `entry_log` (
 -- Dumping data for table `entry_log`
 --
 
-INSERT INTO `entry_log` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `creator`, `private`, `old_data_id`, `type`, `time`) VALUES
-(002, 'test for log', 2016, '2018-02-26', 'logtest', 2, 1, 7, 0, 1, 'Deleted', 1519646513),
-(003, 'test2 for log', 2015, '2018-02-26', 'sdfada', 2, 1, 9, 0, 2, 'Deleted', 1519646595);
+INSERT INTO `entry_log` (`id`, `comment`, `year_created`, `date_db`, `entry_reg`, `backbone`, `strain`, `creator`, `private`, `old_data_id`, `type`, `time`, `created`) VALUES
+(002, 'test for log', 2016, '2018-02-26', 'logtest', 2, 1, 7, 0, 1, 'Deleted', 1519646513, 1),
+(003, 'test2 for log', 2015, '2018-02-26', 'sdfada', 2, 1, 9, 0, 2, 'Deleted', 1519646595, 1);
 
 -- --------------------------------------------------------
 
@@ -285,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `event_log` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `time` varchar(20) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event_log`
@@ -316,7 +317,14 @@ INSERT INTO `event_log` (`object_id`, `object`, `type`, `event_id`, `time`) VALU
 (001, 'User', 'Edited', 23, '2018-03-01 10:29:10'),
 (001, 'User', 'Edited', 24, '2018-03-01 11:19:19'),
 (001, 'User', 'Edited', 25, '2018-03-01 12:33:28'),
-(001, 'User', 'Edited', 26, '2018-03-01 13:36:12');
+(001, 'User', 'Edited', 26, '2018-03-01 13:36:12'),
+(001, 'User', 'Edited', 27, '2018-03-01 15:05:54'),
+(001, 'User', 'Edited', 28, '2018-03-01 15:06:05'),
+(001, 'User', 'Edited', 29, '2018-03-01 15:31:57'),
+(001, 'User', 'Edited', 30, '2018-03-01 17:14:54'),
+(001, 'User', 'Edited', 31, '2018-03-02 10:49:29'),
+(001, 'User', 'Edited', 33, '2018-03-02 12:08:36'),
+(001, 'User', 'Edited', 34, '2018-03-02 12:08:44');
 
 -- --------------------------------------------------------
 
@@ -415,6 +423,46 @@ INSERT INTO `ins_type` (`id`, `name`) VALUES
 (2, 'Coding'),
 (3, 'Promotor'),
 (4, 'RBS');
+
+--
+-- Triggers `ins_type`
+--
+DELIMITER $$
+CREATE TRIGGER `log_instype_add` AFTER INSERT ON `ins_type` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Insert type", new.id, NOW(), "Added")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_instype_delete` BEFORE DELETE ON `ins_type` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Insert type", old.id, NOW(), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `log_instype_update` AFTER UPDATE ON `ins_type` FOR EACH ROW insert into event_log(object, object_id, time, type) values("Insert type", old.id, NOW(), "Edited")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_deleted_instype` BEFORE DELETE ON `ins_type` FOR EACH ROW insert into ins_type_log(id, name, time, type) values(old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+$$
+DELIMITER ;
+DELIMITER $$
+CREATE TRIGGER `save_updated_instype` AFTER UPDATE ON `ins_type` FOR EACH ROW insert into ins_type_log(id, name, time, type) values(old.id, old.name, UNIX_TIMESTAMP(NOW()), "Updated")
+$$
+DELIMITER ;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ins_type_log`
+--
+
+CREATE TABLE IF NOT EXISTS `ins_type_log` (
+  `id` int(3) NOT NULL,
+  `name` varchar(30) NOT NULL,
+  `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
+  `type` varchar(15) NOT NULL,
+  `time` int(100) UNSIGNED NOT NULL,
+  PRIMARY KEY (`old_data_id`),
+  UNIQUE KEY `type_name` (`name`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -526,7 +574,7 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`, `time`) VALUES
-(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 0),
+(1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 0),
 (7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1, 0),
 (9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 0),
 (10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1, 0);
@@ -576,7 +624,7 @@ CREATE TABLE IF NOT EXISTS `users_log` (
   `type` varchar(15) NOT NULL,
   `time` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`old_data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users_log`
@@ -592,7 +640,14 @@ INSERT INTO `users_log` (`user_id`, `first_name`, `last_name`, `email`, `phone`,
 (1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 7, 'Edited', 1519896550),
 (1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 8, 'Edited', 1519899559),
 (1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 9, 'Edited', 1519904008),
-(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testlord', '', '', 0, 0, 10, 'Edited', 1519907772);
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testlord', '', '', 0, 0, 10, 'Edited', 1519907772),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 11, 'Edited', 1519913154),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testy', '', '', 0, 0, 12, 'Edited', 1519913165),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 13, 'Edited', 1519914717),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testy', '', '', 0, 0, 14, 'Edited', 1519920894),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 15, 'Edited', 1519984169),
+(1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 16, 'Edited', 1519988916),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 17, 'Edited', 1519988924);
 
 --
 -- Constraints for dumped tables
@@ -642,21 +697,23 @@ DELIMITER $$
 --
 -- Events
 --
-CREATE EVENT `AutoDeleteEntryLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12:57:57' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
-
-CREATE EVENT `AutoDeleteUserLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12:57:31' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
-
-CREATE EVENT `AutoEmptyLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 13:04:33' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.event_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
-
-CREATE EVENT `AutoDeleteInsertLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 11:23:13' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.ins_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
-
 CREATE EVENT `AutoDeleteBackboneLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:27:32' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.backbone_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
-
-CREATE EVENT `AutoDeleteStrainLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:28:15' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.strain_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 CREATE EVENT `AutoDeleteEntryInsertLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:35:41' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_inserts_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
+CREATE EVENT `AutoDeleteStrainLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 14:28:15' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.strain_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteInsertLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-28 11:23:13' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.ins_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoEmptyLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 13:04:33' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.event_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteUserLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12:57:31' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
+CREATE EVENT `AutoDeleteEntryLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12:57:57' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.entry_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
+
 CREATE EVENT `AutoDeleteNonActiveUser` ON SCHEDULE EVERY 24 HOUR STARTS '2018-03-01 23:59:59' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 72 HOUR) AND active = '0'$$
+
+CREATE EVENT `AutoDeleteInstypeLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-03-02 10:00:28' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.ins_type_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
 
 DELIMITER ;
 COMMIT;

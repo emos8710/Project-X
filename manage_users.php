@@ -81,7 +81,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
 }
 ?>
 
-
 <p>
     <?php if (mysqli_num_rows($userquery) < 1) {
         ?>

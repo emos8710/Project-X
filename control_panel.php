@@ -10,21 +10,11 @@ if ($show_history)
     $history_content = $_GET['history'];
 
 // Handle headers
-if (isset($_POST['header']) && $_POST['header'] === "refresh") {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['header']) && $_POST['header'] === "refresh") {
     if (isset($current_url)): header("Refresh:10, url=" . $current_url);
     else: header("Refresh:10");
     endif;
 }
-
-// Database stuff
-
-include 'scripts/db.php';
-
-// Fetch all users (admins first)
-$usersql = "SELECT user_id, username, first_name, last_name, email, phone, admin FROM users ORDER BY admin DESC, user_id ASC";
-$userquery = mysqli_query($link, $usersql) or die("MySQL error: " . mysqli_error($link));
-
-mysqli_close($link) or die("Could not close connection to database");
 
 $title = "Control Panel";
 ?>
@@ -70,7 +60,7 @@ $title = "Control Panel";
                     ?>
                     <div class="panel-history-show">
                         <?php
-                        if (isset($_POST['restore_data'])) {
+                        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['restore_data'])) {
                             if (isset($_POST['restore_user'])) {
                                 include 'restore_user.php';
                             } else if (isset($_POST['restore_instype'])) {

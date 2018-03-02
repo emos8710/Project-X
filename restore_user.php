@@ -36,7 +36,7 @@ $restore_query = mysqli_query($link, $restore_sql);
         <?php
     }
     mysqli_close($link) or die("Could not close database connection");
-    
     ?>
     <br>
     Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
+</p>
