@@ -16,35 +16,40 @@ $title = "UpStrain";
 	<main>
 	<div class="innertube">
 		<div class="home">
-		<h2 class="home">Welcome to Upstrain!</h2>
+		<img id="welcome" src="images/upstrain.png" alt="updatabase">
+		<div class="clear"></div>
 		Upstrain is the plasmid database for the Uppsala iGEM association, where information is stored about
 		bacterial strains and their inserted plasmids. These plasmids subsuqently consist of certain backbones and
         specific insert sequence types, such as promotor or coding sequences. All this information about a certain
         strain and its plasmids can thus be found in this database, an efficient and easy solution to keep track of
         and reuse previous work.
 		</div>
-        <br>
-        <br>
-
+		<br>
+		
 		<div class="igem_text">
-        <h3 class="home">About iGEM </h3>
+		<img id="about" src="images/igem.png" alt="updatabase"> 
+		<div class="clear"></div>
 		iGEM stands for International Genetically Engineered Machine and it is an annual competition in
         synthetic biology where teams of students from all around the world work over the summer to
         design and build a biological system of their own choice, which is then implemented in living cells.
         <br>
+		<br>
         At the start of the competition all teams are given a tool kit of interchangable parts for their 
         project, so called "Biobricks". These parts consist of promoters, terminators, plasmid backbones etc., 
         and at the end of the summer the teams add their new BioBricks creations to the iGEM Parts Registry,
         and so the scientific community can build upon this added  number of BioBricks sets in the next year.
         <br>
+		<br>
         At the end of the competition, all teams meet in Boston for a scientific conference where the projects 
         are presented to one another and to a scientific jury. The judges then award medals and special prizes 
         in different categories to the teams, and then select a ‘Grand Prize Winner’ team as well as ‘Runner-Up’ teams.
         <br>
+		<br>
         The iGEM competition was first held in 2004  with 31 teams participating, and at that point it was mainly 
         aimed at undergraduate university students. But since then the competition has grown largely in size with ~300
         teams competing in both High School, Undergraduate and Overgraduate divisions.
         <br>
+		<br>
         The iGEM Uppsala team is an overgraduate team competing for Uppsala University in Sweden. The Uppsala team has 
         participated in iGEM since 2009 and have throughout the years created many interesting and practical biological systems.
         For example they have engineered bacteria to express different visible colors, to catalyze the formation of certain nutrients, 
@@ -52,7 +57,8 @@ $title = "UpStrain";
         </div>
         
 		<div class="upstrain_text">
-		<h3 class="home">About Upstrain</h3>
+		<img id="about" src="images/aboutupstrain.png" alt="updatabase"> 
+		<div class="clear"></div>
 		The Upstrain database was created in 2018 as a data storage solution for the iGEM Uppsala team. Before the database was 
         created, all the information about parts and bacterial strains that were engineered during the course of the competition 
         were simply stored in an excel sheet made available for all the team members. This solution however was not an efficient

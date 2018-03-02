@@ -46,11 +46,21 @@ h1, h5, h6 {
     font-size: 28px; /* Added */
 }
 
-h2.help, h2.home {
+h2.help {
     text-align: center;
     font-size: 35px;
     margin-top: 30px; 
     font-style: normal;
+	margin-bottom: 0px;
+}
+
+h2.home {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px; 
+    font-style: normal;
+	margin-bottom: 0px;
+	font-weight: 100;
 }
 
 h3.help, h3.home {
@@ -58,6 +68,16 @@ h3.help, h3.home {
     font-size: 25px; 
     margin-top: 10px; 
     margin-bottom: 10px;
+	font-style: normal;
+}
+
+h4.home {
+    text-align: center;
+    font-size: 20px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+	font-style: normal;
+	font-weight: 100;
 }
 
 h4 {
@@ -332,23 +352,50 @@ div.info {
 	width:100%;
 }
 
+div.innertube div.igem_text, div.innertube div.upstrain_text {
+	border: 3px solid #0074D9;
+	margin-top: 0;
+	
+    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
 div.innertube div.igem_text {
 	float: left; 
-	width: 40%;
-	padding:0;
+	width: 48%;
+	padding:10px;
 	display: inline-block;
-	margin: 0;
+	margin-left: 10px;
 	text-align: justify;
     text-justify: inter-word;
+	margin-top: 0; 
 }
 
 div.innertube div.upstrain_text {
 	float: right;
-	width: 40%; 
-	padding: 0; 
-	margin: 0;
+	width: 48%; 
+	padding: 10px; 
+	margin-right: 10px;
 	text-align: justify;
     text-justify: inter-word;
+	margin-top: 0;
 }
 
 
@@ -552,6 +599,27 @@ img.quicksearch {
     height: 100%;
 }
 
+.home img {
+	float:left;
+	width:70%;
+	margin-left: 15%;
+	margin-bottom: 10px;
+}
+
+.igem_text img {
+	float:left;
+	width:40%;
+	margin-left: 30%;
+	margin-bottom: 14px;
+}
+
+.upstrain_text img {
+	float:left;
+	width:54%;
+	margin-left: 23%;
+	margin-bottom: 10px;
+}
+
 button.control-panel-restore::after { /* Add restore image to "restore" button */
     background-image: url(../images/restore.png);
     background-size: 16px 16px;
@@ -597,6 +665,8 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
     height: 16px;
     content:"";
 }
+
+
 
 /* ---------- LOGIN SYSTEM SPECIFIC ---------- */
 .top-row > div:last-child { /* Puts input boxes next to each other */
@@ -780,12 +850,13 @@ div.help_text {
 }
 
 div.innertube div.home {
-	width:80%;
-    margin-left: 10%;
-    margin-right: 10%;
+	width:70%;
+    margin-left: 15%;
+    margin-right: 15%;
 	font-style: italic;
     text-align: justify;
     text-justify: inter-word;
+	margin-bottom: 0;
 }
 
 
