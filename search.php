@@ -21,19 +21,29 @@ $title = "Help";
 <?php include 'top.php'; ?>
 	
 <main>
-	<div class="innertube">
-            <h2>Search</h2>
-            
+	<div class="innertube">            
             <!-- Nav menu with links to display desired content -->
-                <div class="search_nav">
+        
+				<div class="search_nav">
                 
                         <ul class="search_nav">
-                            <li><a href="?content=search_entries">Search for entries</a></li>
-                            <li><a href="?content=search_users">Search for users</a></li>
-                            <li><a href="?content=search_inserts">Search for inserts</a></li>
+                            <li><a <?php 
+									if (isset($_GET['content']) && $_GET['content']==="search_entries") {
+										echo "class=\"active\"";
+									}
+									?> href="?content=search_entries">Search for entries</a></li>
+                            <li><a <?php 
+									if (isset($_GET['content']) && $_GET['content']==="search_users") {
+										echo "class=\"active\"";
+									}
+									?> href="?content=search_users">Search for users</a></li>
+                            <li><a <?php 
+									if (isset($_GET['content']) && $_GET['content']==="search_inserts") {
+										echo "class=\"active\"";
+									}
+									?> href="?content=search_inserts">Search for inserts</a></li>
                         </ul>
-                
-                </div>
+               
             
             <br>
             <br>
@@ -44,7 +54,6 @@ $title = "Help";
 		?>
             <!-- Form specification -->
 		<form class="search-form" action="search.php?content=search_entries" method="post" id="searchform">
-			<h3>Search for entries</h3>
 			<div>
 				<div class="top-row">
 					<div class="field-wrap">
@@ -115,6 +124,7 @@ $title = "Help";
 			</div>
 		
 		</form>
+		</div>
 	
 	<?php
 	include 'scripts/db.php';
@@ -295,7 +305,6 @@ $title = "Help";
     }  else if ($current_content == "search_users") {
         ?>
         		<form class="search-form" action="search.php?content=search_users" method="post" id="searchform">
-			<h3>Search for users</h3>
 			<div>
 				<div class="top-row">
 					<div class="field-wrap">
@@ -439,7 +448,6 @@ $title = "Help";
     } else if ($current_content == "search_inserts") {
         ?>
                 <form class="search-form" action="search.php?content=search_inserts" method="post" id="searchform">
-			<h3>Search for inserts</h3>
 			<div>
 				<div class="top-row">
 					<div class="field-wrap">

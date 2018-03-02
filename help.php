@@ -33,10 +33,26 @@ $title = "Help";
 					
 	<div class="float_center">
 		<ul class="help_nav">
-			<li><a href="?content=search_entries">Search for entries</a></li>
-			<li><a href="?content=insert_entries">Insert new entry </a></li>
-			<li><a href="?content=edit_profile">Edit my profile</a></li>
-			<li><a href="?content=edit_entries">Edit my entries</a></li>
+			<li><a <?php 
+					if (isset($_GET['content']) && $_GET['content']==="search_entries") {
+						echo "class=\"active\"";
+					}
+					?> href="?content=search_entries">Search for entries</a></li>
+			<li><a <?php 
+					if (isset($_GET['content']) && $_GET['content']==="insert_entries") {
+						echo "class=\"active\"";
+					}
+					?> href="?content=insert_entries">Insert new entry </a></li>
+			<li><a <?php 
+					if (isset($_GET['content']) && $_GET['content']==="edit_profile") {
+						echo "class=\"active\"";
+					}
+					?> href="?content=edit_profile">Edit my profile</a></li>
+			<li><a <?php 
+					if (isset($_GET['content']) && $_GET['content']==="edit_entries") {
+						echo "class=\"active\"";
+					}
+					?> href="?content=edit_entries">Edit my entries</a></li>
 		</ul>
 	</div>
 	<div class="clear"></div>
@@ -47,7 +63,7 @@ $title = "Help";
 	?>
 		<div class="help_page_show">
 		<br>
-		<h3>How to search the database for entries</h3>
+		<h3 class="help">How to search the database for entries</h3>
 		<p>
 			If you wish to serach for entries in the database, click on the "Search" link in the
 			navigation bar. This will bring you to the Search page, where there are a number of
@@ -71,7 +87,7 @@ $title = "Help";
 	?>
 		<div class="help_page_show">
 		<br>
-		<h3> How to insert new entries into database </h3>
+		<h3 class="help"> How to insert new entries into database </h3>
 		<p>
 		One of the key features of Upstrain is the ability to add new entries
 		into the database, which can only be done if you have a registered account and if
@@ -95,7 +111,7 @@ $title = "Help";
 	?>
 	<div class="help_page_show">
 	<br>
-	<h3> How to edit your user profile </h3>
+	<h3 class="help"> How to edit your user profile </h3>
 	<p>
 		To edit your user information, click on "My profile" in the navigation bar
 		to access your personal user profile. Your contact information is displayed
@@ -113,7 +129,7 @@ $title = "Help";
 	?>
 	<div class="help_page_show">
 	<br>
-	<h3> How to edit your previous entries </h3>
+	<h3 class="help"> How to edit your previous entries </h3>
 	<p>
 		If you want to edit your previously inserted entries,
 		click on "My profile" in the navigation bar to access your personal user

@@ -52,6 +52,7 @@ h2.help {
     margin-top: 30px; 
     font-style: normal;
 	margin-bottom: 0px;
+	font-weight: 150;
 }
 
 h2.home {
@@ -113,6 +114,8 @@ form.quicksearch {
 form.search-form, form.insert-form {
     float: left;
     width:100%;
+	padding: 10px 10px;
+	margin-left: 40px; 
 }
 
 /* Search */
@@ -764,6 +767,11 @@ ul.help_nav a:hover, ul.search_nav a:hover { /* Help page nav buttons */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
 
+ul.help_nav a.active, ul.search_nav a.active { /* Help page nav buttons */ 
+    background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
+    color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+}	
+
 .clear {
     clear:both;
 }
@@ -841,9 +849,9 @@ ul.help_nav a:hover, ul.search_nav a:hover { /* Help page nav buttons */
 }
 
 div.help_text {
-    width:68%;
-    margin-left: 16%;
-    margin-right: 16%;
+    width:64%;
+    margin-left: 18%;
+    margin-right: 18%;
     font-style: italic;
     text-align: justify;
     text-justify: inter-word;
