@@ -92,7 +92,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
             if (basename($_SERVER['PHP_SELF']) === "new_insert.php") {
                 echo "class=\"active\" ";
             }
-            ?> href="new_insert.php">New entry</a>
+            ?> href="new_insert.php">New Entry</a>
                 <?php
             }
             ?>

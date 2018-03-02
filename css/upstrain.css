@@ -82,7 +82,6 @@ h4.home {
 }
 
 h4 {
-    text-align: center;
     font-size: 17px;
     margin-top: 0px;
     margin-bottom: 10px;
@@ -702,7 +701,7 @@ div.panel-history-show {
 div.control-panel-show { /* Style for region where the desired content will be shown */
     float: left;
     width: 50%;
-    margin-right: 125px;
+    margin-right: 250px;
 }
 
 div.control_panel_menu {
@@ -767,7 +766,7 @@ ul.help_nav a:hover, ul.search_nav a:hover { /* Help page nav buttons */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
 
-ul.help_nav a.active, ul.search_nav a.active { /* Help page nav buttons */ 
+ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* Help page nav buttons */ 
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	

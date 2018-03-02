@@ -3,7 +3,7 @@
 		session_start();
 	}
 	
-	$title = "Search for entries";
+	$title = "Search";
         
 //Set display for the content div
 if (isset($_GET['content'])) {
@@ -12,8 +12,6 @@ if (isset($_GET['content'])) {
 	$current_content = '';
 }
 
-$title = "Help";
-
 ?>
 
 <!DOCTYPE html>
@@ -21,7 +19,8 @@ $title = "Help";
 <?php include 'top.php'; ?>
 	
 <main>
-	<div class="innertube">            
+	<div class="innertube">
+            <h2>Search</h2>
             <!-- Nav menu with links to display desired content -->
         
 				<div class="search_nav">

@@ -36,10 +36,38 @@ $title = "Control Panel";
                 <!-- Nav menu with links to display desired content -->
                 <div class="control_panel_menu">
                     <ul>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_users">Manage users</a>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_entries">Manage entries</a>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_inserts">Manage inserts</a>
-                        <a href="<?php echo $_SERVER['PHP_SELF'] ?>?content=event_log">Event log</a>
+                        <a 
+                        <?php
+                        if (isset($_GET['content']) && $_GET['content'] === "manage_users")
+                            echo "class=\"active\" ";
+                        ?>
+                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_users">
+                            Manage users
+                        </a>
+                        <a 
+                        <?php
+                        if (isset($_GET['content']) && $_GET['content'] === "manage_entries")
+                            echo "class=\"active\" ";
+                        ?>
+                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_entries">
+                            Manage entries
+                        </a>
+                        <a 
+                        <?php
+                        if (isset($_GET['content']) && $_GET['content'] === "manage_inserts")
+                            echo "class=\"active\" ";
+                        ?>
+                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_inserts">
+                            Manage inserts
+                        </a>
+                        <a 
+                        <?php
+                        if (isset($_GET['content']) && $_GET['content'] === "event_log")
+                            echo "class=\"active\" ";
+                        ?>
+                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=event_log">
+                            Event log
+                        </a>
                     </ul>
                 </div>
 
@@ -65,6 +93,8 @@ $title = "Control Panel";
                                 include 'restore_user.php';
                             } else if (isset($_POST['restore_instype'])) {
                                 include 'restore_instype.php';
+                            } else if (isset($_POST['restore_insert'])) {
+                                include 'restore_insert.php';
                             } else {
                                 echo "This should never happen";
                             }

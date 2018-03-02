@@ -119,7 +119,7 @@ if (mysqli_num_rows($typequery) < 1) {
 }
 ?>
 </p>
-
+<br>
 <p>
 <h4>Inserts</h4>
 <?php
