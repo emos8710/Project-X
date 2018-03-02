@@ -2,6 +2,16 @@
 if (count(get_included_files()) == 1)
     exit("Access restricted");
 
+// Database stuff
+
+include 'scripts/db.php';
+
+// Fetch all users (admins first)
+$usersql = "SELECT user_id, username, first_name, last_name, email, phone, admin FROM users ORDER BY admin DESC, user_id ASC";
+$userquery = mysqli_query($link, $usersql) or die("MySQL error: " . mysqli_error($link));
+
+mysqli_close($link) or die("Could not close connection to database");
+
 $current_url = "control_panel.php?content=manage_users";
 ?>
 
@@ -9,7 +19,7 @@ $current_url = "control_panel.php?content=manage_users";
 
 <?php
 // Handle POST requests
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_POST['admin']))) {
     include 'scripts/db.php';
     ?>
     <p>
@@ -70,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && !isset($_POST['history'])) {
     <?php
 }
 ?>
-
 
 <p>
     <?php if (mysqli_num_rows($userquery) < 1) {

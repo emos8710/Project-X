@@ -19,7 +19,7 @@ if ($deleted) {
 
     $old_data = mysqli_fetch_assoc(mysqli_query($link, $old_data_sql));
     $restore_sql = "UPDATE users SET email = '" . $old_data['email'] . "', first_name = '" . $old_data['first_name'] . "', last_name = '" . $old_data['last_name']
-            . "', phone = '" . $old_data['phone'] . "', username = '" . $old_data['username'] . "' WHERE user_id = " . $user_id;
+            . "', phone = '" . $old_data['phone'] . "', username = '" . $old_data['username'] . "' WHERE user_id = " . $user_id . ";";
 }
 
 $restore_query = mysqli_query($link, $restore_sql);
@@ -35,6 +35,8 @@ $restore_query = mysqli_query($link, $restore_sql);
         <strong style="color:green">User info successfully restored!</strong>
         <?php
     }
+    mysqli_close($link) or die("Could not close database connection");
     ?>
     <br>
     Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
+</p>
