@@ -606,7 +606,7 @@ div.panel-history-show {
 div.control-panel-show { /* Style for region where the desired content will be shown */
     float: left;
     width: 50%;
-    margin-right: 250px;
+    margin-right: 125px;
 }
 
 div.control_panel_menu {
