@@ -46,7 +46,7 @@ h1, h5, h6 {
     font-size: 28px; /* Added */
 }
 
-h2.help {
+h2.help, h2.user {
     text-align: center;
     font-size: 35px;
     margin-top: 30px; 
@@ -64,7 +64,7 @@ h2.home {
 	font-weight: 100;
 }
 
-h3.help, h3.home {
+h3.help, h3.home, h3.user {
     text-align: center;
     font-size: 25px; 
     margin-top: 10px; 
@@ -867,6 +867,28 @@ div.innertube div.home {
 	margin-bottom: 0;
 }
 
+/* PROFILE PAGE */
+div.user_page {
+	width: 64%;
+	margin-left: 18%; 
+}
+
+li.user {
+	list-style-type: none;
+}
+
+div li span.user_title {
+	float: left; 
+	width: 200px; 
+	margin: 0px;
+	padding:0;
+}
+
+div li span.user_info {
+	width: 60px; 
+	margin: 0px;
+	padding: 0;
+}
 
 /* IDs */
 #logo { /* Added: All */
