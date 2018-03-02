@@ -223,6 +223,17 @@ a.edit::after {	/* Adds edit image after link */
     margin-right: 12px;
 }
 
+a.mail::after { /* Adds external link image after link */
+    background-image: url(../images/mail.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+    margin-left: 3px;
+    margin-right: 12px;
+}
+
 /* ??? */ 
 /* div.innertube a {
         color: blue;

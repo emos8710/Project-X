@@ -43,7 +43,7 @@ if ($loggedin && $active) {?>
 		</li>
 		<br>
 		<li class="user">
-			<span class="user_title">Email: </span> <span class="user_info"> <?php echo "<a href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?></span>
+			<span class="user_title">Email: </span> <span class="user_info"> <?php echo "<a class=\"mail\" href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?></span>
 		</li>
 		<br>
 		<li class="user">
