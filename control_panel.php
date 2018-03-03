@@ -86,8 +86,9 @@ $title = "Control Panel";
                         $pages = ["user", "instype", "insert", "backbone", "strain", "entry", "entry_insert"];
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['restore_data'])) {
                             foreach ($pages as $page) {
+                                $page = 'restore_' . $page;
                                 if (isset($_POST[$page])) {
-                                    include 'restore_' . $page . '.php';
+                                    include $page . '.php';
                                     break;
                                 }
                             }

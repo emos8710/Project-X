@@ -12,7 +12,6 @@ $title = "Login/Registration System";
 
 <?php include 'top.php'; ?>
 
-<!-- <script src='https://www.google.com/recaptcha/api.js'></script> -->
 <body>
 
 	<main>
@@ -130,7 +129,8 @@ $title = "Login/Registration System";
 						</div>
 						</div> 
 						
-						<!-- <div class="g-recaptcha" data-sitekey="6LfhdEcUAAAAAHLGQv6w2M5JJVLrSDT4zPlYxiWZ"></div> -->
+                                                <div class="g-recaptcha" data-sitekey="6LfhRkoUAAAAAP2LpjbADUpLBMI1mkwFtAn8vbJn">
+                                                </div>
 						
 						<!-- Registration button -->
 						<button type="submit" class="button" name="register" />Register</button>
