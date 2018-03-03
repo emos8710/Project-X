@@ -138,7 +138,7 @@ if (mysqli_num_rows($insertquery) < 1) {
                 <th>Type</th>
                 <th>Date added</th>
                 <th>iGEM Registry</th>
-                <th>Created by</th>
+                <th>Added by</th>
                 <th>Comment</th>
                 <th colspan="3">Actions</th>
             </tr>

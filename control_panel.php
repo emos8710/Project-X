@@ -62,6 +62,14 @@ $title = "Control Panel";
                         </a>
                         <a 
                         <?php
+                        if (isset($_GET['content']) && $_GET['content'] === "manage_strain_backbone")
+                            echo "class=\"active\"";
+                        ?>
+                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_strain_backbone">
+                            Manage strains & backbones
+                        </a>
+                        <a 
+                        <?php
                         if (isset($_GET['content']) && $_GET['content'] === "event_log")
                             echo "class=\"active\" ";
                         ?>
@@ -73,7 +81,6 @@ $title = "Control Panel";
 
                 <br>
                 <br>
-
 
                 <?php
                 /* Desired content is displayed here */
@@ -95,6 +102,12 @@ $title = "Control Panel";
                                 include 'restore_instype.php';
                             } else if (isset($_POST['restore_insert'])) {
                                 include 'restore_insert.php';
+                            } else if (isset($_POST['restore_backbone'])) {
+                                include 'restore_backbone.php';
+                            } else if (isset($_POST['restore_strain'])) {
+                                include 'restore_strain.php';
+                            } else if (isset($_POST['restore_entry'])) {
+                                include 'restore_entry.php';
                             } else {
                                 echo "This should never happen";
                             }

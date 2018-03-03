@@ -14,7 +14,7 @@ $current_info_sql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins.comme
         . "WHERE ins.id = " . $id;
 $current_info_query = mysqli_query($link, $current_info_sql);
 $old_info_sql = "SELECT FROM_UNIXTIME(ins_log.time) AS time, ins_log.event_type AS etype, ins_log.date_db AS date, "
-        . "ins_log.name AS name, ins_log.old_data_id AS oid, ins_log.id AS id, ins_log.comment AS cmt, "
+        . "ins_log.name AS name, ins_log.old_data_id AS oid, ins_log.id AS id, ins_log.comment AS cmt, ins_log.ins_reg AS biobrick, "
         . "users.user_id AS uid, users.first_name AS fname, users.last_name AS lname, ins_type.name AS itype "
         . "FROM ins_log "
         . "LEFT JOIN ins_type ON ins_log.type = ins_type.id "
@@ -92,10 +92,10 @@ mysqli_close($link) or die("Could not close connection to database");
                 <td><?php echo $row['time']; ?></td>
                 <td>
                     <form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
-                        <input type="hidden" name="restore_data" value="<?php echo $data['oid']; ?>">
-                        <input type="hidden" name="restore_insert" value="<?php echo $data['id']; ?>">
+                        <input type="hidden" name="restore_data" value="<?php echo $row['oid']; ?>">
+                        <input type="hidden" name="restore_insert" value="<?php echo $row['id']; ?>">
                         <input type="hidden" name="header" value="refresh">
-                        <button type="submit" class="control-panel-restore" title="Restore" onclick="confirmAction(event, 'Restore insert <?php echo $data['id']; ?> to this record?')"/>
+                        <button type="submit" class="control-panel-restore" title="Restore" onclick="confirmAction(event, 'Restore insert <?php echo $row['id']; ?> to this record?')"/>
                     </form>
                 </td>
             </tr>
