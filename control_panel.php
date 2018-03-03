@@ -5,9 +5,7 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 }
 
 // Set display for history div
-$show_history = isset($_GET['history']);
-if ($show_history)
-    $history_content = $_GET['history'];
+$show_history = isset($_GET['history']) && isset($_GET['id']);
 
 // Handle headers
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['header']) && $_POST['header'] === "refresh") {
@@ -36,44 +34,34 @@ $title = "Control Panel";
                 <!-- Nav menu with links to display desired content -->
                 <div class="control_panel_menu">
                     <ul>
-                        <a 
-                        <?php
+                        <a <?php
                         if (isset($_GET['content']) && $_GET['content'] === "manage_users")
                             echo "class=\"active\" ";
-                        ?>
-                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_users">
+                        ?>href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_users">
                             Manage users
                         </a>
-                        <a 
-                        <?php
+                        <a <?php
                         if (isset($_GET['content']) && $_GET['content'] === "manage_entries")
                             echo "class=\"active\" ";
-                        ?>
-                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_entries">
+                        ?>href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_entries">
                             Manage entries
                         </a>
-                        <a 
-                        <?php
+                        <a <?php
                         if (isset($_GET['content']) && $_GET['content'] === "manage_inserts")
                             echo "class=\"active\" ";
-                        ?>
-                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_inserts">
+                        ?>href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_inserts">
                             Manage inserts
                         </a>
-                        <a 
-                        <?php
+                        <a <?php
                         if (isset($_GET['content']) && $_GET['content'] === "manage_strain_backbone")
                             echo "class=\"active\"";
-                        ?>
-                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_strain_backbone">
+                        ?>href="<?php echo $_SERVER['PHP_SELF'] ?>?content=manage_strain_backbone">
                             Manage strains & backbones
                         </a>
-                        <a 
-                        <?php
+                        <a <?php
                         if (isset($_GET['content']) && $_GET['content'] === "event_log")
                             echo "class=\"active\" ";
-                        ?>
-                            href="<?php echo $_SERVER['PHP_SELF'] ?>?content=event_log">
+                        ?>href="<?php echo $_SERVER['PHP_SELF'] ?>?content=event_log">
                             Event log
                         </a>
                     </ul>
@@ -95,29 +83,17 @@ $title = "Control Panel";
                     ?>
                     <div class="panel-history-show">
                         <?php
+                        $pages = ["user", "instype", "insert", "backbone", "strain", "entry", "entry_insert"];
                         if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['restore_data'])) {
-                            if (isset($_POST['restore_user'])) {
-                                include 'restore_user.php';
-                            } else if (isset($_POST['restore_instype'])) {
-                                include 'restore_instype.php';
-                            } else if (isset($_POST['restore_insert'])) {
-                                include 'restore_insert.php';
-                            } else if (isset($_POST['restore_backbone'])) {
-                                include 'restore_backbone.php';
-                            } else if (isset($_POST['restore_strain'])) {
-                                include 'restore_strain.php';
-                            } else if (isset($_POST['restore_entry'])) {
-                                include 'restore_entry.php';
-                            } else {
-                                echo "This should never happen";
+                            foreach ($pages as $page) {
+                                if (isset($_POST[$page])) {
+                                    include 'restore_' . $page . '.php';
+                                    break;
+                                }
                             }
                         }
-
-                        if (isset($_GET['id'])) {
-                            include $history_content . '_history.php';
-                        } else {
-                            echo "This should never happen";
-                        }
+                        
+                        include $_GET['content'] . '_history.php';
                         ?>
                     </div>
                     <?php

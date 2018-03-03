@@ -96,7 +96,7 @@ if (mysqli_num_rows($typequery) < 1) {
                     <td>
                         <form class="control-panel" action="<?php echo $current_url; ?>" method="GET">
                             <input type="hidden" name="content" value="manage_inserts">
-                            <input type="hidden" name="history" value="ins_type">
+                            <input type="hidden" name="history" value="instype">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                             <button class="control-panel-history" title="View insert type history" type="submit"/>
                         </form>
