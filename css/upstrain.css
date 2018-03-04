@@ -114,9 +114,9 @@ form.quicksearch {
 /* Search, insert */
 form.search-form, form.insert-form {
     float: left;
-    width:100%;
-	padding: 10px 10px;
-	margin-left: 40px; 
+    width: 100%;
+    padding: 10px 10px;
+    margin-left: 40px; 
 }
 
 /* Search */
@@ -711,6 +711,18 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
 }
 
 /* ---------- CONTROL PANEL ---------- */
+
+h3.event-log {
+    margin-left: 50px;
+}
+
+table.control-panel-log {
+    margin-left: 50px;
+}
+
+.control-panel-show h4 {
+    text-align: left;
+}
 
 div.panel-history-show {
     display: inline-block;

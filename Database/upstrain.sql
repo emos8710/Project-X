@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 04, 2018 at 01:25 PM
+-- Generation Time: Mar 04, 2018 at 08:50 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -33,22 +33,18 @@ CREATE TABLE IF NOT EXISTS `attempt_log` (
   `time` int(100) UNSIGNED NOT NULL,
   `username` varchar(50) NOT NULL,
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attempts` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1 COMMENT='Logs failed login attempts';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Logs failed login attempts';
 
 --
 -- Dumping data for table `attempt_log`
 --
 
-INSERT INTO `attempt_log` (`ip`, `time`, `username`, `id`) VALUES
-('::1', 1520169276, 'admin2', 1),
-('::1', 1520169282, 'admin2', 2),
-('::1', 1520169294, 'admin2', 3),
-('::1', 1520169300, 'admin2', 4),
-('::1', 1520169492, 'admin2', 5),
-('::1', 1520169511, 'admin2', 6),
-('::1', 1520169617, 'WG95', 7),
-('::1', 1520169624, 'admin2', 8);
+INSERT INTO `attempt_log` (`ip`, `time`, `username`, `id`, `attempts`) VALUES
+('::1', 1520184966, 'WG95', 1, 1),
+('::1', 1520191871, 'admin2', 2, 0),
+('::1', 0, 'admin', 3, 0);
 
 -- --------------------------------------------------------
 
@@ -316,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `event_log` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `time` varchar(20) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=58 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event_log`
@@ -366,7 +362,10 @@ INSERT INTO `event_log` (`object_id`, `object`, `type`, `event_id`, `time`) VALU
 (003, 'Insert', 'Edited', 54, '2018-03-03 12:06:06'),
 (011, 'User', 'Added', 55, '2018-03-03 23:04:05'),
 (011, 'User', 'Deleted', 56, '2018-03-03 23:06:45'),
-(012, 'User', 'Added', 57, '2018-03-03 23:10:01');
+(012, 'User', 'Added', 57, '2018-03-03 23:10:01'),
+(012, 'User', 'Edited', 58, '2018-03-04 16:14:19'),
+(012, 'User', 'Edited', 59, '2018-03-04 21:46:27'),
+(012, 'User', 'Deleted', 60, '2018-03-04 21:49:51');
 
 -- --------------------------------------------------------
 
@@ -626,7 +625,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `admin` tinyint(1) NOT NULL DEFAULT '0',
   `time` int(100) UNSIGNED NOT NULL,
-  `locked` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
@@ -636,12 +634,11 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`, `time`, `locked`) VALUES
-(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testy', '', '', 0, 0, 0, 0),
-(7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1, 0, 0),
-(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 0, 0),
-(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1, 0, 0),
-(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 0, 0, 1520115001, 0);
+INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`, `time`) VALUES
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testy', '', '', 0, 0, 0),
+(7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1, 0),
+(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 0),
+(10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1, 0);
 
 --
 -- Triggers `users`
@@ -688,7 +685,7 @@ CREATE TABLE IF NOT EXISTS `users_log` (
   `type` varchar(15) NOT NULL,
   `time` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`old_data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users_log`
@@ -715,7 +712,10 @@ INSERT INTO `users_log` (`user_id`, `first_name`, `last_name`, `email`, `phone`,
 (1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 18, 'Edited', 1520073247),
 (9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 19, 'Edited', 1520073277),
 (9, 'Testy', 'McTestface', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 20, 'Edited', 1520073313),
-(11, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '761059274', 'wigu95', '$2y$10$lgJ0qp.84./MrDnzB9jh7.rB8tqFeG3nmjmy.SbqPZfT/Hv6pzKj.', 'f899139df5e1059396431415e770c6dd', 0, 0, 21, 'Deleted', 1520114805);
+(11, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '761059274', 'wigu95', '$2y$10$lgJ0qp.84./MrDnzB9jh7.rB8tqFeG3nmjmy.SbqPZfT/Hv6pzKj.', 'f899139df5e1059396431415e770c6dd', 0, 0, 21, 'Deleted', 1520114805),
+(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 0, 0, 22, 'Edited', 1520176459),
+(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 1, 0, 23, 'Edited', 1520196387),
+(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 1, 1, 24, 'Deleted', 1520196591);
 
 --
 -- Constraints for dumped tables
@@ -788,8 +788,6 @@ CREATE EVENT `AutoDeleteEntryLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-02-26 12
 CREATE EVENT `AutoDeleteNonActiveUser` ON SCHEDULE EVERY 24 HOUR STARTS '2018-03-01 23:59:59' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.users WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 72 HOUR) AND active = '0'$$
 
 CREATE EVENT `AutoDeleteInstypeLog` ON SCHEDULE EVERY 30 DAY STARTS '2018-03-02 10:00:28' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM upstrain.ins_type_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 30 DAY)$$
-
-CREATE EVENT `AutoEmptyAttemptLog` ON SCHEDULE EVERY 2 DAY STARTS '2018-03-01 00:00:00' ON COMPLETION PRESERVE ENABLE DO DELETE LOW_PRIORITY FROM attempt_log WHERE FROM_UNIXTIME(time) < DATE_SUB(NOW(), INTERVAL 2 DAY)$$
 
 DELIMITER ;
 COMMIT;
