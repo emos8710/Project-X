@@ -78,7 +78,7 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 <?php if (mysqli_num_rows($entry_result) < 1) {
 	?>
 	<div class="user_page">
-	<p>User has not added any entries (yet).</p>
+	<p class="notadded">User has not added any entries (yet).</p>
 	</div>
 	<?php
 } else { ?>
