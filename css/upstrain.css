@@ -70,6 +70,7 @@ h3.help, h3.home, h3.user {
     margin-top: 10px; 
     margin-bottom: 10px;
 	font-style: normal;
+	margin-left: 0px; 
 }
 
 h4.home {
@@ -85,6 +86,7 @@ h4 {
     font-size: 17px;
     margin-top: 0px;
     margin-bottom: 10px;
+	text-align:center; 
 }
 
 /* Text */
@@ -164,6 +166,10 @@ table.control-panel-history td {
     border-bottom: none;
 }
 
+table.user_entries {
+	margin-left: 20%;
+}
+
 th {
     padding-right: 10px;
     text-align: center;
@@ -183,6 +189,7 @@ td {
 
 td.comment {
     min-width: 200px;
+	text-align: center;
 }
 
 /* ---------- SPAN ---------- */
@@ -221,6 +228,7 @@ a.edit::after {	/* Adds edit image after link */
     content:"";
     margin-left: 3px;
     margin-right: 12px;
+	clear:right; 
 }
 
 a.mail::after { /* Adds external link image after link */
@@ -879,8 +887,8 @@ div.innertube div.home {
 
 /* PROFILE PAGE */
 div.user_page {
-	width: 64%;
-	margin-left: 18%; 
+	width: 26%;
+	margin-left: 37%; 
 }
 
 li.user {
@@ -889,15 +897,87 @@ li.user {
 
 div li span.user_title {
 	float: left; 
-	width: 200px; 
+	width: 50%; 
 	margin: 0px;
 	padding:0;
 }
 
+
+span.user_title {
+	font-style: bold; 
+}
+
 div li span.user_info {
-	width: 60px; 
+	width: 50%; 
 	margin: 0px;
 	padding: 0;
+}
+
+strong {
+	text-align: center; 
+}
+
+p a.edit {
+	float: center;
+	margin-left: 80px;
+}
+
+div.edit_users {
+	float: left;
+	margin: 10px;
+	border: 3px solid black;
+	padding: 10px;
+	
+	    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+div.edit_users ul {
+	padding: 0;
+}
+
+div.edit_users ul li {
+	list-style-type: none;
+}
+
+div.edit_users ul li div.edit_title {
+	float: left; 
+	font-style: bold;
+	width: 150px;
+}
+
+div.edit_users ul li div.edit_info {
+	float: right;
+	margin-left: 20px;
+}
+
+div.edit_users ul li div.back {
+	float: left;
+	width:40%;
+	margin-left: 30%;
+	margin-top: 20px;
+}
+
+div.user_page p.notadded{
+	width: 26%;
+	margin-left: 37%; 
 }
 
 /* IDs */

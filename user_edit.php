@@ -184,12 +184,12 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 	
 	$info = mysqli_fetch_assoc($user_result);
 	?>
-	 
+	<div class="edit_users">
 	<ul>
 		<!-- Edit name -->
-		<li>Name	<?php echo $info["fname"]." ".$info["lname"];
+		<li><div class="edit_title">Name</div>	<?php echo $info["fname"]." ".$info["lname"];
 		if ($current_content != "name") { ?>
-			<a href="?user_id=<?php echo $user_id; ?>&edit&content=name">Edit</a> 
+			<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=name">Edit</a></div> 
 		<?php } ?></li>
 		<?php if($current_content == "name") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
@@ -203,12 +203,12 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<?php } ?>
 		
 		<!-- Edit user name -->
-		<li>Username	<?php echo $info["uname"];
+		<li><div class="edit_title">Username</div>	<?php echo $info["uname"];
 		if ($adminpage && !$isowner) {
 			echo " Can't change";
 		}
 		else if ($current_content != "user_name") { ?>
-			<a href="?user_id=<?php echo $user_id; ?>&edit&content=user_name">Edit</a>
+			<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=user_name">Edit</a></div>
 		<?php } ?></li>
 		<?php if($current_content == "user_name") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
@@ -224,9 +224,9 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<?php } ?>
 		
 		<!-- Edit email -->
-		<li>Email <?php echo $info["email"];
+		<li><div class="edit_title">Email</div> <?php echo $info["email"];
 		if ($current_content != "email") { ?>
-			<a href="?user_id=<?php echo $user_id; ?>&edit&content=email">Edit</a>
+			<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=email">Edit</a></div>
 		<?php } ?></li>
 		<?php if($current_content == "email") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
@@ -238,9 +238,9 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<?php } ?>
 		
 		<!-- Edit phone number -->
-		<li>Phone number <?php echo $info["phone"];
+		<li><div class="edit_title">Phone number</div> <?php echo $info["phone"];
 		if ($current_content != "phone") { ?>
-			<a href="?user_id=<?php echo $user_id;?>&edit&content=phone">Edit</a>
+			<div class="edit_info"><a href="?user_id=<?php echo $user_id;?>&edit&content=phone">Edit</a></div>
 			<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
 				<input type="hidden" name="remove_phone">
 				<input type="submit" value="Remove">
@@ -259,7 +259,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		// Change password
 		?>
 			<li><?php if ($current_content != "password") { ?>
-				<a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a>
+				<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a></div>
 			<?php }
 				if($current_content == "password") { ?>
 					<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
@@ -276,10 +276,11 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		} ?>
 	<ul>
 	
+	<div class="clear"></div>
 	<!-- Show success/error message -->
 	<?php if($_SERVER['REQUEST_METHOD']=='POST' && isset($update_msg)): echo "<br>".$update_msg; endif; ?>
 	<!-- Back button -->
-	<a href="?user_id=<?php echo $user_id; ?>">Back to user page</a>
+	<div class="back"><a href="?user_id=<?php echo $user_id; ?>">Back to user page</a></div>
 
 <?php
 // Hides page if the user is not logged in or activated
@@ -303,3 +304,4 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 	<?php
 }
 ?>
+</div>
