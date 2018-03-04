@@ -57,106 +57,107 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
     </head>
 
     <body>
-        <!-- Navigation bar and logo -->
-        <nav class="navigation">
-            <!-- Logo -->
-            <div class="logo">
-                <a class="logo" href="index.php">
-                    <img id="logo" src="images/uplogo.png" alt="UpStrain logo">
-                </a>
-            </div>
-
-            <!-- NAVIGATION BUTTONS -->
-            <div class="nav-wrapper">
-                <!-- Home -->
-                <a <?php
-                if (basename($_SERVER['PHP_SELF']) === "index.php") {
-                    echo "class=\"active\" ";
-                }
-                ?> href="index.php">Home</a>
-
-                <!-- Help -->
-                <a <?php
-                if (basename($_SERVER['PHP_SELF']) === "help.php") {
-                    echo "class=\"active\" ";
-                }
-                ?> href="help.php">Help</a>
-
-                <!-- Search -->
-                <a <?php
-                if (basename($_SERVER['PHP_SELF']) === "search.php") {
-                    echo "class=\"active\" ";
-                }
-                ?> href="search.php">Search</a>
-
-                <?php if ($loggedin && $active) {
-                    ?>
-                    <!--  New Entry -->
-                    <a <?php
-                    if (basename($_SERVER['PHP_SELF']) === "new_insert.php") {
-                        echo "class=\"active\" ";
-                    }
-                    ?> href="new_insert.php">New Entry</a>
-                        <?php
-                    }
-                    ?>
-
-
-                <?php if (isset($_SESSION['active']) && $active && $loggedin && isset($_SESSION['user_id'])) { ?>
-                    <!-- Profile -->
-                    <a <?php
-                    if (basename($_SERVER['PHP_SELF']) === "user.php" && isset($isowner) && $isowner) {
-                        echo "class=\"active\" ";
-                    }
-                    ?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
-                        <?php
-                    }
-                    ?> 
-
-
-                <?php if ($loggedin && $admin && isset($_SESSION['user_id'])) { ?>
-                    <!-- Control Panel (if admin) -->
-                    <a <?php
-                    if (basename($_SERVER['PHP_SELF']) === "control_panel.php") {
-                        echo "class=\"active\"";
-                    }
-                    ?> href="control_panel.php">Control Panel</a>
-                        <?php
-                    }
-                    ?>
-
-            </div>
-
-            <div class="right-wrapper">
-                <!-- Quick search -->
-                <div class="quicksearch">
-                    <form class="quicksearch" action="entry.php">
-                        <input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
-                        <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png"></img></button>
-                    </form>
-                    <a class="quicksearch" href="search.php">Advanced search</a>
+        <header>
+            <!-- Navigation bar and logo -->
+            <nav class="navigation">
+                <!-- Logo -->
+                <div class="logo">
+                    <a class="logo" href="index.php">
+                        <img id="logo" src="images/uplogo.png" alt="UpStrain logo">
+                    </a>
                 </div>
 
-                <!-- Login -->
-                <?php
-                if (isset($_SESSION['active']) && $active && $loggedin) {
-                    ?>
-                    <a class="login" href="logout.php">Log out</a>
-                    <?php
-                } else {
-                    ?>
-                    <a class="login 
-                       <?php
-                       if (basename($_SERVER['PHP_SELF']) === "logsyst.php") {
-                           echo " active";
-                       }
-                       ?>" href="logsyst.php">Log in</a>	
-                       <?php
-                   }
-                   ?>
-            </div>
-        </nav>
+                <!-- NAVIGATION BUTTONS -->
+                <div class="nav-wrapper">
+                    <!-- Home -->
+                    <a <?php
+                    if (basename($_SERVER['PHP_SELF']) === "index.php") {
+                        echo "class=\"active\" ";
+                    }
+                    ?> href="index.php">Home</a>
 
+                    <!-- Help -->
+                    <a <?php
+                    if (basename($_SERVER['PHP_SELF']) === "help.php") {
+                        echo "class=\"active\" ";
+                    }
+                    ?> href="help.php">Help</a>
+
+                    <!-- Search -->
+                    <a <?php
+                    if (basename($_SERVER['PHP_SELF']) === "search.php") {
+                        echo "class=\"active\" ";
+                    }
+                    ?> href="search.php">Search</a>
+
+                    <?php if ($loggedin && $active) {
+                        ?>
+                        <!--  New Entry -->
+                        <a <?php
+                        if (basename($_SERVER['PHP_SELF']) === "new_insert.php") {
+                            echo "class=\"active\" ";
+                        }
+                        ?> href="new_insert.php">New Entry</a>
+                            <?php
+                        }
+                        ?>
+
+
+                    <?php if (isset($_SESSION['active']) && $active && $loggedin && isset($_SESSION['user_id'])) { ?>
+                        <!-- Profile -->
+                        <a <?php
+                        if (basename($_SERVER['PHP_SELF']) === "user.php" && isset($isowner) && $isowner) {
+                            echo "class=\"active\" ";
+                        }
+                        ?> href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My Profile</a>
+                            <?php
+                        }
+                        ?> 
+
+
+                    <?php if ($loggedin && $admin && isset($_SESSION['user_id'])) { ?>
+                        <!-- Control Panel (if admin) -->
+                        <a <?php
+                        if (basename($_SERVER['PHP_SELF']) === "control_panel.php") {
+                            echo "class=\"active\"";
+                        }
+                        ?> href="control_panel.php">Control Panel</a>
+                            <?php
+                        }
+                        ?>
+
+                </div>
+
+                <div class="right-wrapper">
+                    <!-- Quick search -->
+                    <div class="quicksearch">
+                        <form class="quicksearch" action="entry.php">
+                            <input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
+                            <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png"></img></button>
+                        </form>
+                        <a class="quicksearch" href="search.php">Advanced search</a>
+                    </div>
+
+                    <!-- Login -->
+                    <?php
+                    if (isset($_SESSION['active']) && $active && $loggedin) {
+                        ?>
+                        <a class="login" href="logout.php">Log out</a>
+                        <?php
+                    } else {
+                        ?>
+                        <a class="login 
+                           <?php
+                           if (basename($_SERVER['PHP_SELF']) === "logsyst.php") {
+                               echo " active";
+                           }
+                           ?>" href="logsyst.php">Log in</a>	
+                           <?php
+                       }
+                       ?>
+                </div>
+            </nav>
+        </header>
         <?php
         if (isset($loggedout_message)) {
             echo $loggedout_message;
