@@ -59,39 +59,30 @@ if ($is_upstrain_error) {
 } else {
     $title = "Entry " . strtoupper($upstrain_id);
 }
+
+include 'top.php';
 ?>
-
-<!DOCTYPE html>
-
-<?php include 'top.php'; ?>
-
-<body>
-    <!-- Body content of page -->
-
-    <main>
-        <div class="innertube">
-            <?php
-            // print errors...
-            if ($is_upstrain_error || $is_mysql_error) {
-                if ($is_upstrain_error)
-                    echo "<h3>Error: " . $upstrain_error . "</h3><br>";
-                if ($is_mysql_error)
-                    echo "<h3>Error: " . $mysql_error . "</h3>";
-                echo "<br>" .
-                "<a href=\"javascript:history.go(-1)\">Go back</a>";
-                //...or show correct content
-            }else {
-                if ($edit) {
-                    include 'entry_edit.php';
-                } else {
-                    include 'entry_show.php';
-                }
+<main>
+    <div class="innertube">
+        <?php
+        // print errors...
+        if ($is_upstrain_error || $is_mysql_error) {
+            if ($is_upstrain_error)
+                echo "<h3>Error: " . $upstrain_error . "</h3><br>";
+            if ($is_mysql_error)
+                echo "<h3>Error: " . $mysql_error . "</h3>";
+            echo "<br>" .
+            "<a href=\"javascript:history.go(-1)\">Go back</a>";
+            //...or show correct content
+        }else {
+            if ($edit) {
+                include 'entry_edit.php';
+            } else {
+                include 'entry_show.php';
             }
-            ?>
-        </div>
-    </main>
+        }
+        ?>
+    </div>
+</main>
 
-    <?php include 'bottom.php'; ?>
-
-</body>
-</html>
+<?php include 'bottom.php'; ?>

@@ -66,56 +66,50 @@ if ($is_user_error) {
 } else {
     $title = "User " . $username;
 }
+
+include 'top.php';
 ?>
 
-<!DOCTYPE html>
+<main>
+    <div class="innertube">	
+        <?php
+        // Print error text...
+        if ($is_user_error || $is_mysql_error) {
+            if ($is_user_error): echo "<h3>Error: " . $user_error . "</h3>";
+            elseif ($is_mysql_error): echo "<h3>Error: " . $mysql_error . "</h3>";
+            endif;
+            echo "<br>" .
+            "<a href=\"javascript:history.go(-1)\">Go back</a>";
+            // ... Or show user information or edit page
+        } else {
 
-<?php include 'top.php'; ?>
+            // Connect to database
+            include 'scripts/db.php';
 
-<body>
-    <main>
-        <div class="innertube">	
-            <?php
-			// Print error text...
-            if ($is_user_error || $is_mysql_error) {
-                if ($is_user_error): echo "<h3>Error: " . $user_error . "</h3>";
-                elseif ($is_mysql_error): echo "<h3>Error: " . $mysql_error . "</h3>";
-                endif;
-                echo "<br>" .
-                "<a href=\"javascript:history.go(-1)\">Go back</a>";
-                // ... Or show user information or edit page
+            // Fetch user information from database
+            $usersql = "SELECT first_name AS fname, last_name AS lname, "
+                    . "email, phone, username AS uname, admin FROM users WHERE user_id = '$id'";
+            $user_result = mysqli_query($link, $usersql);
+
+            // Close database connection
+            mysqli_close($link) or die("Could not close database connection");
+
+            // Fetch user info
+            $info = mysqli_fetch_assoc($user_result);
+
+            $adminpage = $info['admin'] == 1; // check if current page is an admin's
+            $adminpage_owner = ($adminpage && $isowner);
+            $userpage_owner_or_admin = ($isowner || $admin);
+
+            if ($edit) {
+                include 'user_edit.php';
             } else {
-
-                // Connect to database
-                include 'scripts/db.php';
-
-                // Fetch user information from database
-                $usersql = "SELECT first_name AS fname, last_name AS lname, "
-                        . "email, phone, username AS uname, admin FROM users WHERE user_id = '$id'";
-                $user_result = mysqli_query($link, $usersql);
-
-                // Close database connection
-                mysqli_close($link) or die("Could not close database connection");
-
-                // Fetch user info
-                $info = mysqli_fetch_assoc($user_result);
-
-                $adminpage = $info['admin'] == 1; // check if current page is an admin's
-                $adminpage_owner = ($adminpage && $isowner);
-                $userpage_owner_or_admin = ($isowner || $admin);
-
-                if ($edit) {
-                    include 'user_edit.php';
-                } else {
-                    include 'user_show.php';
-                }
+                include 'user_show.php';
             }
-            ?>
-        </div>
-    </main>
+        }
+        ?>
+    </div>
+</main>
 
-    <!-- Include site footer -->
-    <?php include 'bottom.php'; ?>		
-
-</body>
-</html>
+<!-- Include site footer -->
+<?php include 'bottom.php'; ?>

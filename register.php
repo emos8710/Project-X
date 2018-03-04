@@ -16,7 +16,9 @@ $data = array(
     'secret' => '6LfhRkoUAAAAAP_0r8kbO31Q-7VA6ftxRtKiVn6I',
     'response' => $_POST["g-recaptcha-response"]
 );
+
 $query = http_build_query($data);
+
 $options = array(
     'http' => array(
         'header' => "Content-Type: application/x-www-form-urlencoded\r\n",
@@ -31,6 +33,7 @@ $context = stream_context_create($options);
 $verify = file_get_contents($url, false, $context);
 $captcha_success = json_decode($verify);
 
+// If the reCAPTCHA failed, throw an error
 if ($captcha_success->success == false) {
     $_SESSION['message'] = 'reCAPTCHA failed. Are you a bot?';
 
@@ -40,6 +43,7 @@ if ($captcha_success->success == false) {
     if (!(strlen($_POST['password']) < 8)) {
         // Checks if the two passwords match 
         if ($_POST['confpassword'] == $_POST['password']) {
+            
             // Sets the session variables which will be shown on profile before verification
             $_SESSION['email'] = $_POST['email'];
             $_SESSION['first_name'] = $_POST['firstname'];
