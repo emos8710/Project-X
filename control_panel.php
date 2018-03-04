@@ -89,7 +89,7 @@ if ($loggedin && $active && $admin) {
                         }
                     }
 
-                    include $_GET['content'] . '_history.php';
+                    include $_GET['history'] . '_history.php';
                     ?>
                 </div>
                 <?php
