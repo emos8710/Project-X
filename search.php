@@ -114,7 +114,7 @@ include 'top.php';
                             <input class="all" type="text" name="comment_criteria" rows ="4" cols="50"/>
                         </div>
 
-                    <!-- <input name="submit-form" value="Search" type="submit"> -->
+                        <!-- <input name="submit-form" value="Search" type="submit"> -->
                         <button type="submit" class="button" name="search" />Search</button>
                     </div>
 
@@ -217,10 +217,10 @@ include 'top.php';
 
 
                 $entrysql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
-                        . "t1.date_db AS date, t1.entry_reg AS biobrick, "
-                        . "t1.private AS private, t4.name AS strain, "
-                        . "GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS insname, "
-                        . "t3.name AS backbone, "
+                        . "t1.date_db AS date, t1.entry_reg AS biobrick, t1.private AS private, "
+                        . "t4.name AS strain, t4.id AS strain_id, "
+                        . "GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS insname, t6.id AS ins_id, "
+                        . "t3.name AS backbone, t3.id AS backbone_id, "
                         . "t2.user_id AS user_id, t2.username AS uname, "
                         . "GROUP_CONCAT(DISTINCT t7.name SEPARATOR ', ') AS instype, "
                         . "t9.upstrain_id AS up_id "
@@ -266,11 +266,9 @@ include 'top.php';
                             
                         } else {
                             echo "<tr><td><a href=\"entry.php?upstrain_id=" . $row["up_id"] . "\">" . $row["up_id"] . "</a>" .
-                            "</td><td>" . $row["strain"] .
-                            "</td><td>" . $row["backbone"] .
-                            // The following row will be added once an insert page exists.    
-                            //"</td><td><a href=\"inserts.php?ins_id=". $row["ins_id"]."\">".$row["insname"]."</a>".                                        
-                            "</td><td>" . $row["insname"] .
+                            "</td><td><a href=\"parts.php?strain_id=" . $row["strain_id"] . "\">" . $row["strain"] . "</a>" .
+                            "</td><td><a href=\"parts.php?backbone_id=" . $row["backbone_id"] . "\">" . $row["backbone"] . "</a>" .
+                            "</td><td><a href=\"parts.php?ins_id=" . $row["ins_id"] . "\">" . $row["insname"] . "</a>" .
                             "</td><td>" . $row["instype"] .
                             "</td><td>" . $row["year"] .
                             "</td><td>" . $biobrick .
@@ -484,7 +482,7 @@ include 'top.php';
                         <input class="all" type="text" name="comment_criteria" rows ="4" cols="50"/>
                     </div>
 
-                    <!-- <input name="submit-form" value="Search" type="submit"> -->
+                        <!-- <input name="submit-form" value="Search" type="submit"> -->
                     <button type="submit" class="button" name="search" />Search</button>
                 </div>
 
@@ -560,9 +558,10 @@ include 'top.php';
 
 
 
-                $insertsql = "SELECT DISTINCT t1.id AS ins_id, t1.name AS ins_name, "
-                        . "t1.ins_reg AS ins_reg, t1.date_db AS date_db, "
-                        . "t2.username AS creator_name, t2.user_id AS user_id, t3.name AS ins_type FROM (ins AS t1) "
+                $insertsql = "SELECT DISTINCT t1.id AS ins_id, t1.name AS insname, "
+                        . "t1.ins_reg AS ins_reg, t1.date_db AS date_db, t1.private AS private, "
+                        . "t2.username AS creator_name, t2.user_id AS user_id, "
+                        . "t3.name AS ins_type FROM (ins AS t1) "
                         . "LEFT JOIN users AS t2 ON t2.user_id = t1.creator "
                         . "LEFT JOIN ins_type AS t3 ON t3.id = t1.type "
                         . "WHERE ";
@@ -589,17 +588,18 @@ include 'top.php';
 
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-
-                        echo "<tr><td>" . $row["ins_id"] .
-                        // The following row will be added once an insert page exists.    
-                        //"</td><td><a href=\"inserts.php?ins_id=". $row["ins_id"]."\">".$row["ins_name"]."</a>".
-                        "</td><td>" . $row["ins_name"] .
-                        "</td><td>" . $row["ins_type"] .
-                        "</td><td>" . $row["ins_reg"] .
-                        "</td><td>" . $row["date_db"] .
-                        "</td><td><a href=\"user.php?user_id=" . $row["user_id"] . "\">" . $row["creator_name"] . "</a>" .
-                        "</td><td>" . "" .
-                        "</td></tr>";
+                        if (!$loggedin && $row["private"] == 1) {
+                            
+                        } else {
+                            echo "<tr><td>" . $row["ins_id"] .
+                            "</td><td><a href=\"parts.php?ins_id=" . $row["ins_id"] . "\">" . $row["insname"] . "</a>" .
+                            "</td><td>" . $row["ins_type"] .
+                            "</td><td>" . $row["ins_reg"] .
+                            "</td><td>" . $row["date_db"] .
+                            "</td><td><a href=\"user.php?user_id=" . $row["user_id"] . "\">" . $row["creator_name"] . "</a>" .
+                            "</td><td>" . "" .
+                            "</td></tr>";
+                        }
                     }
 
                     echo "</table>";
@@ -621,5 +621,6 @@ include 'top.php';
 
     </div>    
 </main>
+
 <?php include 'bottom.php'; ?>
 
