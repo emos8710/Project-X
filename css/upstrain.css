@@ -242,6 +242,17 @@ a.mail::after { /* Adds external link image after link */
     margin-right: 12px;
 }
 
+a.download::after { /* Adds download image after download link */
+    background-image: url(../images/download.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+    margin-left: 3px;
+    margin-right: 12px;
+}
+
 /* ??? */ 
 /* div.innertube a {
         color: blue;
@@ -731,8 +742,7 @@ div.panel-history-show {
 
 div.control-panel-show { /* Style for region where the desired content will be shown */
     float: left;
-    width: 50%;
-    margin-right: 250px;
+    margin-right: 50px;
 }
 
 div.control_panel_menu {

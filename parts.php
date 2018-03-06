@@ -17,6 +17,7 @@ $is_mysql_error = FALSE;
 if (isset($_GET["ins_id"])) {
     $part_id = $_GET["ins_id"];
     $part = "ins.id";
+    $name = "ins.name";
     $table = "ins";
     if (!check_id($part_id)) {
         $is_upstrain_error = TRUE;
@@ -26,6 +27,7 @@ if (isset($_GET["ins_id"])) {
 } else if (isset($_GET["backbone_id"])) {
     $part_id = $_GET["backbone_id"];
     $part = "backbone.id";
+    $name = "backbone.name";
     $table = "backbone";
     if (!check_id($part_id)) {
         $is_upstrain_error = TRUE;
@@ -35,6 +37,7 @@ if (isset($_GET["ins_id"])) {
 } else if (isset($_GET["strain_id"])) {
     $part_id = $_GET["strain_id"];
     $part = "strain.id";
+    $name = "strain.name";
     $table = "strain";
     if (!check_id($part_id)) {
         $is_upstrain_error = TRUE;
@@ -50,10 +53,11 @@ if (!$is_upstrain_error) {
     include 'scripts/db.php';
 
     $id = mysqli_real_escape_string($link, $part_id);
-    $sql = "SELECT " . $part . " FROM " . $table . " WHERE " . $part . " LIKE '$id'";
+    $sql = "SELECT " . $part . ", " .$name . " AS name FROM " . $table . " WHERE " . $part . " LIKE '$id'";
 
-
+    
     $result = mysqli_query($link, $sql);
+    $info = mysqli_fetch_assoc($result);
     if (!$result) {
         $is_mysql_error = TRUE;
         $mysql_error = mysqli_error();
@@ -74,10 +78,18 @@ if ($is_upstrain_error) {
     $title = "ID error";
 } else if ($is_mysql_error) {
     $title = "Database Error";
-} else if ($edit) {
-    $title = "Edit part " . strtoupper($part_id);
-} else {
-    $title = "Part " . strtoupper($part_id);
+} else if ($edit && isset($_GET['ins_id'])) {
+    $title = "Edit insert: " . $info['name'];
+} else if (!$edit && isset($_GET['ins_id'])) {
+    $title = "Insert: " . $info['name'];
+} else if ($edit && isset($_GET['backbone_id'])) {
+    $title = "Edit backbone: " . $info['name'];
+} else if (!$edit && isset($_GET['backbone_id'])) {
+    $title = "Backbone: " . $info['name'];
+} else if ($edit && isset($_GET['strain_id'])) {
+    $title = "Edit strain: " . $info['name'];
+} else if (!$edit && isset($_GET['strain_id'])) {
+    $title = "Strain: " . $info['name'];
 }
 
 include 'top.php';
