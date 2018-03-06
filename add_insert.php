@@ -1,26 +1,57 @@
 <?php
 
+if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-include 'scripts/db.php';
+    include 'scripts/db.php';
+//Variables 
+    $current_date = date("Y-m-d");
+    $creator = $_POST['user_id'];
+    $type = mysqli_real_escape_string($link, $_REQUEST['new_insert_type']);
+    $name = mysqli_real_escape_string($link, $_REQUEST['new_insert']);
+    $regid = mysqli_real_escape_string($link, $_REQUEST['Ins_registry']);
+    $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
+    $creator = $_SESSION['user_id'];
+    $private = 0;
 
-$current_date = date("Y-m-d");
-$creator = $_POST['user_id'];
-$type = mysqli_real_escape_string($link,$_REQUEST['insert_type[]']);
-$name = mysqli_real_escape_string($link,$_REQUEST['ins[]']); 
-$regid = mysqli_real_escape_string($link,$_REQUEST['Ins_registry']);
-$comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
-
-
+    if (isset($_POST['private'])) {
+        $private = intval($_POST['private']);
+    }
+    /*
+      //Fetch insert type id
+      $ins_type_s = "SELECT id FROM ins_type WHERE name LIKE '$type'";
+      $ins_type_s_query = mysqli_query($link, $ins_type_s);
+      $ins_type_row = mysqli_fetch_assoc($ins_type_s_query);
+      $ins_type_id = $ins_type_row["id"];
+     */
 // Insert new insert if not existing
     $check = "SELECT name FROM ins WHERE name LIKE '$name'";
     $check_query = mysqli_query($link, $check);
     if (mysqli_num_rows($check_query) < 1) {
-        $sql_ins = "INSERT INTO ins (name,type,ins_reg,creator,date_db,comment) VALUES (?,?,?,?,?,?)";
-        $stmt_ins = $link->prepare($sql_strain);
-        $stmt_ins->bind_param("ssssss",'$name','$type', '$regid','$creator','$current_date', '$comment');
-        $stmt_ins->execute();
-        $stmt_ins->close();
-    } 
+        $sql_ins = "INSERT INTO ins (name,type,ins_reg,creator,date_db,comment,private) VALUES (?,?,?,?,?,?,?)";
+        if ($stmt_ins = $link->prepare($sql_ins)) {
+            if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+                if ($stmt_ins->bind_param("sisissi", $name, $type, $regid, $creator, $current_date, $comment, $private)) {
+                    if ($stmt_ins->execute()) {
+                        $_SESSION['success'] = "<div class = 'success'>New insert submitted successfully</div>";
+                        header("Location: new_insert.php?success");
+                    } else {
+                        $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_ins->errno . ")" . " " . "Error: " . $stmt_ins->error . "</div>";
+                        header("Location: new_insert.php?error");
+                        
+                    } $stmt_ins->close();
+                } else {
+                    $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_ins->errno . ")" . " " . "Error: " . $stmt_ins->error . "</div>";
+                    header("Location: new_insert.php?error");
+                }
+            }
+        } else {
+            $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
+            header("Location: new_insert.php?error");
+        }
+    }
 }
 ?>

@@ -13,358 +13,336 @@ if (isset($_GET['content'])) {
 $title = "New entry";
 ?>
 
-<!DOCTYPE html>
-
 <?php include 'top.php'; ?>
 
-<body>
-    <!-- Main content goes here -->
-    <main>
-        <div class="innertube">
+<!-- Main content goes here -->
+<main>
+    <div class="innertube">
 
-            <?php if ($loggedin) {
+        <?php if ($loggedin) {
+            ?>
+            <?php
+            $reg = $year = $comment = $strain = $backbone = $inst = "";
+
+            if (empty($_POST["registry"])) {
+                $reg = "";
+            } else {
+                $reg = test_input($_POST["registry"]);
+            }
+            
+            if (empty($_POST["strain"])) {
+                $strain = "";
+            } else {
+                $strain = test_input($_POST["strain"]);
+            }
+            
+            if (empty($_POST["backbone"])) {
+                $backbone = "";
+            } else {
+                $backbone = test_input($_POST["backbone"]);
+            }
+            
+            if (empty($_POST["new_insert"])) {
+                $inst = "";
+            } else {
+                $inst = test_input($_POST["new_insert"]);
+            }
+
+            if (empty($_POST["year"])) {
+                $year = "";
+            } else {
+                $year = test_input($_POST["year"]);
+            }
+
+            if (empty($_POST["comment"])) {
+                $comment = "";
+            } else {
+                $comment = test_input($_POST["comment"]);
+            }
+
+            //Functions
+            function test_input($data) {
+                $data = trim($data);
+                $data = stripslashes($data);
+                $data = htmlspecialchars($data);
+                return $data;
+            }
+
+            function load_ins_type() {
+                include 'scripts/db.php';
+                $sql_ins_type = mysqli_query($link, "SELECT * FROM ins_type ORDER BY name");
+                while ($row = $sql_ins_type->fetch_assoc()) {
+                    echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
+                }
+                mysqli_close($link);
+            }
+
+            function load_strain() {
+                include 'scripts/db.php';
+                $sql_strain = mysqli_query($link, "SELECT name FROM strain ORDER BY name");
+                while ($row = $sql_strain->fetch_assoc()) {
+                    echo "<option>" . $row['name'] . "</option>";
+                }
+                mysqli_close($link);
+            }
+
+            function load_backbone() {
+                include 'scripts/db.php';
+                $sql_backbone = mysqli_query($link, "SELECT name FROM backbone ORDER by name");
+                while ($row = $sql_backbone->fetch_assoc()) {
+                    echo "<option>" . $row['name'] . "</option>";
+                }
+                mysqli_close($link);
+            }
+            
+            function load_ins_name() {
+                include 'scripts/db.php'; 
+
+$out = '';
+$sql = "SELECT id,name from ins WHERE type='" . $_POST['inst'] . "' ORDER BY name";
+$res = mysqli_query($link, $sql);
+$out = '<option value="">Select insert name</option>';
+while ($row = mysqli_fetch_assoc($res)) {
+    $out .= '<option value="' . $row['id'] . '">' . $row['name'] . '</option>';
+}
+echo $out;
+            }
+            ?>
+
+            <h2>New Entry</h2>
+            <?php
+            if (isset($_SESSION['success'])) {
+                echo $_SESSION['success'];
+                unset($_SESSION['success']);
+            }
+
+            if (isset($_SESSION['error'])) {
+                echo $_SESSION['error'];
+                unset($_SESSION['error']);
+            }
+            ?>
+            <div class="entry_nav">
+                <ul>
+                    <a href="?content=new_entry">New entry</a>
+                    <a href="?content=new_strain">New strain </a>
+                    <a href="?content=new_backbone">New backbone</a>
+                    <a href="?content=new_insert">New insert</a>
+                </ul>
+            </div>
+            <!-- Desired content is displayed here -->   
+
+            <?php if ($current_content == "new_entry") {
                 ?>
-                <?php
-                /*
-                $strainErr = $backboneErr = $yearErr = "";
-                $strain = $backbone = $comment = $year = $reg = $inst = "";
-
-                if ($_POST) {
-
-                    if (empty($_POST["strain"])) {
-                        $strainErr = "A strain is required";
-                    } else {
-                        $strain = test_input($_POST["strain"]);
-                    }
-
-                    if (empty($_POST["backbone"])) {
-                        $backboneErr = "A backbone is required";
-                    } else {
-                        $backbone = test_input($_POST["backbone"]);
-                    }
-
-                    if (empty($_POST["year"])) {
-                        $yearErr = "A year is required";
-                    } elseif (!is_numeric($year)) {
-                        $yearErr = "The input year is not valid";
-                    } else {
-                        $year = test_input($_POST["year"]);
-                    }
-
-                    if (empty($_POST["comment"])) {
-                        $comment = "";
-                    } else {
-                        $comment = test_input($_POST["comment"]);
-                    }
-
-                    if (empty($_POST["registry"])) {
-                        $reg = "";
-                    } else {
-                        $reg = test_input($_POST["registry"]);
-                    }
-
-                    if (empty($_POST["ins"])) {
-                        $inst = "";
-                    } else {
-                        $inst = test_input($_POST["ins"]);
-                    }
-                }
-
-                //Functions
-                function test_input($data) {
-                    $data = trim($data);
-                    $data = stripslashes($data);
-                    $data = htmlspecialchars($data);
-                    return $data;
-                }
-
-*/
-                function load_ins_type() {
-                    include 'scripts/db.php';
-                    $sql_ins_type = mysqli_query($link, "SELECT * FROM ins_type");
-                    while ($row = $sql_ins_type->fetch_assoc()) {
-                        echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
-                    }
-                    mysqli_close($link);
-                }
-
-                function load_strain() {
-                    include 'scripts/db.php';
-                    $sql_strain = mysqli_query($link, "SELECT name FROM strain");
-                    while ($row = $sql_strain->fetch_assoc()) {
-                        echo "<option>" . $row['name'] . "</option>";
-                    }
-                    mysqli_close($link);
-                }
-
-                function load_backbone() {
-                    include 'scripts/db.php';
-                    $sql_backbone = mysqli_query($link, "SELECT name FROM backbone");
-                    while ($row = $sql_backbone->fetch_assoc()) {
-                        echo "<option>" . $row['name'] . "</option>";
-                    }
-                    mysqli_close($link);
-                }
-
-                
-                ?>
-
-
-                <h2>New Entry</h2>
-                <div class="entry_nav">
-                    <ul>
-                        <a href="?content=new_entry">New entry</a>
-                        <a href="?content=new_strain">New strain </a>
-                        <a href="?content=new_backbone">New backbone</a>
-                        <a href="?content=new_insert">New insert</a>
-                    </ul>
-                </div>
-                <!-- Desired content is displayed here -->
-                <!-- NEW ENTRY -->
-
-                <?php if ($current_content == "new_entry") {
-                    ?>
-                    <p><span class="error">* required field.</span></p>
-                    <form class="insert-form" id="new_entry_form" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" enctype="multipart/form-data">
-                        <div class="new_entry">
-
-                            <div class="field-wrap">
-                                <label for="Strain">Strain </label>
-
-                                <select name="strain_name" required>
-                                    <?php
-                                    echo load_strain();
-                                    ?>
-                                </select>
-                              <span class="error">* <?php //echo $strainErr; ?></span>
-                                <br/>
-                            </div>
-
-                            <div class="field-wrap">
-                                <label for="Backbone">Backbone </label>
-
-                                <select name="backbone_name" required>
-                                    <?php
-                                    echo load_backbone();
-                                    ?>
-                                </select>
-
-                                <span class="error">* <?php //echo $backboneErr; ?></span>
-                                <br/>
-                            </div>
-
-                            <div class="field-wrap">
-                                <table id="dynamic">
-                                    <thead>Insert</thead>
-
-
-                                    <td>
-                                        <label for="Ins_Type">Insert type </label>
-                                        <select class="insert" name="insert_type[]" id="Ins_type" >
-                                            <option value="">Select insert type</option>
-                                            <?php
-                                            echo load_ins_type();
-                                            ?>
-                                        </select></td>
-
-                                    <td>
-                                        <label for="Ins">Insert name </label>
-                                        <select class="insert" name="ins[]" id ="Ins">
-                                            <option value="">Select insert name</option>
-                                        </select></td>
-                                    <td> <button type="button" name="add" id="add_input">+ More inserts</button></td>
-
-                                </table>
-                            </div>
-
-
-                            <div class="field-wrap"> 
-
-                                <label for="Registry">Registry id</label>
-                                <input class="insert" type="text" name="registry" id="Registry" value="<?php //echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
-                            </div>
-
-                            <div class="field-wrap">
-                                <label for="FileToUpload">Sequence </label>
-                                <input class="button" type="file" name="my_file" id="FileToUpload">
-                            </div>
-
-                            <div class="field-wrap">
-                                <label for="Year">Year </label>
-                                <input class="insert" type="text" name = "year" id="Year"  maxlengh= "4" pattern = "[0-9]{4}" 
-                                       placeholder="YYYY" value="<?php //echo $year; ?>" required/>
-                                <span class="error">* <?php //echo $yearErr; ?></span>
-                            </div>
-
-                            <div class="field-wrap"> 
-                                <label for="Comment">Comment </label>
-                                <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                          value="<?php //echo $comment; ?>" > </textarea> 
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="Private">Make this entry private </label>
-                                <input class="checkbox" type="checkbox" name="private" value=1> 
-                            </div>
-
-                            <div class="checkbox">
-                                <label for="Created">This entry is created </label>
-                                <input class="checkbox" type="checkbox" name="created" value=1> 
-                            </div>
-
-                            <button id="submit" type="submit" class="button" name="insert" />Submit</button>
-                        </div>
-                    </form>
-
-                    <!-- NEW STRAIN -->
-                    <?php
-                } else if ($current_content == "new_strain") {
-                    ?>
-                    <p><span class="error">* required field.</span></p>
-
-                    <form method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>" enctype="multipart/form-data">
+                <form class="insert-form" id="new_entry_form" method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
+                    <div class="new_entry">
 
                         <div class="field-wrap">
-
                             <label for="Strain">Strain </label>
-                            <input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
-                            <span class="error">* <?php //echo $strainErr; ?></span>
+
+                            <select name="strain_name" required>
+                                <?php
+                                echo load_strain();
+                                ?>
+                            </select>
                             <br/>
-                        </div> 
-
-                        <div class="fieldwrap"> 
-                            <label for="Comment">Comment </label>
-
-                            <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                      value="<?php //echo $comment; ?>" required> </textarea> </p>
-
                         </div>
 
-
-                        <button id="submit" type="submit" class="button" name="insert" />Submit</button>
-                    </form>
-
-                    <!-- NEW BACKBONE -->
-                    <?php
-                } else if ($current_content == "new_backbone") {
-                    ?>
-                    <p><span class="error">* required field.</span></p>
-
-                    <form method="post" action="<?php echo htmlspecialchars("add_backbone.php"); ?>" enctype="multipart/form-data">
-                        <p>
                         <div class="field-wrap">
-
                             <label for="Backbone">Backbone </label>
-                            <input class="insert" type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/> 
-                            <span class="error">* <?php //echo $backboneErr; ?></span>
+
+                            <select name="backbone_name" required>
+                                <?php
+                                echo load_backbone();
+                                ?>
+                            </select>
                             <br/>
                         </div>
 
-                        <div class="field-wrap"> 
-                            <label for="Registry">Registry id</label>
-                            <input class="insert" type="text" name="Bb_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
-                        </div>
-
                         <div class="field-wrap">
-                            <label for="Comment">Comment </label>
-
-                            <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                      value="<?php //echo $comment; ?>" required> </textarea> </p>
-
-                        </div>
-
-
-
-                        </p> -->
-                        <button id="submit" type="submit" class="button" name="insert" />Submit</button>
-                    </form>
-
-                    <!-- NEW INSERT -->
-                    <?php
-                } else if ($current_content == "new_insert") {
-                    ?>
-
-                    <form method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>" enctype="multipart/form-data">
-                        <div class="field-wrap"> 
                             <table id="dynamic">
+                                <thead>Insert</thead>
+
+
                                 <td>
                                     <label for="Ins_Type">Insert type </label>
-                                    <select class="insert" name="insert_type[]" id="Ins_type">
-                                        <option value="Promotor">Promotor</option>
-                                        <option value="Coding sequence">Coding sequence</option>
-                                        <option value="RBS">RBS</option>
-                                        <option value="Other">Other</option>
+                                    <select class="insert" name="insert_type[]" id="Ins_type" >
+                                        <option value="">Select insert type</option>
+                                        <?php
+                                        echo load_ins_type();
+                                        ?>
                                     </select></td>
+
                                 <td>
                                     <label for="Ins">Insert name </label>
-                                    <input class="insert" type="text" name="ins[]" value="<?php echo $inst; ?>" id ="Ins" class="typeahead"/>
-                                </td>
-                                <td><button class="insert-mini" type="button" name="add" id="add_input">+ More inserts</button></td>
+                                    <select class="insert" name="ins[]" id ="Ins">
+                                        <option value="">Select insert name</option>
+                                    </select></td>
+                                <td> <button type="button" name="add" id="add_input">+ More inserts</button></td>
+
                             </table>
                         </div>
 
 
-
                         <div class="field-wrap"> 
+
                             <label for="Registry">Registry id</label>
-                            <input class="insert" type="text" name="Ins_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+                            <input class="insert" type="text" name="registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
                         </div>
 
                         <div class="field-wrap">
+                            <label for="FileToUpload">Sequence </label>
+                            <input class="button" type="file" name="my_file" id="FileToUpload">
+                        </div>
+
+                        <div class="field-wrap">
+                            <label for="Year">Year </label>
+                            <input class="insert" type="text" name = "year" id="Year"  maxlengh= "4" pattern = "[0-9]{4}" 
+                                   placeholder="YYYY" value="<?php echo $year; ?>" required/>
+                        </div>
+
+                        <div class="field-wrap"> 
                             <label for="Comment">Comment </label>
                             <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                      value="<?php //echo $comment; ?>" > </textarea> 
+                                      value="<?php echo $comment; ?>" required> </textarea> 
+                        </div>
+
+                        <div class="checkbox">
+                            <label for="Private">Make this entry private </label>
+                            <input class="checkbox" type="checkbox" name="private" value=1> 
+                        </div>
+
+                        <div class="checkbox">
+                            <label for="Created">This entry is created </label>
+                            <input class="checkbox" type="checkbox" name="created" value=1> 
                         </div>
 
                         <button id="submit" type="submit" class="button" name="insert" />Submit</button>
-                    </form>
-                    <?php
-                } else {
-                    echo "";
-                }
+                    </div>
+                </form>
+
+                <!-- NEW STRAIN -->
+                <?php
+            } else if ($current_content == "new_strain") {
                 ?>
 
-            </div>
+                <form method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>" enctype="multipart/form-data">
+
+                    <div class="field-wrap">
+
+                        <label for="Strain">Strain </label>
+                        <input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
+                        <br/>
+                    </div> 
+
+                    <div class="fieldwrap"> 
+                        <label for="Comment">Comment </label>
+                        <textarea name="comment" id="Comment" rows ="4" cols="50"
+                                  value="<?php echo $comment;   ?>" required> </textarea> </p>
+
+                    </div>
+
+
+                    <button id="submit" type="submit" class="button" name="insert" />Submit</button>
+                </form>
+
+                <!-- NEW BACKBONE -->
+                <?php
+            } else if ($current_content == "new_backbone") {
+                ?>
+                <form method="post" action="<?php echo htmlspecialchars("add_backbone.php"); ?>" enctype="multipart/form-data">
+                    <p>
+                    <div class="field-wrap">
+
+                        <label for="Backbone">Backbone </label>
+                        <input class="insert" type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/> 
+                        <br/>
+                    </div>
+
+                    <div class="field-wrap"> 
+                        <label for="Registry">Registry id</label>
+                        <input class="insert" type="text" name="Bb_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="Comment">Comment </label>
+                        <textarea name="comment" id="Comment" rows ="4" cols="50"
+                                  value="<?php echo $comment;   ?>" required> </textarea> </p>
+
+                    </div>
+                    
+                    <div class="checkbox">
+                            <label for="Private">Make this entry private </label>
+                            <input class="checkbox" type="checkbox" name="private" value=1> 
+                    </div>
+
+                    <button id="submit" type="submit" class="button" name="insert" />Submit</button>
+                </form>
+
+                <!-- NEW INSERT -->
+                <?php
+            } else if ($current_content == "new_insert") {
+                ?>
+
+                <form method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>" enctype="multipart/form-data">
+                    <div class="field-wrap"> 
+                        <table id="dynamic">
+                            <td>
+                                <label for="Ins_Type">Insert type </label>
+                                <select class="insert" name="new_insert_type">
+                                    <option value="">Select insert type</option>
+                                        <?php
+                                        echo load_ins_type();
+                                        ?>
+                                </select></td>
+                            <td>
+                                <label for="Ins">Insert name </label>
+                                <input class="insert" type="text" name="new_insert" value="<?php echo $inst; ?>"/>
+                            </td>
+                        </table>
+                    </div>
 
 
 
-            <?php
-        } else if (!$active) {
+                    <div class="field-wrap"> 
+                        <label for="Registry">Registry id</label>
+                        <input class="insert" type="text" name="Ins_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+                    </div>
+
+                    <div class="field-wrap">
+                        <label for="Comment">Comment </label>
+                        <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
+                                  value="<?php //echo $comment;   ?>" required> </textarea> 
+                    </div>
+
+                    <button id="submit" type="submit" class="button" name="insert" />Submit</button>
+                </form>
+                <?php
+            } else {
+                echo "";
+            }
             ?>
-            <h3 style="color:red">Access denied (your account is not activated).</h3>
-            <?php
-        } else {
-            ?>
-            <h3 style="color:red">Access denied (you are not logged in).</h3>
-            <?php
-        }
+
+        </div>
+
+
+
+        <?php
+    } else if (!$active) {
         ?>
+        <h3 style="color:red">Access denied (your account is not activated).</h3>
+        <?php
+    } else {
+        ?>
+        <h3 style="color:red">Access denied (you are not logged in).</h3>
+        <?php
+    }
+    ?>
 
-    </main>
+</main>
 
 <?php include 'bottom.php'; ?>
 
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script type="text/javascript" src="jquery.js"></script>
-
-</body>
-</html>
-
-
-<script>
-    $(document).on('click','#save', function(e) {
-        var data = $("#new_entry_form").serialize(); 
-        $.ajax({
-            data: data, 
-            type: "POST", 
-            url: "insert.php", 
-            success: function(data) {
-                alert("New entry saved"); 
-            }
-        }); 
-    }); 
-    </script>
-    
+<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         var i = 1;
