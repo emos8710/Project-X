@@ -41,7 +41,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['created'])) {
         $created = intval($_POST['created']);
     }
-
 // Insert entry information into database
     $sql_entry = "INSERT INTO entry (year_created, comment, date_db, entry_reg, "
             . "backbone, strain, creator, private, created)"
@@ -66,38 +65,47 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         header("Location: new_insert.php?error");
     }
 
-// Insert
-    $ins = $_POST["ins"];
-    $num = count($ins_ids);
-
-    if ($num > 0) {
-        $position = 0;
-        for ($i = 0; $i < $num; $i++) {
-            $position++;
-            $entry_ins = "INSERT INTO entry_inserts (entry_id, insert_id, position) "
-                    . "VALUES(?,?,?)";
-            if ($stmt_entry_ins = $link->prepare($entry_ins)) {
-                $stmt_entry_ins->bind_param("iii", $entry_id, $ins[$i], $position);
-                if ($stmt_entry_ins->execute()) {
-                    $_SESSION['success'] = "<div class = 'success'>Entry_inserts successfully updated</div>";
-                    header("Location: new_insert.php?success");
-                } else {
-                    $error = "Execute failed: (" . $stmt_entry_ins->errno . ")" . $stmt_entry_ins->error;
-                    header("Location: new_insert.php?error=" . urlencode($error));
-                }
-                $stmt_entry_ins->close();
-            } else {
-                
-            }
-        }
-    }
-
-//Select upstrain id from the most recent entry 
+// Entry id
     $entry_s_id = "SELECT * FROM entry ORDER BY id DESC LIMIT 1";
     $entry_id_query = mysqli_query($link, $entry_s_id);
     $entry_id_row = mysqli_fetch_assoc($entry_id_query);
     $entry_id = $entry_id_row["id"];
 
+// Insert
+
+$ins = $_POST["ins"];
+$num = count($ins);  
+    
+    if ($num > 0) {
+        $position = 0;
+        for ($i = 0; $i < $num; $i++) {
+             echo $num."    ". $ins[$i];
+            if (trim($ins[$i]) != '') {
+                $position++;
+                $entry_ins = "INSERT INTO entry_inserts (entry_id, insert_id, position) "
+                        . "VALUES(?,?,?)";
+                if ($stmt_entry_ins = $link->prepare($entry_ins)) {
+                    if ($stmt_entry_ins->bind_param("iii", $entry_id, $ins[$i], $position)) {
+                        if ($stmt_entry_ins->execute()) {
+                            $_SESSION['success'] = "<div class = 'success'>Entry_inserts successfully updated</div>";
+                            header("Location: new_insert.php?success");
+                        } else {
+                            $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
+                            header("Location: new_insert.php?error");
+                        } $stmt_entry_ins->close();
+                    } else {
+                        $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
+                        header("Location: new_insert.php?error");
+                    }
+                } else {
+                    $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
+                    header("Location: new_insert.php?error");
+                }
+            }
+        }
+    }
+
+//Select upstrain id from the most recent entry 
     $year_created_s = "SELECT upstrain_id FROM entry_upstrain WHERE entry_id = $entry_id";
     $year_created_query = mysqli_query($link, $year_created_s);
     $year_created_row = mysqli_fetch_assoc($year_created_query);

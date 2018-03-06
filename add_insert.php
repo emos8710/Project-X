@@ -20,13 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['private'])) {
         $private = intval($_POST['private']);
     }
-    /*
-      //Fetch insert type id
-      $ins_type_s = "SELECT id FROM ins_type WHERE name LIKE '$type'";
-      $ins_type_s_query = mysqli_query($link, $ins_type_s);
-      $ins_type_row = mysqli_fetch_assoc($ins_type_s_query);
-      $ins_type_id = $ins_type_row["id"];
-     */
+
 // Insert new insert if not existing
     $check = "SELECT name FROM ins WHERE name LIKE '$name'";
     $check_query = mysqli_query($link, $check);
