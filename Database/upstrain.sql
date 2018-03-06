@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Mar 02, 2018 at 11:09 AM
+-- Generation Time: Mar 04, 2018 at 08:50 PM
 -- Server version: 5.7.19
 -- PHP Version: 5.6.31
 
@@ -25,6 +25,30 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `attempt_log`
+--
+
+CREATE TABLE IF NOT EXISTS `attempt_log` (
+  `ip` varchar(50) NOT NULL,
+  `time` int(100) UNSIGNED NOT NULL,
+  `username` varchar(50) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `attempts` int(11) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1 COMMENT='Logs failed login attempts';
+
+--
+-- Dumping data for table `attempt_log`
+--
+
+INSERT INTO `attempt_log` (`ip`, `time`, `username`, `id`, `attempts`) VALUES
+('::1', 1520184966, 'WG95', 1, 1),
+('::1', 1520191871, 'admin2', 2, 0),
+('::1', 0, 'admin', 3, 0);
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `backbone`
 --
 
@@ -35,6 +59,7 @@ CREATE TABLE IF NOT EXISTS `backbone` (
   `date_db` varchar(10) NOT NULL,
   `creator` int(3) NOT NULL,
   `comment` varchar(200) NOT NULL,
+  `private` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `bb_name` (`name`),
   UNIQUE KEY `bb_regname` (`Bb_reg`),
@@ -45,8 +70,8 @@ CREATE TABLE IF NOT EXISTS `backbone` (
 -- Dumping data for table `backbone`
 --
 
-INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `creator`, `comment`) VALUES
-(2, 'test', 'test', '2018-02-10', 1, 'bleh');
+INSERT INTO `backbone` (`id`, `name`, `Bb_reg`, `date_db`, `creator`, `comment`, `private`) VALUES
+(2, 'test', 'test', '2018-02-10', 1, 'bleh', 0);
 
 --
 -- Triggers `backbone`
@@ -64,11 +89,11 @@ CREATE TRIGGER `log_backbone_update` AFTER UPDATE ON `backbone` FOR EACH ROW ins
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_deleted_backbone` BEFORE DELETE ON `backbone` FOR EACH ROW insert into backbone_log(BB_reg, comment, creator, date_db, id, name, time, type) values(old.BB_reg, old.comment, old.creator, old.date_db, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+CREATE TRIGGER `save_deleted_backbone` BEFORE DELETE ON `backbone` FOR EACH ROW insert into backbone_log(BB_reg, comment, creator, date_db, id, name, time, type, private) values(old.BB_reg, old.comment, old.creator, old.date_db, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted", old.private)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_updated_backbone` AFTER UPDATE ON `backbone` FOR EACH ROW insert into backbone_log(BB_reg, comment, creator, date_db, id, name, time, type) values(old.BB_reg, old.comment, old.creator, old.date_db, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Edited")
+CREATE TRIGGER `save_updated_backbone` AFTER UPDATE ON `backbone` FOR EACH ROW insert into backbone_log(BB_reg, comment, creator, date_db, id, name, time, type, private) values(old.BB_reg, old.comment, old.creator, old.date_db, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Edited", old.private)
 $$
 DELIMITER ;
 
@@ -88,6 +113,7 @@ CREATE TABLE IF NOT EXISTS `backbone_log` (
   `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(15) NOT NULL,
   `time` int(100) UNSIGNED NOT NULL,
+  `private` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`old_data_id`),
   KEY `bb_creat_id` (`creator`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -286,7 +312,7 @@ CREATE TABLE IF NOT EXISTS `event_log` (
   `event_id` int(11) NOT NULL AUTO_INCREMENT,
   `time` varchar(20) NOT NULL,
   PRIMARY KEY (`event_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=61 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `event_log`
@@ -324,7 +350,22 @@ INSERT INTO `event_log` (`object_id`, `object`, `type`, `event_id`, `time`) VALU
 (001, 'User', 'Edited', 30, '2018-03-01 17:14:54'),
 (001, 'User', 'Edited', 31, '2018-03-02 10:49:29'),
 (001, 'User', 'Edited', 33, '2018-03-02 12:08:36'),
-(001, 'User', 'Edited', 34, '2018-03-02 12:08:44');
+(001, 'User', 'Edited', 34, '2018-03-02 12:08:44'),
+(001, 'Strain', 'Edited', 35, '2018-03-02 17:50:12'),
+(001, 'User', 'Edited', 36, '2018-03-03 11:34:07'),
+(009, 'User', 'Edited', 37, '2018-03-03 11:34:37'),
+(009, 'User', 'Edited', 38, '2018-03-03 11:35:13'),
+(003, 'Insert', 'Edited', 50, '2018-03-03 12:02:28'),
+(003, 'Insert', 'Edited', 51, '2018-03-03 12:05:12'),
+(003, 'Insert', 'Edited', 52, '2018-03-03 12:05:31'),
+(003, 'Insert', 'Edited', 53, '2018-03-03 12:05:48'),
+(003, 'Insert', 'Edited', 54, '2018-03-03 12:06:06'),
+(011, 'User', 'Added', 55, '2018-03-03 23:04:05'),
+(011, 'User', 'Deleted', 56, '2018-03-03 23:06:45'),
+(012, 'User', 'Added', 57, '2018-03-03 23:10:01'),
+(012, 'User', 'Edited', 58, '2018-03-04 16:14:19'),
+(012, 'User', 'Edited', 59, '2018-03-04 21:46:27'),
+(012, 'User', 'Deleted', 60, '2018-03-04 21:49:51');
 
 -- --------------------------------------------------------
 
@@ -340,6 +381,7 @@ CREATE TABLE IF NOT EXISTS `ins` (
   `creator` int(3) NOT NULL,
   `date_db` varchar(10) NOT NULL,
   `comment` varchar(200) NOT NULL,
+  `private` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `insert_name` (`name`),
   UNIQUE KEY `ins_regname` (`ins_reg`),
@@ -351,10 +393,10 @@ CREATE TABLE IF NOT EXISTS `ins` (
 -- Dumping data for table `ins`
 --
 
-INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `date_db`, `comment`) VALUES
-(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blah'),
-(4, 'test ins 2', 3, 'test ins reg 2', 1, '2018-02-10', 'blah'),
-(5, 'test ins 3', 3, 'test ins reg 3', 1, '2018-02-10', 'blah');
+INSERT INTO `ins` (`id`, `name`, `type`, `ins_reg`, `creator`, `date_db`, `comment`, `private`) VALUES
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blahbleh', 0),
+(4, 'test ins 2', 3, 'test ins reg 2', 1, '2018-02-10', 'blah', 0),
+(5, 'test ins 3', 3, 'test ins reg 3', 1, '2018-02-10', 'blah', 0);
 
 --
 -- Triggers `ins`
@@ -372,11 +414,11 @@ CREATE TRIGGER `log_insert_update` AFTER UPDATE ON `ins` FOR EACH ROW insert int
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_deleted_insert` BEFORE DELETE ON `ins` FOR EACH ROW insert into ins_log(comment, creator, date_db, id, ins_reg, name, time, type) values(old.comment, old.date_db, old.id, old. ins_reg, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+CREATE TRIGGER `save_deleted_insert` BEFORE DELETE ON `ins` FOR EACH ROW insert into ins_log(comment, creator, date_db, id, ins_reg, name, time, event_type, type, private) values(old.comment, old.creator, old.date_db, old.id, old. ins_reg, old.name, UNIX_TIMESTAMP(NOW()), "Deleted", old.type, old.private)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_updated_insert` AFTER UPDATE ON `ins` FOR EACH ROW insert into ins_log(comment, creator, date_db, id, ins_reg, name, time, type) values(old.comment, old.date_db, old.id, old.ins_reg, old.name, UNIX_TIMESTAMP(NOW()), "Edited")
+CREATE TRIGGER `save_updated_insert` AFTER UPDATE ON `ins` FOR EACH ROW insert into ins_log(comment, creator, date_db, id, ins_reg, name, time, type, event_type, private) values(old.comment, old.creator, old.date_db, old.id, old.ins_reg, old.name, UNIX_TIMESTAMP(NOW()), old.type, "Edited", old.private)
 $$
 DELIMITER ;
 
@@ -397,10 +439,22 @@ CREATE TABLE IF NOT EXISTS `ins_log` (
   `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
   `event_type` varchar(15) NOT NULL,
   `time` int(100) UNSIGNED NOT NULL,
+  `private` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`old_data_id`),
   KEY `creator_id` (`creator`),
   KEY `ins_type` (`type`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `ins_log`
+--
+
+INSERT INTO `ins_log` (`id`, `name`, `type`, `ins_reg`, `creator`, `date_db`, `comment`, `old_data_id`, `event_type`, `time`, `private`) VALUES
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blah', 1, 'Edited', 1520074948, 0),
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blahbleh', 2, 'Edited', 1520075112, 0),
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blah', 3, 'Edited', 1520075131, 0),
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blahbleh', 4, 'Edited', 1520075148, 0),
+(3, 'test ins', 2, 'test ins reg', 1, '2018-02-09', 'blah', 5, 'Edited', 1520075166, 0);
 
 -- --------------------------------------------------------
 
@@ -474,16 +528,20 @@ CREATE TABLE IF NOT EXISTS `strain` (
   `id` int(3) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   `comment` varchar(200) NOT NULL,
+  `private` tinyint(1) NOT NULL DEFAULT '0',
+  `creator` int(3) NOT NULL,
+  `date_db` varchar(15) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `strain_name` (`name`)
+  UNIQUE KEY `strain_name` (`name`),
+  KEY `strain_creator` (`creator`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `strain`
 --
 
-INSERT INTO `strain` (`id`, `name`, `comment`) VALUES
-(1, 'test', '');
+INSERT INTO `strain` (`id`, `name`, `comment`, `private`, `creator`, `date_db`) VALUES
+(1, 'test', '', 0, 1, '2018-03-02');
 
 --
 -- Triggers `strain`
@@ -501,11 +559,11 @@ CREATE TRIGGER `log_strain_update` AFTER UPDATE ON `strain` FOR EACH ROW insert 
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_deleted_strain` BEFORE DELETE ON `strain` FOR EACH ROW insert into strain_log(comment, id, name, time, type) values(old.comment, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted")
+CREATE TRIGGER `save_deleted_strain` BEFORE DELETE ON `strain` FOR EACH ROW insert into strain_log(comment, id, name, time, type, date_db, private, creator) values(old.comment, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Deleted", old.date_db, old.private, old.creator)
 $$
 DELIMITER ;
 DELIMITER $$
-CREATE TRIGGER `save_updated_strain` AFTER UPDATE ON `strain` FOR EACH ROW insert into strain_log(comment, id, name, time, type) values(old.comment, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Edited")
+CREATE TRIGGER `save_updated_strain` AFTER UPDATE ON `strain` FOR EACH ROW insert into strain_log(comment, id, name, time, type, date_db, private, creator) values(old.comment, old.id, old.name, UNIX_TIMESTAMP(NOW()), "Edited", old.date_db, old.private, old.creator)
 $$
 DELIMITER ;
 
@@ -522,6 +580,9 @@ CREATE TABLE IF NOT EXISTS `strain_log` (
   `old_data_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(15) NOT NULL,
   `time` int(100) UNSIGNED NOT NULL,
+  `private` tinyint(1) NOT NULL DEFAULT '0',
+  `date_db` varchar(15) NOT NULL,
+  `creator` int(3) NOT NULL,
   PRIMARY KEY (`old_data_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -567,14 +628,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `first_name`, `last_name`, `email`, `phone`, `username`, `password`, `hash`, `active`, `admin`, `time`) VALUES
-(1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 0),
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testy', '', '', 0, 0, 0),
 (7, 'Admin', 'Adminson', 'admin.adminson@testmail.com', '536545', 'admin2', '$2y$10$ZAsTVraYj6XTRxCJ1Jgy0enqbAp89w/BLjyMmWz4uSxahoz0a6xCm', 'e7b24b112a44fdd9ee93bdf998c6ca0e', 1, 1, 0),
 (9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 0),
 (10, 'Fredrik', 'Lindeberg', 'fredrik.lindeberg@igemuppsala.se', '', 'FredrikLindeberg', '$2y$10$E5YGenXrBZRwdFVSiFp4TuLVLGayAmZo8mJeaxrG7jKMTHEVaNBTi', '912d2b1c7b2826caf99687388d2e8f7c', 1, 1, 0);
@@ -624,7 +685,7 @@ CREATE TABLE IF NOT EXISTS `users_log` (
   `type` varchar(15) NOT NULL,
   `time` int(10) UNSIGNED NOT NULL,
   PRIMARY KEY (`old_data_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `users_log`
@@ -647,7 +708,14 @@ INSERT INTO `users_log` (`user_id`, `first_name`, `last_name`, `email`, `phone`,
 (1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testy', '', '', 0, 0, 14, 'Edited', 1519920894),
 (1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 15, 'Edited', 1519984169),
 (1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 16, 'Edited', 1519988916),
-(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 17, 'Edited', 1519988924);
+(1, 'test', 'testson', 'mail@mail.com', '0123456789', 'testmaster', '', '', 0, 0, 17, 'Edited', 1519988924),
+(1, 'test', 'testson', 'email@email.com', '0123456789', 'testlord', '', '', 0, 0, 18, 'Edited', 1520073247),
+(9, 'testy', 'testville', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 19, 'Edited', 1520073277),
+(9, 'Testy', 'McTestface', 'testytestville@testyness.com', '57466446', 'testytest', '$2y$10$mfunilAu.QVka8M0V0cZUeZ9duzDXQH.UMYn5BsfoGYsyVh59LjuS', '704afe073992cbe4813cae2f7715336f', 1, 1, 20, 'Edited', 1520073313),
+(11, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '761059274', 'wigu95', '$2y$10$lgJ0qp.84./MrDnzB9jh7.rB8tqFeG3nmjmy.SbqPZfT/Hv6pzKj.', 'f899139df5e1059396431415e770c6dd', 0, 0, 21, 'Deleted', 1520114805),
+(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 0, 0, 22, 'Edited', 1520176459),
+(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 1, 0, 23, 'Edited', 1520196387),
+(12, 'Wiktor', 'Gustafsson', 'wiktorg.95@gmail.com', '0761059274', 'WG95', '$2y$10$ClrWba5cgnf.J31Ff1iUi.P9Uk2dcKK0XyOm/pOzKP00lCwCJ76VG', 'f899139df5e1059396431415e770c6dd', 1, 1, 24, 'Deleted', 1520196591);
 
 --
 -- Constraints for dumped tables
@@ -686,6 +754,12 @@ ALTER TABLE `entry_upstrain`
 ALTER TABLE `ins`
   ADD CONSTRAINT `creator_id` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE,
   ADD CONSTRAINT `ins_type` FOREIGN KEY (`type`) REFERENCES `ins_type` (`id`) ON UPDATE CASCADE;
+
+--
+-- Constraints for table `strain`
+--
+ALTER TABLE `strain`
+  ADD CONSTRAINT `strain_creator` FOREIGN KEY (`creator`) REFERENCES `users` (`user_id`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `upstrain_file`

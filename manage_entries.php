@@ -82,7 +82,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             <th>Year created</th>
             <th>iGEM Registry</th>
             <th>Comment</th>
-            <th>Created by</th>
+            <th>Added by</th>
             <th>Private</th>
             <th>Created physically</th>
             <th colspan="3">Actions</th>

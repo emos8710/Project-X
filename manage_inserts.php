@@ -96,7 +96,7 @@ if (mysqli_num_rows($typequery) < 1) {
                     <td>
                         <form class="control-panel" action="<?php echo $current_url; ?>" method="GET">
                             <input type="hidden" name="content" value="manage_inserts">
-                            <input type="hidden" name="history" value="ins_type">
+                            <input type="hidden" name="history" value="instype">
                             <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
                             <button class="control-panel-history" title="View insert type history" type="submit"/>
                         </form>
@@ -119,7 +119,7 @@ if (mysqli_num_rows($typequery) < 1) {
 }
 ?>
 </p>
-
+<br>
 <p>
 <h4>Inserts</h4>
 <?php
@@ -138,7 +138,7 @@ if (mysqli_num_rows($insertquery) < 1) {
                 <th>Type</th>
                 <th>Date added</th>
                 <th>iGEM Registry</th>
-                <th>Created by</th>
+                <th>Added by</th>
                 <th>Comment</th>
                 <th colspan="3">Actions</th>
             </tr>

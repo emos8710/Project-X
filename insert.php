@@ -1,8 +1,8 @@
 
 <?php
 
-if (count(get_included_files()) == 1)
-    exit("Access restricted");
+//if (count(get_included_files()) == 1)
+    //exit("Access restricted");
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
@@ -18,10 +18,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
-
-
-    $ins_name = $_POST["ins"];
-    $ins_type = $_POST["insert_type"];
+    $private = 0;
+    $created = 0;
 
 //Fetch strain id from database
     $strain_s = "SELECT id FROM strain WHERE name LIKE '$strain'";
@@ -35,10 +33,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $back_row = mysqli_fetch_assoc($back_s_query);
     $back_row_id = $back_row["id"];
 
+    if (isset($_POST['private'])) {
+        $private = intval($_POST['private']);
+    }
+    if (isset($_POST['created'])) {
+        $created = intval($_POST['created']);
+    }
+
 // Insert entry information into database
-    $sql_entry = "INSERT INTO entry (year_created, comment, date_db, entry_reg, backbone, strain,creator) VALUES (?,?,?,?,?,?,?)";
+    $sql_entry = "INSERT INTO entry (year_created, comment, date_db, entry_reg, "
+            . "backbone, strain,creator,private,created)"
+            . " VALUES (?,?,?,?,?,?,?,?,?)";
     $stmt_entry = $link->prepare($sql_entry);
-    $stmt_entry->bind_param("isssiii", $year, $comment, $current_date, $reg_id, $back_row_id, $strain_row_id, $creator);
+    $stmt_entry->bind_param("isssiiiii", $year, $comment, $current_date, $reg_id, 
+            $back_row_id, $strain_row_id, $creator, $private, $created);
     $stmt_entry->execute();
     $stmt_entry->close();
 
@@ -53,23 +61,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $year_created_row = mysqli_fetch_assoc($year_created_query);
     $upstrain_id = $year_created_row["upstrain_id"];
 
-
-//Private
-
-    if (isset($_POST['private']) && $_POST['private'] == 'Private') {
-        
-    }
-
-
-//Created 
-
-    if (isset($_POST['created']) && $_POST['created'] == 'Created') {
-        
-    }
-
-
-
 // Insert
+    $ins_name = $_POST["ins"];
+    $ins_type = $_POST["insert_type"];
     $num = count($ins_name);
 
     if ($num > 0) {
@@ -83,28 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $stmt_entry_ins = $link->prepare($entry_ins);
             $stmt_entry_ins->bind_param("ii", $entry_id, $ins_id);
             $stmt_entry_ins->execute();
-            $stmt_entry_ins->close();
-
-            if (trim($ins_name[$i] != '')) {
-                $check3 = "SELECT name FROM ins WHERE name LIKE '$ins_name[$i]'";
-                $check_query3 = mysqli_query($link, $check3);
-                if (mysqli_num_rows($check_query3) < 1) {
-
-                    $ins_type_s = "SELECT id FROM ins_type WHERE name LIKE '$ins_type[$i]'";
-                    $ins_type_s_query = mysqli_query($link, $ins_type_s);
-                    $ins_type_row = mysqli_fetch_assoc($ins_type_s_query);
-                    $ins_type_id = $ins_type_row["id"];
-
-
-                    $sql_ins = "INSERT INTO ins (name,date_db,type,creator) VALUES (?,?,?,?)";
-                    $stmt_ins = $link->prepare($sql_ins);
-                    $stmt_ins->bind_param("sssi", $ins_name[$i], $current_date, $ins_type_id, $creator);
-                    $stmt_ins->execute();
-                    $stmt_ins->close();
-                }
+            $stmt_entry_ins->close();        
             }
-        }
-    } else {
+        } else {
         
     }
 

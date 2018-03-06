@@ -25,15 +25,17 @@ mysqli_close($link) or die("Could not close connection to database");
     <tr>
         <th class="top" colspan="7">Current data</th>
     </tr>
-    <tr>
-        <?php
-        if ($is_deleted) {
-            ?>
+    <?php
+    if ($is_deleted) {
+        ?>
+        <tr>
             <td colspan="7"><strong>No active data (user has been removed).</strong></td>
-            <?php
-        } else {
-            $data = mysqli_fetch_assoc($current_info_query);
-            ?>
+        </tr>
+        <?php
+    } else {
+        $data = mysqli_fetch_assoc($current_info_query);
+        ?>
+        <tr>
             <th>Username</th>
             <th>Name</th>
             <th>E-mail</th>

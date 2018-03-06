@@ -13,10 +13,10 @@ if ($deleted) {
     $restore_sql = "INSERT INTO ins_type(id, name) "
             . "SELECT id, name FROM ins_type_log WHERE old_data_id = " . $restore_id . ";";
 } else {
-    $old_data_sql = "SELECT id, name FROM ins_type_log WHERE old_data_id = " . $restore_id . ";";
+    $old_data_sql = "SELECT name FROM ins_type_log WHERE old_data_id = " . $restore_id . ";";
 
     $old_data = mysqli_fetch_assoc(mysqli_query($link, $old_data_sql));
-    $restore_sql = "UPDATE ins_type SET id = '" . $old_data['id'] . "', name = '" . $old_data['name'] . "' WHERE id = " . $instype_id . ";";
+    $restore_sql = "UPDATE ins_type SET name = '" . $old_data['name'] . "' WHERE id = " . $instype_id . ";";
 }
 
 $restore_query = mysqli_query($link, $restore_sql);

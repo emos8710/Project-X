@@ -46,25 +46,47 @@ h1, h5, h6 {
     font-size: 28px; /* Added */
 }
 
-h2.help, h2.home {
+h2.help, h2.user {
     text-align: center;
     font-size: 35px;
     margin-top: 30px; 
     font-style: normal;
+	margin-bottom: 0px;
+	font-weight: 150;
 }
 
-h3.help, h3.home {
+h2.home {
+    text-align: center;
+    font-size: 40px;
+    margin-top: 30px; 
+    font-style: normal;
+	margin-bottom: 0px;
+	font-weight: 100;
+}
+
+h3.help, h3.home, h3.user {
     text-align: center;
     font-size: 25px; 
     margin-top: 10px; 
     margin-bottom: 10px;
+	font-style: normal;
+	margin-left: 0px; 
+}
+
+h4.home {
+    text-align: center;
+    font-size: 20px; 
+    margin-top: 10px; 
+    margin-bottom: 10px;
+	font-style: normal;
+	font-weight: 100;
 }
 
 h4 {
-    text-align: center;
     font-size: 17px;
     margin-top: 0px;
     margin-bottom: 10px;
+	text-align:center; 
 }
 
 /* Text */
@@ -92,7 +114,9 @@ form.quicksearch {
 /* Search, insert */
 form.search-form, form.insert-form {
     float: left;
-    width:100%;
+    width: 100%;
+    padding: 10px 10px;
+    margin-left: 40px; 
 }
 
 /* Search */
@@ -142,6 +166,10 @@ table.control-panel-history td {
     border-bottom: none;
 }
 
+table.user_entries {
+	margin-left: 20%;
+}
+
 th {
     padding-right: 10px;
     text-align: center;
@@ -161,6 +189,7 @@ td {
 
 td.comment {
     min-width: 200px;
+	text-align: center;
 }
 
 /* ---------- SPAN ---------- */
@@ -192,6 +221,18 @@ a.external::after { /* Adds external link image after link */
 
 a.edit::after {	/* Adds edit image after link */
     background-image: url(../images/edit.png);
+    background-size: 12px 12px;
+    display: inline-block;
+    width: 12px; 
+    height: 12px;
+    content:"";
+    margin-left: 3px;
+    margin-right: 12px;
+	clear:right; 
+}
+
+a.mail::after { /* Adds external link image after link */
+    background-image: url(../images/mail.png);
     background-size: 12px 12px;
     display: inline-block;
     width: 12px; 
@@ -278,9 +319,7 @@ div.quicksearch a:hover {
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
-    max-width:100%;
     margin: 15px;
-
 }
 
 /* Forms */
@@ -328,6 +367,58 @@ div.control_panel_menu, div.entry_nav{
     width:100%; 
     margin-left:0; 
 }
+
+div.info {
+	margin: 10px;
+	width:100%;
+}
+
+div.innertube div.igem_text, div.innertube div.upstrain_text {
+	border: 3px solid #0074D9;
+	margin-top: 0;
+	
+    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+div.innertube div.igem_text {
+	float: left; 
+	width: 48%;
+	padding:10px;
+	display: inline-block;
+	margin-left: 10px;
+	text-align: justify;
+    text-justify: inter-word;
+	margin-top: 0; 
+}
+
+div.innertube div.upstrain_text {
+	float: right;
+	width: 48%; 
+	padding: 10px; 
+	margin-right: 10px;
+	text-align: justify;
+    text-justify: inter-word;
+	margin-top: 0;
+}
+
 
 /* ---------- NAVIGATION BAR ---------- */
 nav.navigation {
@@ -529,6 +620,27 @@ img.quicksearch {
     height: 100%;
 }
 
+.home img {
+	float:left;
+	width:70%;
+	margin-left: 15%;
+	margin-bottom: 10px;
+}
+
+.igem_text img {
+	float:left;
+	width:40%;
+	margin-left: 30%;
+	margin-bottom: 14px;
+}
+
+.upstrain_text img {
+	float:left;
+	width:54%;
+	margin-left: 23%;
+	margin-bottom: 10px;
+}
+
 button.control-panel-restore::after { /* Add restore image to "restore" button */
     background-image: url(../images/restore.png);
     background-size: 16px 16px;
@@ -575,6 +687,8 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
     content:"";
 }
 
+
+
 /* ---------- LOGIN SYSTEM SPECIFIC ---------- */
 .top-row > div:last-child { /* Puts input boxes next to each other */
     margin: 0;
@@ -598,6 +712,18 @@ button.control-panel-admin::after { /* Add admin image to "make admin" button */
 
 /* ---------- CONTROL PANEL ---------- */
 
+h3.event-log {
+    margin-left: 50px;
+}
+
+table.control-panel-log {
+    margin-left: 50px;
+}
+
+.control-panel-show h4 {
+    text-align: left;
+}
+
 div.panel-history-show {
     display: inline-block;
     margin-top: 30px;
@@ -606,7 +732,7 @@ div.panel-history-show {
 div.control-panel-show { /* Style for region where the desired content will be shown */
     float: left;
     width: 50%;
-    margin-right: 125px;
+    margin-right: 250px;
 }
 
 div.control_panel_menu {
@@ -627,13 +753,13 @@ div.control_panel_menu {
     left: 50%; 
 }
 
-ul.help_nav li { /* Help page nav */ 
+ul.help_nav li, ul.search_nav li{ /* Help page nav */ 
     float: left;
     list-style-type: none;
     margin: 0 0px;
 }
 
-ul.help_nav a { /* Help page nav button */
+ul.help_nav a, ul.search_nav a{ /* Help page nav button */
     display: block; 
     background: #81D4FA; /* #0074D9; */
     color: #001F3F;/* Changed. Text color in navigation buttons */ 
@@ -666,7 +792,12 @@ ul.help_nav a { /* Help page nav button */
     border-bottom-right-radius: 7px;
 }
 
-ul.help_nav a:hover { /* Help page nav buttons */ 
+ul.help_nav a:hover, ul.search_nav a:hover, .control_panel_menu a:hover { /* Help page nav buttons */ 
+    background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
+    color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+}	
+
+ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* Help page nav buttons */ 
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
@@ -748,31 +879,118 @@ ul.help_nav a:hover { /* Help page nav buttons */
 }
 
 div.help_text {
-    width:68%;
-    margin-left: 16%;
-    margin-right: 16%;
+    width:64%;
+    margin-left: 18%;
+    margin-right: 18%;
     font-style: italic;
     text-align: justify;
     text-justify: inter-word;
 }
 
-div.home {
-	width:80%;
-    margin-left: 10%;
-    margin-right: 10%;
+div.innertube div.home {
+	width:70%;
+    margin-left: 15%;
+    margin-right: 15%;
 	font-style: italic;
     text-align: justify;
     text-justify: inter-word;
+	margin-bottom: 0;
 }
 
-div.igem_text, div.upstrain_text {
-	width:80%;
-    margin-left: 10%;
-    margin-right: 10%;
-    text-align: justify;
-    text-justify: inter-word;
+/* PROFILE PAGE */
+div.user_page {
+	width: 26%;
+	margin-left: 37%; 
 }
 
+li.user {
+	list-style-type: none;
+}
+
+div li span.user_title {
+	float: left; 
+	width: 50%; 
+	margin: 0px;
+	padding:0;
+}
+
+
+span.user_title {
+	font-style: bold; 
+}
+
+div li span.user_info {
+	width: 50%; 
+	margin: 0px;
+	padding: 0;
+}
+
+strong {
+	text-align: center; 
+}
+
+p a.edit {
+	float: center;
+	margin-left: 80px;
+}
+
+div.edit_users {
+	float: left;
+	margin: 10px;
+	border: 3px solid black;
+	padding: 10px;
+	
+	    /* Rounded corners on top */  /* Added: all */
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+
+    /* Rounded corners on bottom */ /* Added: all */
+    -webkit-border-bottom-left-radius: 7px;
+    -webkit-border-bottom-right-radius: 7px;
+
+    -moz-border-radius-bottomleft: 7px;
+    -moz-border-radius-bottomright: 7px;
+
+    border-bottom-left-radius: 7px;
+    border-bottom-right-radius: 7px;
+}
+
+div.edit_users ul {
+	padding: 0;
+}
+
+div.edit_users ul li {
+	list-style-type: none;
+}
+
+div.edit_users ul li div.edit_title {
+	float: left; 
+	font-style: bold;
+	width: 150px;
+}
+
+div.edit_users ul li div.edit_info {
+	float: right;
+	margin-left: 20px;
+}
+
+div.edit_users ul li div.back {
+	float: left;
+	width:40%;
+	margin-left: 30%;
+	margin-top: 20px;
+}
+
+div.user_page p.notadded{
+	width: 26%;
+	margin-left: 37%; 
+}
 
 /* IDs */
 #logo { /* Added: All */

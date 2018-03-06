@@ -36,12 +36,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
 
         $check_admin_sql = "SELECT admin, active from users WHERE user_id = " . $id;
         $check_admin_query = mysqli_query($link, $check_admin_sql) or die("MySQL error: " . mysqli_error($link));
-        $is_admin = (mysqli_fetch_array($check_admin_query)[0] == '1');
-        $is_active = (mysqli_fetch_array($check_admin_query)[1] == '1');
+        $check_admin_result = mysqli_fetch_array($check_admin_query);
+        $is_admin = ($check_admin_result[0] == 1);
+        $is_active = ($check_admin_result[1] == 1);
 
         if ($delete) {
 
-            if ($user_id == $_SESSION['user_id']) {
+            if ($id == $_SESSION['user_id']) {
                 $delete_msg = "<strong style=\"color:red\">You cannot remove yourself!</strong>";
             } else if ($is_admin) {
                 $delete_msg = "<strong style=\"color:red\">You cannot remove an admin!</strong>";
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
 
         if ($make_admin) {
 
-            if ($user_id == $_SESSION['user_id']) {
+            if ($id == $_SESSION['user_id']) {
                 ?>
                 <strong style="color:red">You are already an admin!</strong>
                 <?php
@@ -67,11 +68,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
             } else {
                 $adminsql = "UPDATE users SET admin='1' WHERE user_id = " . $id;
                 $adminquery = mysqli_query($link, $adminsql);
-                $admin_msg = "<strong style=\"color:green\">User " . $user_id . "is now an admin!</strong>";
+                $admin_msg = "<strong style=\"color:green\">User " . $id . "is now an admin!</strong>";
             }
             echo $admin_msg;
         }
-
         mysqli_close($link) or die("Could not close connection to database");
         ?>
         <br>
@@ -131,14 +131,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
                     </form>
                 </td>
                 <td>
-                    <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
+                    <form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
                         <input type="hidden" name="admin" value="<?php echo $user['user_id']; ?>">
                         <input type="hidden" name="header" value="refresh">
                         <button type="submit" class="control-panel-admin" title="Make admin" onclick="confirmAction(event, 'Really want to make this user admin?')"/>
                     </form>
                 </td>
                 <td>
-                    <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
+                    <form class="control-panel" action="<?php echo $_SERVER['REQUEST_URI']; ?>" method="POST">
                         <input type="hidden" name="delete" value="<?php echo $user['user_id']; ?>">
                         <input type="hidden" name="header" value="refresh">
                         <button type="submit" class="control-panel-delete" title="Delete user" onclick="confirmAction(event, 'Really want to delete this user?')"/>
@@ -151,4 +151,3 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
     ?>
 </table>
 </p>
-

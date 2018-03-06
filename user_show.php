@@ -32,36 +32,54 @@ $entry = mysqli_fetch_assoc($entry_result);
 if ($loggedin && $active) {?>
 	<!-- Show user information -->
 	<!-- Shows user as admin or user -->
-	<?php if ($info["admin"] == 1) echo "<h2>Admin ";
-	else echo "<h2>User ";
+	<?php if ($info["admin"] == 1) echo "<h2 class=\" user\">Admin ";
+	else echo "<h2 class=\"user\">User ";
 	echo $info["uname"]."</h2>"; ?>
 	<br>
-	<h3>Contact information</h3>
-	<p>Name: <?php echo $info["fname"]." ".$info["lname"] ?>
-	<br>Email: <?php echo "<a href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?>
-	<br>Phone number: <?php echo $info["phone"] ?></p>
-<?php } else {
-	?>
-	<h2>User profile</h2>
+	<h3 class="user">Contact information</h3>
+	<div class="user_page">
+		<li class="user">
+			<span class="user_title">Name:</span> <span class="user_info"> <?php echo $info["fname"]." ".$info["lname"] ?></span>
+		</li>
+		<br>
+		<li class="user">
+			<span class="user_title">Email: </span> <span class="user_info"> <?php echo "<a class=\"mail\" href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?></span>
+		</li>
+		<br>
+		<li class="user">
+		<span class="user_title">Phone number: </span> <span class="user_info"> <?php echo $info["phone"] ?></span>
+		</li>
+	</div>
+		<?php 
+		} else {
+		?>
+	<div class="user_page">
+	<h2 class="user">User profile</h2>
 	<p>You need to be logged in and activated to see contact information.</p>
+	</div>
 <?php } ?>
 <br>
 
 <?php // Decide if user can edit information
 if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
+	<div class="user_page">
 	<p>
 	<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit">Edit user information</a>
 	</p>
+	</div>
 <?php } ?>
 
+<div class="clear"></div>
 <br>
 
 <!-- Show entry information -->
-<h3>User entries</h3>
+<h3 class="user">User entries</h3>
 
 <?php if (mysqli_num_rows($entry_result) < 1) {
 	?>
-	<strong>User has not added any entries (yet).</strong>
+	<div class="user_page">
+	<p class="notadded">User has not added any entries (yet).</p>
+	</div>
 	<?php
 } else { ?>
 					
