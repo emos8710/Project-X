@@ -908,32 +908,42 @@ div.innertube div.home {
 }
 
 /* PROFILE PAGE */
-div.user_page {
+
+/* div.user_page {
 	width: 26%;
 	margin-left: 37%; 
-}
+} */ 
 
 li.user {
 	list-style-type: none;
 }
 
-div li span.user_title {
-	float: left; 
-	width: 50%; 
-	margin: 0px;
-	padding:0;
+
+div.user_page div.user_title {
+	float: left;
+	padding:10px;
+	display: inline-block;
+	margin-left: 38%;
+	text-align: justify;
+    text-justify: inter-word;
+	margin-top: 0; 
 }
 
-
-span.user_title {
-	font-style: bold; 
+div.user_page div.user_info {
+	padding: 10px; 
+	
 }
 
-div li span.user_info {
+div.user_page div.edit {
+	margin-left: 43%;
+}
+
+/* div li span.user_info {
 	width: 50%; 
 	margin: 0px;
 	padding: 0;
 }
+*/ 
 
 strong {
 	text-align: center; 
@@ -997,9 +1007,8 @@ div.edit_users ul li div.back {
 	margin-top: 20px;
 }
 
-div.user_page p.notadded{
-	width: 26%;
-	margin-left: 37%; 
+div.not_added{
+	margin-left: 40%; 
 }
 
 /* IDs */

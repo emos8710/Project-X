@@ -28,7 +28,8 @@ mysqli_close($link) or die("Could not close database connection");
 // Put user and first row of entry info in arrays
 $info = mysqli_fetch_assoc($user_result);
 $entry = mysqli_fetch_assoc($entry_result);
-
+?>
+<div class="user_page"><?php
 if ($loggedin && $active) {?>
 	<!-- Show user information -->
 	<!-- Shows user as admin or user -->
@@ -37,8 +38,7 @@ if ($loggedin && $active) {?>
 	echo $info["uname"]."</h2>"; ?>
 	<br>
 	<h3 class="user">Contact information</h3>
-	<div class="user_page">
-		<li class="user">
+		<!-- <li class="user">
 			<span class="user_title">Name:</span> <span class="user_info"> <?php echo $info["fname"]." ".$info["lname"] ?></span>
 		</li>
 		<br>
@@ -48,8 +48,23 @@ if ($loggedin && $active) {?>
 		<br>
 		<li class="user">
 		<span class="user_title">Phone number: </span> <span class="user_info"> <?php echo $info["phone"] ?></span>
-		</li>
-	</div>
+		</li> -->
+		<div class="user_title">
+			Name: 
+			<br>
+			Email: 
+			<br>
+			Phone number: 
+			<br>
+		</div>
+		<div class="user_info">
+			<?php echo $info["fname"]." ".$info["lname"] ?> 
+			<br>
+			<?php echo "<a class=\"mail\" href=\"mailto:".$info["email"]."\">".$info["email"]."</a>" ?>
+			<br>
+			<?php echo $info["phone"] ?> 
+			<br>
+		</div>
 		<?php 
 		} else {
 		?>
@@ -59,16 +74,12 @@ if ($loggedin && $active) {?>
 	</div>
 <?php } ?>
 <br>
-
 <?php // Decide if user can edit information
 if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
-	<div class="user_page">
-	<p>
+	<div class="edit">
 	<a class="edit" href="<?php echo $_SERVER['REQUEST_URI']; ?>&edit">Edit user information</a>
-	</p>
 	</div>
 <?php } ?>
-
 <div class="clear"></div>
 <br>
 
@@ -77,8 +88,8 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 
 <?php if (mysqli_num_rows($entry_result) < 1) {
 	?>
-	<div class="user_page">
-	<p class="notadded">User has not added any entries (yet).</p>
+	<div class="not_added">
+	<p>User has not added any entries (yet).</p>
 	</div>
 	<?php
 } else { ?>
@@ -151,3 +162,4 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 	<!-- End table -->
 	</table>
 <?php } ?>
+</div>
