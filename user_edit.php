@@ -241,10 +241,12 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		<li><div class="edit_title">Phone number</div> <?php echo $info["phone"];
 		if ($current_content != "phone") { ?>
 			<div class="edit_info"><a href="?user_id=<?php echo $user_id;?>&edit&content=phone">Edit</a></div>
-			<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-				<input type="hidden" name="remove_phone">
-				<input type="submit" value="Remove">
-			</form>
+			<?php if ($info["phone"] != "") { ?>
+				<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+					<input type="hidden" name="remove_phone">
+					<input type="submit" value="Remove">
+				</form>
+			<?php } ?>
 		<?php } ?></li>
 		<?php if($current_content == "phone") { ?>
 			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
@@ -259,7 +261,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		// Change password
 		?>
 			<li><?php if ($current_content != "password") { ?>
-				<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a></div>
+				<div class="edit_title"><a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a></div>
 			<?php }
 				if($current_content == "password") { ?>
 					<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
