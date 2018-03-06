@@ -10,8 +10,8 @@ $check_exists = mysqli_query($link, "SELECT * from ins WHERE id = " . $insert_id
 $deleted = (mysqli_num_rows($check_exists) < 1);
 
 if ($deleted) {
-    $restore_sql = "INSERT INTO ins(comment, date_db, id, ins_reg, name, private, type) "
-            . "SELECT comment, date_db, id, ins_reg, name, private, type "
+    $restore_sql = "INSERT INTO ins(comment, date_db, id, ins_reg, name, private, type, creator) "
+            . "SELECT comment, date_db, id, ins_reg, name, private, type, creator "
             . "FROM ins_log "
             . "WHERE old_data_id = " . $restore_id;
 } else {
