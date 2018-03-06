@@ -2,29 +2,43 @@
 
 <?php
 
-if (count(get_included_files()) == 1) exit("Access restricted");
+if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
-include 'scripts/db.php';
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-$strain = mysqli_real_escape_string($link, $_REQUEST['strain']);
-$comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
-$current_date = date("Y-m-d");
-$creator = $_SESSION['user_id'];
+    include 'scripts/db.php';
+//Variables
+    $strain = mysqli_real_escape_string($link, $_REQUEST['strain']);
+    $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
+    $current_date = date("Y-m-d");
+    $creator = $_SESSION['user_id'];
 
 
 // Insert new strain if not existing
-$check = "SELECT name FROM strain WHERE name LIKE '$strain'";
-$check_query = mysqli_query($link, $check);
-if (mysqli_num_rows($check_query) < 1) {
-    $sql_strain = "INSERT INTO strain (name,comment,creator,date_db) VALUES (?,?,?,?)";
-    $stmt_strain = $link->prepare($sql_strain);
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
-            $stmt_strain->bind_param("ssis", $strain, $comment, $creator, $current_date);
-            $stmt_strain->execute();
-            $stmt_strain->close();
+    $check = "SELECT name FROM strain WHERE name LIKE '$strain'";
+    $check_query = mysqli_query($link, $check);
+    if (mysqli_num_rows($check_query) < 1) {
+        $sql_strain = "INSERT INTO strain (name,comment,creator,date_db) VALUES (?,?,?,?)";
+        if ($stmt_strain = $link->prepare($sql_strain)) {
+            if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
+                if ($stmt_strain->bind_param("ssis", $strain, $comment, $creator, $current_date)) {
+                    if ($stmt_strain->execute()) {
+                        $_SESSION['success'] = "<div class = 'success'>New strain submitted successfully</div>";
+                        header("Location: new_insert.php?success");
+                    } else {
+                        $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_strain->errno . ")" . " " . "Error: " . $stmt_strain->error . "</div>";
+                        header("Location: new_insert.php?error");
+                    } $stmt_strain->close();
+                } else {
+                    $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_strain->errno . ")" . " " . "Error: " . $stmt_strain->error . "</div>";
+                    header("Location: new_insert.php?error");
+                }
+            }
         } else {
-            echo "This should never happen";
+            $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
+            header("Location: new_insert.php?error");
         }
     }
 }
