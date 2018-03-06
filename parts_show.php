@@ -221,7 +221,7 @@ if (isset($_GET["ins_id"])) {
             <?php
         }
 
-        if ($insertdata['private'] == 1 && !($loggedin && $active)) {
+        if ($straindata['private'] == 1 && !($loggedin && $active)) {
             ?>
             <h3>
                 Access denied

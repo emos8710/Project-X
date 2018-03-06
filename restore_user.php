@@ -7,9 +7,8 @@ $restore_id = mysqli_real_escape_string($link, $_POST['restore_data']);
 $user_id = mysqli_real_escape_string($link, $_POST['restore_user']);
 
 $check_exists = mysqli_query($link, "SELECT * from users WHERE user_id = " . $user_id);
-$deleted = (mysqli_num_rows($check_exists) < 1);
 
-if ($deleted) {
+if (mysqli_num_rows($check_exists) < 1) {
     $restore_sql = "INSERT INTO users(active, admin, email, first_name, hash, last_name, password, phone, username, user_id) "
             . "SELECT active, admin, email, first_name, hash, last_name, password, phone, username, user_id FROM users_log "
             . "WHERE old_data_id = " . $restore_id . ";";
