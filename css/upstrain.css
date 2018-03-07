@@ -13,6 +13,7 @@ body {
     padding: 0;
     line-height: 1.5em;
     font-family: Arial; /* Sans-serif; */
+	background: #001F3F;
 }
 
 main {
@@ -32,7 +33,8 @@ nav {
 /* Footer */
 footer {
     clear: both;
-    background: #E1F5FE; /* Changed */ 
+    background: #001F3F; /* Changed */
+	color:white;
 }
 
 .field-wrap {	/* For wrapping input fields in the login system */
@@ -87,6 +89,12 @@ h4 {
     margin-top: 0px;
     margin-bottom: 10px;
 	text-align:center; 
+}
+
+footer h4 {
+	text-align: left;
+	margin: 0;
+	color: #E1F5FE;
 }
 
 /* Text */
@@ -331,10 +339,14 @@ div.quicksearch a:hover {
     background-color: inherit;
 }
 
+footer a {
+	color: #0074D9;
+}
+
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
-    margin: 14px;
+    padding: 15px;
 }
 
 /* Forms */
@@ -392,6 +404,7 @@ div.info {
 div.innertube div.igem_text, div.innertube div.upstrain_text {
 	border: 3px solid #0074D9;
 	margin-top: 0;
+	margin-bottom: 15px;
 	
     /* Rounded corners on top */  /* Added: all */
     -webkit-border-top-left-radius: 7px;
@@ -433,6 +446,11 @@ div.innertube div.upstrain_text {
 	text-align: justify;
     text-justify: inter-word;
 	margin-top: 0;
+}
+
+footer div {
+	float: left;
+	margin: 0 40px 0 40px;
 }
 
 
@@ -665,6 +683,10 @@ img.quicksearch {
 	margin-bottom: 10px;
 }
 
+footer img  {
+	float: left;
+}
+
 button.control-panel-restore::after { /* Add restore image to "restore" button */
     background-image: url(../images/restore.png);
     background-size: 16px 16px;
@@ -673,7 +695,6 @@ button.control-panel-restore::after { /* Add restore image to "restore" button *
     height: 16px;
     content:"";
 }
-
 
 button.control-panel-history::after { /* Add history image to "history" button */
     background-image: url(../images/history.png);
@@ -872,6 +893,7 @@ ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* 
     float: center;
     width:84%;
     margin-top: 5px;
+	margin-bottom: 15px;
     margin-left: 8%; 
     margin-right: 8%;
     text-align: justify;
@@ -1023,6 +1045,12 @@ div.edit_users ul li div.back {
 div.not_added{
 	margin-left: 40%; 
 }
+
+/* reCAPTCHA */
+div.g-recaptcha {
+	margin-left: 20%; 
+}
+
 
 /* IDs */
 #logo { /* Added: All */
