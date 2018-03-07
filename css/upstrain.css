@@ -1046,6 +1046,12 @@ div.not_added{
 	margin-left: 40%; 
 }
 
+/* reCAPTCHA */
+div.g-recaptcha {
+	margin-left: 20%; 
+}
+
+
 /* IDs */
 #logo { /* Added: All */
     max-height: 68px; /* Added. Logo less high */
