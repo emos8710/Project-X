@@ -78,7 +78,7 @@ if ($loggedin && $active && $admin) {
                 ?>
                 <div class="panel-history-show">
                     <?php
-                    $pages = ["user", "instype", "insert", "backbone", "strain", "entry", "entry_insert"];
+                    $pages = ["user", "instype", "insert", "backbone", "strain", "entry"];
                     if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['restore_data'])) {
                         foreach ($pages as $page) {
                             $page = 'restore_' . $page;

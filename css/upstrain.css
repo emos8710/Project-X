@@ -147,8 +147,8 @@ table {
     margin-top: 10px;
 }
 
-table.strain, table.backbone, table.insert {
-    display: inline-block;
+table.strain, table.backbone, table.insert, table.control-panel-history {
+    display: inline;
 }
 
 table.control-panel-history th.top {

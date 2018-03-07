@@ -23,9 +23,15 @@ if (!$backbonequery)
     $mysql_error = "Backbone: " . mysqli_error($link);
 
 $insertsql = "SELECT ins.id, ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.date_db AS date, entry_inserts.position AS pos, "
-        . "users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
-        . "users, entry_inserts WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry_inserts.entry_id = "
-        . "entry.id AND entry_inserts.insert_id = ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
+        . "users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id "
+        . "FROM entry_inserts "
+        . "LEFT JOIN ins ON entry_inserts.insert_id = ins.id "
+        . "LEFT JOIN ins_type ON ins.type = ins_type.name "
+        . "LEFT JOIN entry ON entry_inserts.entry_id = entry.id "
+        . "LEFT JOIN users ON ins.creator = users.user_id "
+        . "LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
+        . "WHERE entry_upstrain.upstrain_id = '$id' "
+        . "ORDER BY entry_inserts.position ASC";
 $insertquery = mysqli_query($link, $insertsql);
 if (!$insertquery)
     $mysql_error = "Insert: " . mysqli_error($link);
@@ -231,7 +237,7 @@ if ($error) {
                             <?php
                             if ($backbonedata['biobrick'] === null || $backbonedata['biobrick'] === '') {
                                 ?>
-                            <a class="external" href="http://parts.igem.org/Part:<?php echo $backbonedata['biobrick']; ?>" target="_blank"><?php echo $backbonedata['biobrick']; ?></a>
+                                <a class="external" href="http://parts.igem.org/Part:<?php echo $backbonedata['biobrick']; ?>" target="_blank"><?php echo $backbonedata['biobrick']; ?></a>
                                 <?php
                             } else {
                                 echo "N/A";

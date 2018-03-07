@@ -10,7 +10,7 @@ include 'scripts/db.php';
 // Fetch all entries
 $entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
         . "entry.entry_reg AS biobrick, entry.created AS created, entry.private AS private, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-        . "strain.name AS sname, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
+        . "strain.name AS sname, ins.id AS iid, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
         . "LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
         . "LEFT JOIN backbone ON entry.backbone = backbone.id "
         . "LEFT JOIN strain ON entry.strain = strain.id "
@@ -56,18 +56,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     } else {
         $row = mysqli_fetch_assoc($entryquery);
         $entry_inserts = array(); // create empty array for linking each entry with its inserts
+        $entry_insert_ids = array();
         $rows = [];
         while ($row) { // will return FALSE when no more rows
             array_push($rows, $row);
             $current_id = $row['eid']; // fetch current entry ID
             $inserts = []; // empty array for storing inserts
+            $insert_ids = []; // and one for storing their ID's
             while ($current_id == $row['eid']) { // loop over all rows with the same entry ID
-                array_push($inserts, $row['iname']); // add this row's insert to the array
+                array_push($inserts, $row['iname']);// add this row's insert to the array
+                array_push($insert_ids, $row['iid']);
                 $row = mysqli_fetch_assoc($entryquery); // next row
                 if (!$row)
                     break; //break if no more rows
             }
             $entry_inserts[$current_id] = $inserts; // associate entry ID with its inserts in the array.
+            $entry_insert_ids[$current_id] = $insert_ids;
         }
         mysqli_data_seek($entryquery, 0); // reset result to beginning
         ?>
@@ -98,10 +102,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
                 <?php
                 $current_entry = $row['eid'];
                 $current_inserts = $entry_inserts[$current_entry];
+                $current_ids = $entry_insert_ids[$current_entry];
                 $ins_string = "";
                 for ($i = 0; $i < count($current_inserts); $i++) {
-                    if ($i == count($current_inserts) - 1): $ins_string = $ins_string . $current_inserts[$i];
-                    else: $ins_string = $ins_string . $current_inserts[$i] . ", ";
+                    $link_string = "<a href=\"parts.php?ins_id=" . $current_ids[$i] . "\">" . $current_inserts[$i] . "</a>";
+                    if ($i == count($current_inserts) - 1): $ins_string = $ins_string . $link_string;
+                    else: $ins_string = $ins_string . $link_string . ", ";
                     endif;
                 }
                 ?>
@@ -139,7 +145,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
                         <input type="hidden" name="delete" value="<?php echo $row['eid']; ?>">
                         <input type="hidden" name="header" value="refresh">
-                        <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Really want to delete this entry?')"/>
+                        <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Delete entry <?=$row['eid']?>? THIS IS PERMANENT. To resotre deleted entry, you need to creata new one manually.')"/>
                     </form>
                 </td>
             </tr>
