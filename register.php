@@ -88,7 +88,7 @@ if ($captcha_success->success == false) {
                     // If the query returns zero rows, the username is free
                     else {
                         // The registering user is inserted into the database
-                        $sql = "INSERT INTO users (first_name, last_name, email, phone, username, password, hash, time) VALUES ('$first_name','$last_name','$email','$phone','$username','$password','$hash', UNIX_TIMESTAMP(NOW()))";
+                        $sql = "INSERT INTO users (first_name, last_name, email, phone, username, password, hash) VALUES ('$first_name','$last_name','$email','$phone','$username','$password','$hash')";
 
                         // If the insertion succeeds the user is set to logged in, but not active (0)
                         if ($mysqli->query($sql)) {
