@@ -11,8 +11,8 @@ $user_result = mysqli_query($link, $usersql);
 
 // Fetch information about entries from database
 $entrysql = "SELECT entry.id AS eid, entry.comment, entry.year_created, entry.date_db, "
-."entry.entry_reg, entry.private, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
-."strain.name AS sname, entry_inserts.*, ins.name AS iname FROM entry "
+."entry.entry_reg, entry.private, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, backbone.id AS bid, "
+."strain.name AS sname, strain.id AS sid, entry_inserts.*, ins.name AS iname, ins.id AS iid FROM entry "
 ."LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
 ."LEFT JOIN backbone ON entry.backbone = backbone.id "
 ."LEFT JOIN strain ON entry.strain = strain.id "
@@ -114,8 +114,8 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 					// Part 1 of entry row with upstrain ID, strain and backbone
 					$tpart_1 = "<tr>"
 					."<td><a href=\"entry.php?upstrain_id=".$entry["uid"]."\">".$entry["uid"]."</a></td>"
-					."<td>".$entry["sname"]."</td>"
-					."<td>".$entry["bname"]."</td>";
+					."<td><a href=\"parts.php?strain_id=".$entry['sid']."\">".$entry["sname"]."</a></td>"
+					."<td><a href=\"parts.php?backbone_id=".$entry['bid']."\">".$entry["bname"]."</a></td>";
 					
 					// Decide if user can edit entries
 					if ($admin) {
@@ -139,7 +139,7 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 					."</tr>";
 					
 					// Part 2 of entry row, inserts (has to be created last since it cycles through the list of entries)
-					$inserts = $entry["iname"];		// Grab first insert
+					$inserts = "<a href=\"parts.php?ins_id=".$entry["iid"]."\">".$entry["iname"]."</a>";		// Grab first insert
 					$entry = mysqli_fetch_assoc($entry_result);	// Go to next result in the list
 					while (TRUE) {
 						// Check if result is a different entry or end of results
@@ -147,7 +147,7 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 							break;
 						}
 						// Add insert to list and go to next result
-						$inserts = $inserts."<br>".$entry["iname"];
+						$inserts = $inserts."<br><a href=\"parts.php?ins_id=".$entry["iid"]."\">".$entry["iname"]."</a>";
 						$entry = mysqli_fetch_assoc($entry_result);
 					}
 					$tpart_2 = "<td>".$inserts."</td>";
