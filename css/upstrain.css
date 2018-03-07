@@ -330,7 +330,7 @@ div.quicksearch a:hover {
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
-    margin: 15px;
+    margin: 14px;
 }
 
 /* Forms */
@@ -445,10 +445,18 @@ div.nav-wrapper { /* Entire */
     white-space: nowrap;
 }
 
+div.nav-wrapper a {
+	height: 68px;
+}
+
 div.right-wrapper { /* Quicksearch and login */
     padding: 0;
     float: right;
     clear: right;
+}
+
+div.right-wrapper a.login {
+	height: 68px;
 }
 
 /* Quicksearch */
@@ -642,7 +650,7 @@ img.quicksearch {
 	float:left;
 	width:40%;
 	margin-left: 30%;
-	margin-bottom: 14px;
+	margin-bottom: 15px;
 }
 
 .upstrain_text img {
