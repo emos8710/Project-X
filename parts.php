@@ -8,8 +8,6 @@ function check_id($input) {
     return preg_match('/^\d+$/', $input) == 1;
 }
 
-
-
 $is_upstrain_error = FALSE;
 $is_mysql_error = FALSE;
 
@@ -22,8 +20,7 @@ if (isset($_GET["ins_id"])) {
     if (!check_id($part_id)) {
         $is_upstrain_error = TRUE;
         $upstrain_error = "Invalid insert ID.";
-    } 
-    
+    }
 } else if (isset($_GET["backbone_id"])) {
     $part_id = $_GET["backbone_id"];
     $part = "backbone.id";
@@ -33,7 +30,6 @@ if (isset($_GET["ins_id"])) {
         $is_upstrain_error = TRUE;
         $upstrain_error = "Invalid backbone ID.";
     }
-    
 } else if (isset($_GET["strain_id"])) {
     $part_id = $_GET["strain_id"];
     $part = "strain.id";
@@ -43,7 +39,6 @@ if (isset($_GET["ins_id"])) {
         $is_upstrain_error = TRUE;
         $upstrain_error = "Invalid strain ID.";
     }
-    
 } else {
     $is_upstrain_error = TRUE;
     $upstrain_error = "No ID specified";
@@ -53,9 +48,9 @@ if (!$is_upstrain_error) {
     include 'scripts/db.php';
 
     $id = mysqli_real_escape_string($link, $part_id);
-    $sql = "SELECT " . $part . ", " .$name . " AS name FROM " . $table . " WHERE " . $part . " LIKE '$id'";
+    $sql = "SELECT " . $part . ", " . $name . " AS name FROM " . $table . " WHERE " . $part . " LIKE '$id'";
 
-    
+
     $result = mysqli_query($link, $sql);
     $info = mysqli_fetch_assoc($result);
     if (!$result) {
@@ -96,26 +91,26 @@ include 'top.php';
 ?>
 <main>
     <div class="innertube">
-        <?php
-        // print errors...
-        if ($is_upstrain_error || $is_mysql_error) {
-            if ($is_upstrain_error)
-                echo "<h3>Error: " . $upstrain_error . "</h3><br>";
-            if ($is_mysql_error)
-                echo "<h3>Error: " . $mysql_error . "</h3>";
-            echo "<br>" .
-            "<a href=\"javascript:history.go(-1)\">Go back</a>";
-            //...or show correct content
-        }else {
-            if ($edit) {
-                include 'parts_edit.php';
-            } else {
-                include 'parts_show.php';
-            }
-        }
-        ?>
+<?php
+// print errors...
+if ($is_upstrain_error || $is_mysql_error) {
+    if ($is_upstrain_error)
+        echo "<h3>Error: " . $upstrain_error . "</h3><br>";
+    if ($is_mysql_error)
+        echo "<h3>Error: " . $mysql_error . "</h3>";
+    echo "<br>" .
+    "<a href=\"javascript:history.go(-1)\">Go back</a>";
+    //...or show correct content
+}else {
+    if ($edit) {
+        include 'parts_edit.php';
+    } else {
+        include 'parts_show.php';
+    }
+}
+?>
     </div>
 </main>
 
-<?php include 'bottom.php'; ?>
+        <?php include 'bottom.php'; ?>
 

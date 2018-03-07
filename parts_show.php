@@ -69,12 +69,12 @@ if (isset($_GET["ins_id"])) {
                     <tr>
                         <td><strong>iGEM registry entry:</strong></td>
                         <td><?php
-            if ($insertdata["biobrick"] === null || $insertdata["biobrick"] == '') {
-                echo "N/A";
-            } else {
-                echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $insertdata["biobrick"] . "\" target=\"_blank\">" . $insertdata["biobrick"] . "</a>";
-            }
-            ?></td>
+                            if ($insertdata["biobrick"] === null || $insertdata["biobrick"] == '') {
+                                echo "N/A";
+                            } else {
+                                echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $insertdata["biobrick"] . "\" target=\"_blank\">" . $insertdata["biobrick"] . "</a>";
+                            }
+                            ?></td>
                     </tr>
                     <tr>
                         <td><strong>Added by:</strong></td>
@@ -95,7 +95,6 @@ if (isset($_GET["ins_id"])) {
             <?php
         }
     }
-
 } else if (isset($_GET["backbone_id"])) {
     $backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
             . "backbone.date_db AS date, backbone.comment AS comment, "
@@ -182,7 +181,7 @@ if (isset($_GET["ins_id"])) {
             </div>
             <?php
         }
-    }    
+    }
 } else if (isset($_GET["strain_id"])) {
     $strainsql = "SELECT strain.name AS name, strain.date_db AS date, strain.comment AS comment, "
             . "strain.private AS private, users.first_name AS fname, users.last_name AS lname, "
