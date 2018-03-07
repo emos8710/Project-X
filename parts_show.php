@@ -159,7 +159,7 @@ if (isset($_GET["ins_id"])) {
             if ($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == '') {
                 echo "N/A";
             } else {
-                echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $backbonedata["biobrick"] . "\" target=\"_blank\">" . $insertdata["biobrick"] . "</a>";
+                echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $backbonedata["biobrick"] . "\" target=\"_blank\">" . $backbonedata["biobrick"] . "</a>";
             }
             ?></td>
                     </tr>
