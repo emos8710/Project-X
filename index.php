@@ -62,12 +62,14 @@ include 'top.php';
             Storing all the information in an excel sheet also meant that there was close to no searchablility for users interested in finding
             specific combinations of Biobrick parts, and finding the corresponding entry in iGEMs official Biobrick registry. 
             <br>
+			<br>
             And so as a solution to these problems, the official Uppsala iGEM association collaborated with a team of graduate students at 
             Uppsala University to create the Upstrain database, which served as a project for the grad students during the course 
             Information Management Systems. The aim of this project course was to create a data storage and management system
             (LIMS system) that could perform a certain set of tasks. The system needed to be able to perform database operations such as
             without any information loss, as well as incorporate security checks to protect the data from malignant outside attacks.
             <br>
+			<br>
             The basic functionality of the database is relatively straightforward and has a simple user interface, which hopefully will 
             be incorporated into the daily use of future iGEM teams at Uppsala university as an efficient and convenient solution for 
             data managment.

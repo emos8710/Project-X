@@ -8,7 +8,7 @@
 			<h4>External links</h4>
 			<a href="http://igemuppsala.se/">iGEM Uppsala</a>
 			<br><a href="http://igem.org/Main_Page">iGEM Main Page</a>
-			<br><a href="http://igem.org/Main_Page">iGEM Registry</a>
+			<br><a href="http://parts.igem.org/Main_Page">iGEM Registry</a>
 		</div>
 		<div>
 			<h4>Navigation</h4>
