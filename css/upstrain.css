@@ -147,6 +147,10 @@ table {
     margin-top: 10px;
 }
 
+table.strain, table.backbone, table.insert {
+    display: inline-block;
+}
+
 table.control-panel-history th.top {
     text-align: left;
     border-bottom: none;
@@ -342,19 +346,20 @@ div.form {
 }
 
 /* inserts */
-div.backbone_inserts {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    width: 50%;
-    float: right;
+div.backbone_strain_table {
+    display:inline-block;
+    margin-right: 100px;
+    margin-bottom: 30px;
+}
+
+div.insert_table {
+    display: inline-block;
 }
 
 /* Entries */
 div.entry_table {
-    padding-top: 50px;
-    padding-bottom: 50px;
-    width: 50%;
     float: left;
+    margin-right: 100px;
 }
 
 /* Logo */
