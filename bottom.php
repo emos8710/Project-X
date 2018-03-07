@@ -6,19 +6,23 @@
 		<img src="images/uplogo_notext.png" alt="UpStrain logo" height="45"></img>
 		<div>
 			<h4>External links</h4>
-			<br><a href="http://igemuppsala.se/">iGEM Uppsala</a>
+			<a href="http://igemuppsala.se/">iGEM Uppsala</a>
 			<br><a href="http://igem.org/Main_Page">iGEM Main Page</a>
 			<br><a href="http://igem.org/Main_Page">iGEM Registry</a>
 		</div>
 		<div>
 			<h4>Navigation</h4>
-			<br><a href="index.php">Home</a>
+			<a href="index.php">Home</a>
 			<br><a href="help.php">Help</a>
 			<br><a href="search.php">Search</a>
+			<?php if($loggedin && $active) { ?>
+				<br><a href="new_insert.php">New entry</a>
+				<br><a href="user.php?user_id=<?php echo $_SESSION['user_id']; ?>">My profile</a>
+				<?php if($admin) { ?>
+					<br><a href="control_panel.php">Control panel</a>
+				<?php } ?>
+			<?php } ?>
 		</div>
-			
-        <p>No actual copyright 2018. No rights really reserved.</p>
-		
     </div>
 </footer>
 </body>

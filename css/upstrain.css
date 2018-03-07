@@ -93,7 +93,8 @@ h4 {
 
 footer h4 {
 	text-align: left;
-	
+	margin: 0;
+	color: #E1F5FE;
 }
 
 /* Text */
@@ -338,6 +339,10 @@ div.quicksearch a:hover {
     background-color: inherit;
 }
 
+footer a {
+	color: #0074D9;
+}
+
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
@@ -399,6 +404,7 @@ div.info {
 div.innertube div.igem_text, div.innertube div.upstrain_text {
 	border: 3px solid #0074D9;
 	margin-top: 0;
+	margin-bottom: 15px;
 	
     /* Rounded corners on top */  /* Added: all */
     -webkit-border-top-left-radius: 7px;
@@ -887,6 +893,7 @@ ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* 
     float: center;
     width:84%;
     margin-top: 5px;
+	margin-bottom: 15px;
     margin-left: 8%; 
     margin-right: 8%;
     text-align: justify;
