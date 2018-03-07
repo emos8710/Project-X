@@ -27,7 +27,7 @@ $restore_query = mysqli_query($link, $restore_sql);
     <?php
     if (!$restore_query) {
         ?>
-        <strong style="color:red">Error: <?php echo mysqli_error($link); ?></strong>
+        <strong style="color:red">Database error: <?php echo mysqli_error($link); ?></strong>
         <?php
     } else {
         ?>

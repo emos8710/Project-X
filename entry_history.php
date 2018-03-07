@@ -48,10 +48,10 @@ $insert_history = (mysqli_num_rows($old_entry_inserts_query) >= 1);
 mysqli_close($link) or die("Could not close connection to database");
 ?>
 
+<p>
 <h3>Entry <?php echo $id ?> info history</h3>
 <em>Logged history is automatically removed after 30 days.</em>
-
-<br>
+</p>
 
 <table class="control-panel-history">
     <col><col><col><col><col><col><col><col><col><col>
@@ -102,8 +102,7 @@ mysqli_close($link) or die("Could not close connection to database");
     if ($has_history) {
         ?>
         <tr>
-            <th>Year created</th>
-            <th>Date added</th>
+            <th>Comment</th>
             <th>iGEM registry</th>
             <th>Backbone</th>
             <th>Strain</th>
@@ -117,8 +116,7 @@ mysqli_close($link) or die("Could not close connection to database");
         while ($data = mysqli_fetch_assoc($old_info_query)) {
             ?>
             <tr>
-                <td><?php echo $data['year']; ?></td>
-                <td><?php echo $data['date']; ?></td>
+                <td><?php echo $data['cmt']; ?></td>
                 <td><?php echo $data['biobrick']; ?></td>
                 <td><?php echo $data['bname']; ?></td>
                 <td><?php echo $data['sname']; ?></td>
@@ -128,10 +126,9 @@ mysqli_close($link) or die("Could not close connection to database");
                 <td><?php echo $data['time']; ?></td>
                 <td>
                     <form class="control-panel" action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST">
-                        <input type="hidden" name="restore_data" value="<?= $row['oid'] ?>">
-                        <input type="hidden" name="retore_entry" value="<?= $row['eid'] ?>">
-                        <input type="hidden" name="what" value="entry">
-                        <button class="control-panel-restore" type="submit" title="Restore" onclick="confirmAction('Restore entry <?=$row['eid']?> to this record?')"/>
+                        <input type="hidden" name="restore_data" value="<?= $data['oid'] ?>">
+                        <input type="hidden" name="restore_entry" value="<?= $data['eid'] ?>">
+                        <button class="control-panel-restore" type="submit" title="Restore" onclick="confirmAction(event, 'Restore entry <?= $data['eid'] ?> to this record?')"/>
                     </form>
                 </td>
             </tr>
@@ -203,8 +200,7 @@ mysqli_close($link) or die("Could not close connection to database");
                 <td>
                     <form class="control-panel" action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST">
                         <input type="hidden" name="restore_data" value="<?= $row['oid'] ?>">
-                        <input type="hidden" name="retore_entry" value="<?= $row['eid'] ?>">
-                        <input type="hidden" name="what" value="entry_insert">
+                        <input type="hidden" name="restore_entry_insert" value="<?= $row['eid'] ?>">
                         <input type="hidden" name="header" value="refresh">
                         <button class="control-panel-restore" type="submit" title="Restore" onclick="confirmAction(event, 'Restore insert <?= $row['iid'] ?> to this entry (this might change the position of other inserts)?')"/>
                     </form>

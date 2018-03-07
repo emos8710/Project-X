@@ -34,7 +34,7 @@ if (mysqli_num_rows($logquery) < 1) {
 
         <?php
         while ($log = mysqli_fetch_assoc($logquery)) {
-            if ($log['object'] === "Entry") {
+            if ($log['object'] === "Entry" || $log['object'] === "Entry-insert link") {
                 $id = $log['object_id'];
             } else {
                 $id = ltrim($log['object_id'], '0');
@@ -48,7 +48,11 @@ if (mysqli_num_rows($logquery) < 1) {
                 <td>
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="GET">
                         <input type="hidden" name="content" value="event_log">
-                        <input type="hidden" name="history" value="<?php echo strtolower($log['object']); ?>">
+                        <input type="hidden" name="history" value="<?php
+                        if ($log['object'] != "Entry-insert link"): echo strtolower($log['object']);
+                        else: echo "entry";
+                        endif;
+                        ?>">
                         <input type="hidden" name="id" value="<?php echo $id; ?>">
                         <button class="control-panel-history" title="View detailed history" type="submit"/>
                     </form>

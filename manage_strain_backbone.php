@@ -65,7 +65,7 @@ if (mysqli_num_rows($strainquery) < 1) {
             while ($row = mysqli_fetch_assoc($strainquery)) {
                 ?>
                 <tr>
-                    <td><?php echo $row['sid']; ?></td>
+                    <td><a href="parts.php?strain_id=<?=$row['sid']?>"><?php echo $row['sid']; ?></a></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['date']; ?></td>
                     <td><a href="user.php?user_id=<?php echo $row['uid']; ?>"><?php echo $row['fname'] . " " . $row['lname']; ?></a></td>
@@ -137,7 +137,7 @@ if (mysqli_num_rows($backbonequery) < 1) {
             while ($row = mysqli_fetch_assoc($backbonequery)) {
                 ?>
                 <tr>
-                    <td><?php echo $row['bid']; ?></td>
+                    <td><a href="parts.php?backbone_id=<?=$row['bid']?>"><?php echo $row['bid']; ?></a></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['biobrick']; ?></td>
                     <td><?php echo $row['date']; ?></td>

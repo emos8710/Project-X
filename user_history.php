@@ -17,8 +17,10 @@ $has_history = (mysqli_num_rows($old_info_query) >= 1);
 mysqli_close($link) or die("Could not close connection to database");
 ?>
 
+<p>
 <h3>User <?php echo $id; ?> info history</h3>
 <em>Logged history is automatically removed after 30 days.</em>
+</p>
 
 <table class="control-panel-history">
     <col><col><col><col><col><col><col><col>

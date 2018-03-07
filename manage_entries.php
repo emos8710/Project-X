@@ -9,7 +9,7 @@ include 'scripts/db.php';
 
 // Fetch all entries
 $entrysql = "SELECT entry.id AS eid, entry.comment AS cmt, entry.year_created AS year, entry.date_db AS date, "
-        . "entry.entry_reg AS biobrick, entry.created AS created, entry.private AS private, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
+        . "entry.entry_reg AS biobrick, entry.created AS created, entry.private AS private, entry.backbone AS bid, entry.strain AS sid, entry_upstrain.upstrain_id AS uid, backbone.name AS bname, "
         . "strain.name AS sname, ins.id AS iid, ins.name AS iname, users.user_id AS usid, users.username AS usname, users.first_name AS fname, users.last_name AS lname FROM entry "
         . "LEFT JOIN entry_upstrain ON entry_upstrain.entry_id = entry.id "
         . "LEFT JOIN backbone ON entry.backbone = backbone.id "
@@ -97,8 +97,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             <tr>
                 <td><a href="entry.php?upstrain_id=<?php echo $row['uid']; ?>"><?php echo $row['uid']; ?></a></td>
                 <td><?php echo $row['date']; ?></td>
-                <td><?php echo $row['sname']; ?></td>
-                <td><?php echo $row['bname']; ?></td>
+                <td><a href="parts.php?strain_id=<?=$row['sid']?>"><?php echo $row['sname']; ?></a></td>
+                <td><a href="parts.php?backbone_id=<?=$row['bid']?>"><?php echo $row['bname']; ?></a></td>
                 <?php
                 $current_entry = $row['eid'];
                 $current_inserts = $entry_inserts[$current_entry];

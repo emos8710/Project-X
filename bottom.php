@@ -6,9 +6,9 @@
 		<img src="images/uplogo_notext.png" alt="UpStrain logo" height="45"></img>
 		<div>
 			<h4>External links</h4>
-			<a href="http://igemuppsala.se/">iGEM Uppsala</a>
-			<br><a href="http://igem.org/Main_Page">iGEM Main Page</a>
-			<br><a href="http://parts.igem.org/Main_Page">iGEM Registry</a>
+                        <a class="external" href="http://igemuppsala.se/" target="_blank">iGEM Uppsala</a>
+			<br><a class="external" href="http://igem.org/Main_Page" target="_blank">iGEM Main Page</a>
+			<br><a class="external" href="http://parts.igem.org/Main_Page" target="_blank">iGEM Registry</a>
 		</div>
 		<div>
 			<h4>Navigation</h4>
