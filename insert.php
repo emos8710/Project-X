@@ -23,13 +23,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $private = 0;
     $created = 0;
 
-//Fetch strain id from database
+//Fetch strain id 
     $strain_s = "SELECT id FROM strain WHERE name LIKE '$strain'";
     $strain_s_query = mysqli_query($link, $strain_s);
     $strain_row = mysqli_fetch_assoc($strain_s_query);
     $strain_row_id = $strain_row["id"];
 
-//Fetch backbone id from database
+//Fetch backbone id 
     $back_s = "SELECT id FROM backbone WHERE name LIKE '$backbone'";
     $back_s_query = mysqli_query($link, $back_s);
     $back_row = mysqli_fetch_assoc($back_s_query);
@@ -41,7 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['created'])) {
         $created = intval($_POST['created']);
     }
-// Insert entry information into database
+    
+// Insert entry information
     $sql_entry = "INSERT INTO entry (year_created, comment, date_db, entry_reg, "
             . "backbone, strain, creator, private, created)"
             . " VALUES (?,?,?,?,?,?,?,?,?)";
@@ -72,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $entry_id = $entry_id_row["id"];
 
 // Insert
-
 $ins = $_POST["ins"];
 $num = count($ins);  
     

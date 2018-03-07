@@ -126,7 +126,7 @@ $title = "New entry";
                     <div class="new_entry">
 
                         <div class="field-wrap">
-                            <label for="Strain">Strain </label>
+                            <label for="Strain">Strain * </label>
 
                             <select name="strain_name" required>
                                 <?php
@@ -137,7 +137,7 @@ $title = "New entry";
                         </div>
 
                         <div class="field-wrap">
-                            <label for="Backbone">Backbone </label>
+                            <label for="Backbone">Backbone * </label>
 
                             <select name="backbone_name" required>
                                 <?php
@@ -184,15 +184,15 @@ $title = "New entry";
                         </div>
 
                         <div class="field-wrap">
-                            <label for="Year">Year </label>
+                            <label for="Year">Year * </label>
                             <input class="insert" type="text" name = "year" id="Year"  maxlengh= "4" pattern = "[0-9]{4}" 
                                    placeholder="YYYY" value="<?php echo $year; ?>" required/>
                         </div>
 
                         <div class="field-wrap"> 
-                            <label for="Comment">Comment </label>
+                            <label for="Comment">Comment * </label>
                             <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                      value="<?php echo $comment; ?>" required> </textarea> 
+                                      value="<?php echo $comment; ?>" required ="required"> </textarea> 
                         </div>
 
                         <div class="checkbox">
@@ -218,15 +218,15 @@ $title = "New entry";
 
                     <div class="field-wrap">
 
-                        <label for="Strain">Strain </label>
+                        <label for="Strain">Strain * </label>
                         <input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
                         <br/>
                     </div> 
 
                     <div class="fieldwrap"> 
-                        <label for="Comment">Comment </label>
+                        <label for="Comment">Comment * </label>
                         <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment;   ?>" required> </textarea> </p>
+                                  value="<?php echo $comment;   ?>" required ="required"> </textarea> </p>
 
                     </div>
 
@@ -242,7 +242,7 @@ $title = "New entry";
                     <p>
                     <div class="field-wrap">
 
-                        <label for="Backbone">Backbone </label>
+                        <label for="Backbone">Backbone * </label>
                         <input class="insert" type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/> 
                         <br/>
                     </div>
@@ -253,9 +253,9 @@ $title = "New entry";
                     </div>
 
                     <div class="field-wrap">
-                        <label for="Comment">Comment </label>
+                        <label for="Comment">Comment * </label>
                         <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment;   ?>" required> </textarea> </p>
+                                  value="<?php echo $comment;   ?>" required ="required"> </textarea> </p>
 
                     </div>
                     
@@ -276,16 +276,16 @@ $title = "New entry";
                     <div class="field-wrap"> 
                         <table id="dynamic">
                             <td>
-                                <label for="Ins_Type">Insert type </label>
-                                <select class="insert" name="new_insert_type">
+                                <label for="Ins_Type">Insert type * </label>
+                                <select class="insert" name="new_insert_type" required>
                                     <option value="">Select insert type</option>
                                         <?php
                                         echo load_ins_type();
                                         ?>
                                 </select></td>
                             <td>
-                                <label for="Ins">Insert name </label>
-                                <input class="insert" type="text" name="new_insert" value="<?php echo $inst; ?>"/>
+                                <label for="Ins">Insert name * </label>
+                                <input class="insert" type="text" name="new_insert" value="<?php echo $inst; ?>" required/>
                             </td>
                         </table>
                     </div>
@@ -298,9 +298,9 @@ $title = "New entry";
                     </div>
 
                     <div class="field-wrap">
-                        <label for="Comment">Comment </label>
+                        <label for="Comment">Comment * </label>
                         <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php //echo $comment;   ?>" required> </textarea> 
+                                  value="<?php echo $comment;   ?>" required ="required"> </textarea> 
                     </div>
 
                     <button id="submit" type="submit" class="button" name="insert" />Submit</button>
