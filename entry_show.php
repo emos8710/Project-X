@@ -13,7 +13,7 @@ $entryquery = mysqli_query($link, $entrysql);
 if (!$entryquery)
     $mysql_error = "Entry: " . mysqli_error($link);
 
-$backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
+$backbonesql = "SELECT backbone.id AS bid, backbone.name AS name, backbone.Bb_reg AS biobrick, "
         . "backbone.date_db AS date, backbone.private AS private, users.first_name AS fname, users.last_name AS lname, "
         . "users.user_id AS user_id FROM backbone, entry, entry_upstrain, users WHERE "
         . "entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND "
@@ -22,7 +22,7 @@ $backbonequery = mysqli_query($link, $backbonesql);
 if (!$backbonequery)
     $mysql_error = "Backbone: " . mysqli_error($link);
 
-$insertsql = "SELECT ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.date_db AS date, entry_inserts.position AS pos, "
+$insertsql = "SELECT ins.id, ins.name AS name, ins.ins_reg AS biobrick, ins_type.name AS type, ins.date_db AS date, entry_inserts.position AS pos, "
         . "users.first_name AS fname, users.last_name AS lname, users.user_id AS user_id FROM ins, ins_type, entry, entry_upstrain, "
         . "users, entry_inserts WHERE entry_upstrain.upstrain_id = '$id' AND entry_upstrain.entry_id = entry.id AND entry_inserts.entry_id = "
         . "entry.id AND entry_inserts.insert_id = ins.id AND ins.type = ins_type.id AND ins.creator = users.user_id";
@@ -189,11 +189,13 @@ if ($error) {
                     </tr>
                 </tbody>
             </table>
+        </div>
+        <div class="backbone_strain_table">
             <table class="strain">
                 <col><col>
                 <thead>
                     <tr>
-                        <th colspan="2"><a href="parts.php?strain_id=<?php echo $straindata['sid']; ?>">Strains</a></th>
+                        <th colspan="2"><a href="parts.php?strain_id=<?php echo $straindata['sid']; ?>">Strain</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -202,55 +204,64 @@ if ($error) {
                         <td><?php echo $straindata['name']; ?></td>
                     </tr>
                     <tr>
-                        <td><strong></strong></td>
+                        <td><strong>Added by:</strong></td>
+                        <td><a href="user.php?user_id=<?php echo $straindata['uid']; ?>"><?php echo $straindata['fname'] . " " . $straindata['lname']; ?></a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Date added:</strong></td>
+                        <td><?php echo $straindata['date']; ?></td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="backbone">
+                <col><col>
+                <thead>
+                    <tr>
+                        <th colspan="2"><a href="parts.php?backbone_id=<?php echo $backbonedata['bid']; ?>">Backbone</a></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Name:</strong></td>
+                        <td><?php echo $backbonedata['name']; ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>iGEM registry entry:</strong></td>
+                        <td>
+                            <?php
+                            if ($backbonedata['biobrick'] === null || $backbonedata['biobrick'] === '') {
+                                ?>
+                            <a class="external" href="http://parts.igem.org/Part:<?php echo $backbonedata['biobrick']; ?>" target="_blank"><?php echo $backbonedata['biobrick']; ?></a>
+                                <?php
+                            } else {
+                                echo "N/A";
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>Added by:</strong></td>
+                        <td><a href = "user.php?user_id=<?php echo $backbonedata['user_id']; ?>"><?php echo $backbonedata['fname'] . " " . $backbonedata['lname']; ?></a></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Date added:</strong></td>
+                        <td><?php echo $backbonedata['date']; ?></td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
-        <div class="backbone_inserts">
-            <table class="entry">
-                <col><col>
-                <tr>
-                    <th colspan="2">Backbone</th>
-                </tr>
-                <tr>
-                    <td><strong>Name:</strong></td>
-                    <td><?php echo $backbonedata["name"] ?></td>
-                </tr>
-                <tr>
-                    <td><strong>iGEM registry entry:</strong></td>
-                    <td>
-                        <?php
-                        if ($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == '') {
-                            echo "N/A";
-                        } else {
-                            ?>
-                            <a class="external" href="http://parts.igem.org/Part:<?php echo $backbonedata["biobrick"]; ?>" target="_blank"><?php echo $backbonedata["biobrick"]; ?></a>
-                            <?php
-                        }
-                        ?>
-                    </td>
-                </tr>
-                <tr>
-                    <td><strong>Added by:</strong></td>
-                    <td><?php echo "<a href=\"user.php?user_id=" . $backbonedata["user_id"] . "\">" . $backbonedata["fname"] . " " . $backbonedata["lname"] . "</a>"; ?></td>
-                </tr>
-                <tr>
-                    <td><strong>Date added:</strong></td>
-                    <td><?php echo $backbonedata["date"]; ?> </td>
-                </tr>
-                <tr>
-                    <?php for ($i = 0; $i < $insertrows; $i++) {
-                        ?>
-                    <tr>
-                        <th colspan="2"><?php
-                            echo "Insert ";
-                            if ($insertrows > 1) {
-                                echo ($i + 1);
-                            }
-                            ?></th>
-                    </tr>
+        <div class="insert_table">            
+            <?php
+            for ($i = 0; $i < $insertrows; $i++) {
+                ?>
+                <table class="insert">
+                    <col><col>
+                    <thead>
+                        <tr>
+                            <th colspan="2"><a href="parts.php?ins_id=<?php echo $inserts[$i]['id']; ?>"> Insert <?php echo $i + 1; ?></a></th>
+                        </tr>
+                    </thead>
                     <tr>
                         <td><strong>Name:</strong></td>
                         <td><?php echo $inserts[$i]["name"]; ?></td>
@@ -259,7 +270,7 @@ if ($error) {
                     <tr>
                         <td><strong>iGEM registry entry:</strong></td>
                         <td><?php
-                            if ($inserts[$i]["biobrick"] === null || $inserts[$i]["biobrick"] == '') {
+                            if ($inserts[$i]["biobrick"] === null || $inserts[$i]["biobrick"] === '') {
                                 echo "N/A";
                             } else {
                                 echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $inserts[$i]["biobrick"] . "\" target=\"_blank\">" . $inserts[$i]["biobrick"] . "</a>";
@@ -285,4 +296,4 @@ if ($error) {
         </div>
         <?php
     }
-}
+}    
