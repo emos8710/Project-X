@@ -263,8 +263,26 @@ if (isset($_GET['content']) && $_GET['content'] === "search_entries") {
             }
             $num_result_rows = mysqli_num_rows($result);
         } else if ($ischarvalid && count($ConditionArray) == 0) {
-            echo nl2br("\n Error: Please enter search query");
+            $allsql = "SELECT DISTINCT t1.comment AS cmt, t1.year_created AS year, "
+                . "t1.date_db AS date, t1.entry_reg AS biobrick, t1.private AS private, "
+                . "t4.name AS strain, t4.id AS strain_id, "
+                . "GROUP_CONCAT(DISTINCT t6.name SEPARATOR ', ') AS insname, GROUP_CONCAT(DISTINCT t6.id SEPARATOR ', ') AS ins_id, "
+                . "t3.name AS backbone, t3.id AS backbone_id, "
+                . "t2.user_id AS user_id, t2.username AS uname, "
+                . "GROUP_CONCAT(DISTINCT t7.name SEPARATOR ', ') AS instype, "
+                . "t9.upstrain_id AS up_id "
+                . "FROM (entry AS t1) "
+                . "LEFT JOIN entry_inserts AS t5 ON t5.entry_id = t1.id "
+                . "LEFT JOIN ins AS t6 ON t6.id = t5.insert_id "
+                . "LEFT JOIN ins_type AS t7 ON t7.id = t6.type "
+                . "LEFT JOIN users AS t2 ON t1.creator = t2.user_id "
+                . "LEFT JOIN backbone AS t3 ON t1.backbone = t3.id "
+                . "LEFT JOIN strain AS t4 ON t1.strain = t4.id "
+                . "LEFT JOIN entry_upstrain AS t9 ON t1.id = t9.entry_id GROUP BY up_id";
+            $result = mysqli_query($link, $allsql);
+            $num_result_rows = mysqli_num_rows($result);
         }
+        
         if ($num_result_rows > 0) {
             echo "<table>";
             echo "<tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
@@ -418,8 +436,13 @@ if (isset($_GET['content']) && $_GET['content'] === "search_entries") {
             }
             $num_result_rows = mysqli_num_rows($result);
         } else if ($ischarvalid && count($ConditionArray) == 0) {
-            echo nl2br("\n Error: Please enter search query");
+        $allsql = "SELECT DISTINCT t1.username AS uname, t1.first_name AS fname, "
+                . "t1.last_name AS lname, t1.user_id AS user_id, t1.phone AS phone, "
+                . "t1.email AS email FROM (users AS t1) GROUP BY user_id";
+        $result = mysqli_query($link, $allsql);
+        $num_result_rows = mysqli_num_rows($result);
         }
+        
         if ($num_result_rows > 0) {
             echo "<table>";
             echo "<tr><th>User ID</th><th>Username</th><th>First Name</th>"
@@ -602,8 +625,16 @@ if (isset($_GET['content']) && $_GET['content'] === "search_entries") {
             }
             $num_result_rows = mysqli_num_rows($result);
         } else if ($ischarvalid && count($ConditionArray) == 0) {
-            echo nl2br("\n Error: Please enter search query");
+        $allsql = "SELECT DISTINCT t1.id AS ins_id, t1.name AS insname, "
+                . "t1.ins_reg AS ins_reg, t1.date_db AS date_db, t1.private AS private, "
+                . "t2.username AS creator_name, t2.user_id AS user_id, "
+                . "t3.name AS ins_type FROM (ins AS t1) "
+                . "LEFT JOIN users AS t2 ON t2.user_id = t1.creator "
+                . "LEFT JOIN ins_type AS t3 ON t3.id = t1.type GROUP BY ins_id";
+        $result = mysqli_query($link, $allsql);
+        $num_result_rows = mysqli_num_rows($result);
         }
+        
         if ($num_result_rows > 0) {
             echo "<table>";
             echo "<tr><th>Insert ID</th><th>Insert Name</th><th>Insert Type</th>"
