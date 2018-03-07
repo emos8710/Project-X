@@ -576,7 +576,7 @@ include 'top.php';
                 if (count($ConditionArray) > 0) {
                     $sql = $insertsql . implode(' AND ', $ConditionArray) . " GROUP BY ins_id";
                     $result = mysqli_query($link, $sql);
-                    $num_result_rows = mysqli_num_rows($result);
+					$num_result_rows = mysqli_num_rows($result);
                 } else if ($ischarvalid && count($ConditionArray) == 0) {
                     echo nl2br("\n Error: Please enter search query");
                 }
