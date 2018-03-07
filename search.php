@@ -9,6 +9,7 @@ function insertlink($insertnames, $insertids) {
 
     $namearray = explode(", ", $insertnames);
     $idarray = explode(", ", $insertids);
+    $nameshtmlfriendly = "";
 
     foreach ($namearray as $key => $arr) {
         $nameshtmlfriendly .= '<a href="parts.php?ins_id=' . $idarray[$key] . '">' . $arr;
@@ -286,7 +287,6 @@ if (isset($_GET['content']) && $_GET['content'] === "search_entries") {
                     "</td><td><a href=\"parts.php?strain_id=" . $row["strain_id"] . "\">" . $row["strain"] . "</a>" .
                     "</td><td><a href=\"parts.php?backbone_id=" . $row["backbone_id"] . "\">" . $row["backbone"] . "</a>" .
                     "</td><td>" . $insert_links .
-                    //"</td><td><a href=\"parts.php?ins_id=" . $row["ins_id"] . "\">" . $row["insname"] . "</a>" .
                     "</td><td>" . $row["instype"] .
                     "</td><td>" . $row["year"] .
                     "</td><td>" . $biobrick .
