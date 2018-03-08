@@ -12,6 +12,8 @@ $old_data = mysqli_fetch_assoc(mysqli_query($link, $old_sql));
 
 $check_entry_exists = mysqli_query($link, "SELECT * FROM entry WHERE entry.id = " . $entry_id);
 $check_insert_exists = mysqli_query($link, "SELECT * FROM ins WHERE id = " . $old_data['insert_id']);
+
+$check_pos = mysqli_fetch_assoc(mysqli_query($link, "SELECT max(position) AS max_pos FROM entry_inserts WHERE entry_id = '$entry_id'"));
 ?>
 <p>
     <?php
@@ -24,13 +26,23 @@ $check_insert_exists = mysqli_query($link, "SELECT * FROM ins WHERE id = " . $ol
         <strong style="color:red">Error: Cannot restore insert (it doesn't exist anymore).</strong>
         <?php
     } else {
-        $move_sql = "UPDATE entry_inserts SET position = position+1 WHERE position >= " . $old_data['position'] . " AND entry_id = '$entry_id'";
-        $add_sql = "INSERT INTO entry_inserts(entry_id, insert_id, position) VALUES(" . $entry_id . ", " . $old_data['insert_id'] . ", " . $old_data['position'] . ")";
-        $move_query = mysqli_query($link, $move_sql);
-        $add_query = mysqli_query($link, $add_sql);
+        if ($old_data['position'] > $check_pos['max_pos'] + 1) {
+            $position = $check_pos['max_pos'] + 1;
+        } else {
+            $position = $old_data['position'];
+        }
+        $move_sql = "UPDATE entry_inserts SET position = position+1 WHERE position >= " . $position . " AND entry_id = '$entry_id' "
+                . "ORDER BY position DESC; ";
+        $add_sql = "INSERT INTO entry_inserts(entry_id, insert_id, position) VALUES(" . $entry_id . ", " . $old_data['insert_id'] . ", " . $old_data['position'] . "); ";
+
+        mysqli_begin_transaction($link);
+        mysqli_query($link, $move_sql);
+        mysqli_query($link, $add_sql);
+        $commit = mysqli_commit($link);
+
         ?>
         <?php
-        if (!$move_query || !$add_query) {
+        if (!$commit) {
             ?>
             <strong style="color:red">Error: <?= mysqli_error($link) ?></strong>
             <?php
