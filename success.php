@@ -16,7 +16,7 @@ include 'top.php';
             if (isset($_SESSION['message']) AND ! empty($_SESSION['message'])) {
                 echo $_SESSION['message'];
             } else {
-                header("location: logsyst.php");
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "logsyst.php");
             }
             ?>
         </p>

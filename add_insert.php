@@ -31,25 +31,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($stmt_ins->bind_param("sisissi", $name, $type, $regid, $creator, $current_date, $comment, $private)) {
                     if ($stmt_ins->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New insert submitted successfully</div>";
-                        header("Location: new_insert.php?success");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_ins->errno . ")" . " " . "Error: " . $stmt_ins->error . "</div>";
-                        header("Location: new_insert.php?error");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                         
                     } $stmt_ins->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_ins->errno . ")" . " " . "Error: " . $stmt_ins->error . "</div>";
-                    header("Location: new_insert.php?error");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
-            header("Location: new_insert.php?error");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
         }
     } else {
           $SESSION['existing'] = "<div class = 'existing'>The entered insert already exists!"
                 ." ". "Please enter a new one. </div>";
-        header("Location: new_insert.php?existing");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
     }
 }
 ?>

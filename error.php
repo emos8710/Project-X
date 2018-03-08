@@ -20,7 +20,7 @@ include 'top.php';
                 <a href="logsyst.php">Back to login/registration</a>
                 <?php
             } else {
-                header("location: logsyst.php");
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "logsyst.php");
             }
             ?>
         </p>     

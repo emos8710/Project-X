@@ -18,11 +18,11 @@ if (isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && 
     // If the query results in zero rows, the user does not exist.
     if ($result->num_rows == 0) {
         $_SESSION['message'] = "You have entered invalid URL for password reset!";
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
 } else {
     $_SESSION['message'] = "The reset link is not valid, try again!";
-    header("location: error.php");
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
 }
 
 $title = "Reset password";

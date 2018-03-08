@@ -50,23 +50,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($stmt_entry->execute()) {
                     $_SESSION['success'] = "<div class = 'success'>New entry submitted successfully</div>";
                     $success = $_SESSION['success']; 
-                    header("Location: new_insert.php?success");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry->errno . ")" . 
                             " " . "Error: " . $stmt_entry->error . "</div>";
-                    header("Location: new_insert.php?error");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                     exit; 
                 } $stmt_entry->close();
             } else {
                 $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry->errno . 
                         ")" . " " . "Error: " . $stmt_entry->error . "</div>";
-                header("Location: new_insert.php?error");
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
             }
         }
     } else {
         $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno 
                 . ")" . " " . "Error: " . $link->error . "</div>";
-        header("Location: new_insert.php?error");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
     }
 
 // Entry id
@@ -91,15 +91,15 @@ $num = count($ins);
                         if ($stmt_entry_ins->execute()) {
                         } else {
                             $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
-                            header("Location: new_insert.php?error");
+                            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                         } $stmt_entry_ins->close();
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
-                        header("Location: new_insert.php?error");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                     }
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
-                    header("Location: new_insert.php?error");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                 }
             }
         }

@@ -25,7 +25,7 @@ if ($n_attempts >= 3 && time() - $timeout_start < 300) {
     $_SESSION['message'] = "You are blocked due to too many login attempts. Please try again in 5 minutes."
             . "<br>"
             . "Note: 5 minute timer will reset if you attempt to login again.";
-    header("location: error.php"); // The error message is sent to error.php
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // The error message is sent to error.php
 } else {
     if (time() - $timeout_start >= 300) {
         mysqli_query($link, "UPDATE attempt_log SET attempts = 0 WHERE ip = '$ip_address' AND username = '$username'");
@@ -35,7 +35,7 @@ if ($n_attempts >= 3 && time() - $timeout_start < 300) {
     // If $result contains no rows then the user does not exist
     if ($result->num_rows == 0) {
         $_SESSION['message'] = "The user does not exist! Try again or register.";
-        header("location: error.php"); // The error message is sent to error.php
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // The error message is sent to error.php
     }
     // Otherwise, the username exists
     else {
@@ -57,11 +57,11 @@ if ($n_attempts >= 3 && time() - $timeout_start < 300) {
             if ($_SESSION['active'] == false) {
                 $_SESSION['message'] = "Your account is inactive. You will able to log in when the administrator has verified your account.";
                 $_SESSION['logged_in'] = false;
-                header("location: error.php");
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
             } else if ($_SESSION['active'] == true) {
                 // The session is set to logged in
                 $_SESSION['logged_in'] = true;
-                header("location: index.php");
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "index.php");
             }
             // The user is sent to the profile page
         }
@@ -74,7 +74,7 @@ if ($n_attempts >= 3 && time() - $timeout_start < 300) {
             $_SESSION['message'] = "The password you entered is incorrect! Try again or reset your password."
                     . "<br>"
                     . "Remaining attempts: $remaining";
-            header("location: error.php");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
         }
     }
 }
