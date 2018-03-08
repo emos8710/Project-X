@@ -29,19 +29,19 @@ $title = "New entry";
             } else {
                 $reg = test_input($_POST["registry"]);
             }
-            
+
             if (empty($_POST["strain"])) {
                 $strain = "";
             } else {
                 $strain = test_input($_POST["strain"]);
             }
-            
+
             if (empty($_POST["backbone"])) {
                 $backbone = "";
             } else {
                 $backbone = test_input($_POST["backbone"]);
             }
-            
+
             if (empty($_POST["new_insert"])) {
                 $inst = "";
             } else {
@@ -77,6 +77,17 @@ $title = "New entry";
                 mysqli_close($link);
             }
 
+            function load_ins_name() {
+                include 'scripts/db.php';
+                $sql_ins_name = mysqli_query($link, "SELECT name,id,type FROM ins ORDER BY name");
+                while ($row = $sql_ins_name->fetch_assoc()) {
+                        echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
+                   
+                }
+                mysqli_close($link);
+            }
+ 
+
             function load_strain() {
                 include 'scripts/db.php';
                 $sql_strain = mysqli_query($link, "SELECT name FROM strain ORDER BY name");
@@ -94,21 +105,30 @@ $title = "New entry";
                 }
                 mysqli_close($link);
             }
-
-            
             ?>
 
             <h2>New Entry</h2>
             <?php
-            if (isset($_SESSION['success'])) {
+            if (isset($_SESSION['success']) && $_SESSION['success'] !== 0) {
                 echo $_SESSION['success'];
                 unset($_SESSION['success']);
             }
 
-            if (isset($_SESSION['error'])) {
+            if (isset($_SESSION['existing']) && $_SESSION['existing'] !== 0) {
+                echo $_SESSION['existing'];
+                unset($_SESSION['existing']);
+            }
+
+            if (isset($_SESSION['error']) && $_SESSION['error'] !== 0) {
                 echo $_SESSION['error'];
                 unset($_SESSION['error']);
+                
             }
+            
+            if(isset($error)) {
+                echo $error; 
+            }
+            
             ?>
             <div class="entry_nav">
                 <ul>
@@ -123,8 +143,9 @@ $title = "New entry";
             <?php if ($current_content == "new_entry") {
                 ?>
                 <form class="insert-form" id="new_entry_form" method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
-                    <div class="new_entry">
 
+                    <div class="new_entry">
+                        <div id="test"></div>
                         <div class="field-wrap">
                             <label for="Strain">Strain * </label>
 
@@ -154,7 +175,7 @@ $title = "New entry";
 
                                 <td>
                                     <label for="Ins_Type">Insert type </label>
-                                    <select class="insert" name="insert_type[]" id="Ins_type" >
+                                    <select  name="insert_type[]" class="Ins_type" >
                                         <option value="">Select insert type</option>
                                         <?php
                                         echo load_ins_type();
@@ -226,7 +247,7 @@ $title = "New entry";
                     <div class="fieldwrap"> 
                         <label for="Comment">Comment * </label>
                         <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment;   ?>" required ="required"> </textarea> </p>
+                                  value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
 
                     </div>
 
@@ -255,13 +276,13 @@ $title = "New entry";
                     <div class="field-wrap">
                         <label for="Comment">Comment * </label>
                         <textarea name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment;   ?>" required ="required"> </textarea> </p>
+                                  value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
 
                     </div>
-                    
+
                     <div class="checkbox">
-                            <label for="Private">Make this entry private </label>
-                            <input class="checkbox" type="checkbox" name="private" value=1> 
+                        <label for="Private">Make this entry private </label>
+                        <input class="checkbox" type="checkbox" name="private" value=1> 
                     </div>
 
                     <button id="submit" type="submit" class="button" name="insert" />Submit</button>
@@ -279,9 +300,9 @@ $title = "New entry";
                                 <label for="Ins_Type">Insert type * </label>
                                 <select class="insert" name="new_insert_type" required>
                                     <option value="">Select insert type</option>
-                                        <?php
-                                        echo load_ins_type();
-                                        ?>
+                                    <?php
+                                    echo load_ins_type();
+                                    ?>
                                 </select></td>
                             <td>
                                 <label for="Ins">Insert name * </label>
@@ -300,7 +321,7 @@ $title = "New entry";
                     <div class="field-wrap">
                         <label for="Comment">Comment * </label>
                         <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment;   ?>" required ="required"> </textarea> 
+                                  value="<?php echo $comment; ?>" required ="required"> </textarea> 
                     </div>
 
                     <button id="submit" type="submit" class="button" name="insert" />Submit</button>
@@ -340,17 +361,15 @@ $title = "New entry";
         $("#add_input").click(function () {
             if (i <= max) {
                 $("#dynamic").append('<tr id="row' + i + '">\n\
-                <td><select class="insert" name="insert_type[]" id="Ins_type" ><option value="">Select insert type</option>\n\
+                <td><select name="insert_type[]" class="Ins_type" ><option value="">Select insert type</option>\n\
 <?php echo load_ins_type(); ?></select><td>\n\
                 <select class="insert" name="ins[]" id ="Ins"><option value="">\n\
-                Select insert name</option></select></td>\n\
+                Select insert name</option><?php echo load_ins_name(); ?></select></td>\n\
                 <td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
                 i++;
-            } else {
-
             }
-
         });
+        
         $(document).on('click', '.btn_remove', function () {
             var button_id = $(this).attr("id");
             $("#row" + button_id + '').remove();
@@ -365,7 +384,6 @@ $title = "New entry";
                 data: $('#add_me').serialize(),
                 success: function (data)
                 {
-                    alert(data);
                     $('#add_me')[0].reset();
                 }
             });
@@ -377,7 +395,7 @@ $title = "New entry";
 
 <script>
     $(document).ready(function () {
-        $("#Ins_type").change(function () {
+        $(".Ins_type").change(function () {
             var type_id = $(this).val();
             $.ajax({
                 url: 'dropdown.php',
@@ -392,3 +410,36 @@ $title = "New entry";
         });
     });
 </script>
+
+<?php /*
+<script>
+    
+    $(document).ready(function () {
+            var type_values = new Array(); 
+        $("#dynamic").change(function () {
+            $('.Ins_type option:selected').each(function(i,selected) {
+                type_values[i] = $(selected).val(); 
+            });
+            
+            $(document).on('click', '.btn_remove', function () {
+            type_values.removeAttr("selected");   
+            }); 
+            
+            $.ajax({
+                url: "ajax.php",
+                method: "POST",
+                data: {type_val: type_values},
+                success: function (data) {
+                    //$("#test").html(data); 
+                    
+                    $("#Ins_name").html(data);
+                }
+            });
+        });
+        
+      
+    });
+
+</script>
+ * 
+ */

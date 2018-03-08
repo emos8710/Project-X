@@ -40,5 +40,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
             header("Location: new_insert.php?error");
         }
+    } else {
+        $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists!"
+                ." ". "Please enter a new one. </div>";
+        header("Location: new_insert.php?existing");
     }
 }

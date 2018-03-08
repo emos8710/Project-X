@@ -5,9 +5,6 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
     session_start();
 }
 
-//if (count(get_included_files()) == 1)
-//exit("Access restricted");
-
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
@@ -48,21 +45,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             . " VALUES (?,?,?,?,?,?,?,?,?)";
     if ($stmt_entry = $link->prepare($sql_entry)) {
         if (isset($_SESSION['user_id']) && !empty($_SESSION['user_id'])) {
-            if ($stmt_entry->bind_param("isssiiiii", $year, $comment, $current_date, $reg_id, $back_row_id, $strain_row_id, $creator, $private, $created)) {
+            if ($stmt_entry->bind_param("isssiiiii", $year, $comment, $current_date, 
+                    $reg_id, $back_row_id, $strain_row_id, $creator, $private, $created)) {
                 if ($stmt_entry->execute()) {
                     $_SESSION['success'] = "<div class = 'success'>New entry submitted successfully</div>";
+                    $success = $_SESSION['success']; 
                     header("Location: new_insert.php?success");
                 } else {
-                    $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry->errno . ")" . " " . "Error: " . $stmt_entry->error . "</div>";
+                    $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry->errno . ")" . 
+                            " " . "Error: " . $stmt_entry->error . "</div>";
                     header("Location: new_insert.php?error");
+                    exit; 
                 } $stmt_entry->close();
             } else {
-                $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry->errno . ")" . " " . "Error: " . $stmt_entry->error . "</div>";
+                $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry->errno . 
+                        ")" . " " . "Error: " . $stmt_entry->error . "</div>";
                 header("Location: new_insert.php?error");
             }
         }
     } else {
-        $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
+        $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno 
+                . ")" . " " . "Error: " . $link->error . "</div>";
         header("Location: new_insert.php?error");
     }
 
@@ -72,14 +75,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $entry_id_row = mysqli_fetch_assoc($entry_id_query);
     $entry_id = $entry_id_row["id"];
 
-// Insert
+// Insert insert id and entry id into entry_inserts
 $ins = $_POST["ins"];
 $num = count($ins);  
     
     if ($num > 0) {
         $position = 0;
         for ($i = 0; $i < $num; $i++) {
-             echo $num."    ". $ins[$i];
             if (trim($ins[$i]) != '') {
                 $position++;
                 $entry_ins = "INSERT INTO entry_inserts (entry_id, insert_id, position) "
