@@ -88,7 +88,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
                     if (basename($_SERVER['PHP_SELF']) === "search.php") {
                         echo "class=\"active\" ";
                     }
-                    ?> href="search.php">Search</a>
+                    ?> href="search.php?content=search_entries">Search</a>
 
                     <?php if ($loggedin && $active) {
                         ?>
@@ -97,7 +97,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
                         if (basename($_SERVER['PHP_SELF']) === "new_insert.php") {
                             echo "class=\"active\" ";
                         }
-                        ?> href="new_insert.php">New Entry</a>
+                        ?> href="new_insert.php?content=new_entry">New Entry</a>
                             <?php
                         }
                         ?>
