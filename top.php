@@ -133,7 +133,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
                     <div class="quicksearch">
                         <form class="quicksearch" action="entry.php">
                             <input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
-                            <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png"></img></button>
+                            <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png" alt="search-icon"></button>
                         </form>
                         <a class="quicksearch" href="search.php">Advanced search</a>
                     </div>
