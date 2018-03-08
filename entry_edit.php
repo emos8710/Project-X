@@ -83,7 +83,24 @@ if($loggedin && $active && $admin) {
 				$update_msg = "Failed to remove insert. ".mysqli_error($link);
 				goto errorTime;
 			}
-			
+		// Add new insert
+		} else if (isset($_POST['new_insert']) && $_POST['new_insert'] != "" && isset($_POST['position']) && $_POST['position'] != "") {
+			$insert_pos = mysqli_real_escape_string($link, $_POST['position']);
+			$new_insert = mysqli_real_escape_string($link, $_POST['new_insert']);
+			$add_sql = "INSERT INTO entry_inserts (insert_id, entry_id, position) VALUES (?,?,?)";
+			if ($stmt = mysqli_prepare($link, $add_sql)) {
+				mysqli_stmt_bind_param($stmt, "iii", $new_insert, $entry_id, $insert_pos);
+				if (mysqli_stmt_execute($stmt)) {
+					$update_msg = "Successfully added insert.";
+				} else {
+					$iserror = TRUE;
+					$update_msg = "Couldn't add insert, failed to execute statement. ".mysqli_stmt_error($stmt);
+				}
+				mysqli_stmt_close($stmt);
+			} else {
+				$iserror = TRUE;
+				$update_msg = "Couldn't update add insert, failed to prepare statement. ".mysqli_stmt_error($stmt);
+			}
 			
 		// Change comment
 		} else if (isset($_POST['comment']) && $_POST['comment'] != "") {
@@ -269,6 +286,44 @@ if($loggedin && $active && $admin) {
 				<?php } ?>
 			<?php } ?>
 		</ol>
+		
+		<!-- Add new insert -->
+		<ul>
+			<li>
+				<a href="?upstrain_id=<?php echo $id; ?>&edit&content=add_insert">Add insert</a>
+			</li>
+			<?php if($current_content == "add_insert") { ?>
+				<li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+					Insert type
+					<select name="insert_type" id="Ins_type" required>
+						<option value="">Select insert type</option>
+						<?php
+						include 'scripts/db.php';
+						$sql_ins_type = mysqli_query($link, "SELECT * FROM ins_type");
+						while ($row = $sql_ins_type->fetch_assoc()) {
+							echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
+						}
+						?>
+					</select>
+					
+					Insert name
+					<select name="new_insert" id ="Ins" required>
+						<option value="">Select insert name</option>
+					</select>
+					
+					<?php include 'scripts/db.php';
+					$pos_query = "SELECT MAX(position) FROM entry_inserts WHERE entry_id = '$entry_id'";
+					$pos_result = mysqli_query($link, $pos_query);
+					$position = mysqli_fetch_array($pos_result)[0]+1;
+					?>
+					
+					<input name="position" type="hidden" value="<?php echo $position ?>">
+					
+					<input type="submit" value="Submit" >
+					<a href="?upstrain_id=<?php echo $id;?>&edit">Cancel</a>
+				</form></li>
+			<?php } ?>
+		</ul>
 		
 		<!-- Edit comment -->
 		<li>Comment <?php echo $entry_info["comment"];
