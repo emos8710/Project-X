@@ -89,8 +89,6 @@ $num = count($ins);
                 if ($stmt_entry_ins = $link->prepare($entry_ins)) {
                     if ($stmt_entry_ins->bind_param("iii", $entry_id, $ins[$i], $position)) {
                         if ($stmt_entry_ins->execute()) {
-                            $_SESSION['success'] = "<div class = 'success'>Entry_inserts successfully updated</div>";
-                            header("Location: new_insert.php?success");
                         } else {
                             $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
                             header("Location: new_insert.php?error");
@@ -127,7 +125,7 @@ $num = count($ins);
             $seq .= $lines[$i];
         }
 
-        if ($firstc == '>' && preg_match("/^[[ATCG]\*\-\s]+$/", $seq)) {
+        if ($firstc == '>' && preg_match("/^[[ATCGUatcgu]\*\-\s]+$/", $seq)) {
             if (!file_exists($path)) {
                 if (move_uploaded_file($_FILES['my_file']['tmp_name'], $path)) {
                     $org_name_file = $_FILES['my_file']['name'];

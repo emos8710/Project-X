@@ -41,8 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             header("Location: new_insert.php?error");
         }
     } else {
-        $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists!"
-                ." ". "Please enter a new one. </div>";
+        $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists! Please enter a new one</div>";
         header("Location: new_insert.php?existing");
     }
 }

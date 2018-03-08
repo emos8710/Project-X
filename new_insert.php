@@ -109,21 +109,17 @@ $title = "New entry";
 
             <h2>New Entry</h2>
             <?php
-            if (isset($_SESSION['success']) && $_SESSION['success'] !== 0) {
+            if (isset($_SESSION['success']) && !empty($_SESSION['success'])) {
                 echo $_SESSION['success'];
-                unset($_SESSION['success']);
-            }
-
-            if (isset($_SESSION['existing']) && $_SESSION['existing'] !== 0) {
+            } else if (isset($_SESSION['existing']) && !empty($_SESSION['existing'])) {
                 echo $_SESSION['existing'];
-                unset($_SESSION['existing']);
-            }
-
-            if (isset($_SESSION['error']) && $_SESSION['error'] !== 0) {
+            } else if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
                 echo $_SESSION['error'];
-                unset($_SESSION['error']);
-                
             }
+            
+            unset($_SESSION['success']);
+            unset($_SESSION['existing']);
+            unset($_SESSION['error']);
             
             if(isset($error)) {
                 echo $error; 
