@@ -7,8 +7,8 @@
  */
 
     $hostname = "localhost";
-    $username = "admin";
-    $password = "iamincontrolofthis";
+    $username = "root";
+    $password = "";
     $dbname = "movie";
     $link = mysqli_connect($hostname, $username, $password, $dbname);
 
