@@ -22,6 +22,7 @@ main {
     width: 100%;
     float: left;
     background: #E1F5FE;  /* Changed */
+	min-height: 400px;
 }
 
 /* Navigation bar */
@@ -63,6 +64,14 @@ h2.home {
     margin-top: 30px; 
     font-style: normal;
 	margin-bottom: 0px;
+	font-weight: 100;
+}
+
+h2.search_etc {
+	text-align: left;	
+	font-size:30px;
+	margin-top: 30px; 
+	margin-left: 50px; 
 	font-weight: 100;
 }
 
@@ -159,6 +168,13 @@ table.strain, table.backbone, table.insert, table.control-panel-history {
     display: inline;
 }
 
+table.insert {
+    border: none;
+    border-spacing: 0;
+    margin-top: 10px;
+	max-width:700px;
+}
+
 table.control-panel-history th.top {
     text-align: left;
     border-bottom: none;
@@ -199,6 +215,28 @@ td {
     max-width: 400px;
 }
 
+div.field-wrap table.insert tr td.type {
+    padding: 0px;
+    text-align: left;
+    vertical-align: top;
+    font-size: small;
+	margin: 2px;
+    border-bottom: 1px solid black;
+    max-width: 700px;
+	border: none;
+}
+
+div.field-wrap table.insert tr td.name {
+    padding: 0px;
+    text-align: left;
+    vertical-align: top;
+    font-size: small;
+	margin: 2px;
+    border-bottom: 1px solid black;
+    max-width: 700px;
+	border: none;
+}
+
 td.comment {
     min-width: 200px;
 	text-align: center;
@@ -218,6 +256,21 @@ a {
 a:hover {
     text-decoration: none;
 }
+
+a.external {
+	color: #0074D9;
+}
+a.external:hover {
+	color: white;
+}
+
+a.bottom {
+	color: #0074D9;
+}
+a.bottom:hover {
+	color: white;
+}
+
 
 /* Images */
 a.external::after { /* Adds external link image after link */
@@ -396,6 +449,11 @@ div.control_panel_menu, div.entry_nav{
     margin-left:0; 
 }
 
+div.entry_nav ul li {
+	list-style-type: none;
+}
+
+
 div.info {
 	margin: 10px;
 	width:100%;
@@ -507,6 +565,23 @@ label { /* Added: All */
     font-style: italic;
 }
 
+div.field-wrap table.insert tr td.type { /* Fixes the size of the "select insert type" */
+	width: 400px;
+}
+
+div.field-wrap table.insert tr td.name { /* Fixes the size of the "select insert name" */
+	width: 400px;
+}
+
+div.field-wrap table.insert tr td select {
+	float: left; 
+	margin-bottom: 3px;
+	margin-top: 3px;
+}
+
+div.field-wrap table tr td label {
+	float: left; 
+}
 
 /* Quicksearch */
 input.quicksearch {
@@ -597,6 +672,11 @@ input.button {
 .button:hover {
     color: #0074D9; /* Changed. Text color when hovering over buttons */ 
 }
+
+div.field-wrap table.insert tr td button.insert, div.field-wrap table.insert tr td button.btn_remove {
+	border: none;
+}
+
 
 /* Quicksearch */
 button.quicksearch {

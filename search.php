@@ -30,7 +30,7 @@ include 'top.php';
 
 <main>
     <div class="innertube">
-        <h2>Search</h2>
+        <h2 class="search_etc">Search</h2>
         <!-- Nav menu with links to display desired content -->
 
         <div class="search_nav">
