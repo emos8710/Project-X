@@ -26,22 +26,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($stmt_strain->bind_param("ssis", $strain, $comment, $creator, $current_date)) {
                     if ($stmt_strain->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New strain submitted successfully</div>";
-                        header("Location: new_insert.php?success");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_strain->errno . ")" . " " . "Error: " . $stmt_strain->error . "</div>";
-                        header("Location: new_insert.php?error");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                     } $stmt_strain->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_strain->errno . ")" . " " . "Error: " . $stmt_strain->error . "</div>";
-                    header("Location: new_insert.php?error");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
-            header("Location: new_insert.php?error");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
         }
     } else {
         $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists! Please enter a new one</div>";
-        header("Location: new_insert.php?existing");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
     }
 }

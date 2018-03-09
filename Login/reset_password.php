@@ -20,14 +20,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if ( $mysqli->query($sql) ) {
 
         $_SESSION['message'] = "Your password has been reset successfully!";
-        header("location: success.php");    
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "success.php");    
 
         }
 
     }
     else {
         $_SESSION['message'] = "Two passwords you entered don't match, try again!";
-        header("location: error.php");    
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");    
     }
 
 }

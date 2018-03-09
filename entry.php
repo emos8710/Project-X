@@ -18,7 +18,10 @@ $is_mysql_error = FALSE;
 // Fetch the upstrain id from URL
 if (isset($_GET["upstrain_id"])) {
     $upstrain_id = $_GET["upstrain_id"];
-    if (!check_upstrain_id($upstrain_id)) {
+    if (empty($upstrain_id)) {
+        $is_upstrain_error = TRUE;
+        $upstrain_error = "No ID specified.";
+    } else if (!check_upstrain_id($upstrain_id)) {
         $is_upstrain_error = TRUE;
         $upstrain_error = "Invalid entry ID.";
     }

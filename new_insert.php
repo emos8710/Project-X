@@ -107,7 +107,7 @@ $title = "New entry";
             }
             ?>
 
-            <h2>New Entry</h2>
+            <h2 class="search_etc">New Entry</h2>
             <?php
             if (isset($_SESSION['success']) && !empty($_SESSION['success'])) {
                 echo $_SESSION['success'];
@@ -149,7 +149,7 @@ $title = "New entry";
                         <div id="test"></div>
                         <div class="field-wrap">
                             <label>Strain * </label>
-                            <select name="strain_name" required>
+                            <select class="insert" name="strain_name" required>
                                 <option value="">Select strain</option>
                                 <?php
                                 echo load_strain();
@@ -160,7 +160,7 @@ $title = "New entry";
 
                         <div class="field-wrap">
                             <label>Backbone * </label>
-                            <select name="backbone_name" required>
+                            <select class="insert" name="backbone_name" required>
                                 <option value="">Select backbone</option>
                                 <?php
                                 echo load_backbone();
@@ -170,13 +170,13 @@ $title = "New entry";
                         </div>
 
                         <div class="field-wrap">
-                            <table id="dynamic">
-                                <tr> <th> Insert </th> </tr>
+                            <table class="insert" id="dynamic">
+                                <!-- <tr> <th> Insert </th> </tr> -->
 
                                 <tr> 
-                                <td>
-                                    <label>Insert type </label>
-                                    <select  name="insert_type[]" class="Ins_type" >
+                                <td class="type">
+                                    <label class="type">Insert type </label> <br>
+                                    <select class="insert" name="insert_type[]" class="Ins_type" >
                                         <option value="">Select insert type</option>
                                         <?php
                                         echo load_ins_type();
@@ -184,12 +184,12 @@ $title = "New entry";
                                     </select></td>
                                 
 
-                                <td>
-                                    <label>Insert name </label>
+                                <td class="name">
+                                    <label>Insert name </label> <br>
                                     <select class="insert" name="ins[]" id ="Ins">
                                         <option value="">Select insert name</option>
                                     </select></td>
-                                <td> <button type="button" name="add" id="add_input">+ More inserts</button></td> </tr>
+                                <td> <button class="insert" type="button" name="add" id="add_input">+ More inserts</button></td> </tr>
 
                             </table>
                         </div>
@@ -208,7 +208,7 @@ $title = "New entry";
 
                         <div class="field-wrap">
                             <label>Year * </label>
-                                <input class="all" type="text" name="year" minlength= "4" maxlength= "4" pattern = "(?:19|20)[0-9]{2}" 
+                                <input class="insert" type="text" name="year" minlength= "4" maxlength= "4" pattern = "(?:19|20)[0-9]{2}" 
                                        placeholder="YYYY" title ="Must contain four digits for year." required/>
                         </div>
 
@@ -248,7 +248,7 @@ $title = "New entry";
 
                     <div class="fieldwrap"> 
                         <label for="Comment">Comment * </label>
-                        <textarea name="comment" id="Comment" rows ="4" cols="50"
+                        <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
                                   value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
 
                     </div>
@@ -277,7 +277,7 @@ $title = "New entry";
 
                     <div class="field-wrap">
                         <label>Comment * </label>
-                        <textarea name="comment" id="Comment" rows ="4" cols="50"
+                        <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
                                   value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
 
                     </div>
@@ -364,11 +364,11 @@ $title = "New entry";
         $("#add_input").click(function () {
             if (i <= max) {
                 $("#dynamic").append('<tr id="row' + i + '">\n\
-                <td><select name="insert_type[]" class="Ins_type" ><option value="">Select insert type</option>\n\
-                <?php echo load_ins_type(); ?></select><td>\n\
-                <select class="insert" name="ins[]" id ="Ins"><option value="">\n\
+                <td class="type"><select class="insert" name="insert_type[]"><option value="">Select insert type</option>\n\
+                <?php echo load_ins_type(); ?></select></td>\n\
+                <td class="name"><select class="insert" name="ins[]" id ="Ins"><option value="">\n\
                 Select insert name</option><?php echo load_ins_name(); ?></select></td>\n\
-                <td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
+                <td class="button"><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
                 i++;
             }
         });

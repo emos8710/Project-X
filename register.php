@@ -37,7 +37,7 @@ $captcha_success = json_decode($verify);
 if ($captcha_success->success == false) {
     $_SESSION['message'] = 'reCAPTCHA failed. Are you a bot?';
 
-    header("location: error.php"); // An error message is sent to error.php
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // An error message is sent to error.php
 } else {
     // Checks if the password is an ok length
     if (!(strlen($_POST['password']) < 8)) {
@@ -65,7 +65,7 @@ if ($captcha_success->success == false) {
             if ($result->num_rows != 0) {
                 $_SESSION['message'] = 'The email is already registered to another user. 
 									Have you forgotten the password? - Click on Reset Password.';
-                header("location: error.php"); // An error message is sent to error.php
+                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // An error message is sent to error.php
             }
             // The email is not registered
             else {
@@ -73,7 +73,7 @@ if ($captcha_success->success == false) {
                 if ($username != $_POST['username']) {
                     $_SESSION['message'] = 'The username contains invalid characters! 
 											Choose another username!';
-                    header("location: error.php");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                 }
                 // Otherwise, the username is OK and the registration process proceeds. 
                 else {
@@ -83,7 +83,7 @@ if ($captcha_success->success == false) {
                     // If the query returns more than one row, the username is taken.
                     if ($result->num_rows != 0) {
                         $_SESSION['message'] = 'The username is taken by another user. Please choose another username.';
-                        header("location: error.php"); // An error message is sent
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // An error message is sent
                     }
                     // If the query returns zero rows, the username is free
                     else {
@@ -109,22 +109,22 @@ if ($captcha_success->success == false) {
                                     . ' http://localhost/verify.php?email=' . $email . '&hash=' . $hash;
 
                             mail($to, $subject, $message_body);
-                            header("location: profile.php");
+                            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "profile.php");
                         }
                         // If the insertion did not succeed, the registration has failed and an error message is shown
                         else {
                             $_SESSION['message'] = 'The registration failed!';
-                            header("location: error.php");
+                            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                         }
                     }
                 }
             }
         } else {
             $_SESSION['message'] = "The passwords do not match! Try again.";
-            header("location: error.php");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
         }
     } else {
         $_SESSION['message'] = "The entered password is too short. Please try again. The password must be at least 8 characters long!";
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
 }
