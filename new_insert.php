@@ -107,7 +107,7 @@ $title = "New entry";
             }
             ?>
 
-            <h2 class="search_etc">New Entry</h2>
+            <!-- <h2 class="search_etc">New Entry</h2> -->
             <?php
             if (isset($_SESSION['success']) && !empty($_SESSION['success'])) {
                 echo $_SESSION['success'];
@@ -172,7 +172,7 @@ $title = "New entry";
                                 ?>
                             </select>
                             <br/>
-                        </div>
+                        </div> 
 
                         <div class="field-wrap">
                             <label>Backbone * </label>
@@ -254,21 +254,19 @@ $title = "New entry";
                 ?>
 
                 <form class="insert-form" method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>">
+					<div class="new_strain">
+						<div class="field-wrap-strain">
+							<label for="Strain">Strain * </label>
+							<input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/></input>
+							<br/>
+						</div> 
 
-                    <div class="field-wrap">
-
-                        <label for="Strain">Strain * </label>
-                        <input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/>
-                        <br/>
-                    </div> 
-
-                    <div class="field-wrap"> 
-                        <label for="Comment">Comment * </label>
-                        <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
-
-                    </div>
-
+						<div class="field-wrap-strain"> 
+							<label for="Comment">Comment * </label>
+							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
+									value="<?php echo $comment; ?>" required ="required"> </textarea>
+						</div>
+					</div>
 
                     <button id="submit" type="submit" class="button" name="insert" />Submit</button>
                 </form>
@@ -278,30 +276,29 @@ $title = "New entry";
             } else if ($current_content == "new_backbone") {
                 ?>
                 <form class="insert-form" method="post" action="<?php echo htmlspecialchars("add_backbone.php"); ?>">
-                    <p>
-                    <div class="field-wrap">
+                    <div class="new_backbone">
+						<div class="field-wrap-backbone">
+							<label>Backbone * </label>
+							<input class="insert" type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/></input>
+							<br/>
+						</div>
 
-                        <label>Backbone * </label>
-                        <input class="insert" type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/> 
-                        <br/>
-                    </div>
+						<div class="field-wrap-backbone"> 
+							<label >Registry id</label>
+							<input class="insert" type="text" name="Bb_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+						</div>
 
-                    <div class="field-wrap"> 
-                        <label >Registry id</label>
-                        <input class="insert" type="text" name="Bb_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
-                    </div>
-
-                    <div class="field-wrap">
-                        <label>Comment * </label>
-                        <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
+						<div class="field-wrap-backbone">
+							<label>Comment * </label>
+							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
                                   value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
+						</div>
 
-                    </div>
-
-                    <div class="checkbox">
-                        <label>Make this entry private </label>
-                        <input class="checkbox" type="checkbox" name="private" value=1> 
-                    </div>
+						<div class="checkbox">
+							<label>Make this entry private </label>
+							<input class="checkbox" type="checkbox" name="private" value=1> 
+						</div>
+					</div>
 
                     <button id="submit" type="submit" class="button" name="insert" />Submit</button>
                 </form>
@@ -312,39 +309,37 @@ $title = "New entry";
                 ?>
 
                 <form class="insert-form" method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>">
-                    <div class="field-wrap"> 
-                        <table id="dynamic">
-                            <td>
-                                <label>Insert type * </label>
-                                <select class="insert" name="new_insert_type" required>
-                                    <option value="">Select insert type</option>
-                                    <?php
-                                    echo load_ins_type();
-                                    ?>
-                                </select></td>
-                            <td>
-                                <label>Insert name * </label>
-                                <input class="insert" type="text" name="new_insert" value="<?php echo $inst; ?>" required/>
-                            </td>
-                        </table>
-                    </div>
+                    <div class="new_insert">
+						<div class="field-wrap-insert"> 
+							<label>Insert type * </label>
+							<select class="insert" name="new_insert_type" required>
+								<option value="">Select insert type</option>
+								<?php
+								echo load_ins_type();
+								?>
+							</select>
+						</div>
+						<div class="field-wrap-insert">
+								<label>Insert name * </label>
+								<input class="insert" type="text" name="new_insert" value="<?php echo $inst; ?>" required/></input>
+						</div>
 
-                    <div class="field-wrap"> 
-                        <label>Registry id</label>
-                        <input class="insert" type="text" name="Ins_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
-                    </div>
+						<div class="field-wrap-insert"> 
+							<label>Registry id</label>
+							<input class="insert" type="text" name="Ins_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+						</div>
 
-                    <div class="field-wrap">
-                        <label>Comment * </label>
-                        <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment; ?>" required ="required"> </textarea> 
-                    </div>
+						<div class="field-wrap-insert">
+							<label>Comment * </label>
+							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
+									value="<?php echo $comment; ?>" required ="required"> </textarea> 
+						</div>
                     
-                    <div class="checkbox">
-                        <label>Make this entry private </label>
-                        <input class="checkbox" type="checkbox" name="private" value=1> 
-                    </div>
-
+						<div class="checkbox">
+							<label>Make this entry private </label>
+							<input class="checkbox" type="checkbox" name="private" value=1> 
+						</div>
+					</div>
                     <button id="submit" type="submit" class="button" name="insert" />Submit</button>
                 </form>
                 <?php

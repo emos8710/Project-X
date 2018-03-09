@@ -42,6 +42,12 @@ footer {
     margin-bottom: 15px;
 }
 
+.field-wrap-strain, .field-wrap-backbone, .field-wrap-insert {	/* For wrapping input fields in the login system */
+    margin-bottom: 15px;
+	clear: both;
+}
+
+
 /* Headers */
 h1, h5, h6 {
     color: #001F3F; /* Changed */
@@ -133,7 +139,7 @@ form.search-form, form.insert-form {
     float: left;
     width: 100%;
     padding: 10px 10px;
-    margin-left: 40px; 
+    margin-left: 40px;
 }
 
 /* Search */
@@ -215,7 +221,7 @@ td {
     max-width: 400px;
 }
 
-div.field-wrap table.insert tr td {
+div.field-wrap table.insert tr td, div.field-wrap-backbone table tr td, div.field-wrap-strain table tr td {
     padding: 0px;
     text-align: left;
     vertical-align: top;
@@ -406,6 +412,12 @@ div.new_entry {
 	max-width: 500px;
 }
 
+div.new_strain {
+	width: 500px;
+	min-width: 500px;
+	max-width: 500px;
+}
+
 /* Tables */
 div.backbone_strain_table {
     display:inline-block;
@@ -434,14 +446,21 @@ div.checkbox {
 	margin-top: 0px;
     float: right;
     padding: 10px;
-    width: 50%;
+    width: 45%;
 }
 
 /* navigation stuff in help, control panel etc  */ 
 
-div.control_panel_menu, div.entry_nav{
+div.entry_nav{
     float: left; 
     width:600px; 
+    margin-left:0px; 
+	clear: both;
+}
+
+div.control_panel_menu {
+	float: left; 
+    width:100%; 
     margin-left:0px; 
 	clear: both;
 }
@@ -624,6 +643,7 @@ textarea.insert {
     width:100%;
     float: right;
     margin-bottom: 20px;
+	resize: none;
 }
 
 /* Multiple inserts */
@@ -771,6 +791,11 @@ button.btn_remove:hover {
     color: #0074D9; /* Changed. Text color when hovering over buttons */ 
 }
 
+form.insert-form button.button {
+	width: 500px;
+	clear: both;
+}
+
 /* ---------- IMAGES ---------- */
 /* Quicksearch icon */
 img.quicksearch {
@@ -892,6 +917,8 @@ div.panel-history-show {
 div.control-panel-show { /* Style for region where the desired content will be shown */
     float: left;
     margin-right: 50px;
+	margin-left: 50px;
+	margin-bottom: 20px;
 }
 
 div.control_panel_menu {
