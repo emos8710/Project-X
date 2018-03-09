@@ -117,9 +117,10 @@ $title = "New entry";
                 echo $_SESSION['error'];
             }
             
+            unset($_SESSION['error']);
             unset($_SESSION['success']);
             unset($_SESSION['existing']);
-            unset($_SESSION['error']);
+            
             
             ?>
             <div class="entry_nav">
