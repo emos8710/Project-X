@@ -39,7 +39,7 @@ footer {
 }
 
 .field-wrap {	/* For wrapping input fields in the login system */
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 /* Headers */
@@ -215,18 +215,7 @@ td {
     max-width: 400px;
 }
 
-div.field-wrap table.insert tr td.type {
-    padding: 0px;
-    text-align: left;
-    vertical-align: top;
-    font-size: small;
-	margin: 2px;
-    border-bottom: 1px solid black;
-    max-width: 700px;
-	border: none;
-}
-
-div.field-wrap table.insert tr td.name {
+div.field-wrap table.insert tr td {
     padding: 0px;
     text-align: left;
     vertical-align: top;
@@ -410,7 +399,14 @@ div.form {
     margin: auto;
 }
 
-/* inserts */
+/* Inserts */
+div.new_entry {
+	width: 500px;
+	min-width: 500px;
+	max-width: 500px;
+}
+
+/* Tables */
 div.backbone_strain_table {
     display:inline-block;
     margin-right: 100px;
@@ -435,9 +431,9 @@ div.logo {
 
 /* "Private" Checkbox */
 div.checkbox {
-    margin-top: 30px;
+	margin-top: 0px;
     float: right;
-    padding: 30px;
+    padding: 10px;
     width: 50%;
 }
 
@@ -445,8 +441,9 @@ div.checkbox {
 
 div.control_panel_menu, div.entry_nav{
     float: left; 
-    width:100%; 
-    margin-left:0; 
+    width:600px; 
+    margin-left:0px; 
+	clear: both;
 }
 
 div.entry_nav ul li {
@@ -559,6 +556,10 @@ input.all, select.all, input.login {
     width:100%; /* Added. The input boxes are no longer overlapping but separated */
 }
 
+form.insert-form div.new_entry table.insert select.insert{
+	width: 95%;
+}
+
 label { /* Added: All */
     font-size: 15px; /* Added. Change of text size above input boxes */ 
     color: #001F3F; /* Added. Text color of text above input boxes  */
@@ -566,11 +567,11 @@ label { /* Added: All */
 }
 
 div.field-wrap table.insert tr td.type { /* Fixes the size of the "select insert type" */
-	width: 400px;
+	width: 30%; 
 }
 
 div.field-wrap table.insert tr td.name { /* Fixes the size of the "select insert name" */
-	width: 400px;
+	width: 35%;
 }
 
 div.field-wrap table.insert tr td select {
@@ -607,7 +608,7 @@ input.insert, select.insert {
     font-size: 16px; /* Added. Increased font size in input boxes */
     padding: 4px 7px; /* Added. Less padding within input boxes */ 
     /* outline: 0; */ /* Added. No outline around active input box */
-    width:70%;
+    width:80%;
     float: right;
 }	
 
@@ -622,7 +623,7 @@ textarea.insert {
     /* outline: 0; */ /* Added. No outline around active input box */
     width:100%;
     float: right;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
 }
 
 /* Multiple inserts */
@@ -677,6 +678,29 @@ div.field-wrap table.insert tr td button.insert, div.field-wrap table.insert tr 
 	border: none;
 }
 
+div.field-wrap label.sequence {
+	float: left;
+}
+
+input.sequence {
+	border: none;
+	padding: 4px;
+    /* padding: 15px 0; */ /* Removed. The text is centered in button. */
+    /* text-transform: uppercase;*/ /* Removed. No uppercase text in buttons. */
+    letter-spacing: .1em;
+    display: inline-block;
+    width: 50%;
+    height: 29px; /* Added. Less thick button.  */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	margin-left: 30px;
+	cursor: pointer;
+}
+
+input.sequence:hover {
+	color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
 
 /* Quicksearch */
 button.quicksearch {
@@ -712,6 +736,17 @@ button.insert-mini {
 
 button.insert-mini:hover {
     color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
+form.insert-form div.new_entry tr td.more-button {
+	width: 20%; 
+	margin: 0px;
+}
+
+form.insert-form div.new_entry tr td.more-button button.insert-mini, form.insert-form div.new_entry tr td button.btn_remove {
+	width: 100%; 
+	margin-top: 3px;
+	margin-bottom: 0px;
 }
 
 /* "Remove insert" button in insert entry page */
@@ -921,7 +956,7 @@ ul.help_nav a:hover, ul.search_nav a:hover, .control_panel_menu a:hover { /* Hel
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
 
-ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* Help page nav buttons */ 
+ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active, .entry_nav a.active { /* Help page nav buttons */ 
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
@@ -939,8 +974,8 @@ ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* 
     font-size: 17px; /* Changed. Larger text size in nav. buttons */
     margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 3px;
-    margin-right: 30px;
+    margin-left: 5px;
+    margin-right: 22px;
 
     /* Rounded corners on top */  /* Added: all */
     -webkit-border-top-left-radius: 7px;
@@ -966,6 +1001,10 @@ ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* 
 .control_panel_nav a:hover, .entry_nav a:hover{
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+}
+
+.entry_nav a.last {
+	margin-right:0px;
 }
 
 /* HELP PAGE */ 
@@ -1142,3 +1181,4 @@ div.g-recaptcha {
     float: right;
     margin-bottom: 15px;
 }
+

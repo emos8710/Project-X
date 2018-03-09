@@ -125,19 +125,35 @@ $title = "New entry";
             <div class="entry_nav">
                 <ul>
                     <li>
-                    <a href="?content=new_entry">New entry</a>
+                    <a <?php
+						if (isset($_GET['content']) && $_GET['content'] === "new_entry") {
+							echo "class=\"active\"";
+						}
+						?> href="?content=new_entry">New entry</a>
                     </li>
                     <li>
-                    <a href="?content=new_strain">New strain </a>
+                    <a <?php 
+						if (isset($_GET['content']) && $_GET['content']=== "new_strain") {
+							echo "class=\"active\"";
+						}
+						?> href="?content=new_strain">New strain </a>
                     </li>
                     <li>
-                    <a href="?content=new_backbone">New backbone</a>
+                    <a <?php 
+						if (isset($_GET['content']) && $_GET['content']=== "new_backbone") {
+							echo "class=\"active\"";
+						}
+						?> href="?content=new_backbone">New backbone</a>
                     </li>
                     <li>
-                    <a href="?content=new_insert">New insert</a>
+                    <a <?php 
+						if (isset($_GET['content']) && $_GET['content']=== "new_insert") {
+							echo "class=\"active\"";
+						}
+						?> class="last" href="?content=new_insert">New insert</a>
                     </li>
                 </ul>
-            </div>
+            </div> 
             <!-- Desired content is displayed here -->   
 
             <?php if ($current_content == "new_entry") {
@@ -175,7 +191,7 @@ $title = "New entry";
                                 <tr> 
                                 <td class="type">
                                     <label class="type">Insert type </label> <br>
-                                    <select class="insert" name="insert_type[]" class="Ins_type" >
+                                    <select class="insert" name="insert_type[]" id="Ins_type" >
                                         <option value="">Select insert type</option>
                                         <?php
                                         echo load_ins_type();
@@ -187,8 +203,8 @@ $title = "New entry";
                                     <label>Insert name </label> <br>
                                     <select class="insert" name="ins[]" id ="Ins">
                                         <option value="">Select insert name</option>
-                                    </select></td>
-                                <td> <button class="insert" type="button" name="add" id="add_input">+ More inserts</button></td> </tr>
+										</select></td>
+                                <td class="more-button"> <br> <button class="insert-mini" type="button" name="add" id="add_input">+ More inserts</button></td> </tr>
 
                             </table>
                         </div>
@@ -201,10 +217,10 @@ $title = "New entry";
                         </div>
 
                         <div class="field-wrap">
-                            <label>Sequence </label>
-                            <input class="button" type="file" name="my_file" id="FileToUpload">
+                            <label class="sequence">Sequence </label>
+                            <input class="sequence" type="file" name="my_file" id="FileToUpload"></input>
                         </div>
-
+						
                         <div class="field-wrap">
                             <label>Year * </label>
                                 <input class="insert" type="text" name="year" minlength= "4" maxlength= "4" pattern = "(?:19|20)[0-9]{2}" 
@@ -236,7 +252,7 @@ $title = "New entry";
             } else if ($current_content == "new_strain") {
                 ?>
 
-                <form method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>">
+                <form class="insert-form" method="post" action="<?php echo htmlspecialchars("add_strain.php"); ?>">
 
                     <div class="field-wrap">
 
@@ -245,7 +261,7 @@ $title = "New entry";
                         <br/>
                     </div> 
 
-                    <div class="fieldwrap"> 
+                    <div class="field-wrap"> 
                         <label for="Comment">Comment * </label>
                         <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
                                   value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
@@ -260,7 +276,7 @@ $title = "New entry";
                 <?php
             } else if ($current_content == "new_backbone") {
                 ?>
-                <form method="post" action="<?php echo htmlspecialchars("add_backbone.php"); ?>">
+                <form class="insert-form" method="post" action="<?php echo htmlspecialchars("add_backbone.php"); ?>">
                     <p>
                     <div class="field-wrap">
 
@@ -294,7 +310,7 @@ $title = "New entry";
             } else if ($current_content == "new_insert") {
                 ?>
 
-                <form method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>">
+                <form class="insert-form" method="post" action="<?php echo htmlspecialchars("add_insert.php"); ?>">
                     <div class="field-wrap"> 
                         <table id="dynamic">
                             <td>
@@ -367,7 +383,7 @@ $title = "New entry";
                 <?php echo load_ins_type(); ?></select></td>\n\
                 <td class="name"><select class="insert" name="ins[]" id ="Ins"><option value="">\n\
                 Select insert name</option><?php echo load_ins_name(); ?></select></td>\n\
-                <td class="button"><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
+                <td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
                 i++;
             }
         });
@@ -397,7 +413,7 @@ $title = "New entry";
 
 <script>
     $(document).ready(function () {
-        $(".Ins_type").change(function () {
+        $("#Ins_type").change(function () {
             var type_id = $(this).val();
             $.ajax({
                 url: 'dropdown.php',
