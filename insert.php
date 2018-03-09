@@ -1,7 +1,5 @@
 
 <?php
-if (count(get_included_files()) == 1)
-    exit("Access restricted");
 
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
     session_start();
