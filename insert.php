@@ -1,5 +1,7 @@
 
 <?php
+if (count(get_included_files()) == 1)
+    exit("Access restricted");
 
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -10,11 +12,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'scripts/db.php';
 
 //Variables
-    $strain = mysqli_real_escape_string($link, $_REQUEST['strain_name']);
-    $backbone = mysqli_real_escape_string($link, $_REQUEST['backbone_name']);
-    $year = mysqli_real_escape_string($link, $_REQUEST['year']);
-    $reg_id = mysqli_real_escape_string($link, $_REQUEST['registry']);
-    $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
+    $strain = mysqli_real_escape_string($link, $_POST['strain_name']);
+    $backbone = mysqli_real_escape_string($link, $_POST['backbone_name']);
+    $year = mysqli_real_escape_string($link, $_POST['year']);
+    $reg_id = mysqli_real_escape_string($link, $_POST['registry']);
+    $comment = mysqli_real_escape_string($link, $_POST['comment']);
+    $ins = mysqli_real_escape_string($link, $_POST["ins"]);
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
     $private = 0;
@@ -49,18 +52,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $reg_id, $back_row_id, $strain_row_id, $creator, $private, $created)) {
                 if ($stmt_entry->execute()) {
                     $_SESSION['success'] = "<div class = 'success'>New entry submitted successfully</div>";
-                    $success = $_SESSION['success']; 
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
+                    exit(); 
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry->errno . ")" . 
                             " " . "Error: " . $stmt_entry->error . "</div>";
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-                    exit; 
+                    exit(); 
                 } $stmt_entry->close();
             } else {
                 $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry->errno . 
                         ")" . " " . "Error: " . $stmt_entry->error . "</div>";
                 header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                exit(); 
             }
         }
     } else {
@@ -76,7 +80,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $entry_id = $entry_id_row["id"];
 
 // Insert insert id and entry id into entry_inserts
-$ins = $_POST["ins"];
 $num = count($ins);  
     
     if ($num > 0) {
@@ -92,14 +95,17 @@ $num = count($ins);
                         } else {
                             $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
                             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                            exit(); 
                         } $stmt_entry_ins->close();
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                        exit(); 
                     }
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                    exit(); 
                 }
             }
         }

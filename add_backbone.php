@@ -1,4 +1,6 @@
 <?php
+if (count(get_included_files()) == 1)
+    exit("Access restricted");
 
 if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_NONE) {
     session_start();
@@ -31,22 +33,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($stmt_backbone->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New backbone submitted successfully</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
+                        exit(); 
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_backbone->errno . ")" . " " . "Error: " . $stmt_backbone->error . "</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                        exit(); 
                     } $stmt_backbone->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_backbone->errno . ")" . " " . "Error: " . $stmt_backbone->error . "</div>";
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                    exit(); 
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+            exit(); 
         }
     } else {
           $SESSION['existing'] = "<div class = 'existing'>The entered backbone already exists!"
                 ." ". "Please enter a new one. </div>";
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
+        exit(); 
     }
 }

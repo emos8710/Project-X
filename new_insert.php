@@ -79,7 +79,7 @@ $title = "New entry";
 
             function load_ins_name() {
                 include 'scripts/db.php';
-                $sql_ins_name = mysqli_query($link, "SELECT name,id,type FROM ins ORDER BY name");
+                $sql_ins_name = mysqli_query($link, "SELECT name,id FROM ins ORDER BY name");
                 while ($row = $sql_ins_name->fetch_assoc()) {
                         echo '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
                    
@@ -176,7 +176,7 @@ $title = "New entry";
                                 <tr> 
                                 <td class="type">
                                     <label class="type">Insert type </label> <br>
-                                    <select class="insert" name="insert_type[]" class="Ins_type" >
+                                    <select class="insert" name="insert_type[]" id="Ins_type" >
                                         <option value="">Select insert type</option>
                                         <?php
                                         echo load_ins_type();
@@ -364,7 +364,7 @@ $title = "New entry";
         $("#add_input").click(function () {
             if (i <= max) {
                 $("#dynamic").append('<tr id="row' + i + '">\n\
-                <td class="type"><select class="insert" name="insert_type[]"><option value="">Select insert type</option>\n\
+                <td class="type"><select class="insert" name="insert_type[]" id="Ins_type"><option value="">Select insert type</option>\n\
                 <?php echo load_ins_type(); ?></select></td>\n\
                 <td class="name"><select class="insert" name="ins[]" id ="Ins"><option value="">\n\
                 Select insert name</option><?php echo load_ins_name(); ?></select></td>\n\
@@ -398,7 +398,7 @@ $title = "New entry";
 
 <script>
     $(document).ready(function () {
-        $(".Ins_type").change(function () {
+        $("#Ins_type").change(function () {
             var type_id = $(this).val();
             $.ajax({
                 url: 'dropdown.php',
