@@ -1,6 +1,5 @@
 <?php
 /* This is the login system page! */
-require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
@@ -11,16 +10,6 @@ include 'top.php';
 ?>
 <main>
     <div class="form">
-        <?php
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {  // Checks if the post method was used to access the page
-            if (isset($_POST['login'])) {    // The login page is shown
-                require 'login.php';
-            } elseif (isset($_POST['register'])) {  // The registration form is shown
-                require 'register.php';
-            }
-        }
-        ?>
-
         <div class="tab-content">
             <!-- Creating login page -->
             <div id="login"> 
@@ -28,7 +17,7 @@ include 'top.php';
                 <p class="tab"><a class="login" href="#register">New? Click here to register!</a></p>
 
                 <!-- Form is created, method is set to post, the id is login -->
-                <form action="logsyst.php" method="post" autocomplete="off">
+                <form action="login.php" method="post" autocomplete="off">
 
                     <!-- Username field -->
                     <div class="field-wrap"> 	
@@ -61,7 +50,7 @@ include 'top.php';
                 <p class="tab"><a class="login" href="#login">Back to log in</a></p>
 
                 <!-- Form is created, method is set to post, the id is register -->
-                <form action="logsyst.php" method="post" autocomplete="off">
+                <form action="register.php" method="post" autocomplete="off">
 
                     <!-- First name field -->
                     <div class="top-row">
