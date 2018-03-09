@@ -32,24 +32,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($stmt_ins->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New insert submitted successfully</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
+                        exit(); 
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_ins->errno . ")" . " " . "Error: " . $stmt_ins->error . "</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                        exit(); 
                         
                     } $stmt_ins->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_ins->errno . ")" . " " . "Error: " . $stmt_ins->error . "</div>";
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                    exit(); 
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+            exit(); 
         }
     } else {
           $SESSION['existing'] = "<div class = 'existing'>The entered insert already exists!"
                 ." ". "Please enter a new one. </div>";
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
+        exit(); 
     }
 }
 ?>
