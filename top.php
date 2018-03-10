@@ -32,6 +32,10 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
 } else {
     $active = FALSE;
 }
+
+function test_input($string) {
+    return htmlspecialchars(strip_tags(stripslashes(trim($string))));
+}
 ?>
 <!DOCTYPE html>
 
