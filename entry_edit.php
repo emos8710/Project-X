@@ -182,94 +182,121 @@ if ($loggedin && $active && $admin) {
     ?>
 
     <!-- Edit forms -->
-    <h2>UpStrain ID <?php echo $id; ?></h2>
-    <ul>
+    <h2 class="search_etc">UpStrain ID <?php echo $id; ?></h2>
+<div class="edit_entry">
+	<table class="edit_entry">
         <!-- Edit registry ID -->
-        <li>Registry ID <?php
-            echo $entry_info["biobrick"];
-            if ($current_content != "biobrick") {
-                ?>
-                <a href="?upstrain_id=<?php echo $id; ?>&edit&content=biobrick">Edit</a>
-            <?php } ?></li>
-        <?php if ($current_content == "biobrick") { ?>
-            <li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    New registry ID
-                    <input type="text" name="biobrick" required> 
-                    <input type="submit" value="Submit">
-                    <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form></li>
-        <?php } ?>
+        <tr class="edit_entry">
+			<th class="title"> Registry ID: </th>
+			<td class="info"> 
+					<?php
+					echo $entry_info["biobrick"]; ?> 
+			</td>
+			<td class="edit"> 
+					<?php
+					if ($current_content != "biobrick") {
+					?>
+						<a href="?upstrain_id=<?php echo $id; ?>&edit&content=biobrick">Edit</a>
+					<?php }
+					if ($current_content == "biobrick") { ?>
+					<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+						<label class="edit_entry">New registry ID</label>
+						<input class="edit_entry" type="text" name="biobrick" required> 
+						<input class="edit_entry_button" type="submit" value="Submit">
+						<div class="clear"></div>
+						<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+					</form>
+					<?php } ?>
+			</td>
+		</tr>
 
         <!-- Edit strain -->
-        <li>Strain <?php
-            echo $entry_info["sname"];
-            if ($current_content != "strain") {
-                ?>
-                <a href="?upstrain_id=<?php echo $id; ?>&edit&content=strain">Edit</a>
-            <?php } ?></li>
-        <?php if ($current_content == "strain") { ?>
-            <li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    New strain
-                    <select name="strain" required>
-                        <?php
-                        include 'scripts/db.php';
-                        $sql_strain = mysqli_query($link, "SELECT name FROM strain");
-                        while ($row = $sql_strain->fetch_assoc()) {
-                            echo "<option>" . $row['name'] . "</option>";
-                        }
-                        mysqli_close($link);
-                        ?>
-                    </select>
-                    <input type="submit" value="Submit">
-                    <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form></li>
-        <?php } ?>
+		<tr class="edit_entry">
+			<th class="title"> Strain: </th> 
+			<td class="info"> 
+				<?php
+					echo $entry_info["sname"]; ?>
+			</td>
+			<td class="edit">
+					<?php
+					if ($current_content != "strain") {
+					?>
+						<a href="?upstrain_id=<?php echo $id; ?>&edit&content=strain">Edit</a>
+					<?php } 
+					if ($current_content == "strain") { ?>
+						<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+							<label class="edit_entry">New strain</label>
+							<select class="edit_entry" name="strain" required>
+								<?php
+								include 'scripts/db.php';
+								$sql_strain = mysqli_query($link, "SELECT name FROM strain");
+								while ($row = $sql_strain->fetch_assoc()) {
+									echo "<option>" . $row['name'] . "</option>";
+								}
+								mysqli_close($link);
+								?>
+							</select>
+							<input class="edit_entry_button" type="submit" value="Submit">
+							<div class="clear"></div>
+							<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+						</form>
+				<?php } ?>
+			</td>
+		</tr>
 
         <!-- Edit backbone -->
-        <li>Backbone <?php
-            echo $entry_info["bname"];
-            if ($current_content != "backbone") {
-                ?>
-                <a href="?upstrain_id=<?php echo $id; ?>&edit&content=backbone">Edit</a>
-            <?php } ?></li>
-        <?php if ($current_content == "backbone") { ?>
-            <li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    New backbone
-                    <select name="backbone" required>
-                        <?php
-                        include 'scripts/db.php';
-                        $sql_strain = mysqli_query($link, "SELECT name FROM backbone");
-                        while ($row = $sql_strain->fetch_assoc()) {
-                            echo "<option>" . $row['name'] . "</option>";
-                        }
-                        mysqli_close($link);
-                        ?>
-                    </select>
-                    <input type="submit" value="Submit">
-                    <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form></li>
-        <?php } ?>
-
+		<tr class="edit_entry">
+			<th class="title"> Backbone: </th> 
+			<td class="info"> 
+				<?php
+				echo $entry_info["bname"];?>
+			</td>
+			<td class="edit">
+				<?php 
+					if ($current_content != "backbone") {
+				?>
+						<div class="edit_info"><a href="?upstrain_id=<?php echo $id; ?>&edit&content=backbone">Edit</a></div>
+				<?php }
+					if ($current_content == "backbone") { ?>
+						<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+							<label class="edit_entry"> New backbone </label>
+							<select class="edit_entry"> name="backbone" required>
+								<?php
+								include 'scripts/db.php';
+								$sql_strain = mysqli_query($link, "SELECT name FROM backbone");
+								while ($row = $sql_strain->fetch_assoc()) {
+									echo "<option>" . $row['name'] . "</option>";
+								}
+								mysqli_close($link);
+								?>
+							</select>
+							<input class="edit_entry_button" type="submit" value="Submit">
+							<div class="clear"></div>
+							<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+						</form>
+				<?php } ?>
+			</td>
+		</tr>
+	
         <!-- Edit inserts -->
-        <li>Inserts</li>
-        <ol>
-            <?php while ($insert_row = mysqli_fetch_assoc($insert_result)) { ?>
-                <li>Insert <?php echo $insert_row['name'] ?> Type <?php
-                    echo $insert_row['type'];
-                    if ($current_content != "insert" . $insert_row['position']) {
-                        ?>
-                        <a href="?upstrain_id=<?php echo $id; ?>&edit&content=insert<?php echo $insert_row['position'] ?>">Edit</a>
-                        <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                            <input name="remove_insert" type="hidden">
-                            <input name="position" type="hidden" value="<?php echo $insert_row['position'] ?>">
-                            <input type="submit" value="Remove">
-                        </form>
-                    <?php } ?>
-                </li>
+        <tr class="edit_entry"> 
+			<th class="title"> Inserts: </th>
+			<td class="info"> 
+				<?php while ($insert_row = mysqli_fetch_assoc($insert_result)) { ?>
+					<li>Insert: <?php echo $insert_row['name'] ?>, Type: <?php echo $insert_row['type'];
+						if ($current_content != "insert" . $insert_row['position']) {
+							?>
+							<a href="?upstrain_id=<?php echo $id; ?>&edit&content=insert<?php echo $insert_row['position'] ?>">Edit</a>
+							<form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+								<input name="remove_insert" type="hidden">
+								<input name="position" type="hidden" value="<?php echo $insert_row['position'] ?>">
+								<input class="edit_entry_button" type="submit" value="Remove">
+							</form>
+						<?php } ?>
+					</li>
                 <?php if ($current_content == "insert" . $insert_row['position']) { ?>
-                    <br>
                     <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                        Insert type
+                        <label>Insert type</label>
                         <select name="insert_type" id="Ins_type" required>
                             <option value="">Select insert type</option>
                             <?php
@@ -281,30 +308,28 @@ if ($loggedin && $active && $admin) {
                             ?>
                         </select>
 
-                        Insert name
+                        <label class="edit_entry">Insert name</label>
                         <select name="insert" id ="Ins" required>
                             <option value="">Select insert name</option>
                         </select>
 
                         <!-- Send insert position -->
                         <input name="position" type="hidden" value="<?php echo $insert_row['position'] ?>">
-
-                        <input type="submit" value="Submit" >
-                        <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+                        <input class="edit_entry_button" type="submit" value="Submit" >
+                        <div class="clear"></div>
+						<a style="float: right;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
                     </form>
                 <?php } ?>
             <?php } ?>
-        </ol>
-
+			</td>
+			<td class="edit">
+				<a href="?upstrain_id=<?php echo $id; ?>&edit&content=add_insert">Add insert</a>
         <!-- Add new insert -->
-        <ul>
-            <li>
-                <a href="?upstrain_id=<?php echo $id; ?>&edit&content=add_insert">Add insert</a>
-            </li>
-            <?php if ($current_content == "add_insert") { ?>
-                <li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                        Insert type
-                        <select name="insert_type" id="Ins_type" required>
+				<?php if ($current_content == "add_insert") { ?>
+                <form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+                        <div class="field-wrap" style="float: left; margin-right: 5px;">
+						<label class="edit_entry"> Insert type </label>
+                        <br><select class="edit_entry" name="insert_type" id="Ins_type" required>
                             <option value="">Select insert type</option>
                             <?php
                             include 'scripts/db.php';
@@ -314,11 +339,14 @@ if ($loggedin && $active && $admin) {
                             }
                             ?>
                         </select>
-
-                        Insert name
-                        <select name="new_insert" id ="Ins" required>
+						</div>
+						
+						<div class="field-wrap">
+                        <label class="edit_entry">Insert name</label>
+                        <br><select class="edit_entry" name="new_insert" id ="Ins" required>
                             <option value="">Select insert name</option>
                         </select>
+						</div>
 
                         <?php
                         include 'scripts/db.php';
@@ -329,79 +357,121 @@ if ($loggedin && $active && $admin) {
 
                         <input name="position" type="hidden" value="<?php echo $position ?>">
 
-                        <input type="submit" value="Submit" >
-                        <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+                        <input class="edit_entry_button" type="submit" value="Submit" >
+						<div class="clear"></div>
+                        <a style="float: right;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
                     </form></li>
             <?php } ?>
-        </ul>
+			</td>
+		</tr>
 
         <!-- Edit comment -->
-        <li>Comment <?php
-            echo $entry_info["comment"];
-            if ($current_content != "comment") {
+        <tr class="edit_entry">
+			<th class="title">Comment:</th> 
+			<td class="info"> 
+				<?php
+					echo $entry_info["comment"]; ?>
+			</td>
+			<td>
+				<?php 
+					if ($current_content != "comment") {
                 ?>
                 <a href="?upstrain_id=<?php echo $id; ?>&edit&content=comment">Edit</a>
-            <?php } ?></li>
-        <?php
-        if ($current_content == "comment") {
-            include 'scripts/db.php';
-            $sql_comment = mysqli_query($link, "SELECT comment FROM entry WHERE id = '$entry_id'");
-            $old_comment = mysqli_fetch_array($sql_comment)[0];
-            ?>
-            <li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    Edit comment
-                    <input type="text" name="comment" required value="<?php echo $old_comment ?>"> 
-                    <input type="submit" value="Submit">
-                    <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form></li>
-        <?php } ?>
+            <?php } 
+				if ($current_content == "comment") {
+				include 'scripts/db.php';
+				$sql_comment = mysqli_query($link, "SELECT comment FROM entry WHERE id = '$entry_id'");
+				$old_comment = mysqli_fetch_array($sql_comment)[0];
+			?>
+				<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+                    <label class="edit_entry"> Edit comment <label>
+                    <input class="edit_entry" type="text" name="comment" required value="<?php echo $old_comment ?>"> 
+                    <input class="edit_entry_button" type="submit" value="Submit">
+                    <div class="clear"></div>
+					<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+                </form>
+			<?php } ?>
+			
+			</td>
+		</tr>
 
         <!-- Edit year created -->
-        <li>Year created <?php
-            echo $entry_info["year_created"];
-            if ($current_content != "year_created") {
+        <tr class="edit_entry">
+			<th class="title"> Year created: </th> 
+			<td class="info">
+				<?php
+					echo $entry_info["year_created"]; ?>
+			</td>
+			<td class="edit">
+				<?php 
+					if ($current_content != "year_created") {
                 ?>
                 <a href="?upstrain_id=<?php echo $id; ?>&edit&content=year_created">Edit</a>
-            <?php } ?></li>
-        <?php if ($current_content == "year_created") { ?>
-            <li><form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    New year
-                    <input type="text" name="year_created" required> 
-                    <input type="submit" value="Submit">
-                    <a href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form></li>
-        <?php } ?>
+				<?php } ?></li>
+				<?php if ($current_content == "year_created") { ?>
+				<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+                    <label class="edit_entry">New year
+                    <input class="edit_entry" type="text" name="year_created" required> 
+                    <input class="edit_entry_button" type="submit" value="Submit">
+					<div class="clear"></div>
+                    <a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+                </form>	
+				<?php } ?>
+			</td>
+		</tr>
 
         <!-- Edit created -->
-        <?php if ($entry_info['created']) { ?>
-            <li>This entry has been created in the lab
-                <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    <input type="hidden" name="created" value="0">
-                    <input type="submit" value="This is wrong">
-                </form></li>
-        <?php } else { ?>
-            <li>This entry has NOT been created in the lab
-                <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    <input type="hidden" name="created" value="1">
-                    <input type="submit" value="It's been created">
-                </form></li>
-        <?php } ?>
+		<tr class="edit_entry">
+			<th class="title"> Created in lab? </th>
+				<?php if ($entry_info['created']) { ?>
+					<td class="info"> 
+						Yes!
+					</td>
+					<td class="edit">
+						<form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+							<input type="hidden" name="created" value="0">
+							<input style="float: left;" class="edit_entry_button" type="submit" value="This is wrong">
+						</form>
+					</td>
+				<?php } else { ?>
+				<td class="info">
+					No!
+				</td>
+				<td class="edit">
+					<form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+						<input type="hidden" name="created" value="1">
+						<input style="float: left;" class="edit_entry_button" type="submit" value="It's been created">
+					</form>
+				</td>
+			<?php } ?>
+		</tr>
 
         <!-- Edit private -->
-        <?php if ($entry_info['private']) { ?>
-            <li>This entry is private
+        <tr class="edit_entry">
+		<th class="title"> Private? </th>
+		<?php if ($entry_info['private']) { ?>
+			<td class="info">
+				Yes!
+			</td>
+			<td class="edit">
                 <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
                     <input type="hidden" name="private" value="0">
-                    <input type="submit" value="Make public">
-                </form></li>
+                    <input style="float: left;" class="edit_entry_button" type="submit" value="Make public">
+                </form>
+			</td>
         <?php } else { ?>
-            <li>This entry is public
+			<td class="info">
+				No!
+			</td>
+			<td class="edit">
                 <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
                     <input type="hidden" name="private" value="1">
-                    <input type="submit" value="Make private">
-                </form></li>
+                    <input style="float: left;" class="edit_entry_button" type="submit" value="Make private">
+                </form>
+			</td>
         <?php } ?>
-    </ul>
+		</tr>
+	</table>
 
     <div class="clear"></div>
     <!-- Show success/error message -->
@@ -410,7 +480,9 @@ if ($loggedin && $active && $admin) {
     endif;
     ?>
     <!-- Back button -->
-    <div class="back"><a href="?upstrain_id=<?php echo $id; ?>">Back to entry page</a></div>
+    <br>
+	<br>
+	<div class="back"><a href="?upstrain_id=<?php echo $id; ?>">Back to entry page</a></div>
 
     <?php
 } else {
@@ -435,7 +507,7 @@ if ($loggedin && $active && $admin) {
     }
 }
 ?>
-
+</div>
 <!-- Script that determines which insert options to show after picking an insert type -->
 <script>
     $(document).ready(function () {
