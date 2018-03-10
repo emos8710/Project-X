@@ -2,7 +2,7 @@
 if (count(get_included_files()) == 1)
     exit("Access restricted");
 
-include 'db.php';
+include 'scripts/db.php';
 
 $id = mysqli_real_escape_string($link, $_GET['id']);
 
