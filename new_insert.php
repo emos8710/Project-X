@@ -186,7 +186,7 @@ $title = "New entry";
                         <div class="field-wrap"> 
                             <label>Comment * </label>
                             <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                      required ="required"> </textarea> 
+                                      required="required"></textarea> 
                         </div>
 
                         <div class="checkbox">
@@ -219,7 +219,7 @@ $title = "New entry";
 						<div class="field-wrap-strain"> 
 							<label for="Comment">Comment * </label>
 							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-									 required ="required"> </textarea>
+									 required></textarea>
 						</div>
 					</div>
 
@@ -246,7 +246,7 @@ $title = "New entry";
 						<div class="field-wrap-backbone">
 							<label>Comment * </label>
 							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                  required ="required"> </textarea> </p>
+                                  required></textarea> </p>
 						</div>
 
 						<div class="checkbox">
@@ -287,7 +287,7 @@ $title = "New entry";
 						<div class="field-wrap-insert">
 							<label>Comment * </label>
 							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-									 required ="required"> </textarea> 
+									 required></textarea> 
 						</div>
                     
 						<div class="checkbox">

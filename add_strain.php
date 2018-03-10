@@ -9,12 +9,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
 
-//Functions
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
+    function test_input($string) {
+        return htmlspecialchars(strip_tags(stripslashes(trim($string))));
     }
 
 //Variables
@@ -57,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             exit();
         }
     } else {
-        $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists! Please enter a new one</div>";
+        $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists! Please enter a new one.</div>";
         mysqli_close($link) or die("Could not close database connection");
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
         exit();

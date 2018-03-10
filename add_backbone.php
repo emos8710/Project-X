@@ -7,15 +7,10 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
-    
-//Functions
-    function test_input($data) {
-        $data = trim($data);
-        $data = stripslashes($data);
-        $data = htmlspecialchars($data);
-        return $data;
-    }
 
+    function test_input($string) {
+        return htmlspecialchars(strip_tags(stripslashes(trim($string))));
+    }
 
 //Variables
     $backbone = mysqli_real_escape_string($link, test_input($_POST['backbone']));
@@ -40,27 +35,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($stmt_backbone->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New backbone submitted successfully</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
-                        exit(); 
+                        exit();
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_backbone->errno . ")" . " " . "Error: " . $stmt_backbone->error . "</div>";
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-                        exit(); 
+                        exit();
                     } $stmt_backbone->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_backbone->errno . ")" . " " . "Error: " . $stmt_backbone->error . "</div>";
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-                    exit(); 
+                    exit();
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-            exit(); 
+            exit();
         }
     } else {
-          $SESSION['existing'] = "<div class = 'existing'>The entered backbone already exists!"
-                ." ". "Please enter a new one. </div>";
+        $SESSION['existing'] = "<div class = 'existing'>The entered backbone already exists! Please enter a new one </div>";
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
-        exit(); 
+        exit();
     }
 }

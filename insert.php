@@ -9,13 +9,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
 
+    function test_input($string) {
+        return htmlspecialchars(strip_tags(stripslashes(trim($string))));
+    }
+
 //Variables
-    $strain = mysqli_real_escape_string($link, $_POST['strain_name']);
-    $backbone = mysqli_real_escape_string($link, $_POST['backbone_name']);
-    $year = mysqli_real_escape_string($link, $_POST['year']);
-    $reg_id = mysqli_real_escape_string($link, $_POST['registry']);
-    $comment = mysqli_real_escape_string($link, $_POST['comment']);
-    $ins = $_POST['ins'];
+    $strain = mysqli_real_escape_string($link, test_input($_POST['strain_name']));
+    $backbone = mysqli_real_escape_string($link, test_input($_POST['backbone_name']));
+    $year = mysqli_real_escape_string($link, test_input($_POST['year']));
+    $reg_id = mysqli_real_escape_string($link, test_input($_POST['registry']));
+    $comment = mysqli_real_escape_string($link, test_input($_POST['comment']));
+    $ins = test_input($_POST['ins']);
     $num = count($ins);
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
@@ -66,6 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                 if ($stmt_entry_ins = $link->prepare($entry_ins)) {
                                     if ($stmt_entry_ins->bind_param("iii", $entry_id, $ins[$i], $position)) {
                                         if ($stmt_entry_ins->execute()) {
+                                            
                                         } else {
                                             $_SESSION['error'] .= "<div class = 'error'>Execute failed: (" . $stmt_entry_ins->errno . ")" . " " . "Error: " . $stmt_entry_ins->error . "</div>";
                                         } $stmt_entry_ins->close();
@@ -124,6 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             exit();
                         }
                     } else {
+                        
                     }
 
                     $_SESSION['success'] .= "<div class = 'success'>New entry submitted successfully</div>";
@@ -149,5 +155,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-mysqli_close($link) or die("Could not close database connection");
+    mysqli_close($link) or die("Could not close database connection");
 }
