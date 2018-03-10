@@ -149,5 +149,5 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 
-    $link->close();
+mysqli_close($link) or die("Could not close database connection");
 }

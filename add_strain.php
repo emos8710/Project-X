@@ -25,7 +25,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if ($stmt_strain->bind_param("ssis", $strain, $comment, $creator, $current_date)) {
                     if ($stmt_strain->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New strain submitted successfully</div>";
-                         mysqli_close($link) or die("Could not close database connection");
+                        mysqli_close($link) or die("Could not close database connection");
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
                         exit(); 
                     } else {
