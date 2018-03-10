@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $year = mysqli_real_escape_string($link, test_input($_POST['year']));
     $reg_id = mysqli_real_escape_string($link, test_input($_POST['registry']));
     $comment = mysqli_real_escape_string($link, test_input($_POST['comment']));
-    $ins = test_input($_POST['ins']);
+    $ins = $_POST['ins'];
     $num = count($ins);
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
