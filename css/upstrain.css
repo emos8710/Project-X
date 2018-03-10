@@ -217,7 +217,7 @@ td {
     text-align: left;
     vertical-align: top;
     font-size: small;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     max-width: 400px;
 }
 
@@ -739,7 +739,7 @@ button.quicksearch:hover {
 }
 
 /* "Add insert" button in insert entry page */
-button.insert-mini {
+button.insert-mini, input.edit_entry_button {
     cursor: pointer;
     border: none;
     padding: 4px;
@@ -1135,6 +1135,7 @@ p a.edit {
 	margin-left: 80px;
 }
 
+/* Edit users */
 div.edit_users {
 	float: left;
 	margin: 10px;
@@ -1191,6 +1192,55 @@ div.edit_users ul li div.back {
 div.not_added{
 	margin-left: 40%; 
 }
+
+/* Edit entry */
+div.edit_entry {
+	float: left;
+	margin-left: 40px;
+	min-width: 500px;
+}
+
+div.edit_entry table.edit_entry {
+	border: none;
+	border-bottom: none;
+	width: 100%;
+}
+
+div.edit_entry table.edit_entry tbody tr.edit_entry {
+	border: none; 
+	border-bottom: none;
+	
+}
+
+div.edit_entry table.edit_entry tbody tr.edit_entry th.title {
+	border: none; 
+	border-bottom: none;
+	text-align: left; 
+	width: 100px;
+}
+
+form.edit_entry input.edit_entry, form.edit_entry select.edit_entry {
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 14px; /* Added. Increased font size in input boxes */
+    /* outline: 0; */ /* Added. No outline around active input box */
+	min-width: 50%;
+	margin-top: 0px;
+}
+
+form.edit_entry label.edit_entry {
+    font-size: 14px; /* Added. Increased font size in input boxes */
+	font-style: normal;
+	margin-bottom: 0px;
+}
+
+form.edit_entry a {
+    font-size: 14px; /* Added. Increased font size in input boxes */
+	font-style: normal;
+	margin-bottom: 0px;
+}
+
+
 
 /* reCAPTCHA */
 div.g-recaptcha {
