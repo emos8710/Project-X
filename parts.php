@@ -13,7 +13,7 @@ $is_mysql_error = FALSE;
 
 // Fetch the insert id from URL
 if (isset($_GET["ins_id"])) {
-    $part_id = $_GET["ins_id"];
+    $part_id = htmlspecialchars(strip_tags(stripslashes(trim($_GET["ins_id"]))));
     $part = "ins.id";
     $name = "ins.name";
     $table = "ins";
@@ -22,7 +22,7 @@ if (isset($_GET["ins_id"])) {
         $upstrain_error = "Invalid insert ID.";
     }
 } else if (isset($_GET["backbone_id"])) {
-    $part_id = $_GET["backbone_id"];
+    $part_id = htmlspecialchars(strip_tags(stripslashes(trim($_GET["backbone_id"]))));
     $part = "backbone.id";
     $name = "backbone.name";
     $table = "backbone";
@@ -31,7 +31,7 @@ if (isset($_GET["ins_id"])) {
         $upstrain_error = "Invalid backbone ID.";
     }
 } else if (isset($_GET["strain_id"])) {
-    $part_id = $_GET["strain_id"];
+    $part_id = htmlspecialchars(strip_tags(stripslashes(trim($_GET["strain_id"]))));
     $part = "strain.id";
     $name = "strain.name";
     $table = "strain";

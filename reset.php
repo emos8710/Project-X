@@ -8,9 +8,9 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Checking that the email and hash variables are set
 // Get carries the variables passed to the script via the URL parameters
-if (isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])) {
-    $email = $mysqli->escape_string($_GET['email']);
-    $hash = $mysqli->escape_string($_GET['hash']);
+if (isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['hash']) && !empty($_GET['hash'])) {
+    $email = $mysqli->escape_string(test_input($_GET['email']));
+    $hash = $mysqli->escape_string(test_input($_GET['hash']));
 
     // Checks if a user with the matching hash exists in the database
     $result = $mysqli->query("SELECT * FROM users WHERE email='$email' AND hash='$hash'");

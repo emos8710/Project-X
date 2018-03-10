@@ -6,7 +6,7 @@ if ($loggedin && $active && $admin) {
 
     // Set display for the content div
     if (isset($_GET['content'])) {
-        $current_content = $_GET['content'];
+        $current_content = test_input($_GET['content']);
     } else {
         $current_content = "";
     }
@@ -28,14 +28,14 @@ if ($loggedin && $active && $admin) {
         // Change registry ID
         if (isset($_POST['biobrick']) && $_POST['biobrick'] != "") {
             $to_update = "entry_reg";
-            $user_input = $_POST['biobrick'];
-            $update_val = mysqli_real_escape_string($link, $_POST['biobrick']);
+            $user_input = test_input($_POST['biobrick']);
+            $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "registry ID";
             // Change strain
         } else if (isset($_POST['strain']) && $_POST['strain'] != "") {
             $to_update = "strain";
-            $user_input = $_POST['strain'];
-            $update_name = mysqli_real_escape_string($link, $_POST['strain']);
+            $user_input = test_input($_POST['strain']);
+            $update_name = mysqli_real_escape_string($link, $user_input);
             if ($update_id = mysqli_query($link, "SELECT id FROM strain WHERE name = '$update_name'")) {
                 $update_val = mysqli_fetch_array($update_id)[0];
             } else {
@@ -46,8 +46,8 @@ if ($loggedin && $active && $admin) {
             // Change backbone
         } else if (isset($_POST['backbone']) && $_POST['backbone'] != "") {
             $to_update = "backbone";
-            $user_input = $_POST['backbone'];
-            $update_name = mysqli_real_escape_string($link, $_POST['backbone']);
+            $user_input = test_input($_POST['backbone']);
+            $update_name = mysqli_real_escape_string($link, $user_input);
             if ($update_id = mysqli_query($link, "SELECT id FROM backbone WHERE name = '$update_name'")) {
                 $update_val = mysqli_fetch_array($update_id)[0];
             } else {
@@ -56,9 +56,9 @@ if ($loggedin && $active && $admin) {
             }
             $update_msg = "backbone";
             // Change insert
-        } else if (isset($_POST['insert']) && $_POST['insert'] != "" && isset($_POST['position']) && $_POST['position'] != "") {
-            $insert_id = mysqli_real_escape_string($link, $_POST['insert']);
-            $insert_pos = mysqli_real_escape_string($link, $_POST['position']);
+        } else if (isset($_POST['insert']) && $_POST['insert'] != "" && isset($_POST['position']) && !empty($_POST['position'])) {
+            $insert_id = mysqli_real_escape_string($link, test_input($_POST['insert']));
+            $insert_pos = mysqli_real_escape_string($link, test_input($_POST['position']));
             $insert_sql = "UPDATE entry_inserts SET insert_id = '$insert_id' WHERE position = '$insert_pos' AND entry_id = '$entry_id'";
             if ($result = mysqli_query($link, $insert_sql)) {
                 $update_msg = "Successfully updated insert.";
@@ -68,8 +68,8 @@ if ($loggedin && $active && $admin) {
                 goto errorTime;
             }
             // Remove insert
-        } else if (isset($_POST['remove_insert']) && isset($_POST['position']) && $_POST['position'] != "") {
-            $insert_pos = mysqli_real_escape_string($link, $_POST['position']);
+        } else if (isset($_POST['remove_insert']) && isset($_POST['position']) && !empty($_POST['position'])) {
+            $insert_pos = mysqli_real_escape_string($link, test_input($_POST['position']));
             $remove_sql = "DELETE FROM entry_inserts WHERE position = '$insert_pos' AND entry_id = '$entry_id';";
             $move_sql = "UPDATE entry_inserts SET position = position-1 WHERE position > '$insert_pos' AND entry_id = '$entry_id';";
             mysqli_begin_transaction($link);
@@ -85,9 +85,9 @@ if ($loggedin && $active && $admin) {
                 goto errorTime;
             }
             // Add new insert
-        } else if (isset($_POST['new_insert']) && $_POST['new_insert'] != "" && isset($_POST['position']) && $_POST['position'] != "") {
-            $insert_pos = mysqli_real_escape_string($link, $_POST['position']);
-            $new_insert = mysqli_real_escape_string($link, $_POST['new_insert']);
+        } else if (isset($_POST['new_insert']) && !empty($_POST['new_insert']) && isset($_POST['position']) && !empty($_POST['position'])){
+            $insert_pos = mysqli_real_escape_string($link, test_input($_POST['position']));
+            $new_insert = mysqli_real_escape_string($link, test_input($_POST['new_insert']));
             $add_sql = "INSERT INTO entry_inserts (insert_id, entry_id, position) VALUES (?,?,?)";
             if ($stmt = mysqli_prepare($link, $add_sql)) {
                 mysqli_stmt_bind_param($stmt, "iii", $new_insert, $entry_id, $insert_pos);
@@ -104,27 +104,27 @@ if ($loggedin && $active && $admin) {
             }
 
             // Change comment
-        } else if (isset($_POST['comment']) && $_POST['comment'] != "") {
+        } else if (isset($_POST['comment']) && !empty($_POST['comment'])){
             $to_update = "comment";
-            $user_input = $_POST['comment'];
-            $update_val = mysqli_real_escape_string($link, $_POST['comment']);
+            $user_input = test_input($_POST['comment']);
+            $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "comment";
-        } else if (isset($_POST['year_created']) && $_POST['year_created'] != "") {
+        } else if (isset($_POST['year_created']) && !empty($_POST['year_created'])) {
             $to_update = "year_created";
-            $user_input = $_POST['year_created'];
-            $update_val = mysqli_real_escape_string($link, $_POST['year_created']);
+            $user_input = test_input($_POST['year_created']);
+            $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "year created";
             // Change created
-        } else if (isset($_POST['created']) && $_POST['created'] != "") {
+        } else if (isset($_POST['created']) && !empty($_POST['created'])){
             $to_update = "created";
-            $user_input = $_POST['created'];
-            $update_val = mysqli_real_escape_string($link, $_POST['created']);
+            $user_input = test_input($_POST['created']);
+            $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "creation status";
             // Change private
-        } else if (isset($_POST['private']) && $_POST['private'] != "") {
+        } else if (isset($_POST['private']) && !empty($_POST['private'])) {
             $to_update = "private";
-            $user_input = $_POST['private'];
-            $update_val = mysqli_real_escape_string($link, $_POST['private']);
+            $user_input = test_input($_POST['private']);
+            $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "privacy setting";
         }
 

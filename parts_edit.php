@@ -8,7 +8,7 @@ if (count(get_included_files()) == 1)
 if ($loggedin && $active && $admin) {
     //Set display for the content div 
     if (isset($_GET['content'])) {
-        $current_content = $_GET['content'];
+        $current_content = test_input($_GET['content']);
     } else {
         $current_content = "";
     }
@@ -23,8 +23,8 @@ if ($loggedin && $active && $admin) {
         if (isset($_GET["ins_id"])) {
             //Code to change insert if part = insert
             // Change insert name 
-            if (isset($_POST['insert_name']) && $_POST['insert_name'] != "") {
-                $insert_name = mysqli_real_escape_string($link, $_POST['insert_name']);
+            if (isset($_POST['insert_name']) && !empty($_POST['insert_name'])) {
+                $insert_name = mysqli_real_escape_string($link, test_input($_POST['insert_name']));
                 // Check if characters have been removed
                 if ($insert_name != $_POST['insert_name']) {
                     $iserror = TRUE;
@@ -50,8 +50,8 @@ if ($loggedin && $active && $admin) {
                 }
 
                 // Change insert type    
-            } else if (isset($_POST['insert_type']) && $_POST['insert_type'] != "") {
-                $insert_type = mysqli_real_escape_string($link, $_POST['insert_type']);
+            } else if (isset($_POST['insert_type']) && !empty($_POST['insert_type'])) {
+                $insert_type = mysqli_real_escape_string($link, test_input($_POST['insert_type']));
                 // Match user input against the name of the specific insert type in the database
                 $type_query = "SELECT ins_type.id AS type_id FROM ins_type WHERE ins_type.name = '$insert_type'";
                 $insert_type_query = mysqli_query($link, $type_query);
@@ -82,9 +82,9 @@ if ($loggedin && $active && $admin) {
                 }
                 // Change privacy of insert    
             } else if (isset($_POST['insert_private'])) {
-                if ($_POST['insert_private'] == 'Yes') {
+                if (test_input($_POST['insert_private']) == 'Yes') {
                     $insert_private = 1;
-                } else if ($_POST['insert_private'] == 'No') {
+                } else if (test_input($_POST['insert_private']) == 'No') {
                     $insert_private = 0;
                 }
                 // Do the change
@@ -106,16 +106,16 @@ if ($loggedin && $active && $admin) {
                 // Change separate values
             } else {
                 // Change insert biobrick registry id
-                if (isset($_POST['insert_reg']) && $_POST['insert_reg'] != "") {
+                if (isset($_POST['insert_reg']) && !empty($_POST['insert_reg'])) {
                     $to_update = "ins_reg";
-                    $user_input = $_POST['insert_reg'];
-                    $update_val = mysqli_real_escape_string($link, $_POST['insert_reg']);
+                    $user_input = test_input($_POST['insert_reg']);
+                    $update_val = mysqli_real_escape_string($link, $user_input);
                     $update_msg = "bb_reg";
                     // Change insert comment
-                } else if (isset($_POST['insert_comment']) && $_POST['insert_comment'] != "") {
+                } else if (isset($_POST['insert_comment']) && !empty($_POST['insert_comment'])) {
                     $to_update = "comment";
-                    $user_input = $_POST['insert_comment'];
-                    $update_val = mysqli_real_escape_string($link, $_POST['insert_comment']);
+                    $user_input = test_input($_POST['insert_comment']);
+                    $update_val = mysqli_real_escape_string($link, $user_input);
                     $update_msg = "comment";
                     // Remove insert comment
                 } else if (isset($_POST['remove_insert_comment'])) {
@@ -156,8 +156,8 @@ if ($loggedin && $active && $admin) {
         } else if (isset($_GET["backbone_id"])) {
             // Code to change backbone if part = backbone
             // Change backbone name 
-            if (isset($_POST['backbone_name']) && $_POST['backbone_name'] != "") {
-                $backbone_name = mysqli_real_escape_string($link, $_POST['backbone_name']);
+            if (isset($_POST['backbone_name']) && !empty($_POST['backbone_name'])) {
+                $backbone_name = mysqli_real_escape_string($link, test_input($_POST['backbone_name']));
                 // Check if characters have been removed
                 if ($backbone_name != $_POST['backbone_name']) {
                     $iserror = TRUE;
@@ -181,9 +181,9 @@ if ($loggedin && $active && $admin) {
                 }
                 // Change backbone privacy       
             } else if (isset($_POST['backbone_private'])) {
-                if ($_POST['backbone_private'] == 'Yes') {
+                if (test_input($_POST['backbone_private']) == 'Yes') {
                     $backbone_private = 1;
-                } else if ($_POST['backbone_private'] == 'No') {
+                } else if (test_input($_POST['backbone_private']) == 'No') {
                     $backbone_private = 0;
                 }
                 // Change the privacy
@@ -205,16 +205,16 @@ if ($loggedin && $active && $admin) {
                 // Change separate values
             } else {
                 // Change backbone biobrick registry id
-                if (isset($_POST['backbone_reg']) && $_POST['backbone_reg'] != "") {
+                if (isset($_POST['backbone_reg']) && !empty($_POST['backbone_reg'])) {
                     $to_update = "Bb_reg";
-                    $user_input = $_POST['backbone_reg'];
-                    $update_val = mysqli_real_escape_string($link, $_POST['backbone_reg']);
+                    $user_input = test_input($_POST['backbone_reg']);
+                    $update_val = mysqli_real_escape_string($link, $user_input);
                     $update_msg = "bb_reg";
                     // Change backbone comment
-                } else if (isset($_POST['backbone_comment']) && $_POST['backbone_comment'] != "") {
+                } else if (isset($_POST['backbone_comment']) && !empty($_POST['backbone_comment'])) {
                     $to_update = "comment";
-                    $user_input = $_POST['backbone_comment'];
-                    $update_val = mysqli_real_escape_string($link, $_POST['backbone_comment']);
+                    $user_input = test_input($_POST['backbone_comment']);
+                    $update_val = mysqli_real_escape_string($link, $user_input);
                     $update_msg = "comment";
                     // Remove backbone comment
                 } else if (isset($_POST['remove_backbone_comment'])) {
@@ -255,8 +255,8 @@ if ($loggedin && $active && $admin) {
         } else if (isset($_GET["strain_id"])) {
             // Code to update strain if part=strain
             // Change strain name 
-            if (isset($_POST['strain_name']) && $_POST['strain_name'] != "") {
-                $strain_name = mysqli_real_escape_string($link, $_POST['strain_name']);
+            if (isset($_POST['strain_name']) && !empty($_POST['strain_name'])) {
+                $strain_name = mysqli_real_escape_string($link, test_input($_POST['strain_name']));
                 // Check if characters have been removed
                 if ($strain_name != $_POST['strain_name']) {
                     $iserror = TRUE;
@@ -280,9 +280,9 @@ if ($loggedin && $active && $admin) {
                 }
                 // Change privacy of strain       
             } else if (isset($_POST['strain_private'])) {
-                if ($_POST['strain_private'] == 'Yes') {
+                if (test_input($_POST['strain_private']) == 'Yes') {
                     $strain_private = 1;
-                } else if ($_POST['strain_private'] == 'No') {
+                } else if (test_input($_POST['strain_private']) == 'No') {
                     $strain_private = 0;
                 }
                 // Change privacy
@@ -304,10 +304,10 @@ if ($loggedin && $active && $admin) {
                 // Change separate values
             } else {
                 // Change strain comment
-                if (isset($_POST['strain_comment']) && $_POST['strain_comment'] != "") {
+                if (isset($_POST['strain_comment']) && !empty($_POST['strain_comment'])) {
                     $to_update = "comment";
-                    $user_input = $_POST['strain_comment'];
-                    $update_val = mysqli_real_escape_string($link, $_POST['strain_comment']);
+                    $user_input = test_input($_POST['strain_comment']);
+                    $update_val = mysqli_real_escape_string($link, $user_input);
                     $update_msg = "comment";
                     // Remove strain comment
                 } else if (isset($_POST['remove_strain_comment'])) {

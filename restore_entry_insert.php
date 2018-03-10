@@ -4,8 +4,8 @@ if (count(get_included_files()) == 1)
 
 include 'scripts/db.php';
 
-$restore_id = mysqli_real_escape_string($link, $_POST['restore_data']);
-$entry_id = mysqli_real_escape_string($link, $_POST['restore_entry_insert']);
+$restore_id = mysqli_real_escape_string($link, test_input($_POST['restore_data']));
+$entry_id = mysqli_real_escape_string($link, test_input($_POST['restore_entry_insert']));
 
 $old_sql = "SELECT insert_id, position FROM entry_inserts_log WHERE old_data_id = '$restore_id'";
 $old_data = mysqli_fetch_assoc(mysqli_query($link, $old_sql));

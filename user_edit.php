@@ -17,9 +17,9 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		$iserror = FALSE;
 		
 		// Change first and last name at the same time
-		if (isset($_POST['first_name']) && isset($_POST['last_name']) && $_POST['first_name'] != "" && $_POST['last_name'] != "") {
-			$fname = mysqli_real_escape_string($link, $_POST['first_name']);
-			$lname = mysqli_real_escape_string($link, $_POST['last_name']);
+		if (isset($_POST['first_name']) && isset($_POST['last_name']) && !empty($_POST['first_name']) && !empty($_POST['last_name'])) {
+			$fname = mysqli_real_escape_string($link, test_input($_POST['first_name']));
+			$lname = mysqli_real_escape_string($link, test_input($_POST['last_name']));
 			// Check if characters have been removed
 			if ($fname != $_POST['first_name']) {
 				$iserror = TRUE;
@@ -48,40 +48,40 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 		// Change separate values
 		} else {
 			// Change first name
-			if (isset($_POST['first_name']) && $_POST['first_name'] != "" && $_POST['last_name'] === "") {
+			if (isset($_POST['first_name']) && !empty($_POST['first_name']) && $_POST['last_name'] === "") {
 				$to_update = "first_name";
-				$user_input = $_POST['first_name'];
-				$update_val = mysqli_real_escape_string($link, $_POST['first_name']);
+				$user_input = test_input($_POST['first_name']);
+				$update_val = mysqli_real_escape_string($link, $user_input);
 				$update_msg = "first name";
 			// Change last name
-			} else if (isset($_POST['last_name']) && $_POST['last_name'] != "" && $_POST['first_name'] === "") {
+			} else if (isset($_POST['last_name']) && !empty($_POST['last_name']) && $_POST['first_name'] === "") {
 				$to_update = "last_name";
-				$user_input = $_POST['last_name'];
-				$update_val = mysqli_real_escape_string($link, $_POST['last_name']);
+				$user_input = test_input($_POST['last_name']);
+				$update_val = mysqli_real_escape_string($link, $user_input);
 				$update_msg = "last name";
 			// Change user name
-			} else if (isset($_POST['user_name']) && $_POST['user_name'] != "") {
+			} else if (isset($_POST['user_name']) && !empty($_POST['user_name'])) {
 				// Check if an admin is trying to change another admin's username
 				if ($adminpage && !$isowner) {
 					$iserror = TRUE;
 					$update_msg = "Can't change other admin's username.";
 				} else {
 					$to_update = "username";
-					$user_input = $_POST['user_name'];
-					$update_val = mysqli_real_escape_string($link, $_POST['user_name']);
+					$user_input = test_input($_POST['user_name']);
+					$update_val = mysqli_real_escape_string($link, $user_input);
 					$update_msg = "username";
 				}
 			// Change email
-			} else if (isset($_POST['email']) && $_POST['email'] != "") {
+			} else if (isset($_POST['email']) && !empty($_POST['email'])) {
 				$to_update = "email";
-				$user_input = $_POST['email'];
-				$update_val = mysqli_real_escape_string($link, $_POST['email']);
+				$user_input = test_input($_POST['email']);
+				$update_val = mysqli_real_escape_string($link, $user_input);
 				$update_msg = "email";
 			// Change phone number
-			} else if (isset($_POST['phone']) && $_POST['phone'] != "") {
+			} else if (isset($_POST['phone']) && !empty($_POST['phone'])) {
 				$to_update = "phone";
-				$user_input = $_POST['phone'];
-				$update_val = mysqli_real_escape_string($link, $_POST['phone']);
+				$user_input = test_input($_POST['phone']);
+				$update_val = mysqli_real_escape_string($link, $user_input);
 				$update_msg = "phone number";
 			// Remove phone number
 			} else if (isset($_POST['remove_phone'])) {
@@ -93,7 +93,7 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 					$update_msg = "Failed to remove phone number. ".mysqli_error($link);
 				}
 			// Change password
-			} else if (isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['conf_password']) && $_POST['old_password'] != "" && $_POST['new_password'] != "" && $_POST['conf_password'] != "") {
+			} else if (isset($_POST['old_password']) && isset($_POST['new_password']) && isset($_POST['conf_password']) && !empty($_POST['old_password']) && !empty($_POST['new_password']) && !empty($_POST['conf_password'])) {
 				
 				// Check that the input old password matches the stored password
 				$result = mysqli_query($link, "SELECT password FROM users WHERE user_id = '$user_id'");

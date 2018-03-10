@@ -5,7 +5,7 @@ if (count(get_included_files()) == 1)
 /* Database things */
 include 'scripts/db.php';
 
-$id = mysqli_real_escape_string($link, $_GET['id']);
+$id = mysqli_real_escape_string($link, test_input($_GET['id']));
 
 $current_info_sql = "SELECT * from ins_type WHERE id = " . $id;
 $current_info_query = mysqli_query($link, $current_info_sql);

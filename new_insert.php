@@ -3,17 +3,17 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
     session_start();
 }
 
+$title = "New entry";
+
+include 'top.php'; 
+
 //Set display for the content div
 if (isset($_GET['content'])) {
-    $current_content = $_GET['content'];
+    $current_content = test_input($_GET['content']);
 } else {
     $current_content = '';
 }
-
-$title = "New entry";
 ?>
-
-<?php include 'top.php'; ?>
 
 <!-- Main content goes here -->
 <main>

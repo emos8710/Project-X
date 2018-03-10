@@ -3,16 +3,16 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
     session_start();
 }
 
-//Set display for the content div
-if (isset($_GET['content'])) {
-    $current_content = $_GET['content'];
-} else {
-    $current_content = '';
-}
-
 $title = "Help";
 
 include 'top.php';
+
+//Set display for the content div
+if (isset($_GET['content'])) {
+    $current_content = test_input($_GET['content']);
+} else {
+    $current_content = '';
+}
 ?>
 <!-- Main content goes here -->
 <main>
@@ -30,22 +30,22 @@ include 'top.php';
     <div class="float_center">
         <ul class="help_nav">
             <li><a <?php
-                if (isset($_GET['content']) && $_GET['content'] === "search_entries") {
+                if (isset($current_content) && $current_content === "search_entries") {
                     echo "class=\"active\"";
                 }
                 ?> href="?content=search_entries">Search for entries</a></li>
             <li><a <?php
-                if (isset($_GET['content']) && $_GET['content'] === "insert_entries") {
+                if (isset($current_content) && $current_content === "insert_entries") {
                     echo "class=\"active\"";
                 }
                 ?> href="?content=insert_entries">Insert new entry </a></li>
             <li><a <?php
-                if (isset($_GET['content']) && $_GET['content'] === "edit_profile") {
+                if (isset($current_content) && $current_content === "edit_profile") {
                     echo "class=\"active\"";
                 }
                 ?> href="?content=edit_profile">Edit my profile</a></li>
             <li><a <?php
-                if (isset($_GET['content']) && $_GET['content'] === "edit_entries") {
+                if (isset($current_content) && $current_content === "edit_entries") {
                     echo "class=\"active\"";
                 }
                 ?> href="?content=edit_entries">Edit my entries</a></li>

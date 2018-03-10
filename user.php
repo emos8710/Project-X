@@ -14,7 +14,7 @@ if ($is_user_error) {
     $user_error = "No user id specified.";
 } else {
     // Fetch the user id from URL and check if it is valid
-    $user_id = $_GET['user_id'];
+    $user_id = htmlspecialchars(strip_tags(stripslashes(trim($_GET['user_id']))));
     $is_user_error = !check_user_id($user_id);
     if ($is_user_error) {
         $user_error = "Invalid user ID.";

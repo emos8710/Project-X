@@ -4,6 +4,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+function test_input($string) {
+    return htmlspecialchars(strip_tags(stripslashes(trim($string))));
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     /* Registration process */
     
@@ -48,16 +52,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
             if ($_POST['confpassword'] == $_POST['password']) {
 
                 // Sets the session variables which will be shown on profile before verification
-                $_SESSION['email'] = $_POST['email'];
-                $_SESSION['first_name'] = $_POST['firstname'];
-                $_SESSION['last_name'] = $_POST['lastname'];
+                $_SESSION['email'] = test_input($_POST['email']);
+                $_SESSION['first_name'] = test_input($_POST['firstname']);
+                $_SESSION['last_name'] = test_input($_POST['lastname']);
 
                 // Protection against SQL injection - all unneccessary variables are removed
-                $first_name = $mysqli->escape_string($_POST['firstname']);
-                $last_name = $mysqli->escape_string($_POST['lastname']);
-                $email = $mysqli->escape_string($_POST['email']);
-                $phone = $mysqli->escape_string($_POST['phone']);
-                $username = $mysqli->escape_string($_POST['username']);
+                $first_name = $mysqli->escape_string(test_input($_POST['firstname']));
+                $last_name = $mysqli->escape_string(test_input($_POST['lastname']));
+                $email = $mysqli->escape_string(test_input($_POST['email']));
+                $phone = $mysqli->escape_string(test_input($_POST['phone']));
+                $username = $mysqli->escape_string(test_input($_POST['username']));
                 $password = $mysqli->escape_string(password_hash($_POST['password'], PASSWORD_BCRYPT)); // Max 72 characters
                 $hash = $mysqli->escape_string(md5(rand(0, 1000)));
 

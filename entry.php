@@ -17,7 +17,7 @@ $is_mysql_error = FALSE;
 
 // Fetch the upstrain id from URL
 if (isset($_GET["upstrain_id"])) {
-    $upstrain_id = $_GET["upstrain_id"];
+    $upstrain_id = htmlspecialchars(strip_tags(stripslashes(trim($_GET["upstrain_id"]))));
     if (empty($upstrain_id)) {
         $is_upstrain_error = TRUE;
         $upstrain_error = "No ID specified.";

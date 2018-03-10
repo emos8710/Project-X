@@ -4,6 +4,10 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+function test_input($string) {
+    return htmlspecialchars(strip_tags(stripslashes(trim($string))));
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
     /* The login process */
@@ -12,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
 
 // Protection against SQL-injections 
     $ip_address = mysqli_real_escape_string($link, $_SERVER['REMOTE_ADDR']);
-    $username = mysqli_real_escape_string($link, $_POST['username']);      // Extra characters are removed
+    $username = mysqli_real_escape_string($link, test_input($_POST['username']));      // Extra characters are removed
 // Check if user has failed login too many times recently
     $check_attempts = mysqli_query($link, "SELECT attempts, time from attempt_log WHERE ip = '$ip_address' AND username = '$username'");
 
