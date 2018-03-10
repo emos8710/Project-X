@@ -353,13 +353,13 @@ $title = "New entry";
 
 
         <?php
-    } else if (!$active) {
+    } else if (!$loggedin) {
         ?>
-        <h3 style="color:red">Access denied (your account is not activated).</h3>
+        <h3 style="color:red">Access denied (you are not logged in).</h3>
         <?php
     } else {
         ?>
-        <h3 style="color:red">Access denied (you are not logged in).</h3>
+        <h3 style="color:red">Access denied (your account is not activated).</h3>
         <?php
     }
     ?>
