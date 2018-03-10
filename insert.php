@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 //Sequence
                     if (is_uploaded_file($_FILES['my_file']['tmp_name']) && $_FILES['my_file']['error'] == 0) {
-                        $path = "files/" . $upstrain_id;
+                        $path = "files/" . $upstrain_id . ".fasta";
                         $lines = file($_FILES['my_file']['tmp_name']);
                         $header = $lines[0];
                         $firstc = $header[0];
