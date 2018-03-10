@@ -7,13 +7,21 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
+//Functions
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
 //Variables 
     $current_date = date("Y-m-d");
     $creator = $_POST['user_id'];
     $type = mysqli_real_escape_string($link, $_POST['new_insert_type']);
-    $name = mysqli_real_escape_string($link, $_POST['new_insert']);
-    $regid = mysqli_real_escape_string($link, $_POST['Ins_registry']);
-    $comment = mysqli_real_escape_string($link, $_POST['comment']);
+    $name = mysqli_real_escape_string($link, test_input($_POST['new_insert']));
+    $regid = mysqli_real_escape_string($link, test_input($_POST['Ins_registry']));
+    $comment = mysqli_real_escape_string($link, test_input($_POST['comment']));
     $creator = $_SESSION['user_id'];
     $private = 0;
 

@@ -8,9 +8,18 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
+
+//Functions
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
 //Variables
-    $strain = mysqli_real_escape_string($link, $_POST['strain']);
-    $comment = mysqli_real_escape_string($link, $_POST['comment']);
+    $strain = mysqli_real_escape_string($link, test_input($_POST['strain']));
+    $comment = mysqli_real_escape_string($link, test_input($_POST['comment']));
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
 
@@ -27,30 +36,30 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         $_SESSION['success'] = "<div class = 'success'>New strain submitted successfully</div>";
                         mysqli_close($link) or die("Could not close database connection");
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
-                        exit(); 
+                        exit();
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_strain->errno . ")" . " " . "Error: " . $stmt_strain->error . "</div>";
                         mysqli_close($link) or die("Could not close database connection");
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-                        exit(); 
+                        exit();
                     } $stmt_strain->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_strain->errno . ")" . " " . "Error: " . $stmt_strain->error . "</div>";
                     mysqli_close($link) or die("Could not close database connection");
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-                    exit(); 
+                    exit();
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
             mysqli_close($link) or die("Could not close database connection");
             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
-            exit(); 
+            exit();
         }
     } else {
         $SESSION['existing'] = "<div class = 'existing'>The entered strain already exists! Please enter a new one</div>";
         mysqli_close($link) or die("Could not close database connection");
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
-        exit(); 
+        exit();
     }
 }

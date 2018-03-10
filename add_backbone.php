@@ -7,11 +7,20 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     include 'scripts/db.php';
+    
+//Functions
+    function test_input($data) {
+        $data = trim($data);
+        $data = stripslashes($data);
+        $data = htmlspecialchars($data);
+        return $data;
+    }
+
 
 //Variables
-    $backbone = mysqli_real_escape_string($link, $_POST['backbone']);
-    $comment = mysqli_real_escape_string($link, $_POST['comment']);
-    $reg_id = mysqli_real_escape_string($link, $_POST['Bb_registry']);
+    $backbone = mysqli_real_escape_string($link, test_input($_POST['backbone']));
+    $comment = mysqli_real_escape_string($link, test_input($_POST['comment']));
+    $reg_id = mysqli_real_escape_string($link, test_input($_POST['Bb_registry']));
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
     $private = 0;
@@ -20,7 +29,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $private = intval($_POST['private']);
     }
 
-/// Insert new backbone if not existing
+// Insert new backbone if not existing
     $check = "SELECT name FROM backbone WHERE name LIKE '$backbone'";
     $check_query = mysqli_query($link, $check);
     if (mysqli_num_rows($check_query) < 1) {

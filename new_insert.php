@@ -22,51 +22,6 @@ $title = "New entry";
         <?php if ($loggedin) {
             ?>
             <?php
-            $reg = $year = $comment = $strain = $backbone = $inst = "";
-
-            if (empty($_POST["registry"])) {
-                $reg = "";
-            } else {
-                $reg = test_input($_POST["registry"]);
-            }
-
-            if (empty($_POST["strain"])) {
-                $strain = "";
-            } else {
-                $strain = test_input($_POST["strain"]);
-            }
-
-            if (empty($_POST["backbone"])) {
-                $backbone = "";
-            } else {
-                $backbone = test_input($_POST["backbone"]);
-            }
-
-            if (empty($_POST["new_insert"])) {
-                $inst = "";
-            } else {
-                $inst = test_input($_POST["new_insert"]);
-            }
-
-            if (empty($_POST["year"])) {
-                $year = "";
-            } else {
-                $year = test_input($_POST["year"]);
-            }
-
-            if (empty($_POST["comment"])) {
-                $comment = "";
-            } else {
-                $comment = test_input($_POST["comment"]);
-            }
-
-            //Functions
-            function test_input($data) {
-                $data = trim($data);
-                $data = stripslashes($data);
-                $data = htmlspecialchars($data);
-                return $data;
-            }
 
             function load_ins_type() {
                 include 'scripts/db.php';
@@ -214,7 +169,7 @@ $title = "New entry";
                         <div class="field-wrap"> 
 
                             <label>Registry id</label>
-                            <input class="insert" type="text" name="registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+                            <input class="insert" type="text" name="registry" id="Registry" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
                         </div>
 
                         <div class="field-wrap">
@@ -231,7 +186,7 @@ $title = "New entry";
                         <div class="field-wrap"> 
                             <label>Comment * </label>
                             <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                      value="<?php echo $comment; ?>" required ="required"> </textarea> 
+                                      required ="required"> </textarea> 
                         </div>
 
                         <div class="checkbox">
@@ -257,14 +212,14 @@ $title = "New entry";
 					<div class="new_strain">
 						<div class="field-wrap-strain">
 							<label for="Strain">Strain * </label>
-							<input class="insert" type="text" name="strain" id="Strain" value="<?php echo $strain; ?>" required/></input>
+							<input class="insert" type="text" name="strain" id="Strain" required/></input>
 							<br/>
 						</div> 
 
 						<div class="field-wrap-strain"> 
 							<label for="Comment">Comment * </label>
 							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-									value="<?php echo $comment; ?>" required ="required"> </textarea>
+									 required ="required"> </textarea>
 						</div>
 					</div>
 
@@ -279,19 +234,19 @@ $title = "New entry";
                     <div class="new_backbone">
 						<div class="field-wrap-backbone">
 							<label>Backbone * </label>
-							<input class="insert" type="text" name ="backbone" id="Backbone" value="<?php echo $backbone; ?>" required/></input>
+							<input class="insert" type="text" name ="backbone" id="Backbone" required/></input>
 							<br/>
 						</div>
 
 						<div class="field-wrap-backbone"> 
 							<label >Registry id</label>
-							<input class="insert" type="text" name="Bb_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+							<input class="insert" type="text" name="Bb_registry" id="Registry" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
 						</div>
 
 						<div class="field-wrap-backbone">
 							<label>Comment * </label>
 							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                  value="<?php echo $comment; ?>" required ="required"> </textarea> </p>
+                                  required ="required"> </textarea> </p>
 						</div>
 
 						<div class="checkbox">
@@ -321,18 +276,18 @@ $title = "New entry";
 						</div>
 						<div class="field-wrap-insert">
 								<label>Insert name * </label>
-								<input class="insert" type="text" name="new_insert" value="<?php echo $inst; ?>" required/></input>
+								<input class="insert" type="text" name="new_insert"  required/></input>
 						</div>
 
 						<div class="field-wrap-insert"> 
 							<label>Registry id</label>
-							<input class="insert" type="text" name="Ins_registry" id="Registry" value="<?php echo $reg; ?>" placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
+							<input class="insert" type="text" name="Ins_registry" id="Registry"  placeholder ="BBa_K[X]" pattern="BBa_K\d{4,12}"/> 
 						</div>
 
 						<div class="field-wrap-insert">
 							<label>Comment * </label>
 							<textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-									value="<?php echo $comment; ?>" required ="required"> </textarea> 
+									 required ="required"> </textarea> 
 						</div>
                     
 						<div class="checkbox">
