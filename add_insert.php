@@ -10,10 +10,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 //Variables 
     $current_date = date("Y-m-d");
     $creator = $_POST['user_id'];
-    $type = mysqli_real_escape_string($link, $_REQUEST['new_insert_type']);
-    $name = mysqli_real_escape_string($link, $_REQUEST['new_insert']);
-    $regid = mysqli_real_escape_string($link, $_REQUEST['Ins_registry']);
-    $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
+    $type = mysqli_real_escape_string($link, $_POST['new_insert_type']);
+    $name = mysqli_real_escape_string($link, $_POST['new_insert']);
+    $regid = mysqli_real_escape_string($link, $_POST['Ins_registry']);
+    $comment = mysqli_real_escape_string($link, $_POST['comment']);
     $creator = $_SESSION['user_id'];
     $private = 0;
 

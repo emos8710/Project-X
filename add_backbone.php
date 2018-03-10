@@ -9,9 +9,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     include 'scripts/db.php';
 
 //Variables
-    $backbone = mysqli_real_escape_string($link, $_REQUEST['backbone']);
-    $comment = mysqli_real_escape_string($link, $_REQUEST['comment']);
-    $reg_id = mysqli_real_escape_string($link, $_REQUEST['Bb_registry']);
+    $backbone = mysqli_real_escape_string($link, $_POST['backbone']);
+    $comment = mysqli_real_escape_string($link, $_POST['comment']);
+    $reg_id = mysqli_real_escape_string($link, $_POST['Bb_registry']);
     $current_date = date("Y-m-d");
     $creator = $_SESSION['user_id'];
     $private = 0;
