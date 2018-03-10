@@ -14,8 +14,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 //Variables 
     $current_date = date("Y-m-d");
-    $creator = $_POST['user_id'];
-    $type = mysqli_real_escape_string($link, $_POST['new_insert_type']);
+    $creator = test_input($_POST['user_id']);
+    $type = mysqli_real_escape_string($link, test_input($_POST['new_insert_type']));
     $name = mysqli_real_escape_string($link, test_input($_POST['new_insert']));
     $regid = mysqli_real_escape_string($link, test_input($_POST['Ins_registry']));
     $comment = mysqli_real_escape_string($link, test_input($_POST['comment']));
@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $private = 0;
 
     if (isset($_POST['private'])) {
-        $private = intval($_POST['private']);
+        $private = intval(test_input($_POST['private']));
     }
 
 // Insert new insert if not existing

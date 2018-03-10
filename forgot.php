@@ -7,7 +7,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Checks if the form is submitted with method="post"
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $email = $mysqli->escape_string($_POST['email']);
+    $email = $mysqli->escape_string(test_input($_POST['email']));
 
     // checks if the email is registered in the system
     $result = $mysqli->query("SELECT * FROM users WHERE email='$email'");

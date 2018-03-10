@@ -4,7 +4,7 @@ if (count(get_included_files()) == 1)
 
 include 'scripts/db.php';
 
-$id = mysqli_real_escape_string($link, $_GET['id']);
+$id = mysqli_real_escape_string($link, test_input($_GET['id']));
 
 $current_info_sql = "SELECT strain.id AS sid, strain.name AS name, strain.comment AS cmt, "
         . "strain.private AS private, strain.date_db AS date, users.user_id AS uid, "

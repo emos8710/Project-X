@@ -9,8 +9,8 @@ if (session_status() == PHP_SESSION_NONE) {
 }
 
 // Makes sure that the email and hash variables aren't empty
-if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])){
-    $email 	= $mysqli->escape_string($_GET['email']); 
+if(isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['hash']) && !empty($_GET['hash'])){
+    $email 	= $mysqli->escape_string(test_input($_GET['email'])); 
     $hash 	= $mysqli->escape_string($_GET['hash']); 
     
     // Find the user with the email and hash, which haven't verified their account yet 

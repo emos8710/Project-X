@@ -10,12 +10,13 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Make sure the form is being submitted with method="post"
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        $newpass = $_POST['newpassword'];
 	// Checks that the password is long enough
-	if (!strlen($_POST['newpassword'])<8) {
+	if (!strlen($newpass)<8) {
 		// Make sure the two passwords match
-		if ( $_POST['newpassword'] == $_POST['confirmpassword'] ) { 
+		if ($newpass == $_POST['confirmpassword']) { 
 	
-			$new_password = password_hash($_POST['newpassword'], PASSWORD_BCRYPT);
+			$new_password = password_hash($newpass, PASSWORD_BCRYPT);
         
 			// We get $_POST['email'] and $_POST['hash'] from the hidden input field of reset.php form
 			$email = $mysqli->escape_string($_POST['email']);

@@ -39,10 +39,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $back_row_id = $back_row["id"];
 
     if (isset($_POST['private'])) {
-        $private = intval($_POST['private']);
+        $private = intval(test_input($_POST['private']));
     }
     if (isset($_POST['created'])) {
-        $created = intval($_POST['created']);
+        $created = intval(test_input($_POST['created']));
     }
 
 // Insert entry information
