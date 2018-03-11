@@ -18,7 +18,7 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
     { 
         $_SESSION['message'] = "Account has already been activated or the URL is invalid!";
 
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
     else {
         $_SESSION['message'] = "Your account has been activated!";
@@ -27,11 +27,11 @@ if(isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !
         $mysqli->query("UPDATE users SET active='1' WHERE email='$email'") or die($mysqli->error);
         $_SESSION['active'] = 1;
         
-        header("location: success.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "success.php");
     }
 }
 else {
     $_SESSION['message'] = "Invalid parameters provided for account verification!";
-    header("location: error.php");
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
 }     
 ?>

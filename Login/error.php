@@ -16,7 +16,7 @@ session_start();
     if( isset($_SESSION['message']) AND !empty($_SESSION['message']) ): 
         echo $_SESSION['message'];    
     else:
-        header( "location: index.php" );
+        header( "Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "index.php" );
     endif;
     ?>
     </p>     

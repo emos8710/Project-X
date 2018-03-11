@@ -8,7 +8,7 @@ $result = $mysqli->query("SELECT * FROM users WHERE username='$username'");	// $
 // If $result contains no rows then the user does not exist
 if ($result->num_rows==0){ 				
     $_SESSION['message'] = "The user does not exist! Try again or register.";
-    header("location: error.php"); // The error message is sent to error.php
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // The error message is sent to error.php
 }
 // Otherwise, the username exists
 else { 
@@ -28,12 +28,12 @@ else {
         $_SESSION['logged_in'] = true;
 
 		// The user is sent to the profile page
-        header("location: profile.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "profile.php");
     }
 	// If the passwords do not match an error is sent to error.php
     else {
         $_SESSION['message'] = "The password you entered is incorrect! Try again or reset your password.";
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
 }
 

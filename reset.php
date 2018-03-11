@@ -8,9 +8,9 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Checking that the email and hash variables are set
 // Get carries the variables passed to the script via the URL parameters
-if (isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && !empty($_GET['hash'])) {
-    $email = $mysqli->escape_string($_GET['email']);
-    $hash = $mysqli->escape_string($_GET['hash']);
+if (isset($_GET['email']) && !empty($_GET['email']) && isset($_GET['hash']) && !empty($_GET['hash'])) {
+    $email = $mysqli->escape_string(test_input($_GET['email']));
+    $hash = $mysqli->escape_string(test_input($_GET['hash']));
 
     // Checks if a user with the matching hash exists in the database
     $result = $mysqli->query("SELECT * FROM users WHERE email='$email' AND hash='$hash'");
@@ -18,11 +18,11 @@ if (isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && 
     // If the query results in zero rows, the user does not exist.
     if ($result->num_rows == 0) {
         $_SESSION['message'] = "You have entered invalid URL for password reset!";
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
 } else {
     $_SESSION['message'] = "The reset link is not valid, try again!";
-    header("location: error.php");
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
 }
 
 $title = "Reset password";

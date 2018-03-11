@@ -10,12 +10,13 @@ if (session_status() == PHP_SESSION_NONE) {
 
 // Make sure the form is being submitted with method="post"
 if ($_SERVER['REQUEST_METHOD'] == 'POST') { 
+        $newpass = $_POST['newpassword'];
 	// Checks that the password is long enough
-	if (!strlen($_POST['newpassword'])<8) {
+	if (!strlen($newpass)<8) {
 		// Make sure the two passwords match
-		if ( $_POST['newpassword'] == $_POST['confirmpassword'] ) { 
+		if ($newpass == $_POST['confirmpassword']) { 
 	
-			$new_password = password_hash($_POST['newpassword'], PASSWORD_BCRYPT);
+			$new_password = password_hash($newpass, PASSWORD_BCRYPT);
         
 			// We get $_POST['email'] and $_POST['hash'] from the hidden input field of reset.php form
 			$email = $mysqli->escape_string($_POST['email']);
@@ -26,20 +27,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			if ( $mysqli->query($sql) ) {
 
 			$_SESSION['message'] = "Your password has been reset successfully!";
-			header("location: success.php");    
+			header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "success.php");    
 
 			}
 
 		}
 		else {
 			$_SESSION['message'] = "Two passwords you entered don't match, try again!";
-			header("location: error.php");    
+			header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");    
 		}
 
 	}
 	else {
 		$_SESSION['message']="The new password is too short! Please try again. The password must be at least 8 characters long.";
-		header("location: error.php");
+		header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
 	}
 }
 ?>

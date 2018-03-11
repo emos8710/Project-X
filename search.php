@@ -5,6 +5,8 @@ if (session_status() == PHP_SESSION_DISABLED || session_status() == PHP_SESSION_
 
 $title = "Search";
 
+include 'top.php';
+
 function insertlink($insertnames, $insertids) {
 
     $namearray = explode(", ", $insertnames);
@@ -20,34 +22,32 @@ function insertlink($insertnames, $insertids) {
 
 //Set display for the content div
 if (isset($_GET['content'])) {
-    $current_content = $_GET['content'];
+    $current_content = test_input($_GET['content']);
 } else {
     $current_content = '';
 }
-
-include 'top.php';
 ?>
 
 <main>
     <div class="innertube">
-        <h2>Search</h2>
+        <h2 class="search_etc">Search</h2>
         <!-- Nav menu with links to display desired content -->
 
         <div class="search_nav">
 
             <ul class="search_nav">
                 <li><a <?php
-if (isset($_GET['content']) && $_GET['content'] === "search_entries") {
+if (isset($current_content) && $current_content === "search_entries") {
     echo "class=\"active\"";
 }
 ?> href="?content=search_entries">Search for entries</a></li>
                 <li><a <?php
-                    if (isset($_GET['content']) && $_GET['content'] === "search_users") {
+                    if (isset($current_content) && $current_content === "search_users") {
                         echo "class=\"active\"";
                     }
                     ?> href="?content=search_users">Search for users</a></li>
                 <li><a <?php
-                    if (isset($_GET['content']) && $_GET['content'] === "search_inserts") {
+                    if (isset($current_content) && $current_content === "search_inserts") {
                         echo "class=\"active\"";
                     }
                     ?> href="?content=search_inserts">Search for inserts</a></li>

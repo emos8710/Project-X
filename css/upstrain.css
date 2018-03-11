@@ -22,6 +22,7 @@ main {
     width: 100%;
     float: left;
     background: #E1F5FE;  /* Changed */
+	min-height: 400px;
 }
 
 /* Navigation bar */
@@ -38,8 +39,14 @@ footer {
 }
 
 .field-wrap {	/* For wrapping input fields in the login system */
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
+
+.field-wrap-strain, .field-wrap-backbone, .field-wrap-insert {	/* For wrapping input fields in the login system */
+    margin-bottom: 15px;
+	clear: both;
+}
+
 
 /* Headers */
 h1, h5, h6 {
@@ -63,6 +70,14 @@ h2.home {
     margin-top: 30px; 
     font-style: normal;
 	margin-bottom: 0px;
+	font-weight: 100;
+}
+
+h2.search_etc {
+	text-align: left;	
+	font-size:30px;
+	margin-top: 30px; 
+	margin-left: 50px; 
 	font-weight: 100;
 }
 
@@ -124,7 +139,7 @@ form.search-form, form.insert-form {
     float: left;
     width: 100%;
     padding: 10px 10px;
-    margin-left: 40px; 
+    margin-left: 40px;
 }
 
 /* Search */
@@ -157,6 +172,13 @@ table {
 
 table.strain, table.backbone, table.insert, table.control-panel-history {
     display: inline;
+}
+
+table.insert {
+    border: none;
+    border-spacing: 0;
+    margin-top: 10px;
+	max-width:700px;
 }
 
 table.control-panel-history th.top {
@@ -195,8 +217,19 @@ td {
     text-align: left;
     vertical-align: top;
     font-size: small;
-    border-bottom: 1px solid black;
+    /* border-bottom: 1px solid black; */
     max-width: 400px;
+}
+
+div.field-wrap table.insert tr td, div.field-wrap-backbone table tr td, div.field-wrap-strain table tr td {
+    padding: 0px;
+    text-align: left;
+    vertical-align: top;
+    font-size: small;
+	margin: 2px;
+    border-bottom: 1px solid black;
+    max-width: 700px;
+	border: none;
 }
 
 td.comment {
@@ -218,6 +251,21 @@ a {
 a:hover {
     text-decoration: none;
 }
+
+a.external {
+	color: #0074D9;
+}
+a.external:hover {
+	color: white;
+}
+
+a.bottom {
+	color: #0074D9;
+}
+a.bottom:hover {
+	color: white;
+}
+
 
 /* Images */
 a.external::after { /* Adds external link image after link */
@@ -357,7 +405,20 @@ div.form {
     margin: auto;
 }
 
-/* inserts */
+/* Inserts */
+div.new_entry {
+	width: 500px;
+	min-width: 500px;
+	max-width: 500px;
+}
+
+div.new_strain {
+	width: 500px;
+	min-width: 500px;
+	max-width: 500px;
+}
+
+/* Tables */
 div.backbone_strain_table {
     display:inline-block;
     margin-right: 100px;
@@ -382,19 +443,32 @@ div.logo {
 
 /* "Private" Checkbox */
 div.checkbox {
-    margin-top: 30px;
+	margin-top: 0px;
     float: right;
-    padding: 30px;
-    width: 50%;
+    padding: 10px;
+    width: 45%;
 }
 
 /* navigation stuff in help, control panel etc  */ 
 
-div.control_panel_menu, div.entry_nav{
+div.entry_nav{
     float: left; 
-    width:100%; 
-    margin-left:0; 
+    width:600px; 
+    margin-left:0px; 
+	clear: both;
 }
+
+div.control_panel_menu {
+	float: left; 
+    width:100%; 
+    margin-left:0px; 
+	clear: both;
+}
+
+div.entry_nav ul li {
+	list-style-type: none;
+}
+
 
 div.info {
 	margin: 10px;
@@ -501,12 +575,33 @@ input.all, select.all, input.login {
     width:100%; /* Added. The input boxes are no longer overlapping but separated */
 }
 
+form.insert-form div.new_entry table.insert select.insert{
+	width: 95%;
+}
+
 label { /* Added: All */
     font-size: 15px; /* Added. Change of text size above input boxes */ 
     color: #001F3F; /* Added. Text color of text above input boxes  */
     font-style: italic;
 }
 
+div.field-wrap table.insert tr td.type { /* Fixes the size of the "select insert type" */
+	width: 30%; 
+}
+
+div.field-wrap table.insert tr td.name { /* Fixes the size of the "select insert name" */
+	width: 35%;
+}
+
+div.field-wrap table.insert tr td select {
+	float: left; 
+	margin-bottom: 3px;
+	margin-top: 3px;
+}
+
+div.field-wrap table tr td label {
+	float: left; 
+}
 
 /* Quicksearch */
 input.quicksearch {
@@ -532,7 +627,7 @@ input.insert, select.insert {
     font-size: 16px; /* Added. Increased font size in input boxes */
     padding: 4px 7px; /* Added. Less padding within input boxes */ 
     /* outline: 0; */ /* Added. No outline around active input box */
-    width:70%;
+    width:80%;
     float: right;
 }	
 
@@ -547,7 +642,8 @@ textarea.insert {
     /* outline: 0; */ /* Added. No outline around active input box */
     width:100%;
     float: right;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+	resize: none;
 }
 
 /* Multiple inserts */
@@ -598,6 +694,34 @@ input.button {
     color: #0074D9; /* Changed. Text color when hovering over buttons */ 
 }
 
+div.field-wrap table.insert tr td button.insert, div.field-wrap table.insert tr td button.btn_remove {
+	border: none;
+}
+
+div.field-wrap label.sequence {
+	float: left;
+}
+
+input.sequence {
+	border: none;
+	padding: 4px;
+    /* padding: 15px 0; */ /* Removed. The text is centered in button. */
+    /* text-transform: uppercase;*/ /* Removed. No uppercase text in buttons. */
+    letter-spacing: .1em;
+    display: inline-block;
+    width: 50%;
+    height: 29px; /* Added. Less thick button.  */
+    -moz-border-radius: 5px; /* Added. Rounded corners in firefox */
+    -webkit-border-radius: 5px; /* Added. Rounded corners in other browsers eg. chrome */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+	margin-left: 30px;
+	cursor: pointer;
+}
+
+input.sequence:hover {
+	color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
 /* Quicksearch */
 button.quicksearch {
     cursor: pointer;
@@ -615,7 +739,7 @@ button.quicksearch:hover {
 }
 
 /* "Add insert" button in insert entry page */
-button.insert-mini {
+button.insert-mini, input.edit_entry_button {
     cursor: pointer;
     border: none;
     padding: 4px;
@@ -632,6 +756,17 @@ button.insert-mini {
 
 button.insert-mini:hover {
     color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
+form.insert-form div.new_entry tr td.more-button {
+	width: 20%; 
+	margin: 0px;
+}
+
+form.insert-form div.new_entry tr td.more-button button.insert-mini, form.insert-form div.new_entry tr td button.btn_remove {
+	width: 100%; 
+	margin-top: 3px;
+	margin-bottom: 0px;
 }
 
 /* "Remove insert" button in insert entry page */
@@ -654,6 +789,11 @@ button.btn_remove {
 
 button.btn_remove:hover {
     color: #0074D9; /* Changed. Text color when hovering over buttons */ 
+}
+
+form.insert-form button.button {
+	width: 500px;
+	clear: both;
 }
 
 /* ---------- IMAGES ---------- */
@@ -777,6 +917,8 @@ div.panel-history-show {
 div.control-panel-show { /* Style for region where the desired content will be shown */
     float: left;
     margin-right: 50px;
+	margin-left: 50px;
+	margin-bottom: 20px;
 }
 
 div.control_panel_menu {
@@ -841,7 +983,7 @@ ul.help_nav a:hover, ul.search_nav a:hover, .control_panel_menu a:hover { /* Hel
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
 
-ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* Help page nav buttons */ 
+ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active, .entry_nav a.active { /* Help page nav buttons */ 
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
 }	
@@ -859,8 +1001,8 @@ ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* 
     font-size: 17px; /* Changed. Larger text size in nav. buttons */
     margin-top: 5px;
     margin-bottom: 5px;
-    margin-left: 3px;
-    margin-right: 30px;
+    margin-left: 5px;
+    margin-right: 22px;
 
     /* Rounded corners on top */  /* Added: all */
     -webkit-border-top-left-radius: 7px;
@@ -886,6 +1028,10 @@ ul.help_nav a.active, ul.search_nav a.active, .control_panel_menu a.active { /* 
 .control_panel_nav a:hover, .entry_nav a:hover{
     background: #001F3F; /* Added. Background color in navigation in controlpanel & entry */
     color: #E1F5FE; /* Added. Text color in navigation in controlpanel & entry */
+}
+
+.entry_nav a.last {
+	margin-right:0px;
 }
 
 /* HELP PAGE */ 
@@ -989,6 +1135,7 @@ p a.edit {
 	margin-left: 80px;
 }
 
+/* Edit users */
 div.edit_users {
 	float: left;
 	margin: 10px;
@@ -1046,6 +1193,55 @@ div.not_added{
 	margin-left: 40%; 
 }
 
+/* Edit entry */
+div.edit_entry {
+	float: left;
+	margin-left: 40px;
+	min-width: 500px;
+}
+
+div.edit_entry table.edit_entry {
+	border: none;
+	border-bottom: none;
+	width: 100%;
+}
+
+div.edit_entry table.edit_entry tbody tr.edit_entry {
+	border: none; 
+	border-bottom: none;
+	
+}
+
+div.edit_entry table.edit_entry tbody tr.edit_entry th.title {
+	border: none; 
+	border-bottom: none;
+	text-align: left; 
+	width: 100px;
+}
+
+form.edit_entry input.edit_entry, form.edit_entry select.edit_entry {
+    border: 1px solid #001F3F; /* Changed. Border color around input boxes */
+    border-radius: 5px; /* Added. Rounded corners in other browsers. */
+    font-size: 14px; /* Added. Increased font size in input boxes */
+    /* outline: 0; */ /* Added. No outline around active input box */
+	min-width: 50%;
+	margin-top: 0px;
+}
+
+form.edit_entry label.edit_entry {
+    font-size: 14px; /* Added. Increased font size in input boxes */
+	font-style: normal;
+	margin-bottom: 0px;
+}
+
+form.edit_entry a {
+    font-size: 14px; /* Added. Increased font size in input boxes */
+	font-style: normal;
+	margin-bottom: 0px;
+}
+
+
+
 /* reCAPTCHA */
 div.g-recaptcha {
 	margin-left: 20%; 
@@ -1062,3 +1258,4 @@ div.g-recaptcha {
     float: right;
     margin-bottom: 15px;
 }
+

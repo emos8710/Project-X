@@ -3,8 +3,8 @@ if (count(get_included_files()) == 1)
     exit("Access restricted");
 
 include 'scripts/db.php';
-$restore_id = mysqli_real_escape_string($link, $_POST['restore_data']);
-$user_id = mysqli_real_escape_string($link, $_POST['restore_user']);
+$restore_id = mysqli_real_escape_string($link, test_input($_POST['restore_data']));
+$user_id = mysqli_real_escape_string($link, test_input($_POST['restore_user']));
 
 $check_exists = mysqli_query($link, "SELECT * from users WHERE user_id = " . $user_id);
 

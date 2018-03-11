@@ -13,7 +13,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 	// If the query returns zero rows, the user does not exist
     if ($result->num_rows==0 ){ 
         $_SESSION['message'] = "There is no user with that email! Try another email or register for a new account.";
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
 	// If the query returns more than zero rows, the user exists
     else {
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD']=='POST'){
 		mail($to, $subject, $message_body);
 		
 		// The user is redirected to the success page
-        header("location: success.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "success.php");
 	}
 }
 ?>

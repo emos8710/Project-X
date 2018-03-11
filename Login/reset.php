@@ -17,12 +17,12 @@ if( isset($_GET['email']) && !empty($_GET['email']) AND isset($_GET['hash']) && 
     if ( $result->num_rows == 0 )
     { 
         $_SESSION['message'] = "You have entered invalid URL for password reset!";
-        header("location: error.php");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
     }
 }
 else {
     $_SESSION['message'] = "Sorry, verification failed, try again!";
-    header("location: error.php");  
+    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");  
 }
 ?>
 <!DOCTYPE html>

@@ -32,6 +32,10 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
 } else {
     $active = FALSE;
 }
+
+function test_input($string) {
+    return htmlspecialchars(strip_tags(stripslashes(trim($string))));
+}
 ?>
 <!DOCTYPE html>
 
@@ -48,11 +52,11 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="css/upstrain.css">
         <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
-        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
-        <link rel="manifest" href="/site.webmanifest">
-        <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
         <title><?php echo $title; ?></title>
     </head>
 
@@ -88,7 +92,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
                     if (basename($_SERVER['PHP_SELF']) === "search.php") {
                         echo "class=\"active\" ";
                     }
-                    ?> href="search.php">Search</a>
+                    ?> href="search.php?content=search_entries">Search</a>
 
                     <?php if ($loggedin && $active) {
                         ?>
@@ -97,7 +101,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
                         if (basename($_SERVER['PHP_SELF']) === "new_insert.php") {
                             echo "class=\"active\" ";
                         }
-                        ?> href="new_insert.php">New Entry</a>
+                        ?> href="new_insert.php?content=new_entry">New Entry</a>
                             <?php
                         }
                         ?>
@@ -133,7 +137,7 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
                     <div class="quicksearch">
                         <form class="quicksearch" action="entry.php">
                             <input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
-                            <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png"></img></button>
+                            <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png" alt="search-icon"></button>
                         </form>
                         <a class="quicksearch" href="search.php">Advanced search</a>
                     </div>

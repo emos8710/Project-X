@@ -4,8 +4,8 @@ if (count(get_included_files()) == 1)
 
 
 include 'scripts/db.php';
-$restore_id = mysqli_real_escape_string($link, $_POST['restore_data']);
-$strain_id = mysqli_real_escape_string($link, $_POST['restore_strain']);
+$restore_id = mysqli_real_escape_string($link, test_input($_POST['restore_data']));
+$strain_id = mysqli_real_escape_string($link, test_input($_POST['restore_strain']));
 
 $check_exists = mysqli_query($link, "SELECT * from strain WHERE id = " . $strain_id);
 

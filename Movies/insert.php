@@ -1,3 +1,6 @@
+<html>
+
+
 <?php
 
 /* 
@@ -27,7 +30,13 @@ if (mysqli_query($link, $sql)) {
 } else {
     echo "Error: " . $sql . "<br>" . mysqli_error($link);
 }
+?>
+<br>
+<a href="index.php">Back to the front page</a>
+<?php
 
 mysqli_close($link) or die('Could not close connection to database');
 
 ?>
+
+</html>
