@@ -2,8 +2,6 @@
 if (count(get_included_files()) == 1)
     exit("Access restricted."); // prevent direct access (included only)
 
-
-    
 // Displays page if user is logged in and is activated and has the right privileges
 if ($loggedin && $active && $admin) {
     //Set display for the content div 
@@ -386,12 +384,12 @@ if ($loggedin && $active && $admin) {
             <ul>
                 <!-- Edit name -->
                 <li><div class="edit_title">Name</div>	<?php
-        echo $info["name"];
-        if ($current_content != "insert_name") {
-            ?>
+                    echo $info["name"];
+                    if ($current_content != "insert_name") {
+                        ?>
                         <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_name">Edit</a></div> 
-                    <?php } ?></li>
-                    <?php if ($current_content == "insert_name") { ?>
+                <?php } ?></li>
+        <?php if ($current_content == "insert_name") { ?>
                     <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
                             New insert name
                             <input type="text" name="insert_name">
@@ -402,12 +400,12 @@ if ($loggedin && $active && $admin) {
 
                 <!-- Edit insert type -->
                 <li><div class="edit_title">Insert type</div> <?php
-        echo $info["type"];
-        if ($current_content != "insert_type") {
-            ?>
+                    echo $info["type"];
+                    if ($current_content != "insert_type") {
+                        ?>
                         <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_type">Edit</a></div>
-                    <?php } ?></li>
-                    <?php if ($current_content == "insert_type") { ?>
+                <?php } ?></li>
+        <?php if ($current_content == "insert_type") { ?>
                     <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
                             New Insert Type
                             <select class="all" name="insert_type">
@@ -419,23 +417,23 @@ if ($loggedin && $active && $admin) {
                             <input type="submit" value="Submit">
                             <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
                         </form></li>
-                <?php } ?>                        
+        <?php } ?>                        
 
                 <!-- Edit biobrick registry id -->
                 <li><div class="edit_title">Biobrick registry id</div> <?php
-                echo $info["biobrick"];
-                if ($current_content != "insert_biobrick") {
-                    ?>
+                    echo $info["biobrick"];
+                    if ($current_content != "insert_biobrick") {
+                        ?>
                         <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_biobrick">Edit</a></div>
-                    <?php } ?></li>
-                <?php if ($current_content == "insert_biobrick") { ?>
+                <?php } ?></li>
+        <?php if ($current_content == "insert_biobrick") { ?>
                     <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
                             New biobrick id
                             <input type="text" name="insert_reg" placeholder="BBa_K[X]" pattern="BBa_K\d{4,12}" required title ="Biobrick ID must match pattern BBa_KXXXXX."/>
                             <input type="submit" value="Submit">
                             <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
                         </form></li>
-                <?php } ?>
+        <?php } ?>
 
                 <!-- Edit comment -->
                 <li><div class="edit_title">Comment</div> <?php
@@ -468,7 +466,7 @@ if ($loggedin && $active && $admin) {
                     if ($current_content != "insert_private") {
                         ?>
                         <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_private">Edit</a></div>
-        <?php } ?></li>
+                <?php } ?></li>
         <?php if ($current_content == "insert_private") { ?>
                     <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
                             Private insert?
@@ -477,13 +475,14 @@ if ($loggedin && $active && $admin) {
                             <input type="submit" value="Submit">
                             <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
                         </form></li>
-                    <?php } ?>                        
+        <?php } ?>                        
 
                 <ul>
 
                     <div class="clear"></div>
                     <!-- Show success/error message -->
-                    <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
+                    <?php
+                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
                     endif;
                     ?>
                     <!-- Back button -->
@@ -512,19 +511,19 @@ if ($loggedin && $active && $admin) {
                         <ul>
                             <!-- Edit name -->
                             <li><div class="edit_title">Name</div>	<?php
-                        echo $info["name"];
-                        if ($current_content != "backbone_name") {
-                            ?>
+                                echo $info["name"];
+                                if ($current_content != "backbone_name") {
+                                    ?>
                                     <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_name">Edit</a></div> 
                             <?php } ?></li>
-                            <?php if ($current_content == "backbone_name") { ?>
+        <?php if ($current_content == "backbone_name") { ?>
                                 <li><form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
                                         New backbone name
                                         <input type="text" name="backbone_name">
                                         <input type="submit" value="Submit">
                                         <a href="?backbone_id=<?php echo $part_id; ?>&edit">Cancel</a>
                                     </form></li>
-                                <?php } ?>
+        <?php } ?>
 
 
                             <!-- Edit biobrick registry id -->
@@ -545,9 +544,9 @@ if ($loggedin && $active && $admin) {
 
                             <!-- Edit comment -->
                             <li><div class="edit_title">Comment</div> <?php
-                            echo $info["comment"];
-                            if ($current_content != "backbone_comment") {
-                                ?>
+                                echo $info["comment"];
+                                if ($current_content != "backbone_comment") {
+                                    ?>
                                     <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_comment">Edit</a></div>
                                     <form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
                                         <input type="hidden" name="remove_backbone_comment">
@@ -566,16 +565,16 @@ if ($loggedin && $active && $admin) {
 
                             <!-- Edit private -->
                             <li><div class="edit_title">Private</div> <?php
-                            if ($info["private"] == 1) {
-                                echo "Yes";
-                            } else {
-                                echo "No";
-                            }
-                            if ($current_content != "backbone_private") {
-                                ?>
+                                if ($info["private"] == 1) {
+                                    echo "Yes";
+                                } else {
+                                    echo "No";
+                                }
+                                if ($current_content != "backbone_private") {
+                                    ?>
                                     <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_private">Edit</a></div>
-                                <?php } ?></li>
-                                <?php if ($current_content == "backbone_private") { ?>
+                            <?php } ?></li>
+        <?php if ($current_content == "backbone_private") { ?>
                                 <li><form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
                                         Private backbone?
                                         <input type="radio" name="backbone_private" value='Yes'/>Yes
@@ -583,13 +582,14 @@ if ($loggedin && $active && $admin) {
                                         <input type="submit" value="Submit">
                                         <a href="?backbone_id=<?php echo $part_id; ?>&edit">Cancel</a>
                                     </form></li>
-                                <?php } ?>                        
+        <?php } ?>                        
 
                             <ul>
 
                                 <div class="clear"></div>
                                 <!-- Show success/error message -->
-                                <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
+                                <?php
+                                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
                                 endif;
                                 ?>
                                 <!-- Back button -->
@@ -618,11 +618,11 @@ if ($loggedin && $active && $admin) {
                                     <ul>
                                         <!-- Edit name -->
                                         <li><div class="edit_title">Name</div>	<?php
-                                echo $info["name"];
-                                if ($current_content != "strain_name") {
-                                    ?>
+                                            echo $info["name"];
+                                            if ($current_content != "strain_name") {
+                                                ?>
                                                 <div class="edit_info"><a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_name">Edit</a></div> 
-        <?php } ?></li>
+                                        <?php } ?></li>
         <?php if ($current_content == "strain_name") { ?>
                                             <li><form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
                                                     New strain name
@@ -635,16 +635,16 @@ if ($loggedin && $active && $admin) {
 
                                         <!-- Edit comment -->
                                         <li><div class="edit_title">Comment</div> <?php
-                                        echo $info["comment"];
-                                        if ($current_content != "strain_comment") {
-                                            ?>
+                                            echo $info["comment"];
+                                            if ($current_content != "strain_comment") {
+                                                ?>
                                                 <div class="edit_info"><a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_comment">Edit</a></div>
                                                 <form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
                                                     <input type="hidden" name="remove_strain_comment">
                                                     <input type="submit" value="Remove">
                                                 </form>
-                                            <?php } ?></li>
-                                        <?php if ($current_content == "strain_comment") { ?>
+                                        <?php } ?></li>
+        <?php if ($current_content == "strain_comment") { ?>
                                             <li><form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
                                                     New comment
                                                     <input type="text" name="strain_comment"> 
@@ -656,29 +656,30 @@ if ($loggedin && $active && $admin) {
 
                                         <!-- Edit private -->
                                         <li><div class="edit_title">Private</div> <?php
-                                        if ($info["private"] == 1) {
-                                            echo "Yes";
-                                        } else {
-                                            echo "No";
-                                        }
-                                        if ($current_content != "strain_private") {
-                                            ?>
+                                            if ($info["private"] == 1) {
+                                                echo "Yes";
+                                            } else {
+                                                echo "No";
+                                            }
+                                            if ($current_content != "strain_private") {
+                                                ?>
                                                 <div class="edit_info"><a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_private">Edit</a></div>
-                                            <?php } ?></li>
-                                            <?php if ($current_content == "strain_private") { ?>
+                                        <?php } ?></li>
+        <?php if ($current_content == "strain_private") { ?>
                                             <li><form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
                                                     Private strain?
                                                     <input type="radio" name="strain_private" value='Yes'/>Yes
                                                     <input type="radio" name="strain_private" value="No"/>No<br>
                                                     <a href="?strain_id=<?php echo $part_id; ?>&edit">Cancel</a>
                                                 </form></li>
-                                            <?php } ?>                        
+        <?php } ?>                        
 
                                         <ul>
 
                                             <div class="clear"></div>
                                             <!-- Show success/error message -->
-                                            <?php if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
+                                            <?php
+                                            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
                                             endif;
                                             ?>
                                             <!-- Back button -->
@@ -734,19 +735,19 @@ if ($loggedin && $active && $admin) {
                                                 <h3 style="color:red">Access denied (you are not logged in).</h3>
                                                 <br>
                                                 <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
-            <?php
-        } else if (!$active) {
-            ?>
+                                                <?php
+                                            } else if (!$active) {
+                                                ?>
                                                 <h3 style="color:red">Access denied (your account is not activated).</h3>
                                                 <br>
                                                 <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
-            <?php
-        } else {
-            ?>
+                                                <?php
+                                            } else {
+                                                ?>
                                                 <h3 style="color:red">You are not allowed to edit strains (you are not an admin).</h3>
                                                 <br>
                                                 <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
-            <?php
-        }
-    }
-}
+                                                <?php
+                                            }
+                                        }
+                                    }

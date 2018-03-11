@@ -91,26 +91,26 @@ include 'top.php';
 ?>
 <main>
     <div class="innertube">
-<?php
+        <?php
 // print errors...
-if ($is_upstrain_error || $is_mysql_error) {
-    if ($is_upstrain_error)
-        echo "<h3>Error: " . $upstrain_error . "</h3><br>";
-    if ($is_mysql_error)
-        echo "<h3>Error: " . $mysql_error . "</h3>";
-    echo "<br>" .
-    "<a href=\"javascript:history.go(-1)\">Go back</a>";
-    //...or show correct content
-}else {
-    if ($edit) {
-        include 'parts_edit.php';
-    } else {
-        include 'parts_show.php';
-    }
-}
-?>
+        if ($is_upstrain_error || $is_mysql_error) {
+            if ($is_upstrain_error)
+                echo "<h3>Error: " . $upstrain_error . "</h3><br>";
+            if ($is_mysql_error)
+                echo "<h3>Error: " . $mysql_error . "</h3>";
+            echo "<br>" .
+            "<a href=\"javascript:history.go(-1)\">Go back</a>";
+            //...or show correct content
+        }else {
+            if ($edit) {
+                include 'parts_edit.php';
+            } else {
+                include 'parts_show.php';
+            }
+        }
+        ?>
     </div>
 </main>
 
-        <?php include 'bottom.php'; ?>
+<?php include 'bottom.php'; ?>
 

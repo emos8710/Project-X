@@ -141,7 +141,7 @@ if (mysqli_num_rows($insertquery) < 1) {
             while ($row = mysqli_fetch_assoc($insertquery)) {
                 ?>
                 <tr>
-                    <td><a href="parts.php?ins_id=<?=$row['id'];?>"><?php echo $row['id']; ?></a></td>
+                    <td><a href="parts.php?ins_id=<?= $row['id']; ?>"><?php echo $row['id']; ?></a></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['type']; ?></td>
                     <td><?php echo $row['date']; ?></td>

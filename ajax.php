@@ -5,7 +5,7 @@ if (isset($_POST['type_val'])) {
     $vals = $_POST['type_val'];
     $num = count($vals);
     $values = '';
-    
+
     foreach ($vals as $one) {
         $values[] .= $one;
     }
@@ -19,7 +19,7 @@ if (isset($_POST['type_val'])) {
                 $out .= '<option value="' . $row['id'] . '">' . $row['name'] . "</option>";
             }
         }
-    }   
+    }
     echo $out;
     mysqli_close($link);
 }

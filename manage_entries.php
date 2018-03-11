@@ -34,8 +34,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
 
         $entry_id = $_POST['delete'];
         $id = mysqli_real_escape_string($link, $entry_id);
+        $check_file = mysqli_query($link, "SELECT * from upstrain_file WHERE upstrain_id = (SELECT upstrain_id FROM entry_upstrain WHERE entry_id = '$id');");
         $deletesql = "DELETE FROM entry WHERE id = " . $entry_id;
-        if (!mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: " . mysqli_error($link) . "</strong>";
+        if (mysqli_num_rows($check_file) >= 1) {
+            $file_delete = unlink("files/" . mysqli_fetch_assoc($check_file)['name_new']);
+        }
+        if (isset($file_delete) && !$file_delete): $delete_msg = "<strong style=\"color:red\">Could not delete this entry's sequence file</strong>";
+        elseif (!mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: " . mysqli_error($link) . "</strong>";
         else: $delete_msg = "<strong style=\"color:green\">Entry successfully deleted!</strong>";
         endif;
         echo $delete_msg;
@@ -44,6 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
     </p>
     <?php
+    mysqli_close($link);
 }
 ?>
 
@@ -64,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             $inserts = []; // empty array for storing inserts
             $insert_ids = []; // and one for storing their ID's
             while ($current_id == $row['eid']) { // loop over all rows with the same entry ID
-                array_push($inserts, $row['iname']);// add this row's insert to the array
+                array_push($inserts, $row['iname']); // add this row's insert to the array
                 array_push($insert_ids, $row['iid']);
                 $row = mysqli_fetch_assoc($entryquery); // next row
                 if (!$row)
@@ -97,8 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
             <tr>
                 <td><a href="entry.php?upstrain_id=<?php echo $row['uid']; ?>"><?php echo $row['uid']; ?></a></td>
                 <td><?php echo $row['date']; ?></td>
-                <td><a href="parts.php?strain_id=<?=$row['sid']?>"><?php echo $row['sname']; ?></a></td>
-                <td><a href="parts.php?backbone_id=<?=$row['bid']?>"><?php echo $row['bname']; ?></a></td>
+                <td><a href="parts.php?strain_id=<?= $row['sid'] ?>"><?php echo $row['sname']; ?></a></td>
+                <td><a href="parts.php?backbone_id=<?= $row['bid'] ?>"><?php echo $row['bname']; ?></a></td>
                 <?php
                 $current_entry = $row['eid'];
                 $current_inserts = $entry_inserts[$current_entry];
@@ -145,7 +151,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
                         <input type="hidden" name="delete" value="<?php echo $row['eid']; ?>">
                         <input type="hidden" name="header" value="refresh">
-                        <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Delete entry <?=$row['eid']?>? THIS IS PERMANENT. To resotre deleted entry, you need to creata new one manually.')"/>
+                        <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Delete entry <?= $row['eid'] ?>? THIS IS PERMANENT. To resotre deleted entry, you need to creata new one manually.')"/>
                     </form>
                 </td>
             </tr>
