@@ -76,8 +76,8 @@ if (mysqli_num_rows($strainquery) < 1) {
                         endif;
                         ?></td>
                     <td>
-                        <form class="control-panel" action="#" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $row['sid']; ?>">
+                        <form class="control-panel" action="parts.php" method="GET">
+                            <input type="hidden" name="strain_id" value="<?php echo $row['sid']; ?>">
                             <input type="hidden" name="edit">
                             <button class="control-panel-edit" title="Edit strain" type="submit"/>
                         </form>
@@ -149,8 +149,8 @@ if (mysqli_num_rows($backbonequery) < 1) {
                         endif;
                         ?></td>
                     <td>
-                        <form class="control-panel" action="#" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $row['bid']; ?>">
+                        <form class="control-panel" action="parts.php" method="GET">
+                            <input type="hidden" name="backbone_id" value="<?php echo $row['bid']; ?>">
                             <input type="hidden" name="edit">
                             <button class="control-panel-edit" title="Edit backbone" type="submit"/>
                         </form>
