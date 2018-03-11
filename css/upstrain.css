@@ -1119,6 +1119,7 @@ div.user_page div.edit {
 	margin-left: 43%;
 }
 
+
 /* div li span.user_info {
 	width: 50%; 
 	margin: 0px;
@@ -1241,9 +1242,9 @@ form.edit_entry a {
 }
 
 div.mini-table {
-	width:200px; 
 	margin: 0px;
 }
+
 
 /* reCAPTCHA */
 div.g-recaptcha {

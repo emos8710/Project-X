@@ -200,13 +200,24 @@ if ($loggedin && $active && $admin) {
 						<a href="?upstrain_id=<?php echo $id; ?>&edit&content=biobrick">Edit</a>
 					<?php }
 					if ($current_content == "biobrick") { ?>
+					<table class="mini-table">
+					<tr class="mini-table">
 					<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-						<label class="edit_entry">New registry ID</label>
-						<input class="edit_entry" type="text" name="biobrick" required> 
-						<input class="edit_entry_button" type="submit" value="Submit">
-						<div class="clear"></div>
+						<td class="mini-table" style="padding: 0px;">
+						<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;">New registry ID</label>
+						</td>
+						<td class="mini-table">
+						<input class="edit_entry" type="text" name="biobrick" required style="border: 1px solid #001F3F; border-radius: 5px"> 
+						</td>
+						<td class="mini-table">
+						<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding:2px; margin-top: 2px;">
+						</td>
+						<td class="">
 						<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+						</td>
 					</form>
+					</tr>
+					</table>
 					<?php } ?>
 			</td>
 		</tr>
@@ -225,9 +236,14 @@ if ($loggedin && $active && $admin) {
 						<a href="?upstrain_id=<?php echo $id; ?>&edit&content=strain">Edit</a>
 					<?php } 
 					if ($current_content == "strain") { ?>
+						<table class="mini-table">
+						<tr class="mini-table">
 						<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-							<label class="edit_entry">New strain</label>
-							<select class="edit_entry" name="strain" required>
+							<td class="mini-table">
+							<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;">New strain</label>
+							</td>
+							<td class="mini-table">
+							<select class="edit_entry" name="strain" required style="border: 1px solid #001F3F; border-radius: 5px">
 								<?php
 								include 'scripts/db.php';
 								$sql_strain = mysqli_query($link, "SELECT name FROM strain");
@@ -237,10 +253,16 @@ if ($loggedin && $active && $admin) {
 								mysqli_close($link);
 								?>
 							</select>
-							<input class="edit_entry_button" type="submit" value="Submit">
-							<div class="clear"></div>
+							</td>
+							<td class="mini-table">
+							<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding:2px; margin-top: 2px;">
+							</td>
+							<td class="mini-table">
 							<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+							</td>
 						</form>
+						</tr>
+						</table>
 				<?php } ?>
 			</td>
 		</tr>
@@ -248,7 +270,7 @@ if ($loggedin && $active && $admin) {
         <!-- Edit backbone -->
 		<tr class="edit_entry">
 			<th class="title"> Backbone: </th> 
-			<td class="info"> 
+			<td class="info" style="padding:0px;"> 
 				<?php
 				echo $entry_info["bname"];?>
 			</td>
@@ -259,9 +281,14 @@ if ($loggedin && $active && $admin) {
 						<div class="edit_info"><a href="?upstrain_id=<?php echo $id; ?>&edit&content=backbone">Edit</a></div>
 				<?php }
 					if ($current_content == "backbone") { ?>
+						<table class="mini-table" style="margin-top: 0px;">
+						<tr class="mini-table">
 						<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-							<label class="edit_entry"> New backbone </label>
-							<select class="edit_entry"> name="backbone" required>
+							<td class="mini-table"> 
+							<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;"> New backbone </label>
+							</td>
+							<td class="mini-table"> 
+							<select class="edit_entry" style="border: 1px solid #001F3F; border-radius: 5px"> name="backbone" required>
 								<?php
 								include 'scripts/db.php';
 								$sql_strain = mysqli_query($link, "SELECT name FROM backbone");
@@ -271,10 +298,16 @@ if ($loggedin && $active && $admin) {
 								mysqli_close($link);
 								?>
 							</select>
-							<input class="edit_entry_button" type="submit" value="Submit">
-							<div class="clear"></div>
+							</td>
+							<td class="mini-table"> 
+							<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding:2px; margin-top: 2px;">
+							</td>
+							<td class="mini-table"> 
 							<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+							</td>
 						</form>
+						</tr>
+						</table>
 				<?php } ?>
 			</td>
 		</tr>
@@ -290,13 +323,13 @@ if ($loggedin && $active && $admin) {
 						<th class="mini-table" style="text-align: left; width:50px; border: none; border-bottom: none;"> 
 							Insert: 
 						</th> 
-						<td class="mini-table" style="width: 150px;">
+						<td class="mini-table" style="width: 200px">
 							<?php echo $insert_row['name'] ?>
 						</td>
 						<th class="mini-table" style="text-align: left; width: 50px; border: none; border-bottom: none;"> 
 							Type:
 						</th> 
-						<td class="mini-table" style="width: 150px;">
+						<td class="mini-table" style="width: 200px">
 							<?php echo $insert_row['type'];?>
 						</td>
 					<?php 
@@ -339,7 +372,7 @@ if ($loggedin && $active && $admin) {
                         <input name="position" type="hidden" value="<?php echo $insert_row['position'] ?>">
                         <input class="edit_entry_button" type="submit" value="Submit" >
                         <div class="clear"></div>
-						<a style="float: right;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+						<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
 						</form>
 						</div>
                 <?php } ?>
@@ -351,10 +384,13 @@ if ($loggedin && $active && $admin) {
 				<a href="?upstrain_id=<?php echo $id; ?>&edit&content=add_insert">Add insert</a>
         <!-- Add new insert -->
 				<?php if ($current_content == "add_insert") { ?>
-                <form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                        <div class="field-wrap" style="float: left; margin-right: 5px;">
-						<label class="edit_entry"> Insert type </label>
-                        <br><select class="edit_entry" name="insert_type" id="Ins_type" required>
+                <table class="mini-table">
+				<tr class="mini-table">
+				<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+                        <td class="mini-table">
+						<div class="field-wrap" style="float: left; margin-right: 5px;">
+						<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;"> Insert type </label>
+                        <br><select class="edit_entry" name="insert_type" id="Ins_type" required style="border: 1px solid #001F3F; border-radius: 5px">
                             <option value="">Select insert type</option>
                             <?php
                             include 'scripts/db.php';
@@ -365,13 +401,16 @@ if ($loggedin && $active && $admin) {
                             ?>
                         </select>
 						</div>
+						</td>
 						
+						<td class="mini-table">
 						<div class="field-wrap">
-                        <label class="edit_entry">Insert name</label>
-                        <br><select class="edit_entry" name="new_insert" id ="Ins" required>
+                        <label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;">Insert name</label>
+                        <br><select class="edit_entry" name="new_insert" id ="Ins" required style="border: 1px solid #001F3F; border-radius: 5px">
                             <option value="">Select insert name</option>
                         </select>
 						</div>
+						</td>
 
                         <?php
                         include 'scripts/db.php';
@@ -379,13 +418,21 @@ if ($loggedin && $active && $admin) {
                         $pos_result = mysqli_query($link, $pos_query);
                         $position = mysqli_fetch_array($pos_result)[0] + 1;
                         ?>
-
-                        <input name="position" type="hidden" value="<?php echo $position ?>">
-
-                        <input class="edit_entry_button" type="submit" value="Submit" >
-						<div class="clear"></div>
-                        <a style="float: right;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                    </form></li>
+						
+						<td class="mini-table">
+                        <input name="position" type="hidden" value="<?php echo $position ?>" style="border: 1px solid #001F3F; border-radius: 5px">
+						</td>
+						<td class="mini-table">
+                        <br>
+						<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+						</td>
+						<td class="mini-table">
+                        <br>
+						<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
+						</td>
+                    </form>
+					</tr>
+					</table>
             <?php } ?>
 			</td>
 		</tr>
@@ -408,13 +455,26 @@ if ($loggedin && $active && $admin) {
 				$sql_comment = mysqli_query($link, "SELECT comment FROM entry WHERE id = '$entry_id'");
 				$old_comment = mysqli_fetch_array($sql_comment)[0];
 			?>
+				<table class="mini-table">
+				<tr class="mini-table">
 				<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    <label class="edit_entry"> Edit comment <label>
-                    <input class="edit_entry" type="text" name="comment" required value="<?php echo $old_comment ?>"> 
-                    <input class="edit_entry_button" type="submit" value="Submit">
-                    <div class="clear"></div>
+                    <td class="mini-table">
+					<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;"> 
+					Edit comment 
+					<label>
+                    </td>
+					<td class="mini-table">
+					<input class="edit_entry" type="text" name="comment" required value="<?php echo $old_comment ?> " style="border: 1px solid #001F3F; border-radius: 5px"> 
+                    </td>
+					<td class="mini-table">
+					<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+                    </td>
+					<td class="mini-table">
 					<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form>
+					</td>
+				</form>
+				</tr>
+				</table>
 			<?php } ?>
 			
 			</td>
@@ -434,13 +494,24 @@ if ($loggedin && $active && $admin) {
                 <a href="?upstrain_id=<?php echo $id; ?>&edit&content=year_created">Edit</a>
 				<?php } ?></li>
 				<?php if ($current_content == "year_created") { ?>
+				<table class="mini-table">
+				<tr class="mini-table">
 				<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                    <label class="edit_entry">New year
-                    <input class="edit_entry" type="text" name="year_created" required> 
-                    <input class="edit_entry_button" type="submit" value="Submit">
-					<div class="clear"></div>
+                    <td class="mini-table">
+					<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;">New year</label>
+					</td>
+					<td class="mini-table">
+                    <input class="edit_entry" type="text" name="year_created" required style="border: 1px solid #001F3F; border-radius: 5px"> 
+                    </td>
+					<td class="mini-table">
+					<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+					</td>
+					<td class="mini-table">
                     <a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                </form>	
+					</td>
+				</form>	
+				</tr>
+				</table>
 				<?php } ?>
 			</td>
 		</tr>
