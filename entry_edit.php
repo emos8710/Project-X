@@ -72,12 +72,13 @@ if ($loggedin && $active && $admin) {
             $insert_pos = mysqli_real_escape_string($link, test_input($_POST['position']));
             $remove_sql = "DELETE FROM entry_inserts WHERE position = '$insert_pos' AND entry_id = '$entry_id';";
             $move_sql = "UPDATE entry_inserts SET position = position-1 WHERE position > '$insert_pos' AND entry_id = '$entry_id';";
+            
             mysqli_begin_transaction($link);
             mysqli_query($link, $remove_sql);
             mysqli_query($link, $move_sql);
             $commit = mysqli_commit($link);
             
-            if ($result = mysqli_query($link, $remove_sql)) {
+            if ($commit) {
                 $update_msg = "Successfully removed insert.";
             } else {
                 $iserror = TRUE;
