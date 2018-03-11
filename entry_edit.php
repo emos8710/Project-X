@@ -384,11 +384,11 @@ if ($loggedin && $active && $admin) {
 				<a href="?upstrain_id=<?php echo $id; ?>&edit&content=add_insert">Add insert</a>
         <!-- Add new insert -->
 				<?php if ($current_content == "add_insert") { ?>
-                <table class="mini-table">
-				<tr class="mini-table">
+                <table class="mini-table" style="margin-top: 0px;">
+				<tr class="mini-table" style="margin-top: 0px;">
 				<form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                        <td class="mini-table">
-						<div class="field-wrap" style="float: left; margin-right: 5px;">
+                        <td class="mini-table" style="margin-top: 0px;">
+						<div class="field-wrap" style="float: left; margin-right: 5px; margin-top: 0px;">
 						<label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;"> Insert type </label>
                         <br><select class="edit_entry" name="insert_type" id="Ins_type" required style="border: 1px solid #001F3F; border-radius: 5px">
                             <option value="">Select insert type</option>
@@ -419,14 +419,14 @@ if ($loggedin && $active && $admin) {
                         $position = mysqli_fetch_array($pos_result)[0] + 1;
                         ?>
 						
-						<td class="mini-table">
+						<td class="mini-table" style="margin-top: 0px;">
                         <input name="position" type="hidden" value="<?php echo $position ?>" style="border: 1px solid #001F3F; border-radius: 5px">
 						</td>
-						<td class="mini-table">
+						<td class="mini-table" style="margin-top: 0px;">
                         <br>
 						<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
 						</td>
-						<td class="mini-table">
+						<td class="mini-table" style="margin-top: 0px;">
                         <br>
 						<a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
 						</td>

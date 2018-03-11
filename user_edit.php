@@ -185,104 +185,233 @@ if($loggedin && $active && $userpage_owner_or_admin) {
 	$info = mysqli_fetch_assoc($user_result);
 	?>
 	<div class="edit_users">
-	<ul>
 		<!-- Edit name -->
-		<li><div class="edit_title">Name</div>	<?php echo $info["fname"]." ".$info["lname"];
-		if ($current_content != "name") { ?>
-			<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=name">Edit</a></div> 
-		<?php } ?></li>
-		<?php if($current_content == "name") { ?>
-			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-				New first name
-				<input type="text" name="first_name">
-				New last name
-				<input type="text" name="last_name">
-				<input type="submit" value="Submit">
-				<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
-			</form></li>
+		<table class="edit_users">
+			<tr class="edit_users">
+			<th class="edit_users" style="border-bottom: none; text-align: left;">
+				Name:
+			</th>
+			<td class="edit_users">
+				<?php echo $info["fname"]." ".$info["lname"];?>
+			</td>
+			<td class="edit_users">
+			<?php
+			if ($current_content != "name") { ?>
+					<a href="?user_id=<?php echo $user_id; ?>&edit&content=name">Edit</a>
+				<?php } ?>
+			<?php if($current_content == "name") { ?>
+				<table class="mini-table" style="margin-top: 0px;">
+					<tr class="mini-table">
+					<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+					<td class="mini-table" style="width: 100px;"> 
+						<label class="mini-table" style="width: 100px;font-size: 14px; font-style: normal; text-align: left; margin-right: 70px;"> 
+							First name:
+						</label>
+					</td>
+					<td class="mini-table">
+						<input type="text" name="first_name" style="border: 1px solid #001F3F; border-radius: 5px"></input>
+					</td>
+					<td class="minitable">
+						<label class="mini-table" style="width: 100px;font-size: 14px; font-style: normal; text-align: left; margin-right: 70px;">
+							Last name:
+						</label>
+					</td>
+					<td class="mini-table">
+						<input type="text" name="last_name" style="border: 1px solid #001F3F; border-radius: 5px"></input>
+					</td>
+					<td class="mini-table-button">
+						<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;"></input>
+					</td>
+					<td class="mini-table">
+						<a href="?user_id=<?php echo $user_id; ?>&edit" style="margin-top: 3px;">Cancel</a>
+					</td>
+					</form>
+					</tr>
+				</table>
+			</td>
 		<?php } ?>
+		</tr>
 		
 		<!-- Edit user name -->
-		<li><div class="edit_title">Username</div>	<?php echo $info["uname"];
+		<tr class="edit_users">
+			<th class="edit_users" style="border-bottom: none; text-align: left;">
+				Username:	
+			</th>
+			<td class="edit_users">
+				<?php echo $info["uname"];?>
+			</td>
+			<td class="edit_users">
+			<?php
 		if ($adminpage && !$isowner) {
 			echo " Can't change";
 		}
 		else if ($current_content != "user_name") { ?>
-			<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=user_name">Edit</a></div>
-		<?php } ?></li>
-		<?php if($current_content == "user_name") { ?>
-			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-				New user name
-				<input type="text" name="user_name" pattern=".{3,50}" required title="The username must be 3-50 characters long">
-				<?php if($_SESSION['user_id'] == $user_id) { ?>
-					<input type="submit" value="Submit" onclick="confirmAction(event, 'Do you really want to change your username?')">
-				<?php } else { ?>
-					<input type="submit" value="Submit" onclick="confirmAction(event, 'This is not your account! Do you still want to change the username?')">
-				<?php } ?>
-				<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
-			</form></li>
+				<a href="?user_id=<?php echo $user_id; ?>&edit&content=user_name">Edit</a>
 		<?php } ?>
+		<?php if($current_content == "user_name") { ?>
+			<table class="mini-table" style="margin-top: 0px;">
+				<tr class="mini-table">
+				<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+				<td class="mini-table">
+					<label class="mini-table" style="width: 100px;font-size: 14px; font-style: normal; text-align: left; margin-right: 110px;"> 
+						New user name:
+					</label>	
+				</td>
+				<td class="mini-table">
+					<input type="text" name="user_name" pattern=".{3,50}" required title="The username must be 3-50 characters long" style="border: 1px solid #001F3F; border-radius: 5px"></input>
+				</td>
+				<td class="mini-table-button">
+				<?php if($_SESSION['user_id'] == $user_id) { ?>
+					<input class="edit_entry_button" type="submit" value="Submit" onclick="confirmAction(event, 'Do you really want to change your username?')" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+				<?php } else { ?>
+					<input class="edit_entry_button" type="submit" value="Submit" onclick="confirmAction(event, 'This is not your account! Do you still want to change the username?')" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+				<?php } ?>
+				</td>
+				<td class="mini-table">
+					<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
+				</td>
+				</form>
+				</tr>
+			</table>
+			</td>
+		<?php } ?>
+		</tr>
 		
 		<!-- Edit email -->
-		<li><div class="edit_title">Email</div> <?php echo $info["email"];
+		<tr class="edit_users">
+		<th class="edit_users" style="border-bottom: none; text-align: left;"> 
+			Email:
+		</th>
+		<td class="edit_users">
+			<?php echo $info["email"];?>
+		</td>
+		<td class="edit_users">
+		<?php 
 		if ($current_content != "email") { ?>
-			<div class="edit_info"><a href="?user_id=<?php echo $user_id; ?>&edit&content=email">Edit</a></div>
-		<?php } ?></li>
-		<?php if($current_content == "email") { ?>
-			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-				New email
-				<input type="email" name="email" required> 
-				<input type="submit" value="Submit">
-				<a href="?user_id=<?php echo $user_id;?>&edit">Cancel</a>
-			</form></li>
+				<a href="?user_id=<?php echo $user_id; ?>&edit&content=email">Edit</a>
 		<?php } ?>
+		<?php if($current_content == "email") { ?>
+			<table class="mini-table" style="margin-top: 0px;">
+			<tr class="mini-table">
+			<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+				<td class="mini-table">
+					<label class="mini-table" style="width: 100px;font-size: 14px; font-style: normal; text-align: left; margin-right: 70px;">
+							New email:
+					</label>
+				</td>
+				<td class="mini-table">
+					<input type="email" name="email" required style="border: 1px solid #001F3F; border-radius: 5px"></input> 
+				</td>
+				<td class="mini-table">
+					<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;"></input>
+				</td>
+				<td>
+					<a href="?user_id=<?php echo $user_id;?>&edit">Cancel</a>
+				</td>
+			</form>
+			</tr>
+			</table>
+		<?php } ?>
+			</td>
+		</tr>
 		
 		<!-- Edit phone number -->
-		<li><div class="edit_title">Phone number</div> <?php echo $info["phone"];
-		if ($current_content != "phone") { ?>
-			<div class="edit_info"><a href="?user_id=<?php echo $user_id;?>&edit&content=phone">Edit</a></div>
-			<?php if ($info["phone"] != "") { ?>
-				<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-					<input type="hidden" name="remove_phone">
-					<input type="submit" value="Remove">
-				</form>
+		<tr class="edit_users">
+			<th class="edit_users" style="border-bottom: none; text-align: left;">
+				Phone number:
+			</th>
+			<td class="edit_users">
+				<?php echo $info["phone"];?>
+			</td>
+			<td class="edit_users" style="width=30px;">
+				<?php
+				if ($current_content != "phone") { ?>
+					<a href="?user_id=<?php echo $user_id;?>&edit&content=phone" style="float:left; margin-right:15px;">Edit</a>
+				<?php if ($info["phone"] != "") { ?>
+					<table class="mini-table" style="margin-top: 0px;">
+					<tr class="mini-table">
+					<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+						<td class="mini-table">
+						<input type="hidden" name="remove_phone"></input>
+						<input class="edit_entry_button" type="submit" value="Remove" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 2px;"></input>
+						</td>
+					</form>
+					</tr>
+					</table>
 			<?php } ?>
-		<?php } ?></li>
-		<?php if($current_content == "phone") { ?>
-			<li><form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-				New phone number
-				<input type="text" name="phone"> 
-				<input type="submit" value="Submit">
-				<a href="?user_id=<?php echo $user_id;?>&edit">Cancel</a>
-			</form></li>
+			
 		<?php } ?>
+		<?php if($current_content == "phone") { ?>
+			<table class="mini-table" style="margin-top: 0px;">
+			<tr class="mini-table">
+			<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
+				<td class="mini-table">
+				<label class="mini-table" style="width: 100px;font-size: 14px; font-style: normal; text-align: left;">New number:</label>
+				</td>
+				<td class="mini-table">
+				<input type="text" name="phone" style="border: 1px solid #001F3F; border-radius: 5px">
+				</td>
+				<td class="mini-table">
+				<input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+				</td>
+				<td class="mini-table">
+				<a href="?user_id=<?php echo $user_id;?>&edit">Cancel</a>
+				</td>
+			</form>
+			</tr>
+			</table>
+		<?php } ?>
+		</td>
+		</tr>
+		
 		
 		<?php if ($_SESSION['user_id'] == $user_id) {
 		// Change password
 		?>
-			<li><?php if ($current_content != "password") { ?>
-				<div class="edit_title"><a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a></div>
-			<?php }
+		<tr class="edit_users">
+		<td class="edit_users">
+		<?php if ($current_content != "password") { ?>
+		<a href="?user_id=<?php echo $user_id; ?>&edit&content=password">Change password</a>
+			<?php } ?>
+		</td>
+		<?php
 				if($current_content == "password") { ?>
+				<table class="mini-table">
+				<tr class="mini-table">
 					<form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
-						Old password
-						<input type="password" name="old_password" required>
-						New password
-						<input type="password" name="new_password" required pattern=".{8,}" title="The password must be at least 8 characters">
-						Confirm new password
-						<input type="password" name="conf_password" required pattern=".{8,}" title="The password must be at least 8 characters">
-						<input type="submit" value="Submit">
-						<a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
-					</form></li>
-			<?php }
-		} ?>
-	<ul>
+						<td class="mini-table" style="width: 100px;">
+							Old password:
+							<input type="password" name="old_password" required style="border: 1px solid #001F3F; border-radius: 5px">
+						</td>
+						<td class="mini-table" style="width: 100px;">
+							New password:
+							<input type="password" name="new_password" required pattern=".{8,}" title="The password must be at least 8 characters" style="border: 1px solid #001F3F; border-radius: 5px">
+						</td>
+						<td class="mini-table" style="width: 100px;">
+							Confirm new password:
+							<input type="password" name="conf_password" required pattern=".{8,}" title="The password must be at least 8 characters" style="border: 1px solid #001F3F; border-radius: 5px">
+						</td>
+						<td class="mini-table">
+							<br><input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
+						</td>
+						<td class="mini-table">
+							<br><a href="?user_id=<?php echo $user_id; ?>&edit">Cancel</a>
+						</td>
+					</form>
+				</tr>
+				</table>
+			<?php } ?>
+			</td>
+			</tr>
+		<?php } ?>
+	
+	</table>
 	
 	<div class="clear"></div>
 	<!-- Show success/error message -->
 	<?php if($_SERVER['REQUEST_METHOD']=='POST' && isset($update_msg)): echo "<br>".$update_msg; endif; ?>
 	<!-- Back button -->
-	<div class="back"><a href="?user_id=<?php echo $user_id; ?>">Back to user page</a></div>
+	<div class="back" style="margin-top: 50px;"><a href="?user_id=<?php echo $user_id; ?>">Back to user page</a></div>
 
 <?php
 // Hides page if the user is not logged in or activated
