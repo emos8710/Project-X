@@ -82,28 +82,28 @@ if (isset($_GET['content'])) {
                 <ul>
                     <li>
                     <a <?php
-						if (isset($_GET['content']) && $_GET['content'] === "new_entry") {
+						if (isset($_GET['content']) && test_input($_GET['content']) === "new_entry") {
 							echo "class=\"active\"";
 						}
 						?> href="?content=new_entry">New entry</a>
                     </li>
                     <li>
                     <a <?php 
-						if (isset($_GET['content']) && $_GET['content']=== "new_strain") {
+						if (isset($_GET['content']) && test_input($_GET['content'])=== "new_strain") {
 							echo "class=\"active\"";
 						}
 						?> href="?content=new_strain">New strain </a>
                     </li>
                     <li>
                     <a <?php 
-						if (isset($_GET['content']) && $_GET['content']=== "new_backbone") {
+						if (isset($_GET['content']) && test_input($_GET['content'])=== "new_backbone") {
 							echo "class=\"active\"";
 						}
 						?> href="?content=new_backbone">New backbone</a>
                     </li>
                     <li>
                     <a <?php 
-						if (isset($_GET['content']) && $_GET['content']=== "new_insert") {
+						if (isset($_GET['content']) && test_input($_GET['content'])=== "new_insert") {
 							echo "class=\"active\"";
 						}
 						?> class="last" href="?content=new_insert">New insert</a>
@@ -158,7 +158,7 @@ if (isset($_GET['content'])) {
                                     <label>Insert name </label> <br>
                                     <select class="insert" name="ins[]" id ="Ins">
                                         <option value="">Select insert name</option>
-										</select></td>
+				    </select></td>
                                 <td class="more-button"> <br> <button class="insert-mini" type="button" name="add" id="add_input">+ More inserts</button></td> </tr>
 
                             </table>
@@ -185,7 +185,7 @@ if (isset($_GET['content'])) {
                         <div class="field-wrap"> 
                             <label>Comment * </label>
                             <textarea class="insert" name="comment" id="Comment" rows ="4" cols="50"
-                                      required="required"></textarea> 
+                                      required></textarea> 
                         </div>
 
                         <div class="checkbox">
@@ -233,7 +233,7 @@ if (isset($_GET['content'])) {
                     <div class="new_backbone">
 						<div class="field-wrap-backbone">
 							<label>Backbone * </label>
-							<input class="insert" type="text" name ="backbone" id="Backbone" required/></input>
+							<input class="insert" type="text" name ="backbone" id="Backbone" placeholder="pSB#X#" pattern="pSB\d{1}[A-Z]{1}\d{1}" required/></input>
 							<br/>
 						</div>
 
@@ -320,7 +320,6 @@ if (isset($_GET['content'])) {
 
 </main>
 
-<script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(document).ready(function () {
         var i = 1;
@@ -380,7 +379,7 @@ if (isset($_GET['content'])) {
 </script>
 
 <?php /*
- * // Uufinished
+ * // Unfinished
 <script>
     
     $(document).ready(function () {

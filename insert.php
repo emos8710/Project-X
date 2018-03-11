@@ -117,41 +117,39 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     } else {
                                         $_SESSION['error'] .= "<div class = 'error'>The file was not uploaded successfully</div>";
                                         mysqli_close($link) or die("Could not close database connection");
-                                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+                                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
                                         exit();
                                     }
                                 } else {
                                     $_SESSION['error'] .= "<div class = 'error'>File already exists. Please upload another file</div>";
                                     mysqli_close($link) or die("Could not close database connection");
-                                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+                                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
                                     exit();
                                 }
                             } else {
                                 $_SESSION['error'] .= "<div class = 'error'>The input file has an invalid format. Please only upload nucleotide fasta files</div>";
                                 mysqli_close($link) or die("Could not close database connection");
-                                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+                                header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
                                 exit();
                             }
-                        } else {
-                            
                         }
 
                         $_SESSION['success'] .= "<div class = 'success'>New entry submitted successfully</div>";
                         mysqli_close($link) or die("Could not close database connection");
-                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
                         exit();
                     } else {
                         $_SESSION['error_insert'] .= "<div class = 'error'>Execute failed: (" . $stmt_entry->errno . ")" .
                                 " " . "Error: " . $stmt_entry->error . "</div>";
                         mysqli_close($link) or die("Could not close database connection");
-                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
                         exit();
                     } $stmt_entry->close();
                 } else {
                     $_SESSION['error'] .= "<div class = 'error'>Binding parameters failed: (" . $stmt_entry->errno .
                             ")" . " " . "Error: " . $stmt_entry->error . "</div>";
                     mysqli_close($link) or die("Could not close database connection");
-                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
                     exit();
                 }
             }
@@ -159,7 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['error'] .= "<div class = 'error'>Prepare failed: (" . $link->errno
                     . ")" . " " . "Error: " . $link->error . "</div>";
             mysqli_close($link) or die("Could not close database connection");
-            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_entry");
             exit();
         }
     }

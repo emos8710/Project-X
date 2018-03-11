@@ -35,31 +35,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if ($stmt_backbone->execute()) {
                         $_SESSION['success'] = "<div class = 'success'>New backbone submitted successfully</div>";
                         mysqli_close($link) or die("Could not close database connection");
-                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?success");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_backbone");
                         exit();
                     } else {
                         $_SESSION['error'] = "<div class = 'error'>Execute failed: (" . $stmt_backbone->errno . ")" . " " . "Error: " . $stmt_backbone->error . "</div>";
                         mysqli_close($link) or die("Could not close database connection");
-                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_backbone");
                         exit();
                     } $stmt_backbone->close();
                 } else {
                     $_SESSION['error'] = "<div class = 'error'>Binding parameters failed: (" . $stmt_backbone->errno . ")" . " " . "Error: " . $stmt_backbone->error . "</div>";
                     mysqli_close($link) or die("Could not close database connection");
-                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+                    header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_backbone");
                     exit();
                 }
             }
         } else {
             $_SESSION['error'] = "<div class = 'error'>Prepare failed: (" . $link->errno . ")" . " " . "Error: " . $link->error . "</div>";
             mysqli_close($link) or die("Could not close database connection");
-            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?error");
+            header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_backbone");
             exit();
         }
     } else {
         $_SESSION['existing'] = "<div class = 'existing'>The entered backbone already exists! Please enter a new one </div>";
         mysqli_close($link) or die("Could not close database connection");
-        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?existing");
+        header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "new_insert.php?content=new_backbone");
         exit();
     }
 }
