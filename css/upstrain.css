@@ -208,37 +208,32 @@ table.user_entries {
 	margin-left: 10%; 
 }
 
-table.user_entries tr {
-}
 
-table.user_entries tr th.columns {
+
+table.user_entries tr th.columns, table.control-panel-users tr th.manage_users {
 	margin-left: 10px;
 	margin-right: 10px;
-	min-width: 90px;
 	color: #001F3F;
 	font-size: 15px;
 	border-bottom: 1px solid #0074D9;
+	text-align: left;
 }
 
-table.user_entries tr td {
+table.user_entries tr td,table.control-panel-users tr td {
 	margin-left: 10px;
 	margin-right: 10px;
-	min-width: 90px;
 	color: #001F3F;
 	font-size: 15px;
 	border-bottom: 1px solid white;
+	text-align: left;
 }
 
-table.user_entries tr a {
+table.user_entries tr a, table.control-panel-users tr a {
 	color: #001F3F;
 }
 
-table.user_entries tr a:hover {
+table.user_entries tr a:hover,table.control-panel-users tr a:hover {
 	color: #0074D9;
-}
-
-table.user_entries tr td { 
-	text-align: center;
 }
 
 th {
