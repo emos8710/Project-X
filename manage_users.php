@@ -93,12 +93,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
         <col><col><col><col><col><col><col><col><col><col><col>
         <tr>
             <th class="manage_users">User ID</th>
-            <th class="manage_users">Username</th>
-            <th class="manage_users">Name</th>
-            <th class="manage_users">E-mail address</th>
-            <th class="manage_users">Phone number</th>
-            <th class="manage_users">User level</th>
-            <th colspan="4"  class="manage_users">Actions</th>
+            <th class="manage_users" style="min-width: 100px;">Username</th>
+            <th class="manage_users" style="min-width: 100px;">Name</th>
+            <th class="manage_users" style="min-width: 100px;">E-mail address</th>
+            <th class="manage_users" style="min-width: 100px;">Phone number</th>
+            <th class="manage_users" style="min-width: 100px;">User level</th>
+            <th colspan="4"  class="manage_users" style="min-width: 100px;">Actions</th>
         </tr>
 
         <?php

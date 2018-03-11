@@ -79,17 +79,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         <col><col><col><col><col><col><col><col><col><col><col><col>
         <tr>
             <th class="manage_entries">Upstrain ID</th>
-            <th class="manage_entries">Date added</th>
-            <th class="manage_entries">Strain</th>
-            <th class="manage_entries">Backbone</th>
-            <th class="manage_entries">Inserts</th>
-            <th class="manage_entries">Year created</th>
-            <th class="manage_entries">iGEM Registry</th>
-            <th class="manage_entries">Comment</th>
-            <th class="manage_entries">Added by</th>
-            <th class="manage_entries">Private</th>
-            <th class="manage_entries">Created physically</th>
-            <th colspan="3" class="manage_entries">Actions</th>
+            <th class="manage_entries" style="min-width: 80px;">Date added</th>
+            <th class="manage_entries" style="min-width: 80px;">Strain</th>
+            <th class="manage_entries" style="min-width: 80px;">Backbone</th>
+            <th class="manage_entries" style="min-width: 80px;">Inserts</th>
+            <th class="manage_entries" style="min-width: 80px;">Year created</th>
+            <th class="manage_entries" style="min-width: 80px;">iGEM Registry</th>
+            <th class="manage_entries" style="min-width: 80px;">Comment</th>
+            <th class="manage_entries" style="min-width: 80px;">Added by</th>
+            <th class="manage_entries" style="min-width: 80px;">Private</th>
+            <th class="manage_entries" style="min-width: 80px;">Created physically</th>
+            <th colspan="3" class="manage_entries" style="min-width: 80px;">Actions</th>
         </tr>
         <?php
         foreach ($rows as $row) {
