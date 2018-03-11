@@ -1240,7 +1240,10 @@ form.edit_entry a {
 	margin-bottom: 0px;
 }
 
-
+div.mini-table {
+	width:200px; 
+	margin: 0px;
+}
 
 /* reCAPTCHA */
 div.g-recaptcha {

@@ -282,24 +282,45 @@ if ($loggedin && $active && $admin) {
         <tr class="edit_entry"> 
 			<th class="title"> Inserts: </th>
 			<td class="info"> 
+			<div class="mini-table">
 				<?php while ($insert_row = mysqli_fetch_assoc($insert_result)) { ?>
-					<li>Insert: <?php echo $insert_row['name'] ?>, Type: <?php echo $insert_row['type'];
+					<table class="mini-table">
+					<tr class="mini-table">
+						<th class="mini-table" style="text-align: left; width:50px; border: none; border-bottom: none;"> 
+							Insert: 
+						</th> 
+						<td class="mini-table" style="width: 150px;">
+							<?php echo $insert_row['name'] ?>
+						</td>
+						<th class="mini-table" style="text-align: left; width: 50px; border: none; border-bottom: none;"> 
+							Type:
+						</th> 
+						<td class="mini-table" style="width: 150px;">
+							<?php echo $insert_row['type'];?>
+						</td>
+					<?php 
 						if ($current_content != "insert" . $insert_row['position']) {
 							?>
+						<td class="mini-table" style="verticle-align: center;">
 							<a href="?upstrain_id=<?php echo $id; ?>&edit&content=insert<?php echo $insert_row['position'] ?>">Edit</a>
+						</td>
+						<td class="mini-table">
 							<form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
 								<input name="remove_insert" type="hidden">
 								<input name="position" type="hidden" value="<?php echo $insert_row['position'] ?>">
-								<input class="edit_entry_button" type="submit" value="Remove">
+								<input class="edit_entry_button" type="submit" value="Remove" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;">
 							</form>
+						</td>
 						<?php } ?>
-					</li>
-                <?php if ($current_content == "insert" . $insert_row['position']) { ?>
-                    <form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
-                        <label>Insert type</label>
-                        <select name="insert_type" id="Ins_type" required>
-                            <option value="">Select insert type</option>
-                            <?php
+						</tr>
+						</table>
+					<?php if ($current_content == "insert" . $insert_row['position']) { ?>
+						<div class="field-wrap">
+						<form action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
+							<label>Insert type</label>
+							<select name="insert_type" id="Ins_type" required>
+								<option value="">Select insert type</option>
+								<?php
                             include 'scripts/db.php';
                             $sql_ins_type = mysqli_query($link, "SELECT * FROM ins_type");
                             while ($row = $sql_ins_type->fetch_assoc()) {
@@ -318,9 +339,12 @@ if ($loggedin && $active && $admin) {
                         <input class="edit_entry_button" type="submit" value="Submit" >
                         <div class="clear"></div>
 						<a style="float: right;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                    </form>
+						</form>
+						</div>
                 <?php } ?>
+				
             <?php } ?>
+				</div>
 			</td>
 			<td class="edit">
 				<a href="?upstrain_id=<?php echo $id; ?>&edit&content=add_insert">Add insert</a>
