@@ -23,7 +23,7 @@ $entryquery = mysqli_query($link, $entrysql) or die("MySQL error: " . mysqli_err
 mysqli_close($link) or die("Could not close database connection");
 ?>
 
-<h3>Manage entries</h3>
+<h3 class="entries" style="font-style: normal; font-weight: 300; color: #001F3F;">Manage entries</h3>
 
 <?php
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
@@ -78,18 +78,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
     <table class="control-panel-entries">
         <col><col><col><col><col><col><col><col><col><col><col><col>
         <tr>
-            <th>Upstrain ID</th>
-            <th>Date added</th>
-            <th>Strain</th>
-            <th>Backbone</th>
-            <th>Inserts</th>
-            <th>Year created</th>
-            <th>iGEM Registry</th>
-            <th>Comment</th>
-            <th>Added by</th>
-            <th>Private</th>
-            <th>Created physically</th>
-            <th colspan="3">Actions</th>
+            <th class="manage_entries">Upstrain ID</th>
+            <th class="manage_entries">Date added</th>
+            <th class="manage_entries">Strain</th>
+            <th class="manage_entries">Backbone</th>
+            <th class="manage_entries">Inserts</th>
+            <th class="manage_entries">Year created</th>
+            <th class="manage_entries">iGEM Registry</th>
+            <th class="manage_entries">Comment</th>
+            <th class="manage_entries">Added by</th>
+            <th class="manage_entries">Private</th>
+            <th class="manage_entries">Created physically</th>
+            <th colspan="3" class="manage_entries">Actions</th>
         </tr>
         <?php
         foreach ($rows as $row) {

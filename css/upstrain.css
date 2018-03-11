@@ -81,7 +81,7 @@ h2.search_etc {
 	font-weight: 100;
 }
 
-h3.help, h3.home, h3.user {
+h3.help, h3.home, h3.user, h3.entries {
     text-align: center;
     font-size: 25px; 
     margin-top: 10px; 
@@ -210,29 +210,29 @@ table.user_entries {
 
 
 
-table.user_entries tr th.columns, table.control-panel-users tr th.manage_users {
-	margin-left: 10px;
-	margin-right: 10px;
+table.user_entries tr th.columns, table.control-panel-users tr th.manage_users, table.control-panel-entries tr th.manage_entries {
+	margin-left: 12px;
+	margin-right: 12px;
 	color: #001F3F;
 	font-size: 15px;
 	border-bottom: 1px solid #0074D9;
 	text-align: left;
 }
 
-table.user_entries tr td,table.control-panel-users tr td {
-	margin-left: 10px;
-	margin-right: 10px;
+table.user_entries tr td,table.control-panel-users tr td, table.control-panel-entries tr td {
+	margin-left: 12px;
+	margin-right: 12px;
 	color: #001F3F;
 	font-size: 15px;
 	border-bottom: 1px solid white;
 	text-align: left;
 }
 
-table.user_entries tr a, table.control-panel-users tr a {
+table.user_entries tr a, table.control-panel-users tr a, table.control-panel-entries tr a {
 	color: #001F3F;
 }
 
-table.user_entries tr a:hover,table.control-panel-users tr a:hover {
+table.user_entries tr a:hover,table.control-panel-users tr a:hover,table.control-panel-entries tr a:hover {
 	color: #0074D9;
 }
 
