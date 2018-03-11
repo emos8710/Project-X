@@ -71,7 +71,7 @@ if (isset($_GET['content'])) {
             } else if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
                 echo $_SESSION['error'];
             }
-            
+
             unset($_SESSION['error']);
             unset($_SESSION['success']);
             unset($_SESSION['existing']);
@@ -117,7 +117,6 @@ if (isset($_GET['content'])) {
                 <form class="insert-form" id="new_entry_form" method="post" action="<?php echo htmlspecialchars("insert.php"); ?>" enctype="multipart/form-data">
 
                     <div class="new_entry">
-                        <div id="test"></div>
                         <div class="field-wrap">
                             <label>Strain * </label>
                             <select class="insert" name="strain_name" required>

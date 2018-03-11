@@ -14,7 +14,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 //Variables 
     $current_date = date("Y-m-d");
-    $creator = test_input($_POST['user_id']);
     $type = mysqli_real_escape_string($link, test_input($_POST['new_insert_type']));
     $name = mysqli_real_escape_string($link, test_input($_POST['new_insert']));
     $regid = mysqli_real_escape_string($link, test_input($_POST['Ins_registry']));
