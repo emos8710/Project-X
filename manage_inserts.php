@@ -5,7 +5,7 @@ if (count(get_included_files()) == 1) // Prevent direct access
 $current_url = "control_panel.php?content=manage_inserts";
 ?>
 
-<h3>Manage inserts</h3>
+<h3 class="manage_inserts" style="text-align: left; font-style: normal; font-weight: 300; color: #001F3F;">Manage inserts</h3>
 
 <?php
 // Handle POST requests
@@ -62,7 +62,7 @@ mysqli_close($link) or die("Could not close database connection");
 
 <!-- Display insert types -->
 <p>
-<h4>Insert types</h4>
+<h4 class="manage_inserts"style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Insert types</h4>
 <?php
 if (mysqli_num_rows($typequery) < 1) {
     ?>
@@ -114,7 +114,7 @@ if (mysqli_num_rows($typequery) < 1) {
 </p>
 <br>
 <p>
-<h4>Inserts</h4>
+<h4 class="manage_inserts"style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Inserts</h4>
 <?php
 if (mysqli_num_rows($insertquery) < 1) {
     ?>
@@ -127,13 +127,13 @@ if (mysqli_num_rows($insertquery) < 1) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Date added</th>
-                <th>iGEM Registry</th>
-                <th>Added by</th>
-                <th>Comment</th>
-                <th colspan="3">Actions</th>
+                <th style="min-width: 80px;">Name</th>
+                <th style="min-width: 80px;">Type</th>
+                <th style="min-width: 90px;">Date added</th>
+                <th style="min-width: 90px;">iGEM Registry</th>
+                <th style="min-width: 80px;">Added by</th>
+                <th style="min-width: 130px;">Comment</th>
+                <th style="min-width: 80px;" colspan="3">Actions</th>
             </tr>
         </thead>
         <tbody>

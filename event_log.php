@@ -14,7 +14,7 @@ $logquery = mysqli_query($link, $logsql) or die("MySQL error: " . mysqli_error($
 mysqli_close($link) or die("Could not close database connection");
 ?>
 
-<h3 class="event-log">Event log</h3>
+<h3 class="event-log" style="font-style: normal; font-weight: 300; color: #001F3F;">Event log</h3>
 
 <?php
 if (mysqli_num_rows($logquery) < 1) {
@@ -26,10 +26,10 @@ if (mysqli_num_rows($logquery) < 1) {
     <table class="control-panel-log">
         <col><col><col><col><col>
         <tr>
-            <th>Timestamp</th>
-            <th>Event type</th>
-            <th>Object ID</th>
-            <th>Object type</th>
+            <th style="min-width: 180px;">Timestamp</th>
+            <th style="min-width: 100px;">Event type</th>
+            <th style="min-width: 80px;">Object ID</th>
+            <th style="min-width: 100px;">Object type</th>
         </tr>
 
         <?php

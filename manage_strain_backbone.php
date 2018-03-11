@@ -5,7 +5,7 @@ if (count(get_included_files()) == 1)
 $current_url = "control_panel.php?content=manage_strain_backbone";
 ?>
 
-<h3>Manage backbones & strains</h3>
+<h3 class="strainbackbone" style="text-align: left; font-style: normal; font-weight: 300; color: #001F3F;">Manage backbones & strains</h3>
 
 <?php
 // Handle POST requests
@@ -39,7 +39,7 @@ mysqli_close($link) or die("Could not close database connection");
 
 <!-- Display strains -->
 <p>
-<h4>Strains</h4>
+<h4 class="manage_strain_backbone" style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Strains</h4>
 <?php
 if (mysqli_num_rows($strainquery) < 1) {
     ?>
@@ -52,12 +52,12 @@ if (mysqli_num_rows($strainquery) < 1) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Date added</th>
-                <th>Added by</th>
-                <th>Comment</th>
-                <th>Private</th>
-                <th colspan="3">Actions</th>
+                <th style="min-width: 80px;">Name</th>
+                <th style="min-width: 80px;">Date added</th>
+                <th style="min-width: 100px;">Added by</th>
+                <th style="min-width: 130px;">Comment</th>
+                <th style="min-width: 80px;">Private</th>
+                <th colspan="3" style="min-width: 80px;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -110,7 +110,7 @@ if (mysqli_num_rows($strainquery) < 1) {
 </p>
 <br>
 <p>
-<h4>Backbones</h4>
+<h4 class="manage_strain_backbone" style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Backbones</h4>
 <?php
 if (mysqli_num_rows($backbonequery) < 1) {
     ?>
@@ -123,13 +123,13 @@ if (mysqli_num_rows($backbonequery) < 1) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>iGEM Registry</th>
-                <th>Date added</th>
-                <th>Added by</th>
-                <th>Comment</th>
-                <th>Private</th>
-                <th colspan="3">Actions</th>
+                <th style="min-width: 80px;">Name</th>
+                <th style="min-width: 80px;">iGEM Registry</th>
+                <th style="min-width: 80px;">Date added</th>
+                <th style="min-width: 100px;">Added by</th>
+                <th style="min-width: 130px;">Comment</th>
+                <th style="min-width: 80px;">Private</th>
+                <th colspan="3" style="min-width: 80px;">Actions</th>
             </tr>
         </thead>
         <tbody>
