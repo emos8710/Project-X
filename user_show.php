@@ -84,7 +84,7 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 <br>
 
 <!-- Show entry information -->
-<h3 class="user">User entries</h3>
+<h3 class="user" style="font-style: normal; font-weight: 300; color: #001F3F;">User entries</h3>
 
 <?php if (mysqli_num_rows($entry_result) < 1) {
 	?>
@@ -97,13 +97,13 @@ if($loggedin && $active && ($adminpage_owner || $userpage_owner_or_admin)) { ?>
 	<!-- Create table -->
 	<table class="user_entries">
 		<tr>
-			<th>Entry ID</th>
-			<th>Strain</th>
-			<th>Backbone</th>
-			<th>Inserts</th>
-			<th>Year created</th>
-			<th>iGEM Registry</th>
-			<th>Comment</th>
+			<th class="columns" >Entry ID</th>
+			<th class="columns">Strain</th>
+			<th class="columns">Backbone</th>
+			<th class="columns">Inserts</th>
+			<th class="columns">Year created</th>
+			<th class="columns">iGEM Registry</th>
+			<th class="columns">Comment</th>
 		</tr>
 	
 		<?php // Fill table with one entry at a time
