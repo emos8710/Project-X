@@ -330,7 +330,7 @@ if (isset($_GET['content'])) {
                 $("#dynamic").append('<tr id="row' + i + '">\n\
                 <td class="type"><select class="insert" name="insert_type[]" id="Ins_type"><option value="">Select insert type</option>\n\
                 <?php echo load_ins_type(); ?></select></td>\n\
-                <td class="name"><select class="insert" name="ins[]" id ="Ins"><option value="">\n\
+                <td class="name"><select class="insert" name="ins[]" id ="Ins_name"><option value="">\n\
                 Select insert name</option><?php echo load_ins_name(); ?></select></td>\n\
                 <td><button type="button" name="remove" id="' + i + '" class="btn_remove">Remove insert</button></td></tr>');
                 i++;
@@ -377,15 +377,13 @@ if (isset($_GET['content'])) {
         });
     });
 </script>
-
-<?php /*
- * // Unfinished
+<?php
+/*
 <script>
-    
     $(document).ready(function () {
             var type_values = new Array(); 
-        $("#dynamic").change(function () {
-            $('.Ins_type option:selected').each(function(i,selected) {
+        $("#Ins_type").change(function () {
+            $('#Ins_type option:selected').each(function(i,selected) {
                 type_values[i] = $(selected).val(); 
             });
             
@@ -399,7 +397,6 @@ if (isset($_GET['content'])) {
                 data: {type_val: type_values},
                 success: function (data) {
                     //$("#test").html(data); 
-                    
                     $("#Ins_name").html(data);
                 }
             });
@@ -407,11 +404,9 @@ if (isset($_GET['content'])) {
         
       
     });
-
 </script>
  * 
  */
-?>
-
+    ?>
 
 <?php include 'bottom.php'; ?>
