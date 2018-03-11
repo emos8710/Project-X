@@ -10,7 +10,34 @@ $current_url = "control_panel.php?content=manage_strain_backbone";
 <?php
 // Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']) && isset($_POST['what'])) {
-    
+    include 'scripts/db.php';
+    ?>
+    <p>
+        <?php
+        if ($_POST['what'] === "strain") {
+            $id = mysqli_real_escape_string($link, $_POST['delete']);
+            if (!mysqli_query($link, "DELETE FROM strain WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: cannot remove strain (probably used in entries).</strong>";
+            else: $msg = "<strong style=\"color:green\">Strain successfully removed!</strong>";
+            endif;
+
+            echo $msg;
+        } else if ($_POST['what'] === "backbone") {
+            $id = mysqli_real_escape_string($link, $_POST['delete']);
+            if (!mysqli_query($link, "DELETE FROM backbone WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: Cannot remove backbone (probably used in entries).</strong>";
+            else: $msg = "<strong style=\"color:green\">Backbone successfully removed!</strong>";
+            endif;
+
+            echo $msg;
+        } else {
+            echo "This should never happen";
+        }
+
+        mysqli_close($link) or die("Could not close database connection");
+        ?>
+        <br>
+        Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
+    </p>
+    <?php
 }
 
 /* Fetch data from database */
