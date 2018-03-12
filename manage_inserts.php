@@ -5,7 +5,7 @@ if (count(get_included_files()) == 1) // Prevent direct access
 $current_url = "control_panel.php?content=manage_inserts";
 ?>
 
-<h3>Manage inserts</h3>
+<h3 class="manage_inserts" style="text-align: left; font-style: normal; font-weight: 300; color: #001F3F;">Manage inserts</h3>
 
 <?php
 // Handle POST requests
@@ -62,7 +62,7 @@ mysqli_close($link) or die("Could not close database connection");
 
 <!-- Display insert types -->
 <p>
-<h4>Insert types</h4>
+<h4 class="manage_inserts"style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Insert types</h4>
 <?php
 if (mysqli_num_rows($typequery) < 1) {
     ?>
@@ -71,12 +71,12 @@ if (mysqli_num_rows($typequery) < 1) {
 } else {
     ?>
     <table class="control-panel-instypes">
-        <col><col><col><col><col>
+        <col><col><col><col>
         <thead>
             <tr>
                 <th>ID</th>
                 <th>Name</th>
-                <th colspan="3">Actions</th>
+                <th colspan="2">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -86,13 +86,6 @@ if (mysqli_num_rows($typequery) < 1) {
                 <tr>
                     <td><?php echo $row['id']; ?></td>
                     <td><?php echo $row['name']; ?></td>
-                    <td>
-                        <form class="control-panel" action="#" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
-                            <input type="hidden" name="edit">
-                            <button class="control-panel-edit" title="Edit insert type" type="submit"/>
-                        </form>
-                    </td>
                     <td>
                         <form class="control-panel" action="<?php echo $current_url; ?>" method="GET">
                             <input type="hidden" name="content" value="manage_inserts">
@@ -121,7 +114,7 @@ if (mysqli_num_rows($typequery) < 1) {
 </p>
 <br>
 <p>
-<h4>Inserts</h4>
+<h4 class="manage_inserts"style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Inserts</h4>
 <?php
 if (mysqli_num_rows($insertquery) < 1) {
     ?>
@@ -134,13 +127,13 @@ if (mysqli_num_rows($insertquery) < 1) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Date added</th>
-                <th>iGEM Registry</th>
-                <th>Added by</th>
-                <th>Comment</th>
-                <th colspan="3">Actions</th>
+                <th style="min-width: 80px;">Name</th>
+                <th style="min-width: 80px;">Type</th>
+                <th style="min-width: 90px;">Date added</th>
+                <th style="min-width: 90px;">iGEM Registry</th>
+                <th style="min-width: 80px;">Added by</th>
+                <th style="min-width: 130px;">Comment</th>
+                <th style="min-width: 80px;" colspan="3">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -148,7 +141,7 @@ if (mysqli_num_rows($insertquery) < 1) {
             while ($row = mysqli_fetch_assoc($insertquery)) {
                 ?>
                 <tr>
-                    <td><a href="parts.php?ins_id=<?=$row['id'];?>"><?php echo $row['id']; ?></a></td>
+                    <td><a href="parts.php?ins_id=<?= $row['id']; ?>"><?php echo $row['id']; ?></a></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['type']; ?></td>
                     <td><?php echo $row['date']; ?></td>
@@ -156,8 +149,8 @@ if (mysqli_num_rows($insertquery) < 1) {
                     <td><a href="user.php?user_id=<?php echo $row['uid']; ?>"><?php echo $row['fname'] . " " . $row['lname']; ?></a></td>
                     <td><?php echo $row['comment']; ?></td>
                     <td>
-                        <form class="control-panel" action="#" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $row['id']; ?>">
+                        <form class="control-panel" action="parts.php" method="GET">
+                            <input type="hidden" name="ins_id" value="<?php echo $row['id']; ?>">
                             <input type="hidden" name="edit">
                             <button class="control-panel-edit" title="Edit insert" type="submit"/>
                         </form>

@@ -5,12 +5,39 @@ if (count(get_included_files()) == 1)
 $current_url = "control_panel.php?content=manage_strain_backbone";
 ?>
 
-<h3>Manage backbones & strains</h3>
+<h3 class="strainbackbone" style="text-align: left; font-style: normal; font-weight: 300; color: #001F3F;">Manage backbones & strains</h3>
 
 <?php
 // Handle POST requests
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']) && isset($_POST['what'])) {
-    
+    include 'scripts/db.php';
+    ?>
+    <p>
+        <?php
+        if ($_POST['what'] === "strain") {
+            $id = mysqli_real_escape_string($link, $_POST['delete']);
+            if (!mysqli_query($link, "DELETE FROM strain WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: cannot remove strain (probably used in entries).</strong>";
+            else: $msg = "<strong style=\"color:green\">Strain successfully removed!</strong>";
+            endif;
+
+            echo $msg;
+        } else if ($_POST['what'] === "backbone") {
+            $id = mysqli_real_escape_string($link, $_POST['delete']);
+            if (!mysqli_query($link, "DELETE FROM backbone WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: Cannot remove backbone (probably used in entries).</strong>";
+            else: $msg = "<strong style=\"color:green\">Backbone successfully removed!</strong>";
+            endif;
+
+            echo $msg;
+        } else {
+            echo "This should never happen";
+        }
+
+        mysqli_close($link) or die("Could not close database connection");
+        ?>
+        <br>
+        Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
+    </p>
+    <?php
 }
 
 /* Fetch data from database */
@@ -39,7 +66,7 @@ mysqli_close($link) or die("Could not close database connection");
 
 <!-- Display strains -->
 <p>
-<h4>Strains</h4>
+<h4 class="manage_strain_backbone" style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Strains</h4>
 <?php
 if (mysqli_num_rows($strainquery) < 1) {
     ?>
@@ -52,12 +79,12 @@ if (mysqli_num_rows($strainquery) < 1) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Date added</th>
-                <th>Added by</th>
-                <th>Comment</th>
-                <th>Private</th>
-                <th colspan="3">Actions</th>
+                <th style="min-width: 80px;">Name</th>
+                <th style="min-width: 80px;">Date added</th>
+                <th style="min-width: 100px;">Added by</th>
+                <th style="min-width: 130px;">Comment</th>
+                <th style="min-width: 80px;">Private</th>
+                <th colspan="3" style="min-width: 80px;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -65,7 +92,7 @@ if (mysqli_num_rows($strainquery) < 1) {
             while ($row = mysqli_fetch_assoc($strainquery)) {
                 ?>
                 <tr>
-                    <td><a href="parts.php?strain_id=<?=$row['sid']?>"><?php echo $row['sid']; ?></a></td>
+                    <td><a href="parts.php?strain_id=<?= $row['sid'] ?>"><?php echo $row['sid']; ?></a></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['date']; ?></td>
                     <td><a href="user.php?user_id=<?php echo $row['uid']; ?>"><?php echo $row['fname'] . " " . $row['lname']; ?></a></td>
@@ -76,8 +103,8 @@ if (mysqli_num_rows($strainquery) < 1) {
                         endif;
                         ?></td>
                     <td>
-                        <form class="control-panel" action="#" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $row['sid']; ?>">
+                        <form class="control-panel" action="parts.php" method="GET">
+                            <input type="hidden" name="strain_id" value="<?php echo $row['sid']; ?>">
                             <input type="hidden" name="edit">
                             <button class="control-panel-edit" title="Edit strain" type="submit"/>
                         </form>
@@ -110,7 +137,7 @@ if (mysqli_num_rows($strainquery) < 1) {
 </p>
 <br>
 <p>
-<h4>Backbones</h4>
+<h4 class="manage_strain_backbone" style="text-align: left; font-weight: 200; font-style: italic; font-size: 18px;">Backbones</h4>
 <?php
 if (mysqli_num_rows($backbonequery) < 1) {
     ?>
@@ -123,13 +150,13 @@ if (mysqli_num_rows($backbonequery) < 1) {
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>iGEM Registry</th>
-                <th>Date added</th>
-                <th>Added by</th>
-                <th>Comment</th>
-                <th>Private</th>
-                <th colspan="3">Actions</th>
+                <th style="min-width: 80px;">Name</th>
+                <th style="min-width: 80px;">iGEM Registry</th>
+                <th style="min-width: 80px;">Date added</th>
+                <th style="min-width: 100px;">Added by</th>
+                <th style="min-width: 130px;">Comment</th>
+                <th style="min-width: 80px;">Private</th>
+                <th colspan="3" style="min-width: 80px;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -137,7 +164,7 @@ if (mysqli_num_rows($backbonequery) < 1) {
             while ($row = mysqli_fetch_assoc($backbonequery)) {
                 ?>
                 <tr>
-                    <td><a href="parts.php?backbone_id=<?=$row['bid']?>"><?php echo $row['bid']; ?></a></td>
+                    <td><a href="parts.php?backbone_id=<?= $row['bid'] ?>"><?php echo $row['bid']; ?></a></td>
                     <td><?php echo $row['name']; ?></td>
                     <td><?php echo $row['biobrick']; ?></td>
                     <td><?php echo $row['date']; ?></td>
@@ -149,8 +176,8 @@ if (mysqli_num_rows($backbonequery) < 1) {
                         endif;
                         ?></td>
                     <td>
-                        <form class="control-panel" action="#" method="GET">
-                            <input type="hidden" name="id" value="<?php echo $row['bid']; ?>">
+                        <form class="control-panel" action="parts.php" method="GET">
+                            <input type="hidden" name="backbone_id" value="<?php echo $row['bid']; ?>">
                             <input type="hidden" name="edit">
                             <button class="control-panel-edit" title="Edit backbone" type="submsit"/>
                         </form>

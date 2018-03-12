@@ -102,7 +102,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             for ($i = 1; $i < $num_lines; $i++) {
                                 $seq .= $lines[$i];
                             }
-
                             if ($firstc == '>' && preg_match("/^[ATCGatcg*\-\s]+$/", $seq)) {
                                 if (!file_exists($path)) {
                                     if (move_uploaded_file($_FILES['my_file']['tmp_name'], $path)) {

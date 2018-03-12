@@ -33,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         $_SESSION['message'] = "You are blocked due to too many login attempts. Please try again in 5 minutes."
                 . "<br>"
                 . "Note: 5 minute timer will reset if you attempt to login again.";
-        
+
         mysqli_close($link) or die("Could not close database connection");
-        
+
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // The error message is sent to error.php
         exit();
     } else {
@@ -47,9 +47,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
         // If $result contains no rows then the user does not exist
         if ($result->num_rows == 0) {
             $_SESSION['message'] = "The user does not exist! Try again or register.";
-            
+
             mysqli_close($link) or die("Could not close database connection");
-            
+
             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // The error message is sent to error.php
             exit();
         }
@@ -73,17 +73,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                 if ($_SESSION['active'] == false) {
                     $_SESSION['message'] = "Your account is inactive. You will able to log in when the administrator has verified your account.";
                     $_SESSION['logged_in'] = false;
-                    
+
                     mysqli_close($link) or die("Could not close database connection");
-                    
+
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                     exit();
                 } else if ($_SESSION['active'] == true) {
                     // The session is set to logged in
                     $_SESSION['logged_in'] = true;
-                    
+
                     mysqli_close($link) or die("Could not close database connection");
-                    
+
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "index.php");
                     exit();
                 }
@@ -98,9 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
                 $_SESSION['message'] = "The password you entered is incorrect! Try again or reset your password."
                         . "<br>"
                         . "Remaining attempts: $remaining";
-                
+
                 mysqli_close($link) or die("Could not close database connection");
-                
+
                 header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                 exit();
             }

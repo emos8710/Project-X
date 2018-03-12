@@ -156,12 +156,12 @@ if (isset($_GET["ins_id"])) {
                     <tr>
                         <td><strong>iGEM registry entry:</strong></td>
                         <td><?php
-            if ($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == '') {
-                echo "N/A";
-            } else {
-                echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $backbonedata["biobrick"] . "\" target=\"_blank\">" . $backbonedata["biobrick"] . "</a>";
-            }
-            ?></td>
+                            if ($backbonedata["biobrick"] === null || $backbonedata["biobrick"] == '') {
+                                echo "N/A";
+                            } else {
+                                echo "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $backbonedata["biobrick"] . "\" target=\"_blank\">" . $backbonedata["biobrick"] . "</a>";
+                            }
+                            ?></td>
                     </tr>
                     <tr>
                         <td><strong>Added by:</strong></td>

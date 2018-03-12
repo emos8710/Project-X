@@ -15,7 +15,7 @@ mysqli_close($link) or die("Could not close connection to database");
 $current_url = "control_panel.php?content=manage_users";
 ?>
 
-<h3>Manage users</h3>
+<h3 class="user" style="font-style: normal; font-weight: 300; color: #001F3F;">Manage users</h3>
 
 <?php
 // Handle POST requests
@@ -92,13 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && (isset($_POST['delete']) || isset($_
     <table class="control-panel-users">
         <col><col><col><col><col><col><col><col><col><col><col>
         <tr>
-            <th>User ID</th>
-            <th>Username</th>
-            <th>Name</th>
-            <th>E-mail address</th>
-            <th>Phone number</th>
-            <th>User level</th>
-            <th colspan="4">Actions</th>
+            <th class="manage_users">User ID</th>
+            <th class="manage_users" style="min-width: 100px;">Username</th>
+            <th class="manage_users" style="min-width: 100px;">Name</th>
+            <th class="manage_users" style="min-width: 100px;">E-mail address</th>
+            <th class="manage_users" style="min-width: 100px;">Phone number</th>
+            <th class="manage_users" style="min-width: 100px;">User level</th>
+            <th colspan="4"  class="manage_users" style="min-width: 100px;">Actions</th>
         </tr>
 
         <?php

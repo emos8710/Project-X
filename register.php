@@ -10,7 +10,7 @@ function test_input($string) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
     /* Registration process */
-    
+
     require 'scripts/db.php';
 
     /* reCAPTCHA */
@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
 // If the reCAPTCHA failed, throw an error
     if ($captcha_success->success == false) {
         $_SESSION['message'] = 'reCAPTCHA failed. Are you a bot?';
-        
+
         mysqli_close($link) or die("Could not close database connection");
 
         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // An error message is sent to error.php
@@ -72,9 +72,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                 if ($result->num_rows != 0) {
                     $_SESSION['message'] = 'The email is already registered to another user. 
 									Have you forgotten the password? - Click on Reset Password.';
-                    
+
                     mysqli_close($link) or die("Could not close database connection");
-                    
+
                     header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // An error message is sent to error.php
                     exit();
                 }
@@ -84,9 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                     if ($username != $_POST['username']) {
                         $_SESSION['message'] = 'The username contains invalid characters! 
 											Choose another username!';
-                        
+
                         mysqli_close($link) or die("Could not close database connection");
-                        
+
                         header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                         exit();
                     }
@@ -98,9 +98,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                         // If the query returns more than one row, the username is taken.
                         if ($result->num_rows != 0) {
                             $_SESSION['message'] = 'The username is taken by another user. Please choose another username.';
-                            
+
                             mysqli_close($link) or die("Could not close database connection");
-                            
+
                             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php"); // An error message is sent
                             exit();
                         }
@@ -128,18 +128,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                                         . ' http://localhost/verify.php?email=' . $email . '&hash=' . $hash;
 
                                 mail($to, $subject, $message_body);
-                                
+
                                 mysqli_close($link) or die("Could not close database connection");
-                                
+
                                 header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "profile.php");
                                 exit();
                             }
                             // If the insertion did not succeed, the registration has failed and an error message is shown
                             else {
                                 $_SESSION['message'] = 'The registration failed!';
-                                
+
                                 mysqli_close($link) or die("Could not close database connection");
-                                
+
                                 header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                                 exit();
                             }
@@ -148,17 +148,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
                 }
             } else {
                 $_SESSION['message'] = "The passwords do not match! Try again.";
-                
+
                 mysqli_close($link) or die("Could not close database connection");
-                
+
                 header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
                 exit();
             }
         } else {
             $_SESSION['message'] = "The entered password is too short. Please try again. The password must be at least 8 characters long!";
-            
+
             mysqli_close($link) or die("Could not close database connection");
-            
+
             header("Location: http://" . $_SERVER['HTTP_HOST'] . rtrim(dirname($_SERVER['PHP_SELF']), '/\\') . "/" . "error.php");
             exit();
         }

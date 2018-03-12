@@ -39,7 +39,6 @@ $check_pos = mysqli_fetch_assoc(mysqli_query($link, "SELECT max(position) AS max
         mysqli_query($link, $move_sql);
         mysqli_query($link, $add_sql);
         $commit = mysqli_commit($link);
-
         ?>
         <?php
         if (!$commit) {
