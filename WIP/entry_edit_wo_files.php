@@ -24,6 +24,7 @@ if ($loggedin && $active && $admin) {
         include 'scripts/db.php';
 
         $iserror = FALSE;
+
         // Change registry ID
         if (isset($_POST['biobrick']) && $_POST['biobrick'] != "") {
             $to_update = "entry_reg";
@@ -102,66 +103,7 @@ if ($loggedin && $active && $admin) {
                 $iserror = TRUE;
                 $update_msg = "Couldn't update add insert, failed to prepare statement. " . mysqli_stmt_error($stmt);
             }
-            //Edit file
-        } else if (is_uploaded_file($_FILES['my_file']['tmp_name'])) {
-            if ($_FILES['my_file']['error'] == 0) {
-                include 'scripts/db.php';
 
-                $old = mysqli_query($link, "SELECT name_new AS file FROM upstrain_file WHERE upstrain_id = (SELECT upstrain_id FROM entry_upstrain "
-                        . "WHERE entry_id = '$entry_id');");
-
-                $old_file = mysqli_fetch_array($old)[0];
-                $new_file = $_FILES['my_file']['name'];
-
-                $path = "files/" . $id . ".fasta";
-                $lines = file($_FILES['my_file']['tmp_name']);
-                $n_lines = count($lines);
-
-                if ($n_lines < 2) {
-                    $iserror = TRUE;
-                    $update_msg = "Uploaded file has no sequence data!";
-                    goto errorTime;
-                } else {
-                    $header = trim($lines[0]);
-                    $first_char = $header[0];
-                    $seq = "";
-                    for ($i = 1; $i < $n_lines; $i++) {
-                        $seq .= $lines[$i];
-                    }
-                    if ($first_char === '>' && preg_match("/^[ATCGatcg*\-\s]+$/", $seq)) {
-                        if (file_exists($path)) {
-                            $delete = unlink($path);
-                            if (!$delete) {
-                                $iserror = TRUE;
-                                $update_msg = "Failed to remove old sequence file.";
-                                goto errorTime;
-                            }
-                        }
-                        if (move_uploaded_file($_FILES['my_file']['tmp_name'], $path)) {
-                            $edit_sql = "UPDATE upstrain_file SET name_original = '$new_file' WHERE upstrain_id = '$id'";
-                            if (mysqli_query($link, $edit_sql)) {
-                                $update_msg = "Sequence file successfully updated!";
-                            } else {
-                                $iserror = TRUE;
-                                $update_msg = "Couldn't update database file info. " . mysqli_error($link);
-                                goto errorTime;
-                            }
-                        } else {
-                            $iserror = TRUE;
-                            $update_msg = "Failed to upload new file!";
-                            goto errorTime;
-                        }
-                    } else {
-                        $iserror = TRUE;
-                        $update_msg = "The specified file has an invalid format (FASTA files only!)";
-                        goto errorTime;
-                    }
-                }
-            } else {
-                $iserror = TRUE;
-                $update_msg = "File upload error. " . $_FILES['my_file']['error'];
-                goto errorTime;
-            }
             // Change comment
         } else if (isset($_POST['comment']) && !empty($_POST['comment'])) {
             $to_update = "comment";
@@ -185,11 +127,9 @@ if ($loggedin && $active && $admin) {
             $user_input = test_input($_POST['private']);
             $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "privacy setting";
-            // Change file
         }
 
-
-        // Execute changes
+        // Execute the change of registry link, strain, backbone or comment
         if (isset($update_val) && $update_val != "" && !$iserror) {
             // Check if user input invalid characters
             if ($update_val != $user_input && $update_name != $user_input) {
@@ -238,12 +178,6 @@ if ($loggedin && $active && $admin) {
             . "WHERE entry_inserts.entry_id = '$entry_id' AND entry_inserts.insert_id = ins.id AND ins.type = ins_type.id "
             . "ORDER BY entry_inserts.position";
     $insert_result = mysqli_query($link, $insert_sql);
-
-    // Fetch sequence file
-    $file_sql = "SELECT name_new AS file, upstrain_id AS uid FROM upstrain_file WHERE upstrain_id = (SELECT upstrain_id FROM entry_upstrain "
-            . "WHERE entry_id = '$entry_id')";
-    $file_result = mysqli_query($link, $file_sql);
-    $file_info = mysqli_fetch_assoc($file_result);
 
     mysqli_close($link);
     ?>
@@ -505,13 +439,12 @@ if ($loggedin && $active && $admin) {
     <?php } ?>
     </td>
     </tr>
+
     <!-- Edit comment -->
     <tr class="edit_entry">
         <th class="title">Comment:</th> 
         <td class="info"> 
-            <?php
-            echo $entry_info["comment"];
-            ?>
+            <?php echo $entry_info["comment"]; ?>
         </td>
         <td>
             <?php
@@ -519,7 +452,8 @@ if ($loggedin && $active && $admin) {
                 ?>
                 <a href="?upstrain_id=<?php echo $id; ?>&edit&content=comment">Edit</a>
                 <?php
-            } else {
+            }
+            if ($current_content == "comment") {
                 include 'scripts/db.php';
                 $sql_comment = mysqli_query($link, "SELECT comment FROM entry WHERE id = '$entry_id'");
                 $old_comment = mysqli_fetch_array($sql_comment)[0];
@@ -544,69 +478,9 @@ if ($loggedin && $active && $admin) {
                     </form>
         </tr>
         </table>
-        <?php
-    }
-    ?>
-    </td>
-    </tr>
+    <?php } ?>
 
-    <!-- Edit file -->
-    <tr class="edit_entry">
-        <th class="title"> Sequence file: </th>
-        <?php
-        if (mysqli_num_rows($file_result) < 1 || !file_exists("files/" . $id . ".fasta")) {
-            ?>
-            <td class="info">
-                No file uploaded
-            </td>
-            <td>
-                <?php
-                if ($current_content != "file") {
-                    ?>
-                    <a href="<?= $_SERVER['PHP_SELF'] ?>?upstrain_id=<?= $id ?>&edit&content=file">Edit</a>
-                    <?php
-                } else {
-                    ?>
-                    <table class="mini-table">
-                        <tr class="mini-table">
-                        <form class="edit-entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST" enctype="multipart/form-data">
-                            <td class="mini-table">
-                                <label class="edit_entry" style="font-size: 14px; font-style: normal; padding: 0px;">
-                                    Upload new file
-                                </label>
-                            </td>
-                            <td class="mini-table">
-                                <input class="edit_entry_button" type="file" name="my_file" id="my_file" style="border: 1px solid #001F3F; border-radius: 5px" required>
-                            </td>
-                            <td class="mini-table">
-                                <input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px;" onclick="confirmAction(event, 'Really want to replace the sequence? The old file will be deleted!')">
-                            </td>
-                            <td class="mini-table">
-                                <a style="float:right; margin-left: 2px;" href="?upstrain_id=<?php echo $id; ?>&edit">Cancel</a>
-                            </td>
-                        </form>
-            </tr>
-            </table>
-            <?php
-        }
-        ?>
-        </td>
-        <?php
-    } else {
-        ?>
-        <td class="info"><a href="files/<?php echo $file_info['file']; ?>" download><?php echo $file_info['file']; ?></a></td>
-        <td>
-            <?php
-            if ($current_content != "file") {
-                ?>
-                <a href="<?= $_SERVER['PHP_SELF'] ?>?upstrain_id=<?= $id ?>&edit&content=file">Add</a>
-                <?php
-            }
-            ?>
-        </td>
-        <?php
-    }
-    ?>
+    </td>
     </tr>
 
     <!-- Edit year created -->
@@ -620,8 +494,8 @@ if ($loggedin && $active && $admin) {
             if ($current_content != "year_created") {
                 ?>
                 <a href="?upstrain_id=<?php echo $id; ?>&edit&content=year_created">Edit</a>
-            <?php } else {
-                ?>
+            <?php } ?></li>
+            <?php if ($current_content == "year_created") { ?>
                 <table class="mini-table">
                     <tr class="mini-table">
                     <form class="edit_entry" action="entry.php?upstrain_id=<?php echo $id; ?>&edit" method="POST">
@@ -640,9 +514,7 @@ if ($loggedin && $active && $admin) {
                     </form>	
         </tr>
         </table>
-        <?php
-    }
-    ?>
+    <?php } ?>
     </td>
     </tr>
 
@@ -751,9 +623,4 @@ if ($loggedin && $active && $admin) {
 
         });
     });
-
-    function confirmAction(e, msg) {
-        if (!confirm(msg))
-            e.preventDefault();
-    }
 </script>

@@ -36,8 +36,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
         $id = mysqli_real_escape_string($link, $entry_id);
         $check_file = mysqli_query($link, "SELECT * from upstrain_file WHERE upstrain_id = (SELECT upstrain_id FROM entry_upstrain WHERE entry_id = '$id');");
         $deletesql = "DELETE FROM entry WHERE id = " . $entry_id;
-        if (mysqli_num_rows($check_file) >= 1) {
-            $file_delete = unlink("files/" . mysqli_fetch_assoc($check_file)['name_new']);
+        $filename = mysqli_fetch_assoc($check_file)['name_new'];
+        if (mysqli_num_rows($check_file) >= 1 && file_exists("files/" . $filename)) {
+            $file_delete = unlink("files/" . $filename);
         }
         if (isset($file_delete) && !$file_delete): $delete_msg = "<strong style=\"color:red\">Could not delete this entry's sequence file</strong>";
         elseif (!mysqli_query($link, $deletesql)): $delete_msg = "<strong style=\"color:red\">Database error: " . mysqli_error($link) . "</strong>";

@@ -185,7 +185,7 @@ if ($error) {
                             ?></td>
                         <td>
                             <?php
-                            if ($hasfile) {
+                            if ($hasfile && file_exists("files/" . $id . ".fasta")) {
                                 ?>
                                 <a class="download" href="files/<?php echo $filedata["filename"]; ?>"  download><?php echo $filedata["filename"] ?></a>
                                 <?php

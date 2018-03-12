@@ -103,7 +103,7 @@ if ($loggedin && $active && $admin) {
                 $update_msg = "Couldn't update add insert, failed to prepare statement. " . mysqli_stmt_error($stmt);
             }
             //Edit file
-        } else if (isset($_POST['my_file']) && !empty($_POST['my_file'])) {
+        } else if (isset($_POST['my_file'])) {
             if (is_uploaded_file($_FILES['my_file']['tmp_name']) && $_FILES['my_file']['error'] == 0) {
                 include 'scripts/db.php';
 
@@ -554,7 +554,7 @@ if ($loggedin && $active && $admin) {
     <tr class="edit_entry">
         <th class="title"> Sequence file: </th>
         <?php
-        if (mysqli_num_rows($file_result) < 1) {
+        if (mysqli_num_rows($file_result) < 1 && !file_exists("files/" . $id . ".fasta")) {
             ?>
             <td class="info">
                 No file uploaded
