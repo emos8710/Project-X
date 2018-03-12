@@ -17,9 +17,10 @@ body {
 }
 
 main {
+    width: 100%;
+    overflow-x: hidden;
     margin-top: 68px;
     overflow-y: auto;
-    width: 100%;
     float: left;
     background: #E1F5FE;  /* Changed */
 	min-height: 400px;
@@ -394,6 +395,7 @@ footer a {
 /* ---------- DIVS ---------- */
 /* Innertube */
 div.innertube {
+    width: 95%;
     padding: 15px;
 }
 
