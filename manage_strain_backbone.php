@@ -114,7 +114,7 @@ if (mysqli_num_rows($strainquery) < 1) {
                             <input type="hidden" name="content" value="manage_strain_backbone">
                             <input type="hidden" name="history" value="strain">
                             <input type="hidden" name="id" value="<?php echo $row['sid']; ?>">
-                            <button class="control-panel-history" title="View insert type history" type="submit"/>
+                            <button class="control-panel-history" title="View strain history" type="submit"/>
                         </form>
                     </td>
                     <td>
@@ -179,7 +179,7 @@ if (mysqli_num_rows($backbonequery) < 1) {
                         <form class="control-panel" action="parts.php" method="GET">
                             <input type="hidden" name="backbone_id" value="<?php echo $row['bid']; ?>">
                             <input type="hidden" name="edit">
-                            <button class="control-panel-edit" title="Edit backbone" type="submit"/>
+                            <button class="control-panel-edit" title="Edit backbone" type="submsit"/>
                         </form>
                     </td>
                     <td>
@@ -187,7 +187,7 @@ if (mysqli_num_rows($backbonequery) < 1) {
                             <input type="hidden" name="content" value="manage_strain_backbone">
                             <input type="hidden" name="history" value="backbone">
                             <input type="hidden" name="id" value="<?php echo $row['bid']; ?>">
-                            <button class="control-panel-history" title="View insert type history" type="submit"/>
+                            <button class="control-panel-history" title="View backbone history" type="submit"/>
                         </form>
                     </td>
                     <td>
