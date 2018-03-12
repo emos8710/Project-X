@@ -82,7 +82,7 @@ if ($error) {
     $backbonedata = mysqli_fetch_assoc($backbonequery);
     $straindata = mysqli_fetch_assoc($strainquery);
     ?>
-    <h2>UpStrain Entry <?php echo $entrydata['uid']; ?></h2>
+    <h3 class="entry_show" style="text-align: left; font-style: normal; font-weight: 300; color: #001F3F;">UpStrain Entry <?php echo $entrydata['uid']; ?></h2>
 
     <?php
     if ($loggedin && $active && $admin) {
@@ -120,7 +120,7 @@ if ($error) {
                 <col><col>
                 <thead>
                     <tr>    
-                        <th colspan="2"> Entry details</th>
+                        <th colspan="2" style="text-align: left; font-style: normal; font-weight: 400; color: #001F3F;"> Entry details</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -196,12 +196,14 @@ if ($error) {
                 </tbody>
             </table>
         </div>
+		<div class="clear"></div>
+		<br>
         <div class="backbone_strain_table">
-            <table class="strain">
+            <table class="strain" style="margin-right: 80px; margin-top: 40px;">
                 <col><col>
                 <thead>
                     <tr>
-                        <th colspan="2"><a href="parts.php?strain_id=<?php echo $straindata['sid']; ?>">Strain</a></th>
+                        <th colspan="2" style="font-style: normal; font-weight: 300px;"><a href="parts.php?strain_id=<?php echo $straindata['sid']; ?>">Strain</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -223,7 +225,7 @@ if ($error) {
                 <col><col>
                 <thead>
                     <tr>
-                        <th colspan="2"><a href="parts.php?backbone_id=<?php echo $backbonedata['bid']; ?>">Backbone</a></th>
+                        <th colspan="2" style="font-style: normal; font-weight: 300px;"><a href="parts.php?backbone_id=<?php echo $backbonedata['bid']; ?>">Backbone</a></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -265,7 +267,7 @@ if ($error) {
                     <col><col>
                     <thead>
                         <tr>
-                            <th colspan="2"><a href="parts.php?ins_id=<?php echo $inserts[$i]['id']; ?>"> Insert <?php echo $i + 1; ?></a></th>
+                            <th colspan="2" style="font-style: normal;font-weight: 300px;"><a href="parts.php?ins_id=<?php echo $inserts[$i]['id']; ?>"> Insert <?php echo $i + 1; ?></a></th>
                         </tr>
                     </thead>
                     <tr>

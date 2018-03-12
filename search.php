@@ -284,7 +284,7 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
-                    echo "<table>";
+                    echo "<table class=\"search_results\">";
                     echo "<tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
                     . "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM Registry</th>"
                     . "<th>Creator</th><th>Added date</th><th>Comment</th></tr>";
@@ -444,7 +444,7 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
-                    echo "<table>";
+                    echo "<table class=\"search_results\">";
                     echo "<tr><th>User ID</th><th>Username</th><th>First Name</th>"
                     . "<th>Last Name</th><th>Phone number</th><th>Email address</th></tr>";
 
@@ -636,7 +636,7 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
-                    echo "<table>";
+                    echo "<table class=\"search_results\">";
                     echo "<tr><th>Insert ID</th><th>Insert Name</th><th>Insert Type</th>"
                     . "<th>Biobrick registry ID</th><th>Date added</th>"
                     . "<th>Creator</th><th>Comment</th></tr>";

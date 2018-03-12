@@ -82,7 +82,7 @@ h2.search_etc {
 	font-weight: 100;
 }
 
-h3.help, h3.home, h3.user, h3.entries, h3.manage_inserts, h3.strainbackbone, h3.event-log {
+h3.help, h3.home, h3.user, h3.entries, h3.manage_inserts, h3.strainbackbone, h3.event-log, h3.entry_show {
     text-align: center;
     font-size: 25px; 
     margin-top: 10px; 
@@ -211,7 +211,7 @@ table.user_entries {
 
 
 
-table.user_entries tr th.columns, table.control-panel-users tr th.manage_users, table.control-panel-entries tr th.manage_entries, table.control-panel-instypes thead tr th, table.control-panel-inserts thead tr th, table.control-panel-strains thead tr th, table.control-panel-backbones thead tr th, table.control-panel-log tr th {
+table.user_entries tr th.columns, table.control-panel-users tr th.manage_users, table.control-panel-entries tr th.manage_entries, table.control-panel-instypes thead tr th, table.control-panel-inserts thead tr th, table.control-panel-strains thead tr th, table.control-panel-backbones thead tr th, table.control-panel-log tr th, table.search_results tr th, table.entry thead tr th, table.strain thead tr th, table.insert thead tr th, table.backbone tr th {
 	margin-left: 15px;
 	margin-right: 12px;
 	color: #001F3F;
@@ -221,7 +221,7 @@ table.user_entries tr th.columns, table.control-panel-users tr th.manage_users, 
 	min-width: 40px;
 }
 
-table.user_entries tr td,table.control-panel-users tr td, table.control-panel-entries tr td, table.control-panel-instypes tbody tr td, table.control-panel-inserts tbody tr td, table.control-panel-strains tbody tr td, table.control-panel-backbones tbody tr td, table.control-panel-log tr td {
+table.user_entries tr td,table.control-panel-users tr td, table.control-panel-entries tr td, table.control-panel-instypes tbody tr td, table.control-panel-inserts tbody tr td, table.control-panel-strains tbody tr td, table.control-panel-backbones tbody tr td, table.control-panel-log tr td, table.search_results tr td, table.entry tbody td, table.strain tbody tr td, table.insert tbody tr td,  table.backbone tr td {
 	margin-left: 15px;
 	margin-right: 12px;
 	color: #001F3F;
@@ -230,11 +230,11 @@ table.user_entries tr td,table.control-panel-users tr td, table.control-panel-en
 	text-align: left;
 }
 
-table.user_entries tr a, table.control-panel-users tr a, table.control-panel-entries tr a, table.control-panel-instypes tbody tr a, table.control-panel-inserts tbody tr a, table.control-panel-strains tbody tr a, table.control-panel-backbones tbody tr a, table.control-panel-log tr a {
+table.user_entries tr a, table.control-panel-users tr a, table.control-panel-entries tr a, table.control-panel-instypes tbody tr a, table.control-panel-inserts tbody tr a, table.control-panel-strains tbody tr a, table.control-panel-backbones tbody tr a, table.control-panel-log tr a, table.search_results tr a, table.entry tbody a, table.strain tbody a, table.insert tbody a,  table.backbone tr a, table.strain thead tr th a, table.backbone thead tr th a, table.insert thead tr th a   {
 	color: #001F3F;
 }
 
-table.user_entries tr a:hover,table.control-panel-users tr a:hover,table.control-panel-entries tr a:hover, table.control-panel-instypes tbody tr a:hover, table.control-panel-inserts tbody tr a:hover, table.control-panel-strains tbody tr a:hover, table.control-panel-backbones tbody tr a:hover, table.control-panel-log tr a:hover {
+table.user_entries tr a:hover,table.control-panel-users tr a:hover,table.control-panel-entries tr a:hover, table.control-panel-instypes tbody tr a:hover, table.control-panel-inserts tbody tr a:hover, table.control-panel-strains tbody tr a:hover, table.control-panel-backbones tbody tr a:hover, table.control-panel-log tr a:hover, table.search_results tr a:hover, table.entry tbody a:hover, table.strain tbody a:hover, table.insert tbody a:hover,  table.backbone tr a:hover, table.strain thead tr th a:hover, table.backbone thead tr th a:hover, table.insert thead tr th a:hover   {
 	color: #0074D9;
 }
 
