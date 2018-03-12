@@ -138,7 +138,13 @@ if ($loggedin && $active && $admin) {
                             }
                         }
                         if (move_uploaded_file($_FILES['my_file']['tmp_name'], $path)) {
-                            $edit_sql = "UPDATE upstrain_file SET name_original = '$new_file' WHERE upstrain_id = '$id'";
+                            $check_query = mysqli_query($link, "SELECT * FROM upstrain_file WHERE upstrain_id = '$id'");
+                            if (mysqli_num_rows($check_query) < 1) {
+                                $edit_sql = "INSERT INTO upstrain_file(upstrain_id, name_new, name_original) "
+                                        . "VALUES('$id', '$new_file', '$old_file')";
+                            } else {
+                                $edit_sql = "UPDATE upstrain_file SET name_original = '$new_file' WHERE upstrain_id = '$id'";
+                            }
                             if (mysqli_query($link, $edit_sql)) {
                                 $update_msg = "Sequence file successfully updated!";
                             } else {
@@ -174,13 +180,13 @@ if ($loggedin && $active && $admin) {
             $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "year created";
             // Change created
-        } else if (isset($_POST['created']) && !empty($_POST['created'])) {
+        } else if (isset($_POST['created']) && $_POST['created'] != "") {
             $to_update = "created";
             $user_input = test_input($_POST['created']);
             $update_val = mysqli_real_escape_string($link, $user_input);
             $update_msg = "creation status";
             // Change private
-        } else if (isset($_POST['private']) && !empty($_POST['private'])) {
+        } else if (isset($_POST['private']) && $_POST['private'] != "") {
             $to_update = "private";
             $user_input = test_input($_POST['private']);
             $update_val = mysqli_real_escape_string($link, $user_input);
@@ -563,7 +569,7 @@ if ($loggedin && $active && $admin) {
                 <?php
                 if ($current_content != "file") {
                     ?>
-                    <a href="<?= $_SERVER['PHP_SELF'] ?>?upstrain_id=<?= $id ?>&edit&content=file">Edit</a>
+                    <a href="<?= $_SERVER['PHP_SELF'] ?>?upstrain_id=<?= $id ?>&edit&content=file">Add file</a>
                     <?php
                 } else {
                     ?>
@@ -594,12 +600,12 @@ if ($loggedin && $active && $admin) {
         <?php
     } else {
         ?>
-        <td class="info"><a href="files/<?php echo $file_info['file']; ?>" download><?php echo $file_info['file']; ?></a></td>
+        <td class="info"><a class="download" href="files/<?php echo $file_info['file']; ?>" download><?php echo $file_info['file']; ?></a></td>
         <td>
             <?php
             if ($current_content != "file") {
                 ?>
-                <a href="<?= $_SERVER['PHP_SELF'] ?>?upstrain_id=<?= $id ?>&edit&content=file">Add</a>
+                <a href="<?= $_SERVER['PHP_SELF'] ?>?upstrain_id=<?= $id ?>&edit&content=file">Edit</a>
                 <?php
             }
             ?>
