@@ -122,7 +122,7 @@ if (mysqli_num_rows($strainquery) < 1) {
                             <input type="hidden" name="delete" value="<?php echo $row['sid']; ?>">
                             <input type="hidden" name="what" value="strain">
                             <input type="hidden" name="header" value="refresh">
-                            <button class="control-panel-delete" title="Delete strain" type="submit" onclick="confirmAction(event, 'Really delete this insert type?')"/>
+                            <button class="control-panel-delete" title="Delete strain" type="submit" onclick="confirmAction(event, 'Really delete this strain?')"/>
                         </form>
                     </td>
                 </tr>
@@ -195,7 +195,7 @@ if (mysqli_num_rows($backbonequery) < 1) {
                             <input type="hidden" name="delete" value="<?php echo $row['bid']; ?>">
                             <input type="hidden" name="what" value="backbone">
                             <input type="hidden" name="header" value="refresh">
-                            <button class="control-panel-delete" title="Delete backbone" type="submit" onclick="confirmAction(event, 'Really delete this insert type?')"/>
+                            <button class="control-panel-delete" title="Delete backbone" type="submit" onclick="confirmAction(event, 'Really delete this backbone?')"/>
                         </form>
                     </td>
                 </tr>

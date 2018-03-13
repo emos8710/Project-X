@@ -28,8 +28,6 @@ if ($loggedin && $active && $admin) {
     ?>
     <main>
         <div class="innertube">
-            <h2 class="search_etc">Control Panel</h2>
-
             <!-- Nav menu with links to display desired content -->
             <div class="control_panel_menu">
                 <ul>

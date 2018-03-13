@@ -43,15 +43,16 @@ function test_input($string) {
 
     <!--Scripts, meta tags, stylesheets, favicon, title-->
     <head>
-        <script src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
-        <script src='https://www.google.com/recaptcha/api.js'></script>
+        <script type="text/javascript" src = "https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js'></script>
         <meta name="msapplication-TileColor" content="#da532c">
         <meta name="theme-color" content="#ffffff">
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="css/upstrain.css">
-        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+        <link rel="stylesheet" type="text/css" href="css/upstrain.css">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+        <link rel="stylesheet" type="text/css" href="css/datatable.css">
         <link rel="apple-touch-icon" sizes="180x180" href="icons/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="icons/favicon-32x32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
@@ -136,7 +137,7 @@ function test_input($string) {
                     <!-- Quick search -->
                     <div class="quicksearch">
                         <form class="quicksearch" action="entry.php">
-                            <input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id"></input>
+                            <input class ="quicksearch" type="text" placeholder="Search UpStrain ID" name="upstrain_id" id="quicksearchfield"></input>
                             <button class="quicksearch" type="submit"><img class="quicksearch" src="images/search_button.png" alt="search-icon"></button>
                         </form>
                         <a class="quicksearch" href="search.php">Advanced search</a>
@@ -167,3 +168,11 @@ function test_input($string) {
             echo $loggedout_message;
         }
         ?>
+        <script>
+            $("#quicksearchfield").focus(function(e){
+                $("#quicksearchfield").attr("placeholder", "UUYYYYXXX");
+            });
+            $('#quicksearchfield').blur(function(e){
+                $("#quicksearchfield").attr("placeholder", "Search UpStrain ID");
+            });
+        </script>

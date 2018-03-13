@@ -1,6 +1,6 @@
 <?php
 /* Reset Password form */
-require '/scripts/db.php';
+require 'scripts/db.php';
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }

@@ -152,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete'])) {
                     <form class="control-panel" action="<?php echo $current_url; ?>" method="POST">
                         <input type="hidden" name="delete" value="<?php echo $row['eid']; ?>">
                         <input type="hidden" name="header" value="refresh">
-                        <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Delete entry <?= $row['eid'] ?>? THIS IS PERMANENT. To resotre deleted entry, you need to creata new one manually.')"/>
+                        <button type="submit" class="control-panel-delete" title="Delete entry" onclick="confirmAction(event, 'Delete entry <?= $row['eid'] ?>? THIS IS PERMANENT. To restore deleted entry, you need to create a new one manually.')"/>
                     </form>
                 </td>
             </tr>

@@ -206,8 +206,15 @@ if (isset($_GET['content'])) {
                 }
 
                 if (!empty($inserted_date_criteria)) {
-                    if (!preg_match('/^(?:19|20)[0-9]{2})-([0-9]{2})-([0-9]{2})/', $inserted_date_criteria)) {
-                        $ConditionArray[] = "t1.date_db = '$inserted_date_criteria'";
+                    if (preg_match('/^(?:19|20)([0-9]{2})-([0-9]{2})-([0-9]{2})/', $inserted_date_criteria)) {
+                        $date = new DateTime($inserted_date_criteria);
+                        $now = new DateTime();
+                        if ($date > $now) {
+                            $ischarvalid = FALSE;
+                            echo nl2br("\n \n Error: The specified 'Date inserted' is in the future.");
+                        } else {
+                            $ConditionArray[] = "t1.date_db = '$inserted_date_criteria'";
+                        }
                     } else {
                         $ischarvalid = FALSE;
                         echo nl2br("\n \n Error: Non-valid character usage for 'Date inserted'.");

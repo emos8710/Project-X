@@ -60,20 +60,16 @@ if (isset($_GET['content'])) {
             }
             ?>
 
-            <!-- <h2 class="search_etc">New Entry</h2> -->
-    <?php
-    if (isset($_SESSION['success']) && !empty($_SESSION['success'])) {
-        echo $_SESSION['success'];
-    } else if (isset($_SESSION['existing']) && !empty($_SESSION['existing'])) {
-        echo $_SESSION['existing'];
-    } else if (isset($_SESSION['error']) && !empty($_SESSION['error'])) {
-        echo $_SESSION['error'];
-    }
-
-    unset($_SESSION['error']);
-    unset($_SESSION['success']);
-    unset($_SESSION['existing']);
-    ?>
+            <?php
+            $msg_types = ['success', 'existing', 'errror'];
+            foreach ($msg_types as $type) {
+                if (isset($_SESSION[$type])) {
+                    echo $_SESSION[$type];
+                    unset($_SESSION[$type]);
+                    break;
+                }
+            }
+            ?>
             <div class="entry_nav">
                 <ul>
                     <li>
@@ -190,8 +186,8 @@ if (isset($_GET['content'])) {
                         </div>
 
                         <div class="checkbox">
-                            <label>This entry is created </label>
-                            <input class="checkbox" type="checkbox" name="created" value=1> 
+                            <label>This entry is is lab-made </label>
+                            <input class="checkbox" type="checkbox" name="created" value=1 checked> 
                         </div>
 
                         <button id="submit" type="submit" class="button" name="insert">Submit</button>
@@ -229,7 +225,7 @@ if (isset($_GET['content'])) {
                     <div class="new_backbone">
                         <div class="field-wrap-backbone">
                             <label>Backbone * </label>
-                            <input class="insert" type="text" name ="backbone" id="Backbone" placeholder="pSB#X#" pattern="pSB\d{1}[A-Z]{1}\d{1}" required/></input>
+                            <input class="insert" type="text" name ="backbone" id="Backbone" required/></input>
                             <br/>
                         </div>
 

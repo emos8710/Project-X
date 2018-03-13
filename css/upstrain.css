@@ -947,6 +947,7 @@ table.control-panel-log {
 div.panel-history-show {
     display: inline-block;
     margin-top: 30px;
+    max-width: 40%;
 }
 
 div.control-panel-show { /* Style for region where the desired content will be shown */

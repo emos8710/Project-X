@@ -13,10 +13,10 @@ include 'top.php';
         <div class="home">
             <img id="welcome" src="images/upstrain.png" alt="updatabase">
             <div class="clear"></div>
-            Upstrain is the plasmid database for the Uppsala iGEM association, where information is stored about
-            bacterial strains and their inserted plasmids. These plasmids subsuqently consist of certain backbones and
+            UpStrain is the plasmid database for the Uppsala iGEM association, where information is stored about 
+            bacterial strains and their inserted plasmids. These plasmids subsequently consist of certain backbones and
             specific insert sequence types, such as promotor or coding sequences. All this information about a certain
-            strain and its plasmids can thus be found in this database, an efficient and easy solution to keep track of
+            strain and its plasmids can thus be found in this database, an efficient and easy solution to keep track of 
             and reuse previous work.
         </div>
         <br>
