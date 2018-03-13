@@ -28,6 +28,7 @@ main {
 
 /* Navigation bar */
 nav {
+    z-index: 9999; /* To make it stay on top of everything */
     width: 100%;
     min-width: 1000px;
     position: fixed;

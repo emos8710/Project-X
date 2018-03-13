@@ -99,75 +99,90 @@ $entry = mysqli_fetch_assoc($entry_result);
     <?php } else {
         ?>
 
-        <!-- Create table -->
-        <table class="user_entries">
-            <tr>
-                <th class="columns" >Entry ID</th>
-                <th class="columns">Strain</th>
-                <th class="columns">Backbone</th>
-                <th class="columns">Inserts</th>
-                <th class="columns">Year created</th>
-                <th class="columns">iGEM Registry</th>
-                <th class="columns">Comment</th>
-            </tr>
+        <div style="display: block; margin-left:10%; margin-right: 10%;">
+            <!-- Create table -->
+            <table class="display" id="userentries">
+                <thead>
+                    <tr>
+                        <th>Entry ID</th>
+                        <th>Strain</th>
+                        <th>Backbone</th>
+                        <th>Inserts</th>
+                        <th>Year created</th>
+                        <th>iGEM Registry</th>
+                        <th>Comment</th>
+                        <th>Edit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php
+                    // Fill table with one entry at a time
+                    while ($entry) {
+                        if (($loggedin && $active) || $entry['private'] === '0') {
+                            $current_entry = $entry["eid"];
 
-            <?php
-            // Fill table with one entry at a time
-            while ($entry) {
-                if (($loggedin && $active) || $entry['private'] === '0') {
-                    $current_entry = $entry["eid"];
+                            // Part 1 of entry row with upstrain ID, strain and backbone
+                            $tpart_1 = "<tr>"
+                                    . "<td><a href=\"entry.php?upstrain_id=" . $entry["uid"] . "\">" . $entry["uid"] . "</a></td>"
+                                    . "<td><a href=\"parts.php?strain_id=" . $entry['sid'] . "\">" . $entry["sname"] . "</a></td>"
+                                    . "<td><a href=\"parts.php?backbone_id=" . $entry['bid'] . "\">" . $entry["bname"] . "</a></td>";
 
-                    // Part 1 of entry row with upstrain ID, strain and backbone
-                    $tpart_1 = "<tr>"
-                            . "<td><a href=\"entry.php?upstrain_id=" . $entry["uid"] . "\">" . $entry["uid"] . "</a></td>"
-                            . "<td><a href=\"parts.php?strain_id=" . $entry['sid'] . "\">" . $entry["sname"] . "</a></td>"
-                            . "<td><a href=\"parts.php?backbone_id=" . $entry['bid'] . "\">" . $entry["bname"] . "</a></td>";
+                            // Decide if user can edit entries
+                            if ($admin) {
+                                $edit = "<td>"
+                                        . "<a class=\"edit\" href=\"entry.php?upstrain_id=" . $entry["uid"] . "&edit\">Edit</a></td>";
+                            } else
+                                $edit = "";
 
-                    // Decide if user can edit entries
-                    if ($admin) {
-                        $edit = "<td style=\"border: none;\">"
-                                . "<a class=\"edit\" href=\"entry.php?upstrain_id=" . $entry["uid"] . "&edit=1\">Edit</a></td>";
-                    } else
-                        $edit = "";
+                            // Create biobrick registry link (or not)
+                            if ($entry["entry_reg"] === null || $entry["entry_reg"] == '') {
+                                $biobrick = "N/A";
+                            } else {
+                                $biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $entry["entry_reg"]
+                                        . "\" target=\"_blank\">" . $entry["entry_reg"] . "</a>";
+                            }
 
-                    // Create biobrick registry link (or not)
-                    if ($entry["entry_reg"] === null || $entry["entry_reg"] == '') {
-                        $biobrick = "N/A";
-                    } else {
-                        $biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $entry["entry_reg"]
-                                . "\" target=\"_blank\">" . $entry["entry_reg"] . "</a>";
-                    }
+                            // Part 3 of entry row with year created, registry link, comment and edit link
+                            $tpart_3 = "<td>" . $entry["year_created"] . "</td>"
+                                    . "<td>" . $biobrick . "</td>"
+                                    . "<td>" . $entry["comment"] . "</td>"
+                                    . $edit
+                                    . "</tr>";
 
-                    // Part 3 of entry row with year created, registry link, comment and edit link
-                    $tpart_3 = "<td>" . $entry["year_created"] . "</td>"
-                            . "<td>" . $biobrick . "</td>"
-                            . "<td class=\"comment\">" . $entry["comment"] . "</td>"
-                            . $edit
-                            . "</tr>";
+                            // Part 2 of entry row, inserts (has to be created last since it cycles through the list of entries)
+                            $inserts = "<a href=\"parts.php?ins_id=" . $entry["iid"] . "\">" . $entry["iname"] . "</a>";  // Grab first insert
+                            $entry = mysqli_fetch_assoc($entry_result); // Go to next result in the list
+                            while (TRUE) {
+                                // Check if result is a different entry or end of results
+                                if (!$entry || $entry["eid"] != $current_entry) {
+                                    break;
+                                }
+                                // Add insert to list and go to next result
+                                $inserts = $inserts . "<br><a href=\"parts.php?ins_id=" . $entry["iid"] . "\">" . $entry["iname"] . "</a>";
+                                $entry = mysqli_fetch_assoc($entry_result);
+                            }
+                            $tpart_2 = "<td>" . $inserts . "</td>";
 
-                    // Part 2 of entry row, inserts (has to be created last since it cycles through the list of entries)
-                    $inserts = "<a href=\"parts.php?ins_id=" . $entry["iid"] . "\">" . $entry["iname"] . "</a>";  // Grab first insert
-                    $entry = mysqli_fetch_assoc($entry_result); // Go to next result in the list
-                    while (TRUE) {
-                        // Check if result is a different entry or end of results
-                        if (!$entry || $entry["eid"] != $current_entry) {
-                            break;
+                            // Piece together the parts to form a row of the table
+                            echo $tpart_1 . $tpart_2 . $tpart_3;
+                        } else {
+                            // If the entry is private, skip it unless user is logged in and activated
+                            $entry = mysqli_fetch_assoc($entry_result);
                         }
-                        // Add insert to list and go to next result
-                        $inserts = $inserts . "<br><a href=\"parts.php?ins_id=" . $entry["iid"] . "\">" . $entry["iname"] . "</a>";
-                        $entry = mysqli_fetch_assoc($entry_result);
                     }
-                    $tpart_2 = "<td>" . $inserts . "</td>";
-
-                    // Piece together the parts to form a row of the table
-                    echo $tpart_1 . $tpart_2 . $tpart_3;
-                } else {
-                    // If the entry is private, skip it unless user is logged in and activated
-                    $entry = mysqli_fetch_assoc($entry_result);
-                }
-            }
-            ?>
-            <!-- End table -->
-        </table>
+                    ?>
+                    <!-- End table -->
+                </tbody>
+            </table>
+        </div>
     <?php } ?>
 </div>
+<script>
+    $(document).ready(function () {
+        $('#userentries').DataTable({
+            paging: true,
+            select: true,
+            "order": [[4, "asc"]]
+        });
+    });
+</script>

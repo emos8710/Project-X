@@ -14,16 +14,6 @@ $logquery = mysqli_query($link, $logsql) or die("MySQL error: " . mysqli_error($
 mysqli_close($link) or die("Could not close database connection");
 ?>
 
-<script>
-    $(document).ready(function () {
-        $('#eventlog').DataTable({
-            paging: true,
-            select: true,
-            "order": [[ 0, "desc" ]]
-        });
-    });
-</script>
-
 <h3 class="event-log" style="font-style: normal; font-weight: 300; color: #001F3F;">Event log</h3>
 
 <?php

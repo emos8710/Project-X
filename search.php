@@ -291,11 +291,12 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
-                    echo "<table class=\"search_results\">";
-                    echo "<tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
+                    echo "<div style=\"max-width: 70%\">";
+                    echo "<table class=\"display\" id=\"searchtable\">";
+                    echo "<thead><tr><th>UpStrain ID</th><th>Strain</th><th>Backbone</th>"
                     . "<th>Insert</th><th>Insert Type</th><th>Year</th><th>iGEM Registry</th>"
-                    . "<th>Creator</th><th>Added date</th><th>Comment</th></tr>";
-
+                    . "<th>Creator</th><th>Added date</th><th>Comment</th></tr></thead>";
+                    echo "<tbody>";
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
                         $biobrick = "";
@@ -305,9 +306,7 @@ if (isset($_GET['content'])) {
                         } else {
                             $biobrick = "<a class=\"external\" href=\"http://parts.igem.org/Part:" . $row["biobrick"] . "\" target=\"_blank\">" . $row["biobrick"] . "</a>";
                         }
-                        if (!$loggedin && $row["private"] == 1) {
-                            
-                        } else {
+                        if ($loggedin || $row["private"] == 0) {
                             echo "<tr><td><a href=\"entry.php?upstrain_id=" . $row["up_id"] . "\">" . $row["up_id"] . "</a>" .
                             "</td><td><a href=\"parts.php?strain_id=" . $row["strain_id"] . "\">" . $row["strain"] . "</a>" .
                             "</td><td><a href=\"parts.php?backbone_id=" . $row["backbone_id"] . "\">" . $row["backbone"] . "</a>" .
@@ -320,7 +319,9 @@ if (isset($_GET['content'])) {
                             "</td><td class=\"comment\">" . $row["cmt"] . "</td></tr>";
                         }
                     }
+                    echo "</tbody>";
                     echo "</table>";
+                    echo "</div>";
                 }
                 // If there are no rows, create error
                 else {
@@ -451,10 +452,11 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
-                    echo "<table class=\"search_results\">";
-                    echo "<tr><th>User ID</th><th>Username</th><th>First Name</th>"
-                    . "<th>Last Name</th><th>Phone number</th><th>Email address</th></tr>";
-
+                    echo "<div style=\"max-width: 70%\">";
+                    echo "<table class=\"display\" id=\"searchtable\">";
+                    echo "<thead><tr><th>User ID</th><th>Username</th><th>First Name</th>"
+                    . "<th>Last Name</th><th>Phone number</th><th>Email address</th></tr></thead>";
+                    echo "<tbody>";
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
 
@@ -466,8 +468,9 @@ if (isset($_GET['content'])) {
                         "</td><td>" . $row["email"] .
                         "</td></tr>";
                     }
-
+                    echo "</tbody>";
                     echo "</table>";
+                    echo "</div>";
                 }
                 // If there are no rows, create error
                 else {
@@ -643,16 +646,15 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
-                    echo "<table class=\"search_results\">";
-                    echo "<tr><th>Insert ID</th><th>Insert Name</th><th>Insert Type</th>"
+                    echo "<div style=\"max-width: 70%\">";
+                    echo "<table class=\"display\" id=\"searchtable\">";
+                    echo "<thead><tr><th>Insert ID</th><th>Insert Name</th><th>Insert Type</th>"
                     . "<th>Biobrick registry ID</th><th>Date added</th>"
-                    . "<th>Creator</th><th>Comment</th></tr>";
-
+                    . "<th>Creator</th><th>Comment</th></tr></thead>";
+                    echo "<tbody>";
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-                        if (!$loggedin && $row["private"] == 1) {
-                            
-                        } else {
+                        if ($loggedin || $row["private"] == 0) {
                             echo "<tr><td>" . $row["ins_id"] .
                             "</td><td><a href=\"parts.php?ins_id=" . $row["ins_id"] . "\">" . $row["insname"] . "</a>" .
                             "</td><td>" . $row["ins_type"] .
@@ -663,8 +665,9 @@ if (isset($_GET['content'])) {
                             "</td></tr>";
                         }
                     }
-
+                    echo "</tbody>";
                     echo "</table>";
+                    echo "</div>";
                 }
                 // If there are no rows, create error
                 else {

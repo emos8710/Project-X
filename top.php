@@ -169,10 +169,24 @@ function test_input($string) {
         }
         ?>
         <script>
-            $("#quicksearchfield").focus(function(e){
+            $("#quicksearchfield").focus(function (e) {
                 $("#quicksearchfield").attr("placeholder", "UUYYYYXXX");
             });
-            $('#quicksearchfield').blur(function(e){
+            $('#quicksearchfield').blur(function (e) {
                 $("#quicksearchfield").attr("placeholder", "Search UpStrain ID");
+            });
+            $(document).ready(function () {
+                $('#eventlog').DataTable({
+                    paging: true,
+                    select: true,
+                    "order": [[0, "desc"]]
+                });
+            });
+            $(document).ready(function () {
+                $('#searchtable').DataTable({
+                    paging: true,
+                    select: true,
+                    "order": [[0, "asc"]]
+                });
             });
         </script>
