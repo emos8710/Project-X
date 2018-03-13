@@ -184,6 +184,7 @@ function test_input($string) {
             });
             $(document).ready(function () {
                 $('#searchtable').DataTable({
+                    "searching": false,
                     paging: true,
                     select: true,
                     "order": [[0, "asc"]]
