@@ -82,7 +82,7 @@ if ($error) {
     $backbonedata = mysqli_fetch_assoc($backbonequery);
     $straindata = mysqli_fetch_assoc($strainquery);
     ?>
-    <h3 class="entry_show" style="text-align: left; font-style: normal; font-weight: 300; color: #001F3F;">UpStrain Entry <?php echo $entrydata['uid']; ?></h2>
+    <h2 class="search_etc">UpStrain Entry <?php echo $entrydata['uid']; ?></h2>
 
     <?php
     if ($loggedin && $active && $admin) {
@@ -120,7 +120,7 @@ if ($error) {
                 <col><col>
                 <thead>
                     <tr>    
-                        <th colspan="2" style="text-align: left; font-style: normal; font-weight: 400; color: #001F3F;"> Entry details</th>
+                        <th style="font-style: normal; font-weight: 300px;">Entry details</th>
                     </tr>
                 </thead>
                 <tbody>

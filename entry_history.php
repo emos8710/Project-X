@@ -143,7 +143,7 @@ mysqli_close($link) or die("Could not close connection to database");
     }
     ?>
 </table>
-<table class="control-panel-history">
+<table class="control-panel-history" style="margin-left: 30px">
 
     <tr>
         <th class="top" colspan="4">Current inserts</th>
