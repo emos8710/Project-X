@@ -68,7 +68,7 @@ if ($loggedin && $active && $admin) {
             }
 // Remove insert
         } else if (isset($_POST['remove_insert']) && isset($_POST['position']) && $_POST['position'] != "") {
-            $insert_pos = mysqli_real_escape_string($link, test_input($_POST['position']));
+            $insert_pos = mysqli_real_escape_string($link, $_POST['position']);
             $remove_sql = "DELETE FROM entry_inserts WHERE position = '$insert_pos' AND entry_id = '$entry_id';";
             $move_sql = "UPDATE entry_inserts SET position = position-1 WHERE position > '$insert_pos' AND entry_id = '$entry_id';";
 
@@ -626,12 +626,10 @@ if ($loggedin && $active && $admin) {
                 <th colspan="5">Inserts</th>
             </tr>
             <?php
-            $i = 0;
             while ($insert_row = mysqli_fetch_assoc($insert_result)) {
-                $i++;
                 ?>
                 <tr class="edit_entry">
-                    <th class="title">Insert <?= $i ?></th>
+                    <th class="title">Insert <?= $insert_row['position'] ?></th>
                     <td class="info">Name: <?= $insert_row['name'] ?></td>
                     <td class="info">Type: <?= $insert_row['type'] ?></td>
                     <?php
