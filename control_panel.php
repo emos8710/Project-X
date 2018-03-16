@@ -27,6 +27,7 @@ if (isset($_GET['content'])) {
 if ($loggedin && $active && $admin) {
     ?>
     <main>
+        <h2 class="search_etc">Control Panel</h2>
         <div class="innertube">
             <!-- Nav menu with links to display desired content -->
             <div class="control_panel_menu">

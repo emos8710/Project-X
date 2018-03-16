@@ -3,13 +3,11 @@ if (count(get_included_files()) == 1)
     exit("Access restricted."); //prevent direct access
 
     /* Logs out user if no activity in a certain time */
-if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > (100000))) {
+if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true && isset($_SESSION['LAST_ACTIVITY']) && (time() - $_SESSION['LAST_ACTIVITY'] > (7200))) {
     /* If the logout button is pressed the refresh is not made */
     if (basename($_SERVER['PHP_SELF'] != "logout.php")) {
         $_SESSION['logged_in'] = false;
         header("Refresh:0; url=logout.php");
-        session_unset();     // unset $_SESSION variable for the run-time 
-        session_destroy();   // destroy session data in storage
     }
 } else {
     $_SESSION['LAST_ACTIVITY'] = time(); // update last activity time stamp
@@ -62,7 +60,7 @@ function test_input($string) {
     </head>
 
     <body>
-        <header>
+        <header id="top">
             <!-- Navigation bar and logo -->
             <nav class="navigation">
                 <!-- Logo -->
