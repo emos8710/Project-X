@@ -1,6 +1,7 @@
 <?php
-if (count(get_included_files()) == 1)
-    exit("Access restricted."); // prevent direct access (included only)
+if (count(get_included_files()) == 1) { // prevent direct access (included only)
+    exit("Access restricted.");
+}
 
 // Displays page if user is logged in and is activated and has the right privileges
 if ($loggedin && $active && $admin) {
@@ -116,13 +117,13 @@ if ($loggedin && $active && $admin) {
                     $update_val = mysqli_real_escape_string($link, $user_input);
                     $update_msg = "comment";
                     // Remove insert comment
-                } else if (isset($_POST['remove_insert_comment'])) {
-                    $remove_sql = "UPDATE ins SET comment = '' WHERE id = " . $part_id;
+                } else if (isset($_POST['remove_insert_reg'])) {
+                    $remove_sql = "UPDATE ins SET ins_reg = '' WHERE id = " . $part_id;
                     if ($result = mysqli_query($link, $remove_sql)) {
-                        $update_msg = "Successfully removed comment.";
+                        $update_msg = "Successfully removed registry ID.";
                     } else {
                         $iserror = TRUE;
-                        $update_msg = "Failed to remove comment. " . mysqli_error($link);
+                        $update_msg = "Failed to remove registry ID. " . mysqli_error($link);
                     }
                 }
                 // Execute the change of biobrick id or comment
@@ -375,379 +376,711 @@ if ($loggedin && $active && $admin) {
                 . "users.user_id AS user_id FROM ins, ins_type, users "
                 . "WHERE ins.id = '$id' AND ins.type = ins_type.id AND ins.creator = users.user_id";
         $insertquery = mysqli_query($link, $insertsql);
-        mysqli_close($link) or die("Could not close database connection");
 
         $info = mysqli_fetch_assoc($insertquery);
+
+        $typesql = "SELECT name FROM ins_type ORDER BY name ASC";
+        $typequery = mysqli_query($link, $typesql);
+
+        mysqli_close($link) or die("Could not close database connection");
         ?>
-        <h1>Edit Insert</h1>
+        <h2 class="search_etc">UpStrain Insert: <?= $info['name'] ?> - Edit</h2>
         <div class="edit_users">
-            <ul>
-                <!-- Edit name -->
-                <li><div class="edit_title">Name</div>	<?php
-                    echo $info["name"];
+            <table class="edit_users">
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Name
+                    </th>
+                    <td class="info">
+                        <?= $info['name'] ?>
+                    </td>
+                    <?php
                     if ($current_content != "insert_name") {
                         ?>
-                        <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_name">Edit</a></div> 
-                <?php } ?></li>
-        <?php if ($current_content == "insert_name") { ?>
-                    <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
-                            New insert name
-                            <input type="text" name="insert_name">
-                            <input type="submit" value="Submit">
-                            <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                        </form></li>
-        <?php } ?>
-
-                <!-- Edit insert type -->
-                <li><div class="edit_title">Insert type</div> <?php
-                    echo $info["type"];
-                    if ($current_content != "insert_type") {
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_name">Edit</a>
+                        </td>
+                        <?php
+                    } else {
                         ?>
-                        <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_type">Edit</a></div>
-                <?php } ?></li>
-        <?php if ($current_content == "insert_type") { ?>
-                    <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
-                            New Insert Type
-                            <select class="all" name="insert_type">
-                                <option value=""></option>    
-                                <option value="Promotor">Promotor</option>
-                                <option value="Coding">Coding</option>
-                                <option value="RBS">RBS</option>
-                            </select>
-                            <input type="submit" value="Submit">
-                            <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                        </form></li>
-        <?php } ?>                        
-
-                <!-- Edit biobrick registry id -->
-                <li><div class="edit_title">Biobrick registry id</div> <?php
-                    echo $info["biobrick"];
-                    if ($current_content != "insert_biobrick") {
-                        ?>
-                        <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_biobrick">Edit</a></div>
-                <?php } ?></li>
-        <?php if ($current_content == "insert_biobrick") { ?>
-                    <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
-                            New biobrick id
-                            <input type="text" name="insert_reg" placeholder="BBa_K[X]" pattern="BBa_K\d{4,12}" required title ="Biobrick ID must match pattern BBa_KXXXXX."/>
-                            <input type="submit" value="Submit">
-                            <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                        </form></li>
-        <?php } ?>
-
-                <!-- Edit comment -->
-                <li><div class="edit_title">Comment</div> <?php
-                    echo $info["comment"];
-                    if ($current_content != "insert_comment") {
-                        ?>
-                        <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_comment">Edit</a></div>
-                        <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
-                            <input type="hidden" name="remove_insert_comment">
-                            <input type="submit" value="Remove">
-                        </form>
-                <?php } ?></li>
-        <?php if ($current_content == "comment") { ?>
-                    <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
-                            New comment
-                            <input type="text" name="insert_comment"> 
-                            <input type="submit" value="Submit">
-                            <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                        </form></li>
-                <?php }
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "insert_name") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New name: 
+                                </label>
+                                <br>
+                                <input type="text" name="insert_name" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['name'] ?>">
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
                 ?>
 
-                <!-- Edit private -->
-                <li><div class="edit_title">Private</div> <?php
-                    if ($info["private"] == 1) {
-                        echo "Yes";
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Insert Type
+                    </th>
+                    <td class="info">
+                        <?= $info['type'] ?>
+                    </td>
+                    <?php
+                    if ($current_content != "insert_type") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_type">Edit</a>
+                        </td>
+                        <?php
                     } else {
-                        echo "No";
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
                     }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "insert_type") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New type: 
+                                </label>
+                                <br>
+                                <select class="all" name="insert_type" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;">
+                                    <option value=""></option>
+                                    <?php
+                                    while ($type = mysqli_fetch_assoc($typequery)) {
+                                        echo "<option value=\"" . $type['name'] . "\">" . $type['name'] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        iGEM Registy ID
+                    </th>
+                    <td class="info">
+                        <?= $info['biobrick'] ?>
+                    </td>
+                    <?php
+                    if ($current_content != "insert_biobrick") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_biobrick">Edit</a>
+                        </td>
+                        <td class="edit_users">
+                            <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <input type="hidden" name="remove_insert_reg"></input>
+                                <input class="edit_entry_button" type="submit" value="Remove" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 2px;"></input>
+                            </form>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "insert_biobrick") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New registry ID: 
+                                </label>
+                                <br>
+                                <input type="text" name="insert_reg" placeholder="BBa_K[X]" pattern="BBa_K\d{4,12}" required title ="Biobrick ID must match pattern BBa_KXXXXX." style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;">
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Comment
+                    </th>
+                    <td class="info">
+                        <?= $info['comment'] ?>
+                    </td>
+                    <?php
+                    if ($current_content != "insert_comment") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_comment">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "insert_comment") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New comment: 
+                                </label>
+                                <br>
+                                <textarea class="edit_entry" name="insert_comment" required style="border: 1px solid #001F3F; border-radius: 5px" rows ="8" cols="30"><?= $info['comment'] ?></textarea>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Private?
+                    </th>
+                    <td class="info">
+                        <?php
+                        if ($info['private'] == 1): echo "Yes";
+                        else: echo "No";
+                        endif;
+                        ?>
+                    </td>
+                    <?php
                     if ($current_content != "insert_private") {
                         ?>
-                        <div class="edit_info"><a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_private">Edit</a></div>
-                <?php } ?></li>
-        <?php if ($current_content == "insert_private") { ?>
-                    <li><form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
-                            Private insert?
-                            <input type="radio" name="insert_private" value='Yes'/>Yes
-                            <input type="radio" name="insert_private" value="No"/>No<br>
-                            <input type="submit" value="Submit">
-                            <a href="?ins_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                        </form></li>
-        <?php } ?>                        
-
-                <ul>
-
-                    <div class="clear"></div>
-                    <!-- Show success/error message -->
-                    <?php
-                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
-                    endif;
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo $part_id; ?>&edit&content=insert_private">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?ins_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
                     ?>
-                    <!-- Back button -->
-                    <div class="back"><a href="?ins_id=<?php echo $part_id; ?>">Back to insert page</a></div>
-
-                    <?php
-                    // Check if Backbone part            
-                } else if (isset($_GET["backbone_id"])) {
-
-                    // Show the backbone page
-                    // Fetch backbone information from database
-                    include 'scripts/db.php';
-
-                    $backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
-                            . "backbone.date_db AS date, backbone.comment AS comment, backbone.private AS private, "
-                            . "users.first_name AS fname, users.last_name AS lname, "
-                            . "users.user_id AS user_id FROM backbone, users "
-                            . "WHERE backbone.id = '$id' AND backbone.creator = users.user_id";
-                    $backbonequery = mysqli_query($link, $backbonesql);
-                    mysqli_close($link) or die("Could not close database connection");
-
-                    $info = mysqli_fetch_assoc($backbonequery);
+                </tr>
+                <?php
+                if ($current_content == "insert_private") {
                     ?>
-                    <h1>Edit Backbone</h1>
-                    <div class="edit_users">
-                        <ul>
-                            <!-- Edit name -->
-                            <li><div class="edit_title">Name</div>	<?php
-                                echo $info["name"];
-                                if ($current_content != "backbone_name") {
-                                    ?>
-                                    <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_name">Edit</a></div> 
-                            <?php } ?></li>
-        <?php if ($current_content == "backbone_name") { ?>
-                                <li><form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
-                                        New backbone name
-                                        <input type="text" name="backbone_name">
-                                        <input type="submit" value="Submit">
-                                        <a href="?backbone_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                    </form></li>
-        <?php } ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?ins_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    Private insert? 
+                                </label>
+                                <br>
+                                <label style="display: inline-block"><input type="radio" name="insert_private" value='Yes'/>Yes</label>
+                                <label style="display: inline-block"><input type="radio" name="insert_private" value="No"/>No</label>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
+            <!-- Show success/error message -->
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
+            endif;
+            ?>
+            <!-- Back button -->
+            <div class="back">
+                <a href="?ins_id=<?php echo $part_id; ?>">Back to insert page</a>
+            </div>
+        </div>
 
 
-                            <!-- Edit biobrick registry id -->
-                            <li><div class="edit_title">Biobrick registry id</div> <?php
-                                echo $info["biobrick"];
-                                if ($current_content != "backbone_biobrick") {
-                                    ?>
-                                    <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_biobrick">Edit</a></div>
-                            <?php } ?></li>
-        <?php if ($current_content == "backbone_biobrick") { ?>
-                                <li><form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
-                                        New biobrick id
-                                        <input type="text" name="backbone_reg" placeholder="BBa_K[X]" pattern="BBa_K\d{4,12}" required title ="Biobrick ID must match pattern BBa_KXXXXX."/>
-                                        <input type="submit" value="Submit">
-                                        <a href="?backbone_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                    </form></li>
-        <?php } ?>
+        <?php
+        // Check if Backbone part            
+    } else if (isset($_GET["backbone_id"])) {
 
-                            <!-- Edit comment -->
-                            <li><div class="edit_title">Comment</div> <?php
-                                echo $info["comment"];
-                                if ($current_content != "backbone_comment") {
-                                    ?>
-                                    <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_comment">Edit</a></div>
-                                    <form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
-                                        <input type="hidden" name="remove_backbone_comment">
-                                        <input type="submit" value="Remove">
-                                    </form>
-                            <?php } ?></li>
-        <?php if ($current_content == "backbone_comment") { ?>
-                                <li><form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
-                                        New comment
-                                        <input type="text" name="backbone_comment"> 
-                                        <input type="submit" value="Submit">
-                                        <a href="?backbone_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                    </form></li>
-                            <?php }
-                            ?>
+        // Show the backbone page
+        // Fetch backbone information from database
+        include 'scripts/db.php';
 
-                            <!-- Edit private -->
-                            <li><div class="edit_title">Private</div> <?php
-                                if ($info["private"] == 1) {
-                                    echo "Yes";
-                                } else {
-                                    echo "No";
-                                }
-                                if ($current_content != "backbone_private") {
-                                    ?>
-                                    <div class="edit_info"><a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_private">Edit</a></div>
-                            <?php } ?></li>
-        <?php if ($current_content == "backbone_private") { ?>
-                                <li><form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
-                                        Private backbone?
-                                        <input type="radio" name="backbone_private" value='Yes'/>Yes
-                                        <input type="radio" name="backbone_private" value="No"/>No<br>
-                                        <input type="submit" value="Submit">
-                                        <a href="?backbone_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                    </form></li>
-        <?php } ?>                        
+        $backbonesql = "SELECT backbone.name AS name, backbone.Bb_reg AS biobrick, "
+                . "backbone.date_db AS date, backbone.comment AS comment, backbone.private AS private, "
+                . "users.first_name AS fname, users.last_name AS lname, "
+                . "users.user_id AS user_id FROM backbone, users "
+                . "WHERE backbone.id = '$id' AND backbone.creator = users.user_id";
+        $backbonequery = mysqli_query($link, $backbonesql);
+        mysqli_close($link) or die("Could not close database connection");
 
-                            <ul>
+        $info = mysqli_fetch_assoc($backbonequery);
+        ?>
+        <h2 class="search_etc">UpStrain Backbone: <?= $info['name'] ?> - Edit</h2>
+        <div class="edit_users">
+            <table class="edit_users">
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Name
+                    </th>
+                    <td class="info">
+                        <?php
+                        echo $info['name'];
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "backbone_name") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_name">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "backbone_name") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New name: 
+                                </label>
+                                <br>
+                                <input type="text" name="backbone_name" required style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['name'] ?>">
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
 
-                                <div class="clear"></div>
-                                <!-- Show success/error message -->
-                                <?php
-                                if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
-                                endif;
-                                ?>
-                                <!-- Back button -->
-                                <div class="back"><a href="?backbone_id=<?php echo $part_id; ?>">Back to backbone page</a></div>
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        iGEM Registry ID
+                    </th>
+                    <td class="info">
+                        <?php
+                        echo $info['biobrick'];
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "backbone_biobrick") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_biobrick">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "backbone_biobrick") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New registry ID: 
+                                </label>
+                                <br>
+                                <input type="text" name="backbone_reg" placeholder="BBa_K[X]" pattern="BBa_K\d{4,12}" required title ="Biobrick ID must match pattern BBa_KXXXXX." style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;">
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
 
-                                <?php
-                                //Check if strain part      
-                            } else if (isset($_GET["strain_id"])) {
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Comment
+                    </th>
+                    <td class="info">
+                        <?php
+                        echo $info['comment'];
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "backbone_comment") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_comment">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "backbone_comment") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New registry ID: 
+                                </label>
+                                <br>
+                                <textarea class="edit_entry" name="backbone_comment" required style="border: 1px solid #001F3F; border-radius: 5px" rows ="8" cols="30"><?= $info['comment'] ?></textarea>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
 
-                                // Show the strain page
-                                // Fetch strain information from database
-                                include 'scripts/db.php';
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Private
+                    </th>
+                    <td class="info">
+                        <?php
+                        if ($info['private'] == 1): echo "Yes";
+                        else: echo "No";
+                        endif;
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "backbone_cprivate") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo $part_id; ?>&edit&content=backbone_private">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?backbone_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "backbone_private") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?backbone_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    Private backbone? 
+                                </label>
+                                <br>
+                                <label style="display: inline-block"><input type="radio" name="backbone_private" value='Yes'/>Yes</label>
+                                <label style="display: inline-block"><input type="radio" name="backbone_private" value="No"/>No</label>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
 
-                                $strainsql = "SELECT strain.name AS name, "
-                                        . "strain.date_db AS date, strain.comment AS comment, strain.private AS private, "
-                                        . "users.first_name AS fname, users.last_name AS lname, "
-                                        . "users.user_id AS user_id FROM strain, users "
-                                        . "WHERE strain.id = '$id' AND strain.creator = users.user_id";
-                                $strainquery = mysqli_query($link, $strainsql);
-                                mysqli_close($link) or die("Could not close database connection");
+            <!-- Show success/error message -->
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
+            endif;
+            ?>
+            <!-- Back button -->
+            <div class="back">
+                <a href="?backbone_id=<?php echo $part_id; ?>">Back to backbone page</a>
+            </div>
+        </div>
 
-                                $info = mysqli_fetch_assoc($strainquery);
-                                ?>
-                                <h1>Edit Strain</h1>
-                                <div class="edit_users">
-                                    <ul>
-                                        <!-- Edit name -->
-                                        <li><div class="edit_title">Name</div>	<?php
-                                            echo $info["name"];
-                                            if ($current_content != "strain_name") {
-                                                ?>
-                                                <div class="edit_info"><a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_name">Edit</a></div> 
-                                        <?php } ?></li>
-        <?php if ($current_content == "strain_name") { ?>
-                                            <li><form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
-                                                    New strain name
-                                                    <input type="text" name="strain_name">
-                                                    <input type="submit" value="Submit">
-                                                    <a href="?strain_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                                </form></li>
-        <?php } ?>
+        <?php
+        //Check if strain part      
+    } else if (isset($_GET["strain_id"])) {
+
+        // Show the strain page
+        // Fetch strain information from database
+        include 'scripts/db.php';
+
+        $strainsql = "SELECT strain.name AS name, "
+                . "strain.date_db AS date, strain.comment AS comment, strain.private AS private, "
+                . "users.first_name AS fname, users.last_name AS lname, "
+                . "users.user_id AS user_id FROM strain, users "
+                . "WHERE strain.id = '$id' AND strain.creator = users.user_id";
+        $strainquery = mysqli_query($link, $strainsql);
+        mysqli_close($link) or die("Could not close database connection");
+
+        $info = mysqli_fetch_assoc($strainquery);
+        ?>
+
+        <div class="edit_users">
+            <h2 class="search_etc">UpStrain Strain: <?= $info['name'] ?> - Edit</h2>
+            <table class="edit_users">
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Name
+                    </th>
+                    <td class="info">
+                        <?php
+                        echo $info['name'];
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "strain_name") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_name">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?strain_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "strain_name") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New name: 
+                                </label>
+                                <br>
+                                <input type="text" name="backbone_reg" required style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['name'] ?>">
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Comment
+                    </th>
+                    <td class="info">
+                        <?php
+                        echo $info['comment'];
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "strain_comment") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_comment">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?strain_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "strain_comment") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    New comment: 
+                                </label>
+                                <br>
+                                <textarea class="edit_entry" name="strain_comment" required style="border: 1px solid #001F3F; border-radius: 5px" rows ="8" cols="30"><?= $info['comment'] ?></textarea>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+
+                <tr class="edit_users">
+                    <th class="edit_users">
+                        Private
+                    </th>
+                    <td class="info">
+                        <?php
+                        if ($info['private'] == 1): echo "Yes";
+                        else: echo "No";
+                        endif;
+                        ?>
+                    </td>
+                    <?php
+                    if ($current_content != "strain_private") {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_private">Edit</a>
+                        </td>
+                        <?php
+                    } else {
+                        ?>
+                        <td class="edit_users">
+                            <a href="?strain_id=<?php echo$part_id; ?>&edit">Cancel</a>
+                        </td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+                if ($current_content == "strain_private") {
+                    ?>
+                    <tr class="mini-table">
+                        <td class="mini-table" colspan="2">
+                            <form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
+                                <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
+                                    Private strain? 
+                                </label>
+                                <br>
+                                <label style="display: inline-block"><input type="radio" name="strain_private" value='Yes'/>Yes</label>
+                                <label style="display: inline-block"><input type="radio" name="strain_private" value="No"/>No</label>
+                                <br>
+                                <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; float:left">
+                            </form>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+            </table>
+            <!-- Show success/error message -->
+            <?php
+            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
+            endif;
+            ?>
+
+            <!-- Back button -->
+            <div class="back">
+                <a href="?strain_id=<?php echo $part_id; ?>">Back to strain page</a>
+            </div>
+        </div>
 
 
-                                        <!-- Edit comment -->
-                                        <li><div class="edit_title">Comment</div> <?php
-                                            echo $info["comment"];
-                                            if ($current_content != "strain_comment") {
-                                                ?>
-                                                <div class="edit_info"><a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_comment">Edit</a></div>
-                                                <form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
-                                                    <input type="hidden" name="remove_strain_comment">
-                                                    <input type="submit" value="Remove">
-                                                </form>
-                                        <?php } ?></li>
-        <?php if ($current_content == "strain_comment") { ?>
-                                            <li><form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
-                                                    New comment
-                                                    <input type="text" name="strain_comment"> 
-                                                    <input type="submit" value="Submit">
-                                                    <a href="?strain_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                                </form></li>
-                                        <?php }
-                                        ?>
-
-                                        <!-- Edit private -->
-                                        <li><div class="edit_title">Private</div> <?php
-                                            if ($info["private"] == 1) {
-                                                echo "Yes";
-                                            } else {
-                                                echo "No";
-                                            }
-                                            if ($current_content != "strain_private") {
-                                                ?>
-                                                <div class="edit_info"><a href="?strain_id=<?php echo $part_id; ?>&edit&content=strain_private">Edit</a></div>
-                                        <?php } ?></li>
-        <?php if ($current_content == "strain_private") { ?>
-                                            <li><form action="parts.php?strain_id=<?php echo $part_id; ?>&edit" method="POST">
-                                                    Private strain?
-                                                    <input type="radio" name="strain_private" value='Yes'/>Yes
-                                                    <input type="radio" name="strain_private" value="No"/>No<br>
-                                                    <a href="?strain_id=<?php echo $part_id; ?>&edit">Cancel</a>
-                                                </form></li>
-        <?php } ?>                        
-
-                                        <ul>
-
-                                            <div class="clear"></div>
-                                            <!-- Show success/error message -->
-                                            <?php
-                                            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($update_msg)): echo "<br>" . $update_msg;
-                                            endif;
-                                            ?>
-                                            <!-- Back button -->
-                                            <div class="back"><a href="?strain_id=<?php echo $part_id; ?>">Back to strain page</a></div>
-
-                                            <?php
-                                        }
+        <?php
+    }
 // Hides page if the user is not logged in or activated
-                                    } else {
-                                        if (isset($_GET["ins_id"])) {
-                                            if (!$loggedin) {
-                                                ?>
-                                                <h3 style="color:red">Access denied (you are not logged in).</h3>
-                                                <br>
-                                                <a href="parts.php?ins_id=<?php echo "$ins_id" ?> ">Go back to insert page</a>
-                                                <?php
-                                            } else if (!$active) {
-                                                ?>
-                                                <h3 style="color:red">Access denied (your account is not activated).</h3>
-                                                <br>
-                                                <a href="parts.php?ins_id=<?php echo "$ins_id" ?> ">Go back to insert page</a>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <h3 style="color:red">You are not allowed to edit inserts (you are not an admin).</h3>
-                                                <br>
-                                                <a href="parts.php?ins_id=<?php echo "$ins_id" ?> ">Go back to insert page</a>
-                                                <?php
-                                            }
-                                        } else if (isset($_GET["backbone_id"])) {
-                                            if (!$loggedin) {
-                                                ?>
-                                                <h3 style="color:red">Access denied (you are not logged in).</h3>
-                                                <br>
-                                                <a href="parts.php?backbone_id=<?php echo "$backbone_id" ?> ">Go back to backbone page</a>
-                                                <?php
-                                            } else if (!$active) {
-                                                ?>
-                                                <h3 style="color:red">Access denied (your account is not activated).</h3>
-                                                <br>
-                                                <a href="parts.php?backbone_id=<?php echo "$backbone_id" ?> ">Go back to backbone page</a>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <h3 style="color:red">You are not allowed to edit backbones (you are not an admin).</h3>
-                                                <br>
-                                                <a href="parts.php?backbone_id=<?php echo "$backbone_id" ?> ">Go back to backbone page</a>
-                                                <?php
-                                            }
-                                        } else if (isset($_GET["strain_id"])) {
-                                            if (!$loggedin) {
-                                                ?>
-                                                <h3 style="color:red">Access denied (you are not logged in).</h3>
-                                                <br>
-                                                <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
-                                                <?php
-                                            } else if (!$active) {
-                                                ?>
-                                                <h3 style="color:red">Access denied (your account is not activated).</h3>
-                                                <br>
-                                                <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
-                                                <?php
-                                            } else {
-                                                ?>
-                                                <h3 style="color:red">You are not allowed to edit strains (you are not an admin).</h3>
-                                                <br>
-                                                <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
-                                                <?php
-                                            }
-                                        }
-                                    }
+} else {
+    if (isset($_GET["ins_id"])) {
+        if (!$loggedin) {
+            ?>
+            <h3 style="color:red">Access denied (you are not logged in).</h3>
+            <br>
+            <a href="parts.php?ins_id=<?php echo "$ins_id" ?> ">Go back to insert page</a>
+            <?php
+        } else if (!$active) {
+            ?>
+            <h3 style="color:red">Access denied (your account is not activated).</h3>
+            <br>
+            <a href="parts.php?ins_id=<?php echo "$ins_id" ?> ">Go back to insert page</a>
+            <?php
+        } else {
+            ?>
+            <h3 style="color:red">You are not allowed to edit inserts (you are not an admin).</h3>
+            <br>
+            <a href="parts.php?ins_id=<?php echo "$ins_id" ?> ">Go back to insert page</a>
+            <?php
+        }
+    } else if (isset($_GET["backbone_id"])) {
+        if (!$loggedin) {
+            ?>
+            <h3 style="color:red">Access denied (you are not logged in).</h3>
+            <br>
+            <a href="parts.php?backbone_id=<?php echo "$backbone_id" ?> ">Go back to backbone page</a>
+            <?php
+        } else if (!$active) {
+            ?>
+            <h3 style="color:red">Access denied (your account is not activated).</h3>
+            <br>
+            <a href="parts.php?backbone_id=<?php echo "$backbone_id" ?> ">Go back to backbone page</a>
+            <?php
+        } else {
+            ?>
+            <h3 style="color:red">You are not allowed to edit backbones (you are not an admin).</h3>
+            <br>
+            <a href="parts.php?backbone_id=<?php echo "$backbone_id" ?> ">Go back to backbone page</a>
+            <?php
+        }
+    } else if (isset($_GET["strain_id"])) {
+        if (!$loggedin) {
+            ?>
+            <h3 style="color:red">Access denied (you are not logged in).</h3>
+            <br>
+            <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
+            <?php
+        } else if (!$active) {
+            ?>
+            <h3 style="color:red">Access denied (your account is not activated).</h3>
+            <br>
+            <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
+            <?php
+        } else {
+            ?>
+            <h3 style="color:red">You are not allowed to edit strains (you are not an admin).</h3>
+            <br>
+            <a href="parts.php?strain_id=<?php echo "$strain_id" ?> ">Go back to strain page</a>
+            <?php
+        }
+    }
+}

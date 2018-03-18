@@ -215,21 +215,23 @@ if ($loggedin && $active && $userpage_owner_or_admin) {
                 }
                 ?>
             </tr>
-            <?php if ($current_content == "name") { ?>
+            <?php
+            if ($current_content == "name") {
+                ?>
                 <tr class="mini-table">
                     <td class="mini-table" colspan="2">
                         <form action="user.php?user_id=<?php echo $user_id; ?>&edit" method="POST">
                             <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
                                 First name:
                             </label>
-                            <input type="text" name="first_name" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['fname'] ?>"></input>
+                            <input type="text" name="first_name" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['fname'] ?>">
                             <br>
                             <label class="mini-table" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block">
                                 Last name:
                             </label>
-                            <input type="text" name="last_name" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['lname'] ?>"></input>
+                            <input type="text" name="last_name" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;" value="<?= $info['lname'] ?>">
                             <br>
-                            <input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px; float: left;"></input>
+                            <input class="edit_entry_button" type="submit" value="Submit" style="height: 20px; padding: 2px; verticle-align: center; margin-top: 3px; float: left;">
                         </form>
                     </td>
                 </tr>
