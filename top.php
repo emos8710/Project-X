@@ -34,6 +34,30 @@ if (isset($_SESSION['active']) && $_SESSION['active'] == 1) {
 function test_input($string) {
     return htmlspecialchars(strip_tags(stripslashes(trim($string))));
 }
+
+/* Making sure that the files directory contains only the correct files */
+include 'scripts/db.php';
+
+$all_files = mysqli_query($link, "SELECT name_new FROM upstrain_file");
+
+$scanned_directory = array_diff(scandir('files'), array('..', '.'));
+$database_files = [];
+
+while ($file = mysqli_fetch_assoc($all_files)) {
+    if (!in_array($file['name_new'], $scanned_directory)) {
+        mysqli_query($link, "DELETE FROM upstrain_file WHERE name_new = " . $file['name_new']); // If a database entry has no corresponding file, delete it
+    } else {
+        array_push($database_files, $file['name_new']);
+    }
+}
+
+foreach ($scanned_directory as $file) {
+    if (!in_array($file, $database_files)) {
+        unlink('files/' . $file); // If a file has no corresponding database entry, delete it
+    }
+}
+
+mysqli_close($link) or die("Could not close database connection");
 ?>
 <!DOCTYPE html>
 
@@ -56,7 +80,7 @@ function test_input($string) {
         <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
         <link rel="manifest" href="site.webmanifest">
         <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
-        <title><?php echo $title; ?></title>
+        <title><?= $title ?></title>
     </head>
 
     <body>
@@ -91,7 +115,7 @@ function test_input($string) {
                     if (basename($_SERVER['PHP_SELF']) === "search.php") {
                         echo "class=\"active\" ";
                     }
-                    ?> href="search.php?content=search_entries">Search</a>
+                    ?> href="search.php">Search</a>
 
                     <?php if ($loggedin && $active) {
                         ?>
@@ -100,7 +124,7 @@ function test_input($string) {
                         if (basename($_SERVER['PHP_SELF']) === "new_insert.php") {
                             echo "class=\"active\" ";
                         }
-                        ?> href="new_insert.php?content=new_entry">New Entry</a>
+                        ?> href="new_insert.php">New Entry</a>
                             <?php
                         }
                         ?>

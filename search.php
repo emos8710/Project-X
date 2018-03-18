@@ -24,7 +24,7 @@ function insertlink($insertnames, $insertids) {
 if (isset($_GET['content'])) {
     $current_content = test_input($_GET['content']);
 } else {
-    $current_content = '';
+    $current_content = "search_entries";
 }
 ?>
 

@@ -11,7 +11,7 @@ include 'top.php';
 if (isset($_GET['content'])) {
     $current_content = test_input($_GET['content']);
 } else {
-    $current_content = '';
+    $current_content = 'new_entry';
 }
 ?>
 
@@ -74,28 +74,28 @@ if (isset($_GET['content'])) {
                 <ul>
                     <li>
                         <a <?php
-        if (isset($_GET['content']) && test_input($_GET['content']) === "new_entry") {
+        if (isset($current_content) && $current_content === "new_entry") {
             echo "class=\"active\"";
         }
         ?> href="?content=new_entry">New entry</a>
                     </li>
                     <li>
                         <a <?php
-                            if (isset($_GET['content']) && test_input($_GET['content']) === "new_strain") {
+                            if (isset($current_content) && $current_content === "new_strain") {
                                 echo "class=\"active\"";
                             }
                             ?> href="?content=new_strain">New strain </a>
                     </li>
                     <li>
                         <a <?php
-                            if (isset($_GET['content']) && test_input($_GET['content']) === "new_backbone") {
+                            if (isset($current_content) && $current_content === "new_backbone") {
                                 echo "class=\"active\"";
                             }
                             ?> href="?content=new_backbone">New backbone</a>
                     </li>
                     <li>
                         <a <?php
-                            if (isset($_GET['content']) && test_input($_GET['content']) === "new_insert") {
+                            if (isset($current_content) && $current_content === "new_insert") {
                                 echo "class=\"active\"";
                             }
                             ?> class="last" href="?content=new_insert">New insert</a>
