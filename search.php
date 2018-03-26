@@ -452,6 +452,7 @@ if (isset($_GET['content'])) {
                 }
 
                 if ($num_result_rows > 0) {
+                    
                     echo "<div style=\"max-width: 70%\">";
                     echo "<table class=\"display\" id=\"searchtable\">";
                     echo "<thead><tr><th>User ID</th><th>Username</th><th>First Name</th>"
@@ -459,7 +460,7 @@ if (isset($_GET['content'])) {
                     echo "<tbody>";
                     // output data of each row
                     while ($row = $result->fetch_assoc()) {
-
+                        if ($loggedin) {
                         echo "<tr><td>" . $row["user_id"] .
                         "</td><td><a href=\"user.php?user_id=" . $row["user_id"] . "\">" . $row["uname"] . "</a>" .
                         "</td><td>" . $row["fname"] .
@@ -467,6 +468,15 @@ if (isset($_GET['content'])) {
                         "</td><td>" . $row["phone"] .
                         "</td><td>" . $row["email"] .
                         "</td></tr>";
+                    } else {
+                        echo "<tr><td>" . $row["user_id"] .
+                        "</td><td>" . $row["uname"] .
+                        "</td><td>" . $row["fname"] .
+                        "</td><td>" . $row["lname"] .
+                        "</td><td>" ."".
+                        "</td><td>" ."".
+                        "</td></tr>";                        
+                    }
                     }
                     echo "</tbody>";
                     echo "</table>";
