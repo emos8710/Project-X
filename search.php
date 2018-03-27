@@ -470,7 +470,7 @@ if (isset($_GET['content'])) {
                         "</td></tr>";
                     } else {
                         echo "<tr><td>" . $row["user_id"] .
-                        "</td><td>" . $row["uname"] .
+                        "</td><td><a href=\"user.php?user_id=" . $row["user_id"] . "\">" . $row["uname"] . "</a>" .
                         "</td><td>" . $row["fname"] .
                         "</td><td>" . $row["lname"] .
                         "</td><td>" ."".
