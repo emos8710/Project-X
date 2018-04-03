@@ -15,6 +15,7 @@ include 'top.php';
 <main>
     <div class="form">
         <h1 class="login">You have been logged out!</h1>
-    </div>
+        <br>
+        <center><a href="logsyst.php">Log back in</a></center>
 </main>
 <?php include 'bottom.php'; ?>
