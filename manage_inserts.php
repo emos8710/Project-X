@@ -9,31 +9,45 @@ $current_url = "control_panel.php?content=manage_inserts";
 
 <?php
 // Handle POST requests
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete']) && isset($_POST['what'])) {
-    include 'scripts/db.php';
-    ?>
-    <p>
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_POST['delete']) && isset($_POST['what'])) {
+        include 'scripts/db.php';
+        ?>
         <?php
         if ($_POST['what'] === "ins_type") {
             $id = mysqli_real_escape_string($link, $_POST['delete']);
             if (!mysqli_query($link, "DELETE FROM ins_type WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: cannot remove insert type (probably used by inserts).</strong>";
             else: $msg = "<strong style=\"color:green\">Insert type successfully removed!</strong>";
             endif;
-
-            echo $msg;
         } else if ($_POST['what'] === "insert") {
             $id = mysqli_real_escape_string($link, $_POST['delete']);
             if (!mysqli_query($link, "DELETE FROM ins WHERE id = " . $id)): $msg = "<strong style=\"color:red\">Database error: Cannot remove insert (probably used by entries).</strong>";
             else: $msg = "<strong style=\"color:green\">Insert successfully removed!</strong>";
             endif;
-
-            echo $msg;
         } else {
-            echo "This should never happen";
+            $msg = "This should never happen";
         }
-
         mysqli_close($link) or die("Could not close database connection");
         ?>
+        <?php
+    } else if (isset($_POST['add_instype'])) {
+        include 'scripts/db.php';
+        $new_type = mysqli_real_escape_string($link, test_input($_POST['add_instype']));
+        $check_exists = mysqli_query($link, "SELECT * FROM ins_type WHERE name = '$new_type'");
+        if (mysqli_num_rows($check_exists) >= 1) {
+            $msg = "<strong style=\"color:red\">Insert type already exists!</strong>";
+        } else {
+            if (!mysqli_query($link, "INSERT INTO ins_type (name) VALUES ('$new_type')")) {
+                $msg = "<strong style=\"color:red\">Database error: Could not add insert type.</strong>";
+            } else {
+                $msg = "<strong style=\"color:green\">Insert type successfully added!</strong>";
+            }
+        }
+        mysqli_close($link) or die("Could not close database connection");
+    }
+    ?>
+    <p>
+        <?= $msg; ?>
         <br>
         Reloading in 10 seconds... <a href="<?php echo $_SERVER['REQUEST_URI']; ?>">Reload now</a>
     </p>
@@ -106,6 +120,20 @@ if (mysqli_num_rows($typequery) < 1) {
                 <?php
             }
             ?>
+            <tr>
+                <th colspan="3">
+                    Add insert type
+                </th>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <form class="control-panel" action="<?= $current_url ?>" method="POST">
+                        <input type="text" name="add_instype" style="border: 1px solid #001F3F; border-radius: 5px; display: inline-block; padding: 3px;">
+                        <input type="hidden" name="header" value="refresh">
+                        <input class="edit_entry_button" type="submit" value="Submit" style="width: 100px; font-size: 14px; font-style: normal; text-align: left; display: inline-block; margin-left: 5px;">
+                    </form>
+                </td>
+            </tr>
         </tbody>
     </table>
     <?php
