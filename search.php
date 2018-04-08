@@ -30,9 +30,6 @@ if (isset($_GET['content'])) {
 
 <main>
     <div class="innertube">
-        <h2 class="search_etc">Search</h2>
-        <!-- Nav menu with links to display desired content -->
-
         <div class="search_nav">
 
             <ul class="search_nav">

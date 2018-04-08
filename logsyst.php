@@ -4,7 +4,7 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
-$title = "Login/Registration System";
+$title = "Login/Register";
 
 include 'top.php';
 ?>

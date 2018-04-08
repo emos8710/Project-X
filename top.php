@@ -80,7 +80,7 @@ mysqli_close($link) or die("Could not close database connection");
         <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
         <link rel="manifest" href="site.webmanifest">
         <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
-        <title><?= $title ?></title>
+        <title><?= "UpStrain - " . $title ?></title>
     </head>
 
     <body>
