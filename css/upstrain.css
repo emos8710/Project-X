@@ -1,3 +1,29 @@
+@media screen and (max-width: 1000px) {
+    .navigation a:not(:first-child) {display: none;}
+    .navigation a.icon {
+        float: right;
+        display: block;
+    }
+    .quicksearch {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+  .navigation.responsive {position: relative;}
+  .navigation.responsive a.icon {
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+  .navigation.responsive a:not(:first-child) {
+    float: none;
+    display: block;
+    text-align: left;
+    z-index: 10000;
+  }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -30,7 +56,6 @@ main {
 nav {
     z-index: 9999; /* To make it stay on top of everything */
     width: 100%;
-    min-width: 1000px;
     position: fixed;
 }
 /* Footer */
@@ -396,6 +421,10 @@ div.innertube a:hover {
     color: #001F3F; /* Changed. Text color on active nav. button */
 }
 
+.navigation .icon {
+    display: none;
+}
+
 a.login {
     color: #0074D9; /* Changed. New color to "New? Click here to register!" */
 }
@@ -570,7 +599,6 @@ nav.navigation {
     background: #001F3F;  /* Changed. Background color in navigation bar. */
     margin-top: 0;
     clear: both; /* Does not alow floating elements on either side of navigation bar */ 
-    max-height: 68px;
 }
 
 /* Wrappers */
@@ -584,7 +612,7 @@ div.nav-wrapper a {
 
 div.right-wrapper { /* Quicksearch and login */
     padding: 0;
-    float: right;
+    display: inline-block;
     clear: right;
 }
 

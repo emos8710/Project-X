@@ -80,13 +80,14 @@ mysqli_close($link) or die("Could not close database connection");
         <link rel="icon" type="image/png" sizes="16x16" href="icons/favicon-16x16.png">
         <link rel="manifest" href="site.webmanifest">
         <link rel="mask-icon" href="icons/safari-pinned-tab.svg" color="#5bbad5">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <title><?= "UpStrain - " . $title ?></title>
     </head>
 
     <body>
         <header id="top">
             <!-- Navigation bar and logo -->
-            <nav class="navigation">
+            <nav class="navigation" id="navigation">
                 <!-- Logo -->
                 <div class="logo">
                     <a class="logo" href="index.php">
@@ -95,7 +96,7 @@ mysqli_close($link) or die("Could not close database connection");
                 </div>
 
                 <!-- NAVIGATION BUTTONS -->
-                <div class="nav-wrapper">
+                <div class="nav-wrapper" id="nav-wrapper">
                     <!-- Home -->
                     <a <?php
                     if (basename($_SERVER['PHP_SELF']) === "index.php") {
@@ -152,6 +153,10 @@ mysqli_close($link) or die("Could not close database connection");
                             <?php
                         }
                         ?>
+
+                    <a href="javascript:void(0);" class="icon" onclick="menu()">
+                        <i class="fa fa-bars"></i>
+                    </a>
 
                 </div>
 
@@ -212,4 +217,13 @@ mysqli_close($link) or die("Could not close database connection");
                     "order": [[0, "asc"]]
                 });
             });
+
+            function menu() {
+                var x = document.getElementById("navigation");
+                if (x.className === "navigation") {
+                    x.className += " responsive";
+                } else {
+                    x.className = "navigation";
+                }
+            }
         </script>
